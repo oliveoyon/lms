@@ -9,20 +9,23 @@
   <title>@yield('title')</title>
   <base href="{{ \URL::to('/') }}">
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link href="https://fonts.maateen.me/solaiman-lipi/font.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.1.0/css/adminlte.min.css">
-
-@stack('admincss')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.1.0/css/adminlte.min.css">
+    
+    
+    @stack('admincss')
+    <link href="{{ asset('dashboard/css/custom.css') }}" rel="stylesheet">
 
 <!-- Your custom CSS -->
 
 
   <style>
-    [class*="sidebar-light-"] .nav-sidebar > .nav-item > .nav-treeview {
-    background-color: rgb(6 59 229 / 5%);
+    [class*="sidebar-dark-"] .nav-sidebar > .nav-item > .nav-treeview {
+    background-color: rgb(41, 43, 45);
     }
   </style>
 </head>
@@ -140,41 +143,42 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar text-sm flex-column" data-widget="treeview" role="menu" data-accordion="false">
           
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-school"></i>
-                <p>
-                    Class Management
-                    <i class="right fas fa-angle-left"></i>
-                </p>
-            </a>
-            <ul class="nav nav-treeview">
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Version</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Class</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Section</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Subject</p>
-                    </a>
-                </li>
-            </ul>
-          </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-school"></i>
+                    <p>
+                        Class Management
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ route('admin.version-list') }}" class="nav-link">
+                            <i class="fas fa-chalkboard nav-icon"></i>
+                            <p>Version</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-chalkboard-teacher nav-icon"></i>
+                            <p>Class</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-stream nav-icon"></i>
+                            <p>Section</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-book nav-icon"></i>
+                            <p>Subject</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            
           <li class="nav-item">
             <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-money-check-alt"></i>

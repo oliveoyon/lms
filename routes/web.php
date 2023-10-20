@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AcademicController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -57,5 +58,19 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware(['auth:admin', 'PreventBackHistory', 'is_admin_first_login'])->group(function () {
         Route::get('home', [AdminController::class, 'index'])->name('home');
         
+        // Version Management
+        Route::get('version-list', [AcademicController::class, 'versionlist'])->name('version-list');
+        Route::post('addVersion', [AcademicController::class, 'addVersion'])->name('addVersion');
+        Route::post('getVersionDetails', [AcademicController::class, 'getVersionDetails'])->name('getVersionDetails');
+        Route::post('updateVersionDetails', [AcademicController::class, 'updateVersionDetails'])->name('updateVersionDetails');
+        Route::post('deleteVersion', [AcademicController::class, 'deleteVersion'])->name('deleteVersion');
+        
+        // Class Management
+        Route::get('class-list', [AcademicController::class, 'classlist'])->name('class-list');
+        Route::post('addClass', [AcademicController::class, 'addClass'])->name('addClass');
+        Route::post('getClassDetails', [AcademicController::class, 'getClassDetails'])->name('getClassDetails');
+        Route::post('updateClassDetails', [AcademicController::class, 'updateClassDetails'])->name('updateClassDetails');
+        Route::post('deleteClass', [AcademicController::class, 'deleteClass'])->name('deleteClass');
+
     });
 });
