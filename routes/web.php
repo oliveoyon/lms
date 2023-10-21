@@ -72,5 +72,20 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('updateClassDetails', [AcademicController::class, 'updateClassDetails'])->name('updateClassDetails');
         Route::post('deleteClass', [AcademicController::class, 'deleteClass'])->name('deleteClass');
 
+        // Section Management
+        Route::get('section-list', [AcademicController::class, 'sectionlist'])->name('section-list');
+        Route::post('addSection', [AcademicController::class, 'addSection'])->name('addSection');
+        Route::post('getSectionDetails', [AcademicController::class, 'getSectionDetails'])->name('getSectionDetails');
+        Route::post('updateSectionDetails', [AcademicController::class, 'updateSectionDetails'])->name('updateSectionDetails');
+        Route::post('deleteSection', [AcademicController::class, 'deleteSection'])->name('deleteSection');
+        Route::post('/get-classes-by-version', [AcademicController::class, 'getClassesByVersion'])->name('getClassesByVersion');
+
+        // Subject Management
+        Route::get('subject-list', [AcademicController::class, 'subjectList'])->name('subject-list');
+        Route::post('addSubject', [AcademicController::class, 'addSubject'])->name('addSubject');
+        Route::post('getSubjectDetails', [AcademicController::class, 'getSubjectDetails'])->name('getSubjectDetails');
+        Route::post('updateSubjectDetails', [AcademicController::class, 'updateSubjectDetails'])->name('updateSubjectDetails');
+        Route::post('deleteSubject', [AcademicController::class, 'deleteSubject'])->name('deleteSubject');
+
     });
 });

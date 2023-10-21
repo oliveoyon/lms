@@ -52,7 +52,7 @@
                       <div class="card-body table-responsive">
                           <table class="table table-bordered table-striped table-hover table-sm" id="datas-table">
                               <thead style="border-top: 1px solid #b4b4b4">
-                                  <th style="width: 10px">#</th>
+                                  <th style="width: 15px">#</th>
                                   <th>Version Name</th>
                                   <th>Status</th>
                                   <th style="width: 40px">Action <button class="btn btn-sm btn-danger d-none" id="deleteAllBtn">{{ __('language.deleteall') }}</button></th>
@@ -86,7 +86,7 @@
 
 <!--Add Menu Modal -->
   <div class="modal fade" id="addversions" tabindex="-1" aria-labelledby="addVersionLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header bg-success">
           <h5 class="modal-title" id="addVersionLabel">Add Version</h5>
@@ -100,13 +100,13 @@
         
             <div class="form-group">
                 <label for="version_name">Version Name</label>
-                <input type="text" class="form-control" name="version_name" id="version_name" placeholder="Version Name লিখুন">
+                <input type="text" class="form-control form-control-sm" name="version_name" id="version_name" placeholder="Version Name লিখুন">
                 <span class="text-danger error-text version_name_error"></span>
             </div>
         
             <div class="form-group">
               <label for="status">Status</label>
-              <select class="form-control" name="version_status" id="version_status">
+              <select class="form-control form-control-sm" name="version_status" id="version_status">
                   <option value="1">Active</option>
                   <option value="0">Inactive</option>
               </select>
@@ -144,13 +144,13 @@
                 <input type="hidden" name="vid">
                 <div class="form-group">
                   <label for="version_name">Version Name</label>
-                  <input type="text" class="form-control" name="version_name" id="version_name" placeholder="Version Name লিখুন">
+                  <input type="text" class="form-control form-control-sm" name="version_name" id="version_name" placeholder="Version Name লিখুন">
                   <span class="text-danger error-text version_name_error"></span>
               </div>
           
               <div class="form-group">
                 <label for="status">Status</label>
-                <select class="form-control" name="version_status" id="version_status">
+                <select class="form-control form-control-sm" name="version_status" id="version_status">
                     <option value="1">Active</option>
                     <option value="0">Inactive</option>
                 </select>
@@ -158,7 +158,7 @@
               </div>
             
                 <div class="form-group">
-                    <button type="submit" class="btn btn-block btn-success">Submit</button>
+                    <button type="submit" class="btn btn-block bg-purple">Submit</button>
                 </div>
             </form>
                 

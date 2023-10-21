@@ -142,58 +142,62 @@
         </div>
 
         <!-- Edit Class Modal -->
-<div class="modal fade editClass" tabindex="-1" role="dialog" aria-labelledby="editClassLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editClassLabel">Edit Class</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="{{ route('admin.updateClassDetails') }}" method="post" autocomplete="off" id="update-class-form">
-                    @csrf
-                    <input type="hidden" name="cid">
-                    <div class="form-group">
-                        <label for="class_name">Class Name</label>
-                        <input type="text" class="form-control" name="class_name"  placeholder="Class Name">
-                        <span class="text-danger error-text class_name_error"></span>
+        <div class="modal fade editClass" tabindex="-1" role="dialog" aria-labelledby="editClassLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editClassLabel">Edit Class</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
+                    <div class="modal-body">
+                        <form action="{{ route('admin.updateClassDetails') }}" method="post" autocomplete="off" id="update-class-form">
+                            @csrf
+                            <input type="hidden" name="cid">
+                            <div class="form-group">
+                                <label for="class_name">Class Name</label>
+                                <input type="text" class="form-control" name="class_name"  placeholder="Class Name">
+                                <span class="text-danger error-text class_name_error"></span>
+                            </div>
 
-                    <div class="form-group">
-                        <label for="version_id">Version</label>
-                        <select class="form-control" name="version_id" >
-                            @foreach($versions as $version)
-                                <option value="{{ $version->id }}">{{ $version->version_name }}</option>
-                            @endforeach
-                        </select>
-                        <span class="text-danger error-text version_id_error"></span>
-                    </div>
+                            <div class="form-group">
+                                <label for="version_id">Version</label>
+                                <select class="form-control" name="version_id" >
+                                    @foreach($versions as $version)
+                                        <option value="{{ $version->id }}">{{ $version->version_name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger error-text version_id_error"></span>
+                            </div>
 
-                    <div class="form-group">
-                        <label for="class_numeric">Class Numeric</label>
-                        <input type="number" class="form-control" name="class_numeric"  placeholder="Class Numeric">
-                        <span class="text-danger error-text class_numeric_error"></span>
-                    </div>
+                            <div class="form-group">
+                                <label for="class_numeric">Class Numeric</label>
+                                <input type="number" class="form-control" name="class_numeric"  placeholder="Class Numeric">
+                                <span class="text-danger error-text class_numeric_error"></span>
+                            </div>
 
-                    <div class="form-group">
-                        <label for="class_status">Status</label>
-                        <select class="form-control" name="class_status" >
-                            <option value="1">Active</option>
-                            <option value="0">Inactive</option>
-                        </select>
-                        <span class="text-danger error-text class_status_error"></span>
-                    </div>
+                            <div class="form-group">
+                                <label for="class_status">Status</label>
+                                <select class="form-control" name="class_status" >
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                                <span class="text-danger error-text class_status_error"></span>
+                            </div>
 
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-block btn-success">Update</button>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-block btn-success">Update</button>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
-</div>
+
+        <!-- Edit Section Modal -->
+
+
 
       </div><!-- /.container-fluid -->
     </div>

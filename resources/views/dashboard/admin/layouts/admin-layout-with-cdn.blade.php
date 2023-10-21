@@ -108,7 +108,7 @@
 
   <!-- Main Sidebar Container -->
   {{-- <aside class="main-sidebar sidebar-dark-success elevation-4"> --}}
-    <aside class="main-sidebar sidebar-dark-info elevation-4">
+    <aside class="main-sidebar sidebar-dark-purple elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
       <img src="dashboard/img/logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
@@ -159,19 +159,19 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('admin.class-list') }}" class="nav-link">
                             <i class="fas fa-chalkboard-teacher nav-icon"></i>
                             <p>Class</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('admin.section-list') }}" class="nav-link">
                             <i class="fas fa-stream nav-icon"></i>
                             <p>Section</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('admin.subject-list') }}" class="nav-link">
                             <i class="fas fa-book nav-icon"></i>
                             <p>Subject</p>
                         </a>
