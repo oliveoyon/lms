@@ -210,9 +210,19 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label for="version_id">Version</label>
+                                <select class="form-control form-control-sm version_id" name="version_id" id="version_id">
+                                    <option value="">Select a version</option>
+                                    @foreach ($versions as $version)
+                                        <option value="{{ $version->id }}">{{ $version->version_name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger error-text version_id_error"></span>
+                            </div>
+                            <div class="form-group">
                                 <label for="class_id">Class</label>
-                                <select class="form-control form-control-sm class_id" name="class_id">
-                                    @foreach($classes as $class)
+                                <select class="form-control form-control-sm class_id" name="class_id" id="class_id">
+                                    @foreach ($classes as $class)
                                         <option value="{{ $class->id }}">{{ $class->class_name }}</option>
                                     @endforeach
                                 </select>
@@ -324,6 +334,8 @@
             $.post("{{ route('admin.getSubjectDetails') }}", { subject_id: subject_id }, function (data) {
                 $('.editSubject').find('input[name="subject_id"]').val(data.details.id);
                 $('.editSubject').find('input[name="subject_name"]').val(data.details.subject_name);
+                $('.editSubject').find('select[name="version_id"]').val(data.details.version_id);
+                $('.editSubject').find('select[name="class_id"]').val(data.details.class_id);
                 $('.editSubject').find('input[name="subject_code"]').val(data.details.subject_code);
                 $('.editSubject').find('input[name="academic_year"]').val(data.details.academic_year);
                 $('.editSubject').find('select[name="class_id"]').val(data.details.class_id);
