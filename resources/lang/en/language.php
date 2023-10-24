@@ -17,6 +17,7 @@ return [
     "class_mgmt" => "Class Management",
     "class_list" => "Class List",
     "class_add" => "Add Class",
+    "class_edit" => "Edit Class",
     "class_name" => "Class Name",
     "numeric" => "Numeric Value",
     "class_add_msg" => "Class Has Been Added Successfully",
