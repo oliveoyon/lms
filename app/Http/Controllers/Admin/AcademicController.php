@@ -37,7 +37,7 @@ class AcademicController extends Controller
             if (!$query) {
                 return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
             } else {
-                return response()->json(['code' => 1, 'msg' => 'Version has been successfully saved', 'redirect'=> 'admin/version-list']);
+                return response()->json(['code' => 1, 'msg' => __('language.version_add_msg') , 'redirect'=> 'admin/version-list']);
             }
         }
     }
@@ -71,7 +71,7 @@ class AcademicController extends Controller
             if (!$query) {
                 return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
             } else {
-                return response()->json(['code' => 1, 'msg' => 'Version has been successfully saved', 'redirect'=> 'admin/version-list']);
+                return response()->json(['code' => 1, 'msg' => __('language.version_edit_msg') , 'redirect'=> 'admin/version-list']);
             }
         }
     }
@@ -84,7 +84,7 @@ class AcademicController extends Controller
 
         
         if ($query) {
-            return response()->json(['code' => 1, 'msg' => 'Version has been deleted from database', 'redirect' => 'admin/version-list']);
+            return response()->json(['code' => 1, 'msg' => __('language.version_del_msg') , 'redirect' => 'admin/version-list']);
         } else {
             return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
         }
@@ -93,7 +93,7 @@ class AcademicController extends Controller
     public function classlist()
     {
         $send['classes'] = EduClasses::get();
-        $send['versions'] = EduVersions::get();
+        $send['versions'] = EduVersions::get()->where('version_status', 1);
         return view('dashboard.admin.academic.class', $send);
     }
 
@@ -119,7 +119,7 @@ class AcademicController extends Controller
         $query = $class->save();
 
         if ($query) {
-            return response()->json(['code' => 1, 'msg' => 'Class has been successfully saved', 'redirect' => 'admin/class-list']);
+            return response()->json(['code' => 1, 'msg' => __('language.class_add_msg'), 'redirect' => 'admin/class-list']);
         } else {
             return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
         }
@@ -158,7 +158,7 @@ class AcademicController extends Controller
         $query = $class->save();
 
         if ($query) {
-            return response()->json(['code' => 1, 'msg' => 'Class has been successfully updated', 'redirect' => 'admin/class-list']);
+            return response()->json(['code' => 1, 'msg' => __('language.class_edit_msg'), 'redirect' => 'admin/class-list']);
         } else {
             return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
         }
@@ -171,26 +171,19 @@ class AcademicController extends Controller
         $query = $query->delete();
 
         if ($query) {
-            return response()->json(['code' => 1, 'msg' => 'Class has been deleted from the database', 'redirect' => 'admin/class-list']);
+            return response()->json(['code' => 1, 'msg' => __('language.class_del_msg'), 'redirect' => 'admin/class-list']);
         } else {
             return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
         }
     }
 
-    // public function sectionlist()
-    // {
-    //     $send['versions'] = EduVersions::where('version_status', 1)->get();
-    //     $send['sections'] = Section::get();
-    //     return view('dashboard.admin.academic.section', $send);
-    // }
-
-   
+    
 
     public function sectionList()
     {
         $sections = Section::with(['eduClass', 'version'])->get();
-        $classes = EduClasses::get();
-        $versions = EduVersions::get();
+        $classes = EduClasses::get()->where('class_status', 1);;
+        $versions = EduVersions::get()->where('version_status', 1);;
 
         return view('dashboard.admin.academic.section', compact('sections', 'classes', 'versions'));
     }
@@ -222,7 +215,7 @@ class AcademicController extends Controller
         $query = $section->save();
 
         if ($query) {
-            return response()->json(['code' => 1, 'msg' => 'Section has been successfully saved', 'redirect' => 'admin/section-list']);
+            return response()->json(['code' => 1, 'msg' => __('language.section_add_msg') , 'redirect' => 'admin/section-list']);
         } else {
             return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
         }
@@ -261,7 +254,7 @@ class AcademicController extends Controller
         $query = $section->save();
 
         if ($query) {
-            return response()->json(['code' => 1, 'msg' => 'Section has been successfully updated', 'redirect' => 'admin/section-list']);
+            return response()->json(['code' => 1, 'msg' => __('language.section_edit_msg') , 'redirect' => 'admin/section-list']);
         } else {
             return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
         }
@@ -274,7 +267,7 @@ class AcademicController extends Controller
         $query = $query->delete();
 
         if ($query) {
-            return response()->json(['code' => 1, 'msg' => 'Section has been deleted from the database', 'redirect' => 'admin/section-list']);
+            return response()->json(['code' => 1, 'msg' => __('language.section_del_msg') , 'redirect' => 'admin/section-list']);
         } else {
             return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
         }
@@ -292,8 +285,8 @@ class AcademicController extends Controller
     {
         // Retrieve a list of subjects and any related data you need
         $subjects = Subject::with(['version', 'class'])->get();
-        $versions = EduVersions::get();
-        $classes = EduClasses::get();
+        $versions = EduVersions::get()->where('version_status', 1);;
+        $classes = EduClasses::get()->where('class_status', 1);;
 
         return view('dashboard.admin.academic.subject', compact('subjects', 'versions', 'classes'));
     }
@@ -325,7 +318,7 @@ class AcademicController extends Controller
         $query = $subject->save();
 
         if ($query) {
-            return response()->json(['code' => 1, 'msg' => 'Subject has been successfully saved', 'redirect' => 'admin/subject-list']);
+            return response()->json(['code' => 1, 'msg' => __('language.subject_add_msg') , 'redirect' => 'admin/subject-list']);
         } else {
             return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
         }
@@ -373,7 +366,7 @@ class AcademicController extends Controller
         $subject->subject_status = $request->input('subject_status');
 
         if ($subject->save()) {
-            return response()->json(['code' => 1, 'msg' => 'Subject details have been successfully updated', 'redirect' => 'admin/subject-list']);
+            return response()->json(['code' => 1, 'msg' => __('language.subject_edit_msg') , 'redirect' => 'admin/subject-list']);
         } else {
             return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
         }
@@ -386,7 +379,7 @@ class AcademicController extends Controller
 
         if ($subject) {
             if ($subject->delete()) {
-                return response()->json(['code' => 1, 'msg' => 'Subject has been deleted from the database', 'redirect' => 'admin/subject-list']);
+                return response()->json(['code' => 1, 'msg' => __('language.subject_del_msg') , 'redirect' => 'admin/subject-list']);
             }
         }
 

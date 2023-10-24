@@ -29,12 +29,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Subject Management</h1>
+                    <h1 class="m-0">{{ __('language.subject') }}</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Subject Management</li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('language.dashboard') }}</a></li>
+                        <li class="breadcrumb-item active">{{ __('language.subject') }}</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -57,7 +57,7 @@
                                 <ul class="nav nav-pills ml-auto">
                                     <li class="nav-item">
                                         <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#addSubjectModal">
-                                            <i class="fas fa-plus-square mr-1"></i> Add Subject
+                                            <i class="fas fa-plus-square mr-1"></i> {{ __('language.subject_add') }}
                                         </button>
                                     </li>
                                 </ul>
@@ -68,11 +68,11 @@
                             <table class="table table-bordered table-striped table-hover table-sm" id="subject-table">
                                 <thead style="border-top: 1px solid #b4b4b4">
                                     <th style="width: 15px">#</th>
-                                    <th>Subject Name</th>
-                                    <th>Version</th>
-                                    <th>Class</th>
-                                    <th>Status</th>
-                                    <th style="width: 40px">Action</th>
+                                    <th>{{ __('language.subject_name') }}</th>
+                                    <th>{{ __('language.version') }}</th>
+                                    <th>{{ __('language.class') }}</th>
+                                    <th>{{ __('language.status') }}</th>
+                                    <th style="width: 40px">{{ __('language.action') }}</th>
                                 </thead>
                                 <tbody>
                                     <!-- Loop through subjects and display them here -->
@@ -83,7 +83,7 @@
                                         <td>{{ $subject->version->version_name }}</td>
                                         <td>{{ $subject->class->class_name }}</td>
                                         <td class="{{ $subject->subject_status == 1 ? 'text-success' : 'text-danger' }} font-weight-bold">
-                                            {{ $subject->subject_status == 1 ? 'Active' : 'Inactive' }}
+                                            {{ $subject->subject_status == 1 ?  __('language.active')  :  __('language.inactive')  }}
                                         </td>
                                         <td>
                                             <div class="btn-group">
@@ -114,7 +114,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-success">
-                <h5 class="modal-title" id="addSubjectModalLabel">Add Subject</h5>
+                <h5 class="modal-title" id="addSubjectModalLabel">{{ __('language.subject_add') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -125,14 +125,14 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="subject_name">Subject Name</label>
-                                <input type="text" class="form-control form-control-sm" name="subject_name" id="subject_name" placeholder="Subject Name">
+                                <label for="subject_name">{{ __('language.subject_name') }}</label>
+                                <input type="text" class="form-control form-control-sm" name="subject_name" id="subject_name" placeholder="{{ __('language.subject_name') }}">
                                 <span class="text-danger error-text subject_name_error"></span>
                             </div>
                             <div class="form-group">
-                                <label for="version_id">Version</label>
+                                <label for="version_id">{{ __('language.version') }}</label>
                                 <select class="form-control form-control-sm version_id" name="version_id" id="version_id">
-                                    <option value="">Select a version</option>
+                                    <option value="">{{ __('language.select_version') }}</option>
                                     @foreach ($versions as $version)
                                         <option value="{{ $version->id }}">{{ $version->version_name }}</option>
                                     @endforeach
@@ -140,35 +140,35 @@
                                 <span class="text-danger error-text version_id_error"></span>
                             </div>
                             <div class="form-group">
-                                <label for="class_id">Class</label>
+                                <label for="class_id">{{ __('language.class') }}</label>
                                 <select class="form-control form-control-sm class_id" name="class_id" id="class_id">
-                                    <option value="">Select a class</option>
+                                    <option value="">{{ __('language.select_class') }}</option>
                                 </select>
                                 <span class="text-danger error-text class_id_error"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="subject_code">Subject Code</label>
-                                <input type="text" class="form-control form-control-sm" name="subject_code" id="subject_code" placeholder="Subject Code">
+                                <label for="subject_code">{{ __('language.subject_code') }}</label>
+                                <input type="text" class="form-control form-control-sm" name="subject_code" id="subject_code" placeholder="{{ __('language.subject_code') }}">
                                 <span class="text-danger error-text subject_code_error"></span>
                             </div>
                             <div class="form-group">
-                                <label for="academic_year">Academic Year</label>
-                                <input type="text" class="form-control form-control-sm" name="academic_year" id="academic_year" placeholder="Academic Year">
+                                <label for="academic_year">{{ __('language.academic_year') }}</label>
+                                <input type="text" class="form-control form-control-sm" name="academic_year" id="academic_year" placeholder="{{ __('language.academic_year') }}">
                                 <span class="text-danger error-text academic_year_error"></span>
                             </div>
                             <div class="form-group">
-                                <label for="subject_status">Status</label>
+                                <label for="subject_status">{{ __('language.status') }}</label>
                                 <select class="form-control form-control-sm" name="subject_status" id="subject_status">
-                                    <option value="1">Active</option>
-                                    <option value="0">Inactive</option>
+                                    <option value="1">{{ __('language.active') }}</option>
+                                    <option value="0">{{ __('language.inactive') }}</option>
                                 </select>
                                 <span class="text-danger error-text subject_status_error"></span>
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-success">Submit</button>
+                    <button type="submit" class="btn btn-success">{{ __('language.save') }}</button>
                 </form>
             </div>
         </div>
@@ -193,18 +193,18 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="subject_name">Subject Name</label>
-                                <input type="text" class="form-control form-control-sm" name="subject_name" placeholder="Subject Name">
+                                <label for="subject_name">{{ __('language.subject_name') }}</label>
+                                <input type="text" class="form-control form-control-sm" name="subject_name" placeholder="{{ __('language.subject_name') }}">
                                 <span class="text-danger error-text subject_name_error"></span>
                             </div>
                             <div class="form-group">
-                                <label for="subject_code">Subject Code</label>
-                                <input type="text" class="form-control form-control-sm" name="subject_code" placeholder="Subject Code">
+                                <label for="subject_code">{{ __('language.subject_code') }}</label>
+                                <input type="text" class="form-control form-control-sm" name="subject_code" placeholder="{{ __('language.subject_code') }}">
                                 <span class="text-danger error-text subject_code_error"></span>
                             </div>
                             <div class="form-group">
-                                <label for="academic_year">Academic Year</label>
-                                <input type="text" class="form-control form-control-sm" name="academic_year" placeholder="Academic Year">
+                                <label for="academic_year">{{ __('language.academic_year') }}</label>
+                                <input type="text" class="form-control form-control-sm" name="academic_year" placeholder="{{ __('language.academic_year') }}">
                                 <span class="text-danger error-text academic_year_error"></span>
                             </div>
                         </div>
@@ -212,7 +212,7 @@
                             <div class="form-group">
                                 <label for="version_id">Version</label>
                                 <select class="form-control form-control-sm version_id" name="version_id" id="version_id">
-                                    <option value="">Select a version</option>
+                                    <option value="">{{ __('language.select_version') }}</option>
                                     @foreach ($versions as $version)
                                         <option value="{{ $version->id }}">{{ $version->version_name }}</option>
                                     @endforeach
