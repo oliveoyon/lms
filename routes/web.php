@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AcademicController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\FeeSetupController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -86,6 +87,22 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('getSubjectDetails', [AcademicController::class, 'getSubjectDetails'])->name('getSubjectDetails');
         Route::post('updateSubjectDetails', [AcademicController::class, 'updateSubjectDetails'])->name('updateSubjectDetails');
         Route::post('deleteSubject', [AcademicController::class, 'deleteSubject'])->name('deleteSubject');
+
+        // Fee Frequency Management
+        Route::get('fee-frequency-list', [FeeSetupController::class, 'feeFrequencyList'])->name('fee-frequency-list');
+        Route::post('addFeeFrequency', [FeeSetupController::class, 'addFeeFrequency'])->name('addFeeFrequency');
+        Route::post('getFeeFrequencyDetails', [FeeSetupController::class, 'getFeeFrequencyDetails'])->name('getFeeFrequencyDetails');
+        Route::post('updateFeeFrequencyDetails', [FeeSetupController::class, 'updateFeeFrequencyDetails'])->name('updateFeeFrequencyDetails');
+        Route::post('deleteFeeFrequency', [FeeSetupController::class, 'deleteFeeFrequency'])->name('deleteFeeFrequency');
+
+        // Academic Fee Head Management
+        Route::get('academic-fee-head-list', [FeeSetupController::class, 'academicFeeHeadList'])->name('academic-fee-head-list');
+        Route::post('addAcademicFeeHead', [FeeSetupController::class, 'addAcademicFeeHead'])->name('addAcademicFeeHead');
+        Route::post('getAcademicFeeHeadDetails', [FeeSetupController::class, 'getAcademicFeeHeadDetails'])->name('getAcademicFeeHeadDetails');
+        Route::post('updateAcademicFeeHeadDetails', [FeeSetupController::class, 'updateAcademicFeeHeadDetails'])->name('updateAcademicFeeHeadDetails');
+        Route::post('deleteAcademicFeeHead', [FeeSetupController::class, 'deleteAcademicFeeHead'])->name('deleteAcademicFeeHead');
+
+
 
     });
 });

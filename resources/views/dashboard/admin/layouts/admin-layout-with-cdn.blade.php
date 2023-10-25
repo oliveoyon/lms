@@ -191,6 +191,12 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
+                        <a href="{{ route('admin.fee-frequency-list') }}" class="nav-link">
+                            <i class="fas fa-money-bill nav-icon"></i>
+                            <p>{{ __('language.fee_frequency') }}</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="far fa-credit-card nav-icon"></i>
                             <p>{{ __('language.aca_fee_head') }}</p>

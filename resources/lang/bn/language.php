@@ -66,6 +66,30 @@ return [
     "aca_fee_group" => "শিক্ষাগত ফি গ্রুপ",
     "fee_amount" => "ফি পরিমাণ",
 
+    "fee_frequency_list" => "ফি ফ্রিকোয়েন্সি তালিকা",
+    "fee_frequency" => "ফি ফ্রিকোয়েন্সি",
+    "fee_frequency_add" => "ফি ফ্রিকোয়েন্সি যোগ করুন",
+    "fee_frequency_edit" => "ফি ফ্রিকোয়েন্সি সম্পাদনা করুন",
+    "fee_frequency_name" => "ফি ফ্রিকোয়েন্সির নাম",
+    "fee_frequency_add_msg" => "ফি ফ্রিকোয়েন্সি সফলভাবে যোগ করা হয়েছে",
+    "fee_frequency_edit_msg" => "ফি ফ্রিকোয়েন্সি সফলভাবে আপডেট হয়েছে",
+    "fee_frequency_del_msg" => "ফি ফ্রিকোয়েন্সি তালিকা থেকে মুছে ফেলা হয়েছে",
+    "no_of_installment" => "কিত কিস্তি",
+    "installment_period" => "কিস্তি মেয়াদ",
+
+    // Academic Fee Head Management
+    "academic_fee_head_list" => "একাডেমিক ফি হেড তালিকা",
+    "academic_fee_head_add" => "একাডেমিক ফি হেড যোগ করুন",
+    "academic_fee_head_edit" => "একাডেমিক ফি হেড সম্পাদনা করুন",
+    "academic_fee_head_name" => "একাডেমিক ফি হেড নাম",
+    "academic_fee_head_description" => "বিবরণ",
+    "academic_fee_head_freq" => "ফি সংখ্যা",
+    "academic_fee_head_no_of_installments" => "কিতগুলি কিস্তি",
+    "academic_fee_head_add_msg" => "একাডেমিক ফি হেড সফলভাবে যোগ করা হয়েছে",
+    "academic_fee_head_edit_msg" => "একাডেমিক ফি হেড সফলভাবে আপডেট হয়েছে",
+    "academic_fee_head_del_msg" => "একাডেমিক ফি হেড তালিকা থেকে মুছে ফেলা হয়েছে",
+
+
     // Manage Student
     "manage_student" => "ছাত্র-ছাত্রী পরিচালনা",
     "add_student" => "ছাত্র-ছাত্রী যোগ করুন",

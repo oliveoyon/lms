@@ -51,7 +51,7 @@
                         <div class="card-header bg-navy">
                             <h3 class="card-title">
                                 <i class="fas fa-chalkboard-teacher mr-1"></i>
-                                Subject List
+                                {{ __('language.subject_list') }}
                             </h3>
                             <div class="card-tools">
                                 <ul class="nav nav-pills ml-auto">

@@ -53,7 +53,7 @@ return [
     "subject_edit_msg" => "Subject Has Been Successfully Updated",
     "subject_del_msg" => "Subject Has Been Deleted From the List",
     "subject_code" => "Subject Code",
-    "academic_year" => "Academic Year",
+    "year" => "Academic Year",
 
     "class" => "Class",
     "section" => "Section",
@@ -66,6 +66,30 @@ return [
     "aca_fee_head" => "Academic Fee Head",
     "aca_fee_group" => "Academic Fee Group",
     "fee_amount" => "Fee Amount",
+
+    "fee_frequency" => "Fee Frequency",
+    "fee_frequency_list" => "Fee Frequency List",
+    "fee_frequency_add" => "Add Fee Frequency",
+    "fee_frequency_edit" => "Edit Fee Frequency",
+    "fee_frequency_name" => "Fee Frequency Name",
+    "fee_frequency_add_msg" => "Fee Frequency Has Been Added Successfully",
+    "fee_frequency_edit_msg" => "Fee Frequency Has Been Successfully Updated",
+    "fee_frequency_del_msg" => "Fee Frequency Has Been Deleted From the List",
+    "no_of_installment" => "Number of Installments",
+    "installment_period" => "Installment Period",
+
+    // Academic Fee Head Management
+    "fee_head_list" => "Academic Fee Head List",
+    "fee_head_add" => "Add Academic Fee Head",
+    "fee_head_edit" => "Edit Academic Fee Head",
+    "fee_head_name" => "Academic Fee Head Name",
+    "fee_head_description" => "Description",
+    "fee_head_freq" => "Fee Frequency",
+    "fee_head_no_of_installments" => "Number of Installments",
+    "fee_head_add_msg" => "Academic Fee Head has been added successfully",
+    "fee_head_edit_msg" => "Academic Fee Head has been successfully updated",
+    "fee_head_del_msg" => "Academic Fee Head has been deleted from the list",
+
 
     // Manage Student
 
