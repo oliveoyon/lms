@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\AcademicFeeGroup;
 use App\Models\Admin\AcademicFeeHead;
 use App\Models\Admin\FeeFrequency;
 use Illuminate\Http\Request;
@@ -21,11 +22,12 @@ class FeeSetupController extends Controller
     public function addFeeFrequency(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'freq_name' => 'required|string|max:255',
+            'freq_name' => 'required|string|max:255|unique:fee_frequencies', 
             'no_of_installment' => 'required|integer',
             'installment_period' => 'nullable|string|max:30',
             'freq_status' => 'required|integer',
         ]);
+        
 
         if ($validator->fails()) {
             return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
@@ -59,11 +61,12 @@ class FeeSetupController extends Controller
         $feeFrequency = FeeFrequency::find($feeFrequencyId);
 
         $validator = Validator::make($request->all(), [
-            'freq_name' => 'required|string|max:255',
+            'freq_name' => 'required|string|max:255|unique:fee_frequencies,freq_name,'.$feeFrequencyId.',id', 
             'no_of_installment' => 'required|integer',
             'installment_period' => 'nullable|string|max:30',
             'freq_status' => 'required|integer',
         ]);
+        
 
         if ($validator->fails()) {
             return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
@@ -102,87 +105,179 @@ class FeeSetupController extends Controller
     }
 
     public function addAcademicFeeHead(Request $request)
-{
-    $validator = Validator::make($request->all(), [
-        'aca_feehead_name' => 'required|string|max:255',
-        'aca_feehead_description' => 'required|string',
-        'aca_feehead_freq' => 'required|integer',
-        'status' => 'required|integer',
-    ]);
-
-    if ($validator->fails()) {
-        return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
-    } else {
-        $academicFeeHead = new AcademicFeeHead();
-        $academicFeeHead->aca_feehead_hash_id = md5(uniqid(rand(), true));
+    {
+        $validator = Validator::make($request->all(), [
+            'aca_feehead_name' => 'required|string|max:255|unique:academic_fee_heads,aca_feehead_name', 
+            'aca_feehead_description' => 'required|string',
+            'aca_feehead_freq' => 'required|integer',
+            'status' => 'required|integer',
+        ]);
         
-        $academicFeeHead->aca_feehead_name = $request->input('aca_feehead_name');
-        $academicFeeHead->aca_feehead_description = $request->input('aca_feehead_description');
-        $academicFeeHead->aca_feehead_freq = $request->input('aca_feehead_freq');
-        $academicFeeHead->no_of_installment = 1;
-        $academicFeeHead->status = $request->input('status');
 
-        $query = $academicFeeHead->save();
+        if ($validator->fails()) {
+            return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
+        } else {
+            $academicFeeHead = new AcademicFeeHead();
+            $academicFeeHead->aca_feehead_hash_id = md5(uniqid(rand(), true));
+            
+            $academicFeeHead->aca_feehead_name = $request->input('aca_feehead_name');
+            $academicFeeHead->aca_feehead_description = $request->input('aca_feehead_description');
+            $academicFeeHead->aca_feehead_freq = $request->input('aca_feehead_freq');
+            $academicFeeHead->no_of_installment = 1;
+            $academicFeeHead->status = $request->input('status');
+
+            $query = $academicFeeHead->save();
+
+            if ($query) {
+                return response()->json(['code' => 1, 'msg' => __('language.academic_fee_head_add_msg'), 'redirect' => 'admin/academic-fee-head-list']);
+            } else {
+                return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
+            }
+        }
+    }
+
+
+
+    public function getAcademicFeeHeadDetails(Request $request)
+    {
+        $academicFeeHeadId = $request->academic_feehead_id;
+        $academicFeeHeadDetails = AcademicFeeHead::find($academicFeeHeadId);
+        return response()->json(['details' => $academicFeeHeadDetails]);
+    }
+
+    public function updateAcademicFeeHeadDetails(Request $request)
+    {
+        $academicFeeHeadId = $request->fee_head_id;
+        $academicFeeHead = AcademicFeeHead::find($academicFeeHeadId);
+        $no_of_installment = FeeFrequency::find($request->input('aca_feehead_freq'))->no_of_installment;
+
+        $validator = Validator::make($request->all(), [
+            'aca_feehead_name' => 'required|string|max:255|unique:academic_fee_heads,aca_feehead_name,' . $academicFeeHeadId, // Ensure 'aca_feehead_name' is unique, excluding the current record with ID $id
+            'aca_feehead_description' => 'required|string',
+            'aca_feehead_freq' => 'required|integer',
+            'status' => 'required|integer',
+        ]);
+        
+
+        if ($validator->fails()) {
+            return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
+        } else {
+            $academicFeeHead->aca_feehead_name = $request->input('aca_feehead_name');
+            $academicFeeHead->aca_feehead_description = $request->input('aca_feehead_description');
+            $academicFeeHead->aca_feehead_freq = $request->input('aca_feehead_freq');
+            $academicFeeHead->no_of_installment = $no_of_installment;
+            $academicFeeHead->status = $request->input('status');
+            $query = $academicFeeHead->save();
+
+            if ($query) {
+                return response()->json(['code' => 1, 'msg' => __('language.academic_fee_head_edit_msg'), 'redirect' => 'admin/academic-fee-head-list']);
+            } else {
+                return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
+            }
+        }
+    }
+
+    public function deleteAcademicFeeHead(Request $request)
+    {
+        $academicFeeHeadId = $request->academic_feehead_id;
+        $query = AcademicFeeHead::find($academicFeeHeadId);
+        $query = $query->delete();
 
         if ($query) {
-            return response()->json(['code' => 1, 'msg' => __('language.academic_fee_head_add_msg'), 'redirect' => 'admin/academic-fee-head-list']);
+            return response()->json(['code' => 1, 'msg' => __('language.academic_fee_head_del_msg'), 'redirect' => 'admin/academic-fee-head-list']);
         } else {
             return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
         }
     }
-}
 
+    public function academicFeeGroupList()
+    {
+        $send['feeHeads'] = AcademicFeeHead::get()->where('status', 1);
+        $send['academicFeeGroups'] = AcademicFeeGroup::get();
+        return view('dashboard.admin.FeeSetup.feegroup', $send);
+    }
 
+    public function addAcademicFeeGroup(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'aca_group_name' => 'required|string|max:255|unique:academic_fee_groups,aca_group_name',
+            'academic_year' => 'required|integer',
+            'aca_group_status' => 'required|integer',
+        ]);
 
-public function getAcademicFeeHeadDetails(Request $request)
-{
-    $academicFeeHeadId = $request->academic_feehead_id;
-    $academicFeeHeadDetails = AcademicFeeHead::find($academicFeeHeadId);
-    return response()->json(['details' => $academicFeeHeadDetails]);
-}
+        if ($validator->fails()) {
+            return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
+        } else {
+            $feeGroup = new AcademicFeeGroup();
+            $feeGroup->aca_group_hash_id = md5(uniqid(rand(), true));
+            $feeGroup->aca_group_name = $request->input('aca_group_name');
+            $feeGroup->academic_year = $request->input('academic_year');
+            $feeGroup->aca_group_status = $request->input('aca_group_status');
 
-public function updateAcademicFeeHeadDetails(Request $request)
-{
-    $academicFeeHeadId = $request->fee_head_id;
-    $academicFeeHead = AcademicFeeHead::find($academicFeeHeadId);
+            // Convert selected fee heads to comma-separated text
+            $aca_feehead_ids = implode(',', $request->input('aca_feehead_ids'));
+            $feeGroup->aca_feehead_id = $aca_feehead_ids;
 
-    $validator = Validator::make($request->all(), [
-        'aca_feehead_name' => 'required|string|max:255',
-        'aca_feehead_description' => 'required|string',
-        'aca_feehead_freq' => 'required|integer',
-        'no_of_installment' => 'required|integer',
-        'status' => 'required|integer',
-    ]);
+            $query = $feeGroup->save();
 
-    if ($validator->fails()) {
-        return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
-    } else {
-        $academicFeeHead->aca_feehead_name = $request->input('aca_feehead_name');
-        $academicFeeHead->aca_feehead_description = $request->input('aca_feehead_description');
-        $academicFeeHead->aca_feehead_freq = $request->input('aca_feehead_freq');
-        $academicFeeHead->no_of_installment = $request->input('no_of_installment');
-        $academicFeeHead->status = $request->input('status');
-        $query = $academicFeeHead->save();
+            if ($query) {
+                return response()->json(['code' => 1, 'msg' => __('language.fee_group_add_msg'), 'redirect' => 'admin/academic-fee-group-list']);
+            } else {
+                return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
+            }
+        }
+    }
+
+    public function getAcademicFeeGroupDetails(Request $request)
+    {
+        $feeGroupId = $request->fee_group_id;
+        $feeGroupDetails = AcademicFeeGroup::find($feeGroupId);
+        return response()->json(['details' => $feeGroupDetails]);
+    }
+
+    public function updateAcademicFeeGroupDetails(Request $request)
+    {
+        $feeGroupId = $request->fee_group_id;
+        $feeGroup = AcademicFeeGroup::find($feeGroupId);
+
+        $validator = Validator::make($request->all(), [
+            'aca_group_name' => 'required|string|max:255|unique:academic_fee_groups,aca_group_name,' . $feeGroupId,
+            'academic_year' => 'required|integer',
+            'aca_group_status' => 'required|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
+        } else {
+            $feeGroup->aca_group_name = $request->input('aca_group_name');
+            $feeGroup->academic_year = $request->input('academic_year');
+            $feeGroup->aca_group_status = $request->input('aca_group_status');
+
+            // Convert selected fee heads to comma-separated text
+            $aca_feehead_ids = implode(',', $request->input('aca_feehead_ids'));
+            $feeGroup->aca_feehead_id = $aca_feehead_ids;
+
+            $query = $feeGroup->save();
+
+            if ($query) {
+                return response()->json(['code' => 1, 'msg' => __('language.fee_group_edit_msg'), 'redirect' => 'admin/fee-group-list']);
+            } else {
+                return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
+            }
+        }
+    }
+
+    public function deleteAcademicFeeGroup(Request $request)
+    {
+        $feeGroupId = $request->fee_group_id;
+        $query = AcademicFeeGroup::find($feeGroupId);
+        $query = $query->delete();
 
         if ($query) {
-            return response()->json(['code' => 1, 'msg' => __('language.academic_fee_head_edit_msg'), 'redirect' => 'admin/academic-fee-head-list']);
+            return response()->json(['code' => 1, 'msg' => __('language.fee_group_del_msg'), 'redirect' => 'admin/fee-group-list']);
         } else {
             return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
         }
     }
-}
-
-public function deleteAcademicFeeHead(Request $request)
-{
-    $academicFeeHeadId = $request->academic_feehead_id;
-    $query = AcademicFeeHead::find($academicFeeHeadId);
-    $query = $query->delete();
-
-    if ($query) {
-        return response()->json(['code' => 1, 'msg' => __('language.academic_fee_head_del_msg'), 'redirect' => 'admin/academic-fee-head-list']);
-    } else {
-        return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
-    }
-}
 
 }

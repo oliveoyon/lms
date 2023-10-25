@@ -197,7 +197,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('admin.academic-fee-head-list') }}" class="nav-link">
                             <i class="far fa-credit-card nav-icon"></i>
                             <p>{{ __('language.aca_fee_head') }}</p>
                         </a>

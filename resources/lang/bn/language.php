@@ -61,9 +61,9 @@ return [
     "version" => "ভার্সন",
 
     // Academic Fee Setup
-    "aca_fee_setup" => "শিক্ষাগত ফি সেটআপ",
-    "aca_fee_head" => "শিক্ষাগত ফি হেড",
-    "aca_fee_group" => "শিক্ষাগত ফি গ্রুপ",
+    "aca_fee_setup" => "ফি সেটআপ",
+    "aca_fee_head" => "ফি হেড",
+    "aca_fee_group" => "ফি গ্রুপ",
     "fee_amount" => "ফি পরিমাণ",
 
     "fee_frequency_list" => "ফি ফ্রিকোয়েন্সি তালিকা",
@@ -74,21 +74,29 @@ return [
     "fee_frequency_add_msg" => "ফি ফ্রিকোয়েন্সি সফলভাবে যোগ করা হয়েছে",
     "fee_frequency_edit_msg" => "ফি ফ্রিকোয়েন্সি সফলভাবে আপডেট হয়েছে",
     "fee_frequency_del_msg" => "ফি ফ্রিকোয়েন্সি তালিকা থেকে মুছে ফেলা হয়েছে",
-    "no_of_installment" => "কিত কিস্তি",
+    "no_of_installment" => "কিস্তি",
     "installment_period" => "কিস্তি মেয়াদ",
 
-    // Academic Fee Head Management
-    "academic_fee_head_list" => "একাডেমিক ফি হেড তালিকা",
-    "academic_fee_head_add" => "একাডেমিক ফি হেড যোগ করুন",
-    "academic_fee_head_edit" => "একাডেমিক ফি হেড সম্পাদনা করুন",
-    "academic_fee_head_name" => "একাডেমিক ফি হেড নাম",
-    "academic_fee_head_description" => "বিবরণ",
-    "academic_fee_head_freq" => "ফি সংখ্যা",
-    "academic_fee_head_no_of_installments" => "কিতগুলি কিস্তি",
-    "academic_fee_head_add_msg" => "একাডেমিক ফি হেড সফলভাবে যোগ করা হয়েছে",
-    "academic_fee_head_edit_msg" => "একাডেমিক ফি হেড সফলভাবে আপডেট হয়েছে",
-    "academic_fee_head_del_msg" => "একাডেমিক ফি হেড তালিকা থেকে মুছে ফেলা হয়েছে",
+    // ফি হেড পরিচালনা
+    "fee_head_list" => "ফি হেডের তালিকা",
+    "fee_head_add" => "ফি হেড যোগ করুন",
+    "fee_head_edit" => "ফি হেড সম্পাদনা করুন",
+    "fee_head_name" => "ফি হেডের নাম",
+    "fee_head_description" => "বর্ণনা",
+    "fee_head_freq" => "ফি সময়সূচি",
+    "fee_head_no_of_installments" => "কিস্তি",
+    "fee_head_add_msg" => "ফি হেডটি সফলভাবে যোগ করা হয়েছে",
+    "fee_head_edit_msg" => "ফি হেডটি সফলভাবে আপডেট করা হয়েছে",
+    "fee_head_del_msg" => "ফি হেডটি তালিকা থেকে মুছে ফেলা হয়েছে",
 
+    'fee_group_list' => 'ফি গ্রুপ তালিকা',
+    'fee_group_add' => 'ফি গ্রুপ যোগ করুন',
+    'fee_group_edit' => 'ফি গ্রুপ সম্পাদনা করুন',
+    'fee_group_name' => 'ফি গ্রুপ নাম',
+    'fee_group_academic_year' => 'শিক্ষাবর্ষ',
+    'fee_group_add_msg' => 'ফি গ্রুপ সফলভাবে যোগ করা হয়েছে',
+    'fee_group_edit_msg' => 'ফি গ্রুপ সফলভাবে আপডেট করা হয়েছে',
+    'fee_group_del_msg' => 'ফি গ্রুপ তালিকা থেকে মুছে ফেলা হয়েছে',
 
     // Manage Student
     "manage_student" => "ছাত্র-ছাত্রী পরিচালনা",

@@ -90,6 +90,15 @@ return [
     "fee_head_edit_msg" => "Academic Fee Head has been successfully updated",
     "fee_head_del_msg" => "Academic Fee Head has been deleted from the list",
 
+    'fee_group_list' => 'Academic Fee Group List',
+    'fee_group_add' => 'Add Academic Fee Group',
+    'fee_group_edit' => 'Edit Academic Fee Group',
+    'fee_group_name' => 'Academic Fee Group Name',
+    'fee_group_academic_year' => 'Academic Year',
+    'fee_group_add_msg' => 'Academic Fee Group has been added successfully',
+    'fee_group_edit_msg' => 'Academic Fee Group has been successfully updated',
+    'fee_group_del_msg' => 'Academic Fee Group has been deleted from the list',
+
 
     // Manage Student
 

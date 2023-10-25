@@ -102,6 +102,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('updateAcademicFeeHeadDetails', [FeeSetupController::class, 'updateAcademicFeeHeadDetails'])->name('updateAcademicFeeHeadDetails');
         Route::post('deleteAcademicFeeHead', [FeeSetupController::class, 'deleteAcademicFeeHead'])->name('deleteAcademicFeeHead');
 
+        // Academic Fee Group Management
+        Route::get('academic-fee-group-list', [FeeSetupController::class, 'academicFeeGroupList'])->name('academic-fee-group-list');
+        Route::post('addAcademicFeeGroup', [FeeSetupController::class, 'addAcademicFeeGroup'])->name('addAcademicFeeGroup');
+        Route::post('getAcademicFeeGroupDetails', [FeeSetupController::class, 'getAcademicFeeGroupDetails'])->name('getAcademicFeeGroupDetails');
+        Route::post('updateAcademicFeeGroupDetails', [FeeSetupController::class, 'updateAcademicFeeGroupDetails'])->name('updateAcademicFeeGroupDetails');
+        Route::post('deleteAcademicFeeGroup', [FeeSetupController::class, 'deleteAcademicFeeGroup'])->name('deleteAcademicFeeGroup');
 
 
     });
