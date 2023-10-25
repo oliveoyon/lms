@@ -25,7 +25,7 @@
 
   <style>
     [class*="sidebar-dark-"] .nav-sidebar > .nav-item > .nav-treeview {
-    background-color: rgb(41, 43, 45);
+    background-color: rgb(0, 0, 0);
     }
   </style>
 </head>
@@ -734,6 +734,7 @@ var url = window.location;
     
 
 </script>
+
 
 
 

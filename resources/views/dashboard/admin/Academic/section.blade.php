@@ -64,7 +64,7 @@
                                     <!-- Error messages will be inserted here dynamically -->
                                 </ul>
                             </div>
-                            <table class="table table-bordered table-striped table-hover table-sm" id="section-table">
+                            <table class="table table-bordered table-striped table-hover table-sm" id="example">
                                 <thead style="border-top: 1px solid #b4b4b4">
                                     <th style="width: 15px">#</th>
                                     <th>Section Name</th>
@@ -294,6 +294,7 @@
         });
     });
 </script>
+
 
 <script>
     $.ajaxSetup({
