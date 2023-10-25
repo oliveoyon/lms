@@ -16,11 +16,11 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Version</h1>
+            <h1 class="m-0">{{ __('language.version') }}</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Version</a></li>
+              <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('language.version') }}</a></li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -38,13 +38,13 @@
                     <div class="card-header bg-navy">
                         <h3 class="card-title">
                           <i class="fas fa-chalkboard-teacher mr-1"></i>
-                          Version List
+                          {{ __('language.version_list') }}
                         </h3>
                         <div class="card-tools">
                           <ul class="nav nav-pills ml-auto">
                             <li class="nav-item">
                                 
-                              <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#addversions"><i class="fas fa-plus-square mr-1"></i> Add Version</button>
+                              <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#addversions"><i class="fas fa-plus-square mr-1"></i> {{ __('language.version_add') }}</button>
                             </li>
                           </ul>
                         </div>
@@ -53,9 +53,9 @@
                           <table class="table table-bordered table-striped table-hover table-sm" id="datas-table">
                               <thead style="border-top: 1px solid #b4b4b4">
                                   <th style="width: 15px">#</th>
-                                  <th>Version Name</th>
-                                  <th>Status</th>
-                                  <th style="width: 40px">Action <button class="btn btn-sm btn-danger d-none" id="deleteAllBtn">{{ __('language.deleteall') }}</button></th>
+                                  <th>{{ __('language.version_name') }}</th>
+                                  <th>{{ __('language.status') }}</th>
+                                  <th style="width: 40px">{{ __('language.action') }} <button class="btn btn-sm btn-danger d-none" id="deleteAllBtn">{{ __('language.deleteall') }}</button></th>
                               </thead>
                               <tbody>
                                 @foreach ($versions as $version)
@@ -63,9 +63,9 @@
                                   <td>{{ $loop->iteration }}</td>
                                   <td class="font-weight-bold">{{ $version->version_name }}</td>
                                   <td class="{{ $version->version_status == 1 ? 'text-success' : 'text-danger' }} font-weight-bold">
-                                    {{ $version->version_status == 1 ? 'Active' : 'InActive' }}
+                                    {{ $version->version_status == 1 ? __('language.active') : __('language.inactive') }}
                                   </td>
-                                  
+                                 
                                   <td>
                                     <div class="btn-group">
                                       <button type="button" class="btn btn-warning btn-xs" data-id="{{ $version->id }}" id="editVersionBtn"><i class="fas fa-edit"></i></button>
@@ -89,7 +89,7 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header bg-success">
-          <h5 class="modal-title" id="addVersionLabel">Add Version</h5>
+          <h5 class="modal-title" id="addVersionLabel">{{ __('language.version_add') }}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -99,22 +99,22 @@
             @csrf
         
             <div class="form-group">
-                <label for="version_name">Version Name</label>
-                <input type="text" class="form-control form-control-sm" name="version_name" id="version_name" placeholder="Version Name লিখুন">
+                <label for="version_name">{{ __('language.version_name') }}</label>
+                <input type="text" class="form-control form-control-sm" name="version_name" id="version_name" placeholder="{{ __('language.version_name') }}">
                 <span class="text-danger error-text version_name_error"></span>
             </div>
         
             <div class="form-group">
-              <label for="status">Status</label>
+              <label for="status">{{ __('language.status') }}</label>
               <select class="form-control form-control-sm" name="version_status" id="version_status">
-                  <option value="1">Active</option>
-                  <option value="0">Inactive</option>
+                  <option value="1">{{ __('language.active') }}</option>
+                  <option value="0">{{ __('language.inactive') }}</option>
               </select>
               <span class="text-danger error-text version_status_error"></span>
             </div>
 
             <div class="form-group">
-                <button type="submit" class="btn btn-block btn-success">Submit</button>
+                <button type="submit" class="btn btn-block btn-success">{{ __('language.save') }}</button>
             </div>
         </form>
 
@@ -132,7 +132,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">মেনু সংশোধন করুন</h5>
+                <h5 class="modal-title" id="exampleModalLabel">{{ __('language.version_edit') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -143,22 +143,22 @@
                 @csrf
                 <input type="hidden" name="vid">
                 <div class="form-group">
-                  <label for="version_name">Version Name</label>
-                  <input type="text" class="form-control form-control-sm" name="version_name" id="version_name" placeholder="Version Name লিখুন">
+                  <label for="version_name">{{ __('language.version_name') }}</label>
+                  <input type="text" class="form-control form-control-sm" name="version_name" id="version_name" placeholder="{{ __('language.version_name') }}">
                   <span class="text-danger error-text version_name_error"></span>
               </div>
           
               <div class="form-group">
-                <label for="status">Status</label>
+                <label for="status">{{ __('language.status') }}</label>
                 <select class="form-control form-control-sm" name="version_status" id="version_status">
-                    <option value="1">Active</option>
-                    <option value="0">Inactive</option>
+                    <option value="1">{{ __('language.active') }}</option>
+                    <option value="0">{{ __('language.inactive') }}</option>
                 </select>
                 <span class="text-danger error-text version_status_error"></span>
               </div>
             
                 <div class="form-group">
-                    <button type="submit" class="btn btn-block bg-purple">Submit</button>
+                    <button type="submit" class="btn btn-block bg-purple">{{ __('language.update') }}</button>
                 </div>
             </form>
                 

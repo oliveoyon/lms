@@ -24,12 +24,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Section Management</h1>
+                    <h1 class="m-0">{{ __('language.section') }}</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Section Management</li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('language.dashboard') }}</a></li>
+                        <li class="breadcrumb-item active">{{ __('language.section') }}</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -46,13 +46,13 @@
                         <div class="card-header bg-navy">
                             <h3 class="card-title">
                                 <i class="fas fa-chalkboard-teacher mr-1"></i>
-                                Section List
+                                {{ __('language.section_list') }}
                             </h3>
                             <div class="card-tools">
                                 <ul class="nav nav-pills ml-auto">
                                     <li class="nav-item">
                                         <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#addSectionModal">
-                                            <i class="fas fa-plus-square mr-1"></i> Add Section
+                                            <i class="fas fa-plus-square mr-1"></i> {{ __('language.section_add') }}
                                         </button>
                                     </li>
                                 </ul>
@@ -67,11 +67,11 @@
                             <table class="table table-bordered table-striped table-hover table-sm" id="example">
                                 <thead style="border-top: 1px solid #b4b4b4">
                                     <th style="width: 15px">#</th>
-                                    <th>Section Name</th>
-                                    <th>Version</th>
-                                    <th>Class</th>
-                                    <th>Status</th>
-                                    <th style="width: 40px">Action</th>
+                                    <th>{{ __('language.section_name') }}</th>
+                                    <th>{{ __('language.version') }}</th>
+                                    <th>{{ __('language.class') }}</th>
+                                    <th>{{ __('language.status') }}</th>
+                                    <th style="width: 40px">{{ __('language.action') }}</th>
                                 </thead>
                                 <tbody>
                                     @foreach ($sections as $section)
@@ -81,7 +81,7 @@
                                         <td>{{ $section->version->version_name }}</td>
                                         <td>{{ $section->eduClass->class_name }}</td>
                                         <td class="{{ $section->section_status == 1 ? 'text-success' : 'text-danger' }} font-weight-bold">
-                                            {{ $section->section_status == 1 ? 'Active' : 'Inactive' }}
+                                            {{ $section->section_status == 1 ?  __('language.active')  :  __('language.inactive') }}
                                         </td>
                                         <td>
                                             <div class="btn-group">
@@ -113,7 +113,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-success">
-                <h5 class="modal-title" id="addSectionModalLabel">Add Section</h5>
+                <h5 class="modal-title" id="addSectionModalLabel">{{ __('language.section_add') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -124,32 +124,32 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="section_name">Section Name</label>
-                                <input type="text" class="form-control form-control-sm" name="section_name" id="section_name" placeholder="Section Name">
+                                <label for="section_name">{{ __('language.section_name') }}</label>
+                                <input type="text" class="form-control form-control-sm" name="section_name" id="section_name" placeholder="{{ __('language.section_name') }}">
                                 <span class="text-danger error-text section_name_error"></span>
                             </div>
                             <div class="form-group">
-                                <label for="version_id">Version</label>
+                                <label for="version_id">{{ __('language.version') }}</label>
                                 <select class="form-control form-control-sm version_id" name="version_id" id="version_id">
-                                    <option value="">Select a version</option>
+                                    <option value="">{{ __('language.select_version') }}</option>
                                     @foreach ($versions as $version)
                                         <option value="{{ $version->id }}">{{ $version->version_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="class_id">Class</label>
+                                <label for="class_id">{{ __('language.class') }}</label>
                                 <select class="form-control form-control-sm class_id" name="class_id" id="class_id">
-                                    <option value="">Select a class</option>
+                                    <option value="">{{ __('language.select_class') }}</option>
                                 </select>
                                 <span class="text-danger error-text class_id_error"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="class_teacher_id">Class Teacher</label>
+                                <label for="class_teacher_id">{{ __('language.class_teacher') }}</label>
                                 <select class="form-control form-control-sm" name="class_teacher_id" id="class_teacher_name">
-                                    <option value="">Select a class teacher</option>
+                                    <option value="">{{ __('language.select_class_teacher') }}</option>
                                     <option value="1">Teacher 1</option>
                                     <option value="2">Teacher 2</option>
                                     <option value="3">Teacher 3</option>
@@ -157,21 +157,21 @@
                                 <span class="text-danger error-text class_teacher_id_error"></span>
                             </div>
                             <div class="form-group">
-                                <label for="max_students">Max Students</label>
+                                <label for="max_students">{{ __('language.max_std') }}</label>
                                 <input type="text" class="form-control form-control-sm" name="max_students" id="section_name" placeholder="Max Students">
                                 <span class="text-danger error-text max_students_error"></span>
                             </div>
                             <div class="form-group">
-                                <label for="section_status">Status</label>
+                                <label for="section_status">{{ __('language.status') }}</label>
                                 <select class="form-control form-control-sm" name="section_status" id="section_status">
-                                    <option value="1">Active</option>
+                                    <option value="1">{{ __('language.active') }}</option>
                                     <option value="0">Inactive</option>
                                 </select>
                                 <span class="text-danger error-text section_status_error"></span>
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-success">Submit</button>
+                    <button type="submit" class="btn btn-success">{{ __('language.save') }}</button>
                 </form>
             </div>
         </div>
@@ -182,7 +182,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editSectionLabel">Edit Section</h5>
+                <h5 class="modal-title" id="editSectionLabel">{{ __('language.section_edit') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -194,12 +194,12 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="section_name">Section Name</label>
-                                <input type="text" class="form-control form-control-sm" name="section_name" placeholder="Section Name">
+                                <label for="section_name">{{ __('language.section_name') }}</label>
+                                <input type="text" class="form-control form-control-sm" name="section_name" placeholder="{{ __('language.section_name') }}">
                                 <span class="text-danger error-text section_name_error"></span>
                             </div>
                             <div class="form-group">
-                                <label for="version_id">Version</label>
+                                <label for="version_id">{{ __('language.version') }}</label>
                                 <select class="form-control form-control-sm version_id" name="version_id">
                                     @foreach($versions as $version)
                                         <option value="{{ $version->id }}">{{ $version->version_name }}</option>
@@ -208,7 +208,7 @@
                                 <span class="text-danger error-text version_id_error"></span>
                             </div>
                             <div class="form-group">
-                                <label for="class_id">Class</label>
+                                <label for="class_id">{{ __('language.class') }}</label>
                                 <select class="form-control form-control-sm class_id" name="class_id">
                                     @foreach($classes as $class)
                                         <option value="{{ $class->id }}">{{ $class->class_name }}</option>
@@ -219,9 +219,9 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="class_teacher_id">Class Teacher</label>
+                                <label for="class_teacher_id">{{ __('language.class_teacher') }}</label>
                                 <select class="form-control form-control-sm" name="class_teacher_id">
-                                    <option value="">Select a class teacher</option>
+                                    <option value="">{{ __('language.select_class_teacher') }}</option>
                                     <option value="1">Teacher 1</option>
                                     <option value="2">Teacher 2</option>
                                     <option value="3">Teacher 3</option>
@@ -229,22 +229,22 @@
                                 <span class="text-danger error-text class_teacher_id_error"></span>
                             </div>
                             <div class="form-group">
-                                <label for="max_students">Max Students</label>
+                                <label for="max_students">{{ __('language.max_std') }}</label>
                                 <input type="text" class="form-control form-control-sm" name="max_students" id="section_name" placeholder="Max Students">
                                 <span class="text-danger error-text max_students_error"></span>
                             </div>
                             <div class="form-group">
-                                <label for="section_status">Status</label>
+                                <label for="section_status">{{ __('language.status') }}</label>
                                 <select class="form-control form-control-sm" name="section_status">
-                                    <option value="1">Active</option>
-                                    <option value="0">Inactive</option>
+                                    <option value="1">{{ __('language.active') }}</option>
+                                    <option value="0">{{ __('language.inactive') }}</option>
                                 </select>
                                 <span class="text-danger error-text section_status_error"></span>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-block btn-success">Update</button>
+                        <button type="submit" class="btn btn-block btn-success">{{ __('language.update') }}</button>
                     </div>
                 </form>
             </div>

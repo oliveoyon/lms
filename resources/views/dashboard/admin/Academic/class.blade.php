@@ -16,11 +16,11 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Class Management</h1>
+            <h1 class="m-0">{{ __('language.class_mgmt') }}</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Class Management</a></li>
+              <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('language.class_mgmt') }}</a></li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -38,13 +38,13 @@
                     <div class="card-header bg-navy">
                         <h3 class="card-title">
                           <i class="fas fa-chalkboard-teacher mr-1"></i>
-                          Class List
+                          {{ __('language.class_list') }}
                         </h3>
                         <div class="card-tools">
                           <ul class="nav nav-pills ml-auto">
                             <li class="nav-item">
                                 
-                              <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#addClassModal"><i class="fas fa-plus-square mr-1"></i> Add Class</button>
+                              <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#addClassModal"><i class="fas fa-plus-square mr-1"></i> {{ __('language.class_add') }}</button>
                             </li>
                           </ul>
                         </div>
@@ -59,11 +59,11 @@
                           <table class="table table-bordered table-striped table-hover table-sm" id="class-table">
                               <thead style="border-top: 1px solid #b4b4b4">
                                   <th style="width: 10px">#</th>
-                                  <th>Class Name</th>
-                                  <th>Version</th>
-                                  <th>Numeric Value</th>
-                                  <th>Status</th>
-                                  <th style="width: 40px">Action</th>
+                                  <th>{{ __('language.class_name') }}</th>
+                                  <th>{{ __('language.version') }}</th>
+                                  <th>{{ __('language.numeric') }}</th>
+                                  <th>{{ __('language.status') }}</th>
+                                  <th style="width: 40px">{{ __('language.action') }}</th>
                               </thead>
                               <tbody>
                                 @foreach ($classes as $class)
@@ -73,7 +73,7 @@
                                   <td>{{ $class->version->version_name }}</td>
                                   <td>{{ $class->class_numeric }}</td>
                                   <td class="{{ $class->class_status == 1 ? 'text-success' : 'text-danger' }} font-weight-bold">
-                                    {{ $class->class_status == 1 ? 'Active' : 'InActive' }}
+                                    {{ $class->class_status == 1 ? __('language.active') : __('language.inactive') }}
                                   </td>
                                   
                                   <td>
@@ -98,7 +98,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header bg-success">
-                        <h5 class="modal-title" id="addClassModalLabel">Add Class</h5>
+                        <h5 class="modal-title" id="addClassModalLabel">{{ __('language.class_add') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -107,12 +107,12 @@
                         <form action="{{ route('admin.addClass') }}" method="POST" autocomplete="off" id="add-class-form">
                             @csrf
                             <div class="form-group">
-                                <label for="class_name">Class Name</label>
-                                <input type="text" class="form-control" name="class_name" id="class_name" placeholder="Class Name">
+                                <label for="class_name">{{ __('language.class_name') }}</label>
+                                <input type="text" class="form-control" name="class_name" id="class_name" placeholder="{{ __('language.class_name') }}">
                                 <span class="text-danger error-text class_name_error"></span>
                             </div>
                             <div class="form-group">
-                                <label for="version_id">Version</label>
+                                <label for="version_id">{{ __('language.version') }}</label>
                                 <select class="form-control" name="version_id" id="version_id">
                                     @foreach ($versions as $version)
                                         <option value="{{ $version->id }}">{{ $version->version_name }}</option>
@@ -121,19 +121,19 @@
                                 <span class="text-danger error-text version_id_error"></span>
                             </div>
                             <div class="form-group">
-                                <label for="class_numeric">Numeric Value</label>
+                                <label for="class_numeric">{{ __('language.numeric') }}</label>
                                 <input type="number" class="form-control" name="class_numeric" id="class_numeric" placeholder="Numeric Value">
                                 <span class="text-danger error-text class_numeric_error"></span>
                             </div>
                             <div class="form-group">
-                                <label for="class_status">Status</label>
+                                <label for="class_status">{{ __('language.status') }}</label>
                                 <select class="form-control" name="class_status" id="class_status">
-                                    <option value="1">Active</option>
-                                    <option value="0">Inactive</option>
+                                    <option value="1">{{ __('language.active') }}</option>
+                                    <option value="0">{{ __('language.inactive') }}</option>
                                 </select>
                                 <span class="text-danger error-text class_status_error"></span>
                             </div>
-                            <button type="submit" class="btn btn-success">Submit</button>
+                            <button type="submit" class="btn btn-success">{{ __('language.save') }}</button>
                         </form>
                         
                     </div>
@@ -146,7 +146,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editClassLabel">Edit Class</h5>
+                        <h5 class="modal-title" id="editClassLabel">{{ __('language.class_edit') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -156,38 +156,35 @@
                             @csrf
                             <input type="hidden" name="cid">
                             <div class="form-group">
-                                <label for="class_name">Class Name</label>
-                                <input type="text" class="form-control" name="class_name"  placeholder="Class Name">
+                                <label for="class_name">{{ __('language.class_name') }}</label>
+                                <input type="text" class="form-control" name="class_name" id="class_name" placeholder="{{ __('language.class_name') }}">
                                 <span class="text-danger error-text class_name_error"></span>
                             </div>
-
                             <div class="form-group">
-                                <label for="version_id">Version</label>
-                                <select class="form-control" name="version_id" >
-                                    @foreach($versions as $version)
+                                <label for="version_id">{{ __('language.version') }}</label>
+                                <select class="form-control" name="version_id" id="version_id">
+                                    @foreach ($versions as $version)
                                         <option value="{{ $version->id }}">{{ $version->version_name }}</option>
                                     @endforeach
                                 </select>
                                 <span class="text-danger error-text version_id_error"></span>
                             </div>
-
                             <div class="form-group">
-                                <label for="class_numeric">Class Numeric</label>
-                                <input type="number" class="form-control" name="class_numeric"  placeholder="Class Numeric">
+                                <label for="class_numeric">{{ __('language.numeric') }}</label>
+                                <input type="number" class="form-control" name="class_numeric" id="class_numeric" placeholder="Numeric Value">
                                 <span class="text-danger error-text class_numeric_error"></span>
                             </div>
-
                             <div class="form-group">
-                                <label for="class_status">Status</label>
-                                <select class="form-control" name="class_status" >
-                                    <option value="1">Active</option>
-                                    <option value="0">Inactive</option>
+                                <label for="class_status">{{ __('language.status') }}</label>
+                                <select class="form-control" name="class_status" id="class_status">
+                                    <option value="1">{{ __('language.active') }}</option>
+                                    <option value="0">{{ __('language.inactive') }}</option>
                                 </select>
                                 <span class="text-danger error-text class_status_error"></span>
                             </div>
 
                             <div class="form-group">
-                                <button type="submit" class="btn btn-block btn-success">Update</button>
+                                <button type="submit" class="btn btn-block btn-success">{{ __('language.update') }}</button>
                             </div>
                         </form>
                     </div>
