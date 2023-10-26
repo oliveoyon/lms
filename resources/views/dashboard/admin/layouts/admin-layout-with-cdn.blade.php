@@ -203,7 +203,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('admin.academic-fee-group-list') }}" class="nav-link">
                             <i class="far fa-list-alt nav-icon"></i>
                             <p>{{ __('language.aca_fee_group') }}</p>
                         </a>
@@ -238,7 +238,7 @@
                             <p>{{ __('language.add_bulk_student') }}</p>
                         </a>
                     </li>
-                    <li class "nav-item">
+                    <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="far fa-check-circle nav-icon"></i>
                             <p>{{ __('language.enroll_student') }}</p>

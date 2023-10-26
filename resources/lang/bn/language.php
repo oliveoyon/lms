@@ -93,7 +93,7 @@ return [
     'fee_group_add' => 'ফি গ্রুপ যোগ করুন',
     'fee_group_edit' => 'ফি গ্রুপ সম্পাদনা করুন',
     'fee_group_name' => 'ফি গ্রুপ নাম',
-    'fee_group_academic_year' => 'শিক্ষাবর্ষ',
+    'academic_year' => 'শিক্ষাবর্ষ',
     'fee_group_add_msg' => 'ফি গ্রুপ সফলভাবে যোগ করা হয়েছে',
     'fee_group_edit_msg' => 'ফি গ্রুপ সফলভাবে আপডেট করা হয়েছে',
     'fee_group_del_msg' => 'ফি গ্রুপ তালিকা থেকে মুছে ফেলা হয়েছে',

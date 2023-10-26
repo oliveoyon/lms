@@ -67,7 +67,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td class="font-weight-bold">{{ $feeGroup->aca_group_name }}</td>
                                         <td>{{ $feeGroup->aca_feehead_id }}</td>
-                                        <td>{{ $feeGroup->academic_year }}</td>
+                                        <td>{{ $feeGroup->academic_year .'- '. ($feeGroup->academic_year + 1) }}</td>
                                         <td class="{{ $feeGroup->aca_group_status == 1 ? 'text-success' : 'text-danger' }} font-weight-bold">
                                             {{ $feeGroup->aca_group_status == 1 ? 'Active' : 'Inactive' }}
                                         </td>
@@ -96,9 +96,11 @@
 </div>
 <!-- /.content-wrapper -->
 
-<!-- Add Fee Group Modal with Dual List Box -->
-<div class="modal fade" id="addFeeGroupModal" tabindex="-1" role="dialog" aria-labelledby="addFeeGroupModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
+
+
+<!-- Add Fee Group Modal -->
+<div class="modal fade" id="addFeeGroupModal" tabindex="-1" aria-labelledby="addFeeGroupModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-success">
                 <h5 class="modal-title" id="addFeeGroupModalLabel">{{ __('language.fee_group_add') }}</h5>
@@ -107,109 +109,135 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="addFeeGroupForm" action="{{ route('admin.addAcademicFeeGroup') }}" method="POST" autocomplete="off"  id="add-fee-group-form">
+                <form action="{{ route('admin.addAcademicFeeGroup') }}" method="POST" autocomplete="off" id="add-fee-group-form">
                     @csrf
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="aca_group_name">{{ __('language.fee_group_name') }}</label>
-                                <input type="text" class="form-control" id="aca_group_name" name="aca_group_name" required>
+                                <input type="text" class="form-control form-control-sm" id="aca_group_name" name="aca_group_name" placeholder="{{ __('language.fee_group_name') }}">
+                                <span class="text-danger error-text aca_group_name_error"></span>
                             </div>
+                           
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="academic_year">{{ __('language.fee_group_academic_year') }}</label>
-                                <input type="number" class="form-control" id="academic_year" name="academic_year" required>
+                                <label for="academic_year">{{ __('language.academic_year') }}</label>
+                                <select class="form-control form-control-sm" name="academic_year" id="academic_yeasr">
+                                    @php
+                                        $currentYear = date('Y');
+                                    @endphp
+                                    @for ($i = $currentYear - 5; $i <= $currentYear + 5; $i++)
+                                        <option value="{{ $i }}" <?php if($i == $currentYear){echo "selected";}?> >
+                                            {{ $i }} - {{ $i + 1 }}
+                                        </option>
+                                    @endfor
+                                </select>
+                                <span class="text-danger error-text academic_year_error"></span>
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>{{ __('language.aca_fee_head') }}</label>
+                                <select multiple="multiple" class="duallistbox form-control form-control-sm" id="aca_feehead_ids" name="aca_feehead_ids[]">
+                                    @foreach ($feeHeads as $feeHead)
+                                        <option value="{{ $feeHead->id }}">{{ $feeHead->aca_feehead_name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger error-text aca_feehead_ids_error"></span>
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-6">
+                            
+                            <div class="form-group">
+                                <label for="aca_group_status">{{ __('language.status') }}</label>
+                                <select class="form-control form-control-sm" id="aca_group_status" name="aca_group_status">
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                                <span class="text-danger error-text aca_group_status_error"></span>
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Dual List Box for Fee Heads -->
-                    <div class="form-group">
-                        <label>{{ __('language.aca_fee_head') }}</label>
-                        <select multiple="multiple" class="duallistbox" id="aca_feehead_ids" name="aca_feehead_ids[]">
-                            @foreach ($feeHeads as $feeHead)
-                                <option value="{{ $feeHead->id }}">{{ $feeHead->aca_feehead_name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="aca_group_status">{{ __('language.status') }}</label>
-                        <select class="form-control" id="aca_group_status" name="aca_group_status" required>
-                            <option value="1">Active</option>
-                            <option value="0">Inactive</option>
-                        </select>
-                    </div>
+                    <button type="submit" class="btn btn-success">{{ __('language.save') }}</button>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" form="addFeeGroupForm" class="btn btn-success">{{ __('language.save') }}</button>
             </div>
         </div>
     </div>
 </div>
 
+
+
 <!-- Edit Fee Group Modal -->
-<div class="modal fade editFeeGroup" id="editFeeGroupModal" tabindex="-1" role="dialog" aria-labelledby="editFeeGroupModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+<div class="modal fade editFeeGroup" id="editFeeGroupModal" tabindex="-1" role="dialog" aria-labelledby="editFeeGroupModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header bg-navy">
+            <div class="modal-header bg-warning">
                 <h5 class="modal-title" id="editFeeGroupModalLabel">{{ __('language.fee_group_edit') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="update-fee-group-form" method="post" action="{{ route('admin.updateAcademicFeeGroupDetails') }}">
-                @csrf
-                <div class="modal-body">
-                    <!-- Error Messages -->
-                    <div class="alert alert-danger" style="display: none" id="editFeeGroupErrorAlert">
-                        <ul id="editFeeGroupErrorList"></ul>
-                    </div>
-
-                    <!-- Fee Group ID (hidden input) -->
+            <div class="modal-body">
+                <form id="update-fee-group-form" method="post" action="{{ route('admin.updateAcademicFeeGroupDetails') }}">
+                    @csrf
                     <input type="hidden" name="fee_group_id" id="editFeeGroupId">
-
-                    <!-- Fee Group Name -->
-                    <div class="form-group">
-                        <label for="editFeeGroupName">{{ __('language.fee_group_name') }}</label>
-                        <input type="text" class="form-control" id="editFeeGroupName" name="aca_group_name" required>
-                        <span class="error-text aca_group_name_error text-danger"></span>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="aca_group_name">{{ __('language.fee_group_name') }}</label>
+                                <input type="text" class="form-control form-control-sm" id="aca_group_name" name="aca_group_name" placeholder="{{ __('language.fee_group_name') }}">
+                                <span class="text-danger error-text aca_group_name_error"></span>
+                            </div>
+                           
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="academic_year">{{ __('language.academic_year') }}</label>
+                                <select class="form-control form-control-sm" name="academic_year" id="academic_yeasr">
+                                    @php
+                                        $currentYear = date('Y');
+                                    @endphp
+                                    @for ($i = $currentYear - 5; $i <= $currentYear + 5; $i++)
+                                        <option value="{{ $i }}" <?php if($i == $currentYear){echo "selected";}?> >
+                                            {{ $i }} - {{ $i + 1 }}
+                                        </option>
+                                    @endfor
+                                </select>
+                                <span class="text-danger error-text academic_year_error"></span>
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>{{ __('language.aca_fee_head') }}</label>
+                                <select multiple="multiple" class="duallistbox form-control form-control-sm" id="aca_feehead_ids" name="aca_feehead_ids[]">
+                                    @foreach ($feeHeads as $feeHead)
+                                        <option value="{{ $feeHead->id }}">{{ $feeHead->aca_feehead_name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger error-text aca_feehead_ids_error"></span>
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-6">
+                            
+                            <div class="form-group">
+                                <label for="aca_group_status">{{ __('language.status') }}</label>
+                                <select class="form-control form-control-sm" id="aca_group_status" name="aca_group_status">
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                                <span class="text-danger error-text aca_group_status_error"></span>
+                            </div>
+                        </div>
                     </div>
-
-                    <!-- Academic Year -->
-                    <div class="form-group">
-                        <label for="editAcademicYear">{{ __('language.academic_year') }}</label>
-                        <input type="text" class="form-control" id="editAcademicYear" name="academic_year" required>
-                        <span class="error-text academic_year_error text-danger"></span>
-                    </div>
-
-                    <!-- Status -->
-                    <div class="form-group">
-                        <label for="editAcaGroupStatus">{{ __('language.status') }}</label>
-                        <select class="form-control" id="editAcaGroupStatus" name="aca_group_status" required>
-                            <option value="1">{{ __('language.active') }}</option>
-                            <option value="0">{{ __('language.inactive') }}</option>
-                        </select>
-                        <span class="error-text aca_group_status_error text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="editAcaFeeheadIds">{{ __('language.fee_head_list') }}</label>
-                        <select class="duallistbox" id="feeHeadsDualList" name="aca_feehead_ids[]" multiple="multiple">
-                            @foreach ($feeHeads as $feeHead)
-                                <option value="{{ $feeHead->id }}">{{ $feeHead->aca_feehead_name }}</option>
-                            @endforeach
-                        </select>
-                        
-                        <span class="error-text aca_feehead_ids_error text-danger"></span>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">{{ __('language.save_changes') }}</button>
-                </div>
-            </form>
+                    <button type="submit" class="btn btn-success">{{ __('language.update') }}</button>
+                </form>
+            </div>
+            
         </div>
     </div>
 </div>
@@ -227,7 +255,11 @@
         // Initialize the Dual List Box
         $('.duallistbox').bootstrapDualListbox();
     });
+
+
+
 </script>   
+
 <script>
     $.ajaxSetup({
         headers: {
@@ -276,22 +308,27 @@
             var feeGroupId = $(this).data('id');
             $('.editFeeGroup').find('form')[0].reset();
             $('.editFeeGroup').find('span.error-text').text('');
+        
             $.post("{{ route('admin.getAcademicFeeGroupDetails') }}", { fee_group_id: feeGroupId }, function (data) {
                 $('.editFeeGroup').find('input[name="fee_group_id"]').val(data.details.id);
                 $('.editFeeGroup').find('input[name="aca_group_name"]').val(data.details.aca_group_name);
-                $('.editFeeGroup').find('input[name="academic_year"]').val(data.details.academic_year);
+                $('.editFeeGroup').find('select[name="academic_year"]').val(data.details.academic_year);
                 $('.editFeeGroup').find('select[name="aca_group_status"]').val(data.details.aca_group_status);
 
                 // Convert comma-separated fee heads to an array
                 var feeHeads = data.details.aca_feehead_id.split(',');
-                $('.editFeeGroup').find('select[name="aca_feehead_ids"]').val(feeHeads);
 
-                
-                
+                // Select multiple options in the select element
+                $('.editFeeGroup').find('select[name="aca_feehead_ids[]"]').val(feeHeads);
+
+                // Trigger the Dual List Box to update the selection
+                $('.editFeeGroup').find('select[name="aca_feehead_ids[]"]').bootstrapDualListbox('refresh', true);
 
                 $('.editFeeGroup').modal('show');
             }, 'json');
         });
+
+
 
         $('#update-fee-group-form').on('submit', function (e) {
             e.preventDefault();

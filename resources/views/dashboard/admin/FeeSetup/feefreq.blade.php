@@ -92,52 +92,50 @@
         
         
 
-<!-- Add Fee Group Modal -->
-<div class="modal fade" id="addFeeGroupModal" tabindex="-1" role="dialog" aria-labelledby="addFeeGroupModalLabel" aria-hidden="true">
+<!-- Add Fee Frequency Modal -->
+<div class="modal fade" id="addFeeFrequencyModal" tabindex="-1" aria-labelledby="addFeeFrequencyModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-success">
-                <h5 class="modal-title" id="addFeeGroupModalLabel">{{ __('language.fee_group_add') }}</h5>
+                <h5 class="modal-title" id="addFeeFrequencyModalLabel">{{ __('language.fee_frequency_add') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form id="addFeeGroupForm" action="{{ route('admin.addAcademicFeeGroup') }}" method="POST" autocomplete="off" id="add-fee-group-form">
+                <form action="{{ route('admin.addFeeFrequency') }}" method="POST" autocomplete="off" id="add-fee-frequency-form">
                     @csrf
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="aca_group_name">{{ __('language.fee_group_name') }}</label>
-                                <input type="text" class="form-control form-control-sm" name="aca_group_name" id="aca_group_name" placeholder="{{ __('language.fee_group_name') }}" required>
+                                <label for="freq_name">{{ __('language.fee_frequency_name') }}</label>
+                                <input type="text" class="form-control form-control-sm" name="freq_name" placeholder="{{ __('language.fee_frequency_name') }}">
+                                <span class="text-danger error-text freq_name_error"></span>
                             </div>
                             <div class="form-group">
-                                <label for="academic_year">{{ __('language.fee_group_academic_year') }}</label>
-                                <input type="number" class="form-control form-control-sm" name="academic_year" id="academic_year" placeholder="{{ __('language.fee_group_academic_year') }}" required>
+                                <label for="no_of_installment">{{ __('language.no_of_installment') }}</label>
+                                <input type="number" class="form-control form-control-sm" name="no_of_installment" placeholder="{{ __('language.no_of_installment') }}">
+                                <span class="text-danger error-text no_of_installment_error"></span>
                             </div>
+                            
                         </div>
                         <div class="col-md-6">
-                            <!-- Dual List Box for Fee Heads -->
                             <div class="form-group">
-                                <label>{{ __('language.aca_fee_head') }}</label>
-                                <select multiple="multiple" class="duallistbox" id="aca_feehead_ids" name="aca_feehead_ids[]">
-                                    @foreach ($feeHeads as $feeHead)
-                                        <option value="{{ $feeHead->id }}">{{ $feeHead->aca_feehead_name }}</option>
-                                    @endforeach
-                                </select>
+                                <label for="installment_period">{{ __('language.installment_period') }}</label>
+                                <input type="text" class="form-control form-control-sm" name="installment_period" placeholder="Installment Period">
+                                <span class="text-danger error-text installment_period_error"></span>
                             </div>
                             <div class="form-group">
-                                <label for="aca_group_status">{{ __('language.status') }}</label>
-                                <select class="form-control form-control-sm" name="aca_group_status" id="aca_group_status" required>
-                                    <option value="1">{{ __('language.active') }}</option>
-                                    <option value="0">{{ __('language.inactive') }}</option>
+                                <label for="freq_status">Status</label>
+                                <select class="form-control form-control-sm" name="freq_status" id="freq_status">
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
                                 </select>
+                                <span class="text-danger error-text freq_status_error"></span>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="submit" form="addFeeGroupForm" class="btn btn-success">{{ __('language.save') }}</button>
-                    </div>
+                    <button type="submit" class="btn btn-success">Save</button>
                 </form>
             </div>
         </div>
@@ -171,13 +169,14 @@
                                 <input type="number" class="form-control form-control-sm" name="no_of_installment" placeholder="{{ __('language.no_of_installment') }}">
                                 <span class="text-danger error-text no_of_installment_error"></span>
                             </div>
+                            
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="installment_period">{{ __('language.installment_period') }}</label>
                                 <input type="text" class="form-control form-control-sm" name="installment_period" placeholder="Installment Period">
                                 <span class="text-danger error-text installment_period_error"></span>
                             </div>
-                        </div>
-                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="freq_status">Status</label>
                                 <select class="form-control form-control-sm" name="freq_status" id="freq_status">

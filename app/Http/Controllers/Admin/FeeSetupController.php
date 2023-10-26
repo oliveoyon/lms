@@ -9,6 +9,7 @@ use App\Models\Admin\FeeFrequency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class FeeSetupController extends Controller
 {
@@ -87,15 +88,24 @@ class FeeSetupController extends Controller
     public function deleteFeeFrequency(Request $request)
     {
         $feeFrequencyId = $request->fee_frequency_id;
-        $feeFrequency = FeeFrequency::find($feeFrequencyId);
 
-        if ($feeFrequency) {
-            $feeFrequency->delete();
-            return response()->json(['code' => 1, 'msg' => 'Fee frequency has been deleted from the database', 'redirect' => 'admin/fee-frequency-list']);
+        // Check if the fee frequency is used in academic_fee_heads
+        $usedInAcademicFeeHeads = AcademicFeeHead::where('aca_feehead_freq', $feeFrequencyId)->exists();
+
+        if (!$usedInAcademicFeeHeads) {
+            $feeFrequency = FeeFrequency::find($feeFrequencyId);
+
+            if ($feeFrequency) {
+                $feeFrequency->delete();
+                return response()->json(['code' => 1, 'msg' => 'Fee frequency has been deleted from the database', 'redirect' => 'admin/fee-frequency-list']);
+            } else {
+                return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
+            }
         } else {
-            return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
+            return response()->json(['code' => 0, 'msg' => 'Cannot delete the fee frequency as it is used in academic fee heads.']);
         }
     }
+
 
     public function academicFeeHeadList()
     {
@@ -106,6 +116,7 @@ class FeeSetupController extends Controller
 
     public function addAcademicFeeHead(Request $request)
     {
+        $no_of_installment = FeeFrequency::find($request->input('aca_feehead_freq'))->no_of_installment;
         $validator = Validator::make($request->all(), [
             'aca_feehead_name' => 'required|string|max:255|unique:academic_fee_heads,aca_feehead_name', 
             'aca_feehead_description' => 'required|string',
@@ -123,7 +134,7 @@ class FeeSetupController extends Controller
             $academicFeeHead->aca_feehead_name = $request->input('aca_feehead_name');
             $academicFeeHead->aca_feehead_description = $request->input('aca_feehead_description');
             $academicFeeHead->aca_feehead_freq = $request->input('aca_feehead_freq');
-            $academicFeeHead->no_of_installment = 1;
+            $academicFeeHead->no_of_installment = $no_of_installment;
             $academicFeeHead->status = $request->input('status');
 
             $query = $academicFeeHead->save();
@@ -180,7 +191,20 @@ class FeeSetupController extends Controller
     public function deleteAcademicFeeHead(Request $request)
     {
         $academicFeeHeadId = $request->academic_feehead_id;
+        
+        // Check if the academic fee head is associated with any fee group
+        $isUsedInFeeGroups = AcademicFeeGroup::where('aca_feehead_id', 'like', "%$academicFeeHeadId%")->exists();
+
+        if ($isUsedInFeeGroups) {
+            return response()->json(['code' => 0, 'msg' => 'This academic fee head is used in fee groups and cannot be deleted.']);
+        }
+
         $query = AcademicFeeHead::find($academicFeeHeadId);
+
+        if (!$query) {
+            return response()->json(['code' => 0, 'msg' => 'Academic fee head not found']);
+        }
+
         $query = $query->delete();
 
         if ($query) {
@@ -190,10 +214,26 @@ class FeeSetupController extends Controller
         }
     }
 
+
     public function academicFeeGroupList()
     {
         $send['feeHeads'] = AcademicFeeHead::get()->where('status', 1);
-        $send['academicFeeGroups'] = AcademicFeeGroup::get();
+        $academicFeeGroups = AcademicFeeGroup::get();
+
+        $academicFeeGroups->each(function ($feeGroup) {
+            $acaFeeheadIds = explode(',', $feeGroup->aca_feehead_id);
+
+            // Retrieve the corresponding aca_feehead_name values
+            $acaFeeheadNames = AcademicFeeHead::whereIn('id', $acaFeeheadIds)
+                ->pluck('aca_feehead_name')
+                ->implode(', ');
+
+            // Replace the original aca_feehead_id with aca_feehead_names
+            $feeGroup->aca_feehead_id = $acaFeeheadNames;
+        });
+
+        // Now, $academicFeeGroups contains aca_feehead_names instead of aca_feehead_ids
+        $send['academicFeeGroups'] = $academicFeeGroups;
         return view('dashboard.admin.FeeSetup.feegroup', $send);
     }
 
@@ -203,6 +243,20 @@ class FeeSetupController extends Controller
             'aca_group_name' => 'required|string|max:255|unique:academic_fee_groups,aca_group_name',
             'academic_year' => 'required|integer',
             'aca_group_status' => 'required|integer',
+            'aca_feehead_ids' => [
+                'required',
+                'array',
+                function ($attribute, $value, $fail) {
+                    // Validate that each selected ID exists in the AcademicFeeHead table
+                    $existingIds = AcademicFeeHead::pluck('id')->toArray();
+                    foreach ($value as $selectedId) {
+                        if (!in_array($selectedId, $existingIds)) {
+                            $fail('One or more selected fee head IDs are invalid.');
+                        }
+                    }
+                },
+            ],
+
         ]);
 
         if ($validator->fails()) {
@@ -241,9 +295,28 @@ class FeeSetupController extends Controller
         $feeGroup = AcademicFeeGroup::find($feeGroupId);
 
         $validator = Validator::make($request->all(), [
-            'aca_group_name' => 'required|string|max:255|unique:academic_fee_groups,aca_group_name,' . $feeGroupId,
+            'aca_group_name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('academic_fee_groups', 'aca_group_name')->ignore($feeGroupId),
+            ],
             'academic_year' => 'required|integer',
             'aca_group_status' => 'required|integer',
+            'aca_feehead_ids' => [
+                'required',
+                'array',
+                function ($attribute, $value, $fail) {
+                    // Validate that each selected ID exists in the AcademicFeeHead table
+                    $existingIds = AcademicFeeHead::pluck('id')->toArray();
+                    foreach ($value as $selectedId) {
+                        if (!in_array($selectedId, $existingIds)) {
+                            $fail('One or more selected fee head IDs are invalid.');
+                        }
+                    }
+                },
+            ],
+            
         ]);
 
         if ($validator->fails()) {
@@ -260,7 +333,7 @@ class FeeSetupController extends Controller
             $query = $feeGroup->save();
 
             if ($query) {
-                return response()->json(['code' => 1, 'msg' => __('language.fee_group_edit_msg'), 'redirect' => 'admin/fee-group-list']);
+                return response()->json(['code' => 1, 'msg' => __('language.fee_group_edit_msg'), 'redirect' => 'admin/academic-fee-group-list']);
             } else {
                 return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
             }
@@ -274,7 +347,7 @@ class FeeSetupController extends Controller
         $query = $query->delete();
 
         if ($query) {
-            return response()->json(['code' => 1, 'msg' => __('language.fee_group_del_msg'), 'redirect' => 'admin/fee-group-list']);
+            return response()->json(['code' => 1, 'msg' => __('language.fee_group_del_msg'), 'redirect' => 'admin/academic-fee-group-list']);
         } else {
             return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
         }
