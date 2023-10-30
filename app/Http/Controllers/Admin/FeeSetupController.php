@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\AcademicFeeAmount;
 use App\Models\Admin\AcademicFeeGroup;
 use App\Models\Admin\AcademicFeeHead;
+use App\Models\Admin\EduClasses;
 use App\Models\Admin\FeeFrequency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -352,5 +354,36 @@ class FeeSetupController extends Controller
             return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
         }
     }
+
+    public function academicFeeAmountList()
+    {
+        $academicFeeAmounts = AcademicFeeAmount::with('academicFeeGroup', 'academicFeeHead', 'eduClass')->get();
+        $feeGroups = AcademicFeeGroup::all();
+        $classes = EduClasses::get()->where('class_status', 1);;
+        return view('dashboard.admin.FeeSetup.feeamount', compact('academicFeeAmounts', 'feeGroups', 'classes'));
+    }
+
+    public function getFeeHeads(Request $request)
+    {
+        $feeGroupId = $request->feeGroupId;
+
+        // Get the academic fee group for the given feeGroupId
+        $academicFeeGroup = AcademicFeeGroup::find($feeGroupId);
+
+        if (!$academicFeeGroup) {
+            return response()->json(['feeHeads' => []]); // Return an empty array if fee group not found.
+        }
+
+        // Split the comma-separated fee head IDs and convert them to an array
+        $feeHeadIds = explode(',', $academicFeeGroup->aca_feehead_id);
+
+        // Fetch the fee heads associated with the IDs
+        $feeHeads = AcademicFeeHead::whereIn('id', $feeHeadIds)->get();
+
+        return response()->json(['feeHeads' => $feeHeads]);
+    }
+
+
+
 
 }
