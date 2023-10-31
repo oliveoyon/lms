@@ -109,6 +109,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('updateAcademicFeeGroupDetails', [FeeSetupController::class, 'updateAcademicFeeGroupDetails'])->name('updateAcademicFeeGroupDetails');
         Route::post('deleteAcademicFeeGroup', [FeeSetupController::class, 'deleteAcademicFeeGroup'])->name('deleteAcademicFeeGroup');
 
+        Route::get('multiform', [FeeSetupController::class, 'multiform'])->name('multiform');
+
 
     });
 });
