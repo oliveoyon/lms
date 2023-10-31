@@ -111,6 +111,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::get('multiform', [FeeSetupController::class, 'multiform'])->name('multiform');
 
+        // Routes for Academic Fee Amount Management
+        Route::get('academic-fee-amount-list', [FeeSetupController::class, 'academicFeeAmountList'])->name('academic-fee-amount-list');
+        Route::post('addAcademicFeeAmount', [FeeSetupController::class, 'addAcademicFeeAmount'])->name('addAcademicFeeAmount');
+        Route::post('getAcademicFeeAmountDetails', [FeeSetupController::class, 'getAcademicFeeAmountDetails'])->name('getAcademicFeeAmountDetails');
+        Route::post('updateAcademicFeeAmountDetails', [FeeSetupController::class, 'updateAcademicFeeAmountDetails'])->name('updateAcademicFeeAmountDetails');
+        Route::post('deleteAcademicFeeAmount', [FeeSetupController::class, 'deleteAcademicFeeAmount'])->name('deleteAcademicFeeAmount');
+        Route::get('/get-fee-heads', [FeeSetupController::class, 'getFeeHeads'])->name('get-fee-heads');
+
+
 
     });
 });

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\AcademicFeeAmount;
 use App\Models\Admin\AcademicFeeGroup;
 use App\Models\Admin\AcademicFeeHead;
+use App\Models\Admin\EduClasses;
 use App\Models\Admin\FeeFrequency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -357,5 +359,94 @@ class FeeSetupController extends Controller
             return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
         }
     }
+
+    public function academicFeeAmountList()
+    {
+        $academicFeeAmounts = AcademicFeeAmount::with('academicFeeGroup', 'academicFeeHead', 'eduClass')->get();
+        $feeGroups = AcademicFeeGroup::all();
+        $classes = EduClasses::get()->where('class_status', 1);;
+        return view('dashboard.admin.FeeSetup.feeamount', compact('academicFeeAmounts', 'feeGroups', 'classes'));
+    }
+
+    public function getFeeHeads(Request $request)
+    {
+        $feeGroupId = $request->feeGroupId;
+
+        // Get the academic fee group for the given feeGroupId
+        $academicFeeGroup = AcademicFeeGroup::find($feeGroupId);
+
+        if (!$academicFeeGroup) {
+            return response()->json(['feeHeads' => []]); // Return an empty array if fee group not found.
+        }
+
+        // Split the comma-separated fee head IDs and convert them to an array
+        $feeHeadIds = explode(',', $academicFeeGroup->aca_feehead_id);
+
+        // Fetch the fee heads associated with the IDs
+        $feeHeads = AcademicFeeHead::whereIn('id', $feeHeadIds)->get();
+
+        return response()->json(['feeHeads' => $feeHeads]);
+    }
+
+    public function addAcademicFeeAmount(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'aca_group_id' => 'required|integer',
+            'academic_year' => 'required',
+            'aca_feehead_id' => 'array',
+            'class_id' => 'array',
+            // 'status' => 'required|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
+        } else {
+            $aca_feehead_ids = $request->input('aca_feehead_id');
+            $class_ids = $request->input('class_id');
+            $academic_year = $request->input('academic_year');
+            $aca_group_id = $request->input('aca_group_id');
+
+            // Create an array to store the AcademicFeeAmount data
+            $data = [];
+
+            foreach ($class_ids as $class_id) {
+                foreach ($aca_feehead_ids as $key => $val) {
+                    // Check if a record with the same values already exists in the database
+                    $existingRecord = AcademicFeeAmount::where([
+                        'aca_group_id' => $aca_group_id,
+                        'aca_feehead_id' => $key,
+                        'class_id' => $class_id,
+                        'academic_year' => $academic_year,
+                    ])->first();
+
+                    if (!$existingRecord) {
+                        $data[] = [
+                            'aca_feeamount_hash_id' => md5(uniqid(rand(), true)),
+                            'aca_group_id' => $aca_group_id,
+                            'aca_feehead_id' => $key,
+                            'amount' => $val,
+                            'class_id' => $class_id,
+                            'academic_year' => $academic_year,
+                            'aca_feeamount_status' => 1,
+                        ];
+                    }
+                }
+            }
+
+            // Insert the data into the database
+            $query = AcademicFeeAmount::insert($data);
+
+            if ($query) {
+                return response()->json(['code' => 1, 'msg' => __('language.academic_fee_head_add_msg'), 'redirect' => 'admin/academic-fee-amount-list']);
+            } else {
+                return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
+            }
+        }
+    }
+
+
+
+
+
 
 }

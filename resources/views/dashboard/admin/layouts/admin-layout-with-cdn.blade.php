@@ -209,7 +209,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('admin.academic-fee-amount-list') }}" class="nav-link">
                             <i class="far fa-money-bill-alt nav-icon"></i>
                             <p>{{ __('language.fee_amount') }}</p>
                         </a>

@@ -163,7 +163,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editFeeHeadLabel">{{ __('language.academic_fee_head_edit') }}</h5>
+                <h5 class="modal-title" id="editFeeHeadLabel">{{ __('language.fee_head_edit') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -175,34 +175,30 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="aca_feehead_name">{{ __('language.academic_fee_head_name') }}</label>
-                                <input type="text" class="form-control form-control-sm" name="aca_feehead_name" placeholder="{{ __('language.academic_fee_head_name') }}">
+                                <label for="aca_feehead_name">{{ __('language.fee_head_name') }}</label>
+                                <input type="text" class="form-control form-control-sm" name="aca_feehead_name" id="aca_feehead_name" placeholder="{{ __('language.fee_head_name') }}">
                                 <span class="text-danger error-text aca_feehead_name_error"></span>
                             </div>
                             <div class="form-group">
-                                <label for="aca_feehead_description">{{ __('language.academic_fee_head_description') }}</label>
-                                <input type="text" class="form-control form-control-sm" name="aca_feehead_description" placeholder="{{ __('language.academic_fee_head_description') }}">
+                                <label for="aca_feehead_description">{{ __('language.fee_head_description') }}</label>
+                                <input type="text" class="form-control form-control-sm" name="aca_feehead_description" id="aca_feehead_description" placeholder="{{ __('language.fee_head_description') }}">
                                 <span class="text-danger error-text aca_feehead_description_error"></span>
                             </div>
                             <div class="form-group">
-                                <label for="aca_feehead_freq">{{ __('language.academic_fee_head_freq') }}</label>
-                                <select class="form-control form-control-sm" name="aca_feehead_freq">
-                                    @foreach($feeFrequencies as $feeFrequency)
-                                    <option value="{{ $feeFrequency->id }}">{{ $feeFrequency->freq_name }}</option>
+                                <label for="aca_feehead_freq">{{ __('language.fee_frequency') }}</label>
+                                <select class="form-control form-control-sm" name="aca_feehead_freq" id="aca_feehead_freq">
+                                    @foreach ($feeFrequencies as $freq)
+                                    <option value="{{ $freq->id }}">{{ $freq->freq_name }}</option>
                                     @endforeach
                                 </select>
                                 <span class="text-danger error-text aca_feehead_freq_error"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="no_of_installment">{{ __('language.academic_fee_head_no_of_installments') }}</label>
-                                <input type="number" class="form-control form-control-sm" name="no_of_installment" placeholder="{{ __('language.academic_fee_head_no_of_installments') }}">
-                                <span class="text-danger error-text no_of_installment_error"></span>
-                            </div>
+                            
                             <div class="form-group">
                                 <label for="status">{{ __('language.status') }}</label>
-                                <select class="form-control form-control-sm" name="status">
+                                <select class="form-control form-control-sm" name="status" id="status">
                                     <option value="1">{{ __('language.active') }}</option>
                                     <option value="0">{{ __('language.inactive') }}</option>
                                 </select>
@@ -210,7 +206,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-success">{{ __('language.save') }}</button>
+                    <button type="submit" class="btn btn-success">{{ __('language.update') }}</button>
                 </form>
             </div>
         </div>
