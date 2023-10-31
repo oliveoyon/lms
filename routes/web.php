@@ -118,6 +118,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('updateAcademicFeeAmountDetails', [FeeSetupController::class, 'updateAcademicFeeAmountDetails'])->name('updateAcademicFeeAmountDetails');
         Route::post('deleteAcademicFeeAmount', [FeeSetupController::class, 'deleteAcademicFeeAmount'])->name('deleteAcademicFeeAmount');
         Route::get('/get-fee-heads', [FeeSetupController::class, 'getFeeHeads'])->name('get-fee-heads');
+        Route::get('/get-group-data', [FeeSetupController::class, 'getGroupData'])->name('getGroupData');
 
 
 

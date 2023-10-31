@@ -445,6 +445,72 @@ class FeeSetupController extends Controller
     }
 
 
+    public function getGroupData(Request $request)
+    {
+        $aca_feehead_ids = explode(',', $request->input('aca_feehead_ids'));
+        $data = [];
+
+        foreach ($aca_feehead_ids as $id) {
+            $academicFeeAmount = AcademicFeeAmount::find($id);
+
+            if ($academicFeeAmount) {
+                $feeHeadName = AcademicFeeHead::find($academicFeeAmount->aca_feehead_id)->aca_feehead_name;
+                $data[] = [
+                    'id' => $id,
+                    'aca_feehead_id' => $academicFeeAmount->aca_feehead_id,
+                    'fee_head_name' => $feeHeadName,
+                    'amount' => $academicFeeAmount->amount,
+                ];
+            }
+        }
+
+        return response()->json(['data' => $data]);
+    }
+
+    public function updateAcademicFeeAmountDetails(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'amount_id' => 'required|array',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
+    }
+
+    $amountIds = $request->input('amount_id');
+
+    // dd($amountIds);
+
+    try {
+        foreach ($amountIds as $amountId => $val) {
+            // You should validate and sanitize the input here
+
+           
+
+            // Get the amount record by its ID
+            $academicFeeAmount = AcademicFeeAmount::find(1);
+
+            if (!$academicFeeAmount) {
+                return response()->json(['code' => 0, 'error' => 'Academic fee amount not found']);
+            }
+
+            // Update the amount field based on your requirements
+            $newAmount = $val; // Define how you want to update the amount here
+
+            // Update the amount field
+            $academicFeeAmount->amount = $newAmount;
+            $academicFeeAmount->save();
+        }
+
+        return response()->json(['code' => 1, 'msg' => __('language.academic_fee_head_edit_msg'), 'redirect' => 'admin/academic-fee-amount-list']);
+    } catch (\Exception $e) {
+        return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
+    }
+}
+
+
+
+
 
 
 
