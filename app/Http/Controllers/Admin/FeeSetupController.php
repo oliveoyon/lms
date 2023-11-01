@@ -437,7 +437,7 @@ class FeeSetupController extends Controller
             $query = AcademicFeeAmount::insert($data);
 
             if ($query) {
-                return response()->json(['code' => 1, 'msg' => __('language.academic_fee_head_add_msg'), 'redirect' => 'admin/academic-fee-amount-list']);
+                return response()->json(['code' => 1, 'msg' => __('language.fee_amount_group_add_msg'), 'redirect' => 'admin/academic-fee-amount-list']);
             } else {
                 return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
             }
@@ -468,45 +468,76 @@ class FeeSetupController extends Controller
     }
 
     public function updateAcademicFeeAmountDetails(Request $request)
-{
-    $validator = Validator::make($request->all(), [
-        'amount_id' => 'required|array',
-    ]);
+    {
+        $validator = Validator::make($request->all(), [
+            'amount_id' => 'required|array',
+        ]);
 
-    if ($validator->fails()) {
-        return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
-    }
-
-    $amountIds = $request->input('amount_id');
-
-    // dd($amountIds);
-
-    try {
-        foreach ($amountIds as $amountId => $val) {
-            // You should validate and sanitize the input here
-
-           
-
-            // Get the amount record by its ID
-            $academicFeeAmount = AcademicFeeAmount::find(1);
-
-            if (!$academicFeeAmount) {
-                return response()->json(['code' => 0, 'error' => 'Academic fee amount not found']);
-            }
-
-            // Update the amount field based on your requirements
-            $newAmount = $val; // Define how you want to update the amount here
-
-            // Update the amount field
-            $academicFeeAmount->amount = $newAmount;
-            $academicFeeAmount->save();
+        if ($validator->fails()) {
+            return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
         }
 
-        return response()->json(['code' => 1, 'msg' => __('language.academic_fee_head_edit_msg'), 'redirect' => 'admin/academic-fee-amount-list']);
-    } catch (\Exception $e) {
-        return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
+        $amountIds = $request->input('amount_id');
+
+
+        try {
+            foreach ($amountIds as $amountId => $val) {
+                // Remove any single quotes from the keys
+                $amountId = trim($amountId, "'");
+            
+                // You should validate and sanitize the input here
+            
+                // Get the amount record by its ID
+                $academicFeeAmount = AcademicFeeAmount::find($amountId);
+            
+                if (!$academicFeeAmount) {
+                    return response()->json(['code' => 0, 'error' => 'Academic fee amount not found']);
+                }
+            
+                // Update the amount field based on your requirements
+                $newAmount = $val; // Define how you want to update the amount here
+            
+                // Update the amount field
+                $academicFeeAmount->amount = $newAmount;
+                $academicFeeAmount->save();
+            }
+            
+
+            return response()->json(['code' => 1, 'msg' => __('language.fee_amount_group_edit_msg'), 'redirect' => 'admin/academic-fee-amount-list']);
+        } catch (\Exception $e) {
+            return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
+        }
     }
-}
+
+
+    public function deleteAcademicFeeAmount(Request $request)
+    {
+        $amountIds = $request->fee_amount_id;
+        $amountIdsArray = explode(',', $amountIds);
+
+
+        // Create an array to store the IDs of successfully deleted records
+        $deletedIds = [];
+
+        foreach ($amountIdsArray as $amountId ) {
+            // Remove any single quotes from the keys
+            $amountId = trim($amountId, "'");
+        
+            $query = AcademicFeeAmount::find($amountId);
+            if ($query) {
+                $query->delete();
+                // Add the ID to the deletedIds array
+                $deletedIds[] = $amountId;
+            }
+        }
+
+        if (!empty($deletedIds)) {
+            return response()->json(['code' => 1, 'msg' => __('language.fee_amount_group_del_msg'), 'redirect' => 'admin/academic-fee-amount-list']);
+        } else {
+            return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
+        }
+    }
+
 
 
 

@@ -19,13 +19,13 @@
     margin-top: 10px;
 }
 
-#fee-frequencies-table th {
+/* #fee-frequencies-table th {
     background-color: #007bff;
     color: #fff;
     border: 1px solid #ccc;
     padding: 8px;
     text-align: left;
-}
+} */
 
 #fee-frequencies-table td {
     border: 1px solid #ccc;
@@ -33,13 +33,13 @@
 }
 
 /* Style the Edit and Delete buttons */
-.btn-group button {
+/* .btn-group button {
     background-color: #007bff;
     color: #fff;
     border: none;
     padding: 6px 12px;
     cursor: pointer;
-}
+} */
 
 .btn-group button:hover {
     background-color: #0056b3;
@@ -70,11 +70,11 @@ td .btn-group {
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Fee Amount</h1>
+                        <h1 class="m-0">{{ __('language.fee_amount_group') }}</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Fee Amount</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('language.fee_amount_group') }}</a></li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -91,14 +91,14 @@ td .btn-group {
                             <div class="card-header bg-navy">
                                 <h3 class="card-title">
                                     <i class="fas fa-money-bill-wave mr-1"></i>
-                                    Amount List
+                                    {{ __('language.fee_amount_group_list') }}
                                 </h3>
                                 <div class="card-tools">
                                     <ul class="nav nav-pills ml-auto">
                                         <li class="nav-item">
                                             <button class="btn btn-success btn-sm" data-toggle="modal"
                                                 data-target="#addFeeAmountModal">
-                                                <i class="fas fa-plus-square mr-1"></i> Add Amount
+                                                <i class="fas fa-plus-square mr-1"></i> {{ __('language.fee_amount_group_add') }}
                                             </button>
                                         </li>
                                     </ul>
@@ -109,10 +109,9 @@ td .btn-group {
                                 <table class="table table-bordered table-striped table-hover table-sm" id="fee-frequencies-table">
                                     <thead style="border-top: 1px solid #b4b4b4">
                                         <th style="width: 15px">#</th>
-                                        <th>{{ __('language.fee_group_name') }}</th>
+                                        <th>{{ __('language.fee_amount_group_name') }}</th>
                                         <th>{{ __('language.fee_head_name') }}</th>
                                         <th>{{ __('language.class_name') }}</th>
-                                        <th>{{ __('language.amount') }}</th>
                                         <th>{{ __('language.academic_year') }}</th>
                                         <th>{{ __('language.status') }}</th>
                                         <th style="width: 40px">{{ __('language.action') }}</th>
@@ -156,7 +155,6 @@ td .btn-group {
                                                         </ul>
                                                     </td>
                                                     <td>{{ $className }}</td>
-                                                    <td></td> <!-- You may leave this column empty or display some other data if needed -->
                                                     <td>{{ $academicYear }}</td>
                                                     <td></td> <!-- You may leave this column empty or display some other data if needed -->
                                                     <td>
@@ -170,6 +168,9 @@ td .btn-group {
                                                                 data-row-id="{{ $loop->iteration }}"
                                                             >
                                                                 <i class="fas fa-edit"></i>
+                                                            </button>
+                                                            <button type="button" class="btn btn-danger btn-xs" data-id="{{ $groupIdsString }}" id="deleteFeeAmountBtn">
+                                                                <i class="fas fa-trash-alt"></i>
                                                             </button>
                                                         </div>
                                                     </td>
@@ -199,7 +200,7 @@ td .btn-group {
                     <div class="modal-dialog modal-dialog-centered modal-lg">
                         <div class="modal-content">
                             <div class="modal-header bg-success">
-                                <h5 class="modal-title" id="addFeeAmountModalLabel">{{ __('language.fee_frequency_add') }}
+                                <h5 class="modal-title" id="addFeeAmountModalLabel">{{ __('language.fee_amount_group_add') }}
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -212,7 +213,7 @@ td .btn-group {
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="freq_name">Fee Group</label>
+                                                <label for="freq_name">{{ __('language.aca_fee_group') }}</label>
                                                 <select class="form-control form-control-sm" name="aca_group_id"
                                                     id="aca_feegroup_id">
                                                     <option value="">Select</option>
@@ -264,7 +265,7 @@ td .btn-group {
                                         </div>
                                     </div>
 
-                                    <button type="submit" class="btn btn-success">Save</button>
+                                    <button type="submit" class="btn btn-success">{{ __('language.save') }}</button>
                                 </form>
                             </div>
                         </div>
@@ -274,10 +275,10 @@ td .btn-group {
                 
 <!-- Edit Group Modal -->
 <div class="modal fade editmodal" id="editGroupModal" tabindex="-1" role="dialog" aria-labelledby="editGroupModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editGroupModalLabel">Edit Group</h5>
+                <h5 class="modal-title" id="editGroupModalLabel">{{ __('language.fee_amount_group_edit') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -449,17 +450,37 @@ td .btn-group {
                 $('#editGroupModal').modal('show');
                 var inputFieldsHtml = '';
 
-                data.data.forEach(item => {
-                    inputFieldsHtml += `
-                        <div class="form-group">
-                            <label for="amount_${item.id}">${item.fee_head_name}</label>
-                            <input type="text" class="form-control" id="amount_${item.id}" name="amount_id['${item.id}']" value="${item.amount}">
-                        </div>`;
+                // Create two columns for input fields
+                var column1 = '';
+                var column2 = '';
+
+                data.data.forEach((item, index) => {
+                    // Decide which column to place the input field
+                    if (index % 2 === 0) {
+                        column1 += `
+                            <div class="form-group">
+                                <label for="amount_${item.id}">${item.fee_head_name}</label>
+                                <input type="text" class="form-control form-control-sm" required id="amount_${item.id}" name="amount_id['${item.id}']" value="${item.amount}">
+                            </div>`;
+                    } else {
+                        column2 += `
+                            <div class="form-group">
+                                <label for="amount_${item.id}">${item.fee_head_name}</label>
+                                <input type="text" class="form-control form-control-sm" required id="amount_${item.id}" name="amount_id['${item.id}']" value="${item.amount}">
+                            </div>`;
+                    }
                 });
+
+                // Add the columns to the modal
+                inputFieldsHtml += `<div class="row">
+                    <div class="col-md-6">${column1}</div>
+                    <div class="col-md-6">${column2}</div>
+                </div>`;
 
                 $('#dynamicInputFields').html(inputFieldsHtml);
             }, 'json');
         });
+
 
         $('#update-fee-amount-form').on('submit', function (e) {
             e.preventDefault();
@@ -491,6 +512,33 @@ td .btn-group {
                             window.location.href = redirectUrl;
                         }, 1000);
                     }
+                }
+            });
+        });
+
+        $(document).on('click', '#deleteFeeAmountBtn', function () {
+            var fee_amount_id = $(this).data('id');
+            var url = '<?= route("admin.deleteAcademicFeeAmount"); ?>';
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You want to delete this fee amount group',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it',
+                cancelButtonText: 'Cancel',
+            }).then(function (result) {
+                if (result.isConfirmed) {
+                    $.post(url, { fee_amount_id: fee_amount_id }, function (data) {
+                        if (data.code == 1) {
+                            var redirectUrl = data.redirect;
+                            toastr.success(data.msg);
+                            setTimeout(function () {
+                                window.location.href = redirectUrl;
+                            }, 1000);
+                        } else {
+                            toastr.error(data.msg);
+                        }
+                    }, 'json');
                 }
             });
         });

@@ -89,14 +89,16 @@ return [
     "fee_head_edit_msg" => "ফি হেডটি সফলভাবে আপডেট করা হয়েছে",
     "fee_head_del_msg" => "ফি হেডটি তালিকা থেকে মুছে ফেলা হয়েছে",
 
-    'fee_group_list' => 'ফি গ্রুপ তালিকা',
-    'fee_group_add' => 'ফি গ্রুপ যোগ করুন',
-    'fee_group_edit' => 'ফি গ্রুপ সম্পাদনা করুন',
-    'fee_group_name' => 'ফি গ্রুপ নাম',
-    'academic_year' => 'শিক্ষাবর্ষ',
-    'fee_group_add_msg' => 'ফি গ্রুপ সফলভাবে যোগ করা হয়েছে',
-    'fee_group_edit_msg' => 'ফি গ্রুপ সফলভাবে আপডেট করা হয়েছে',
-    'fee_group_del_msg' => 'ফি গ্রুপ তালিকা থেকে মুছে ফেলা হয়েছে',
+    'fee_amount_group' => 'ফি এমাউন্ট গ্রুপ',
+    'fee_amount_group_list' => 'ফি এমাউন্ট গ্রুপ তালিকা',
+    'fee_amount_group_add' => 'ফি এমাউন্ট গ্রুপ যোগ করুন',
+    'fee_amount_group_edit' => 'ফি এমাউন্ট গ্রুপ সম্পাদনা করুন',
+    'fee_amount_group_name' => 'ফি এমাউন্ট গ্রুপ নাম',
+    'fee_amount_group_add_msg' => 'ফি এমাউন্ট গ্রুপ সফলভাবে যোগ করা হয়েছে',
+    'fee_amount_group_edit_msg' => 'ফি এমাউন্ট গ্রুপ সফলভাবে আপডেট করা হয়েছে',
+    'fee_amount_group_del_msg' => 'ফি এমাউন্ট গ্রুপ তালিকা থেকে মুছে ফেলা হয়েছে',
+
+    
 
     // Manage Student
     "manage_student" => "ছাত্র-ছাত্রী পরিচালনা",
