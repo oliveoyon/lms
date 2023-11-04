@@ -23,4 +23,6 @@ class AcademicFeeAmount extends Model
         return $this->belongsTo(EduClasses::class, 'class_id');
     }
 
+    
+    
 }

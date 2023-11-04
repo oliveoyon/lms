@@ -3,6 +3,16 @@
 @push('admincss')
 <!-- Add your custom CSS here -->
 <style>
+   
+    .required:after {
+        content: " *";
+        color: red;
+    }
+
+    
+
+
+    /* Custom Form Styles */
     .custom-form {
         background: white;
         border: 1px solid #ccc;
@@ -19,13 +29,17 @@
         margin-bottom: 15px;
     }
 
+    /* Timeline Styles */
     .timeline {
-        list-style-type: none;
+        list-style: none;
         display: flex;
         justify-content: space-between;
         padding: 0;
         background: #673AB7;
         color: white;
+        margin: 0;
+        padding: 0;
+        margin-bottom: 10px;
     }
 
     .timeline li {
@@ -34,6 +48,11 @@
         cursor: pointer;
         padding: 10px 0;
         transition: background-color 0.3s, color 0.3s;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .timeline li.active {
@@ -46,25 +65,17 @@
         margin-bottom: 10px;
     }
 
-    .btn-container {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 20px;
+
+    /* Mobile Responsive Styles */
+    @media (max-width: 768px) {
+        .timeline {
+            display: none;
+        }
+
+        
     }
 
-    .btn-container button {
-        background-color: #673AB7;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        padding: 10px 20px;
-        cursor: pointer;
-    }
 
-    .required:after {
-        content: " *";
-        color: red;
-    }
 </style>
 @endpush
 
@@ -88,7 +99,6 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    
                     <div class="alert alert-danger alert-dismissible" id="errorAlert" style="display: none;">
                         <button type="button" class="close" id="closeErrorAlert">&times;</button>
                         <span id="errorAlertText"></span>
@@ -98,35 +108,31 @@
                         <button type="button" class="close" id="closeCompletionAlert">&times;</button>
                         <span id="completionAlertText"></span>
                     </div>
-                    
-                    
-                   
+                    <ul class="timeline">
+                        <li class="timeline-item active" data-step="1">
+                            <i class="fas fa-graduation-cap"></i>
+                            Step 1
+                        </li>
+                        <li class="timeline-item" data-step="2">
+                            <i class="fas fa-user"></i>
+                            Step 2
+                        </li>
+                        <li class="timeline-item" data-step="3">
+                            <i class="fas fa-users"></i>
+                            Step 3
+                        </li>
+                        <li class="timeline-item" data-step="4">
+                            <i class="fa fa-image"></i>
+                            Step 4
+                        </li>
+                        <li class="timeline-item" data-step="5">
+                            <i class="fa fa-check-circle"></i>
+                            Finish
+                        </li>
+                    </ul>
                     <div class="card custom-form">
-                        <ul class="timeline">
-                            <li class="timeline-item active" data-step="1">
-                                <i class="fas fa-graduation-cap"></i>
-                                Step 1
-                            </li>
-                            <li class="timeline-item" data-step="2">
-                                <i class="fas fa-user"></i>
-                                Step 2
-                            </li>
-                            <li class="timeline-item" data-step="3">
-                                <i class="fas fa-users"></i>
-                                Step 3
-                            </li>
-                            <li class="timeline-item" data-step="4">
-                                <i class="fa fa-image"></i>
-                                Step 4
-                            </li>
-                            <li class="timeline-item" data-step="5">
-                                <i class="fa fa-check-circle"></i>
-                                Finish
-                            </li>
-                        </ul>
                         
                         <form id="customForm">
-                            
                             <fieldset>
                                 <h2>Academic Details</h2>
                                 <div class="row">
@@ -192,14 +198,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="admissiondate" class="required">Admission Date:</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="fas fa-calendar"></i>
-                                                    </span>
-                                                </div>
-                                                <input type="date" id="admissiondate" name="admissiondate" class="form-control" required>
-                                            </div>
+                                            <input type="date" id="admissiondate" name="admissiondate" class="form-control" required>
                                         </div>
                                     </div>
                                 </div>

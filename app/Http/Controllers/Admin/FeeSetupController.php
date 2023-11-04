@@ -362,7 +362,7 @@ class FeeSetupController extends Controller
 
     public function academicFeeAmountList()
     {
-        $academicFeeAmounts = AcademicFeeAmount::with('academicFeeGroup', 'academicFeeHead', 'eduClass')->get();
+        $academicFeeAmounts = AcademicFeeAmount::orderBy('class_id', 'asc')->with('academicFeeGroup', 'academicFeeHead', 'eduClass')->get();
         $feeGroups = AcademicFeeGroup::all();
         $classes = EduClasses::get()->where('class_status', 1);;
         return view('dashboard.admin.FeeSetup.feeamount', compact('academicFeeAmounts', 'feeGroups', 'classes'));

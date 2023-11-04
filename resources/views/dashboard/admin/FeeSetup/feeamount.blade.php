@@ -106,7 +106,7 @@ td .btn-group {
                             </div>
                             <div class="card-body table-responsive">
                                 <!-- Your table for fee frequencies listing goes here -->
-                                <table class="table table-bordered table-striped table-hover table-sm" id="fee-frequencies-table">
+                                <table class="table table-bordered table-striped table-hover table-sm example" id="fee-frequencies-table">
                                     <thead style="border-top: 1px solid #b4b4b4">
                                         <th style="width: 15px">#</th>
                                         <th>{{ __('language.fee_amount_group_name') }}</th>
@@ -121,7 +121,7 @@ td .btn-group {
                                             @foreach ($academicFeeAmounts as $feeAmount)
                                                 @php
                                                     // Group fee amounts by group name, class name, and academic year
-                                                    $groupKey = $feeAmount->academicFeeGroup->aca_group_name . '-' . $feeAmount->eduClass->class_name . '-' . $feeAmount->academic_year;
+                                                    $groupKey = $feeAmount->academicFeeGroup->aca_group_name . '-' . $feeAmount->class_id . '-' . $feeAmount->academic_year;
                                                     $groupedFeeAmounts[$groupKey][] = [
                                                         'fee_head_name' => $feeAmount->academicFeeHead->aca_feehead_name,
                                                         'amount' => $feeAmount->amount,
@@ -142,6 +142,8 @@ td .btn-group {
 
                                                     // Create a comma-separated string of 'id' values
                                                     $groupIdsString = implode(',', $groupIds);
+
+                                                    $class = \App\Models\Admin\EduClasses::find($className[0]);
                                                 
                                                 @endphp
                                                 <tr data-row-id="{{ $loop->iteration }}">
@@ -154,7 +156,7 @@ td .btn-group {
                                                             @endforeach
                                                         </ul>
                                                     </td>
-                                                    <td>{{ $className }}</td>
+                                                    <td>{{ $class->class_name .' - '. $class->version->version_name }}</td>
                                                     <td>{{ $academicYear }}</td>
                                                     <td></td> <!-- You may leave this column empty or display some other data if needed -->
                                                     <td>
@@ -543,8 +545,11 @@ td .btn-group {
             });
         });
 
-
-       
-
     </script>
+    <script>
+        $(document).ready(function() {
+            $('.example').DataTable();
+        });
+    </script>
+    
 @endpush
