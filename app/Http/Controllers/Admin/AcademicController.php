@@ -273,19 +273,11 @@ class AcademicController extends Controller
         }
     }
 
-    public function getClassesByVersion(Request $request)
-    {
-        $versionId = $request->input('version_id');
-        $classes = EduClasses::where('version_id', $versionId)->get();
-
-        return response()->json(['classes' => $classes]);
-    }
-
     public function subjectList()
     {
         // Retrieve a list of subjects and any related data you need
         $subjects = Subject::with(['version', 'class'])->get();
-        $versions = EduVersions::get()->where('version_status', 1);;
+        $versions = EduVersions::get()->where('version_status', 1);
         $classes = EduClasses::get()->where('class_status', 1);;
 
         return view('dashboard.admin.academic.subject', compact('subjects', 'versions', 'classes'));

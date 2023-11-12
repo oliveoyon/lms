@@ -36,6 +36,7 @@ class CreateStudentsTable extends Migration
             $table->string('std_permanent_address', 200);
             $table->string('std_f_occupation', 30);
             $table->string('std_m_occupation', 30);
+            $table->double('f_yearly_income');
             $table->string('std_gurdian_name', 100);
             $table->string('std_gurdian_relation', 30);
             $table->string('std_gurdian_mobile', 15);

@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Admin\AcademicController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\DependentController;
 use App\Http\Controllers\Admin\FeeSetupController;
+use App\Http\Controllers\Admin\StudentManagement;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -79,8 +81,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('getSectionDetails', [AcademicController::class, 'getSectionDetails'])->name('getSectionDetails');
         Route::post('updateSectionDetails', [AcademicController::class, 'updateSectionDetails'])->name('updateSectionDetails');
         Route::post('deleteSection', [AcademicController::class, 'deleteSection'])->name('deleteSection');
-        Route::post('/get-classes-by-version', [AcademicController::class, 'getClassesByVersion'])->name('getClassesByVersion');
-
+        
         // Subject Management
         Route::get('subject-list', [AcademicController::class, 'subjectList'])->name('subject-list');
         Route::post('addSubject', [AcademicController::class, 'addSubject'])->name('addSubject');
@@ -109,7 +110,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('updateAcademicFeeGroupDetails', [FeeSetupController::class, 'updateAcademicFeeGroupDetails'])->name('updateAcademicFeeGroupDetails');
         Route::post('deleteAcademicFeeGroup', [FeeSetupController::class, 'deleteAcademicFeeGroup'])->name('deleteAcademicFeeGroup');
 
-        Route::get('multiform', [FeeSetupController::class, 'multiform'])->name('multiform');
 
         // Routes for Academic Fee Amount Management
         Route::get('academic-fee-amount-list', [FeeSetupController::class, 'academicFeeAmountList'])->name('academic-fee-amount-list');
@@ -119,6 +119,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('deleteAcademicFeeAmount', [FeeSetupController::class, 'deleteAcademicFeeAmount'])->name('deleteAcademicFeeAmount');
         Route::get('/get-fee-heads', [FeeSetupController::class, 'getFeeHeads'])->name('get-fee-heads');
         Route::get('/get-group-data', [FeeSetupController::class, 'getGroupData'])->name('getGroupData');
+
+        // Student Management
+        Route::get('student-admission', [StudentManagement::class, 'admission'])->name('admission');
+        Route::post('/stdAdmission', [StudentManagement::class, 'stdAdmission'])->name('stdAdmission');
+
+        // Dependent Controller
+        Route::post('/get-classes-by-version', [DependentController::class, 'getClassesByVersion'])->name('getClassesByVersion');
+        Route::post('/get-sections-by-class', [DependentController::class, 'getSectionByClass'])->name('getSectionByClass');
+
 
 
 

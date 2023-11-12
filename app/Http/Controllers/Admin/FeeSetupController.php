@@ -15,10 +15,6 @@ use Illuminate\Validation\Rule;
 
 class FeeSetupController extends Controller
 {
-    public function multiform()
-    {
-        return view('dashboard.admin.FeeSetup.multiform');
-    }
     
     public function feeFrequencyList()
     {

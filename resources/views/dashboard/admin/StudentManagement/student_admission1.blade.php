@@ -3,14 +3,10 @@
 @push('admincss')
 <!-- Add your custom CSS here -->
 <style>
-   
     .required:after {
         content: " *";
         color: red;
     }
-
-    
-
 
     /* Custom Form Styles */
     .custom-form {
@@ -65,18 +61,19 @@
         margin-bottom: 10px;
     }
 
+    /* Hide hidden fields in inactive steps */
+    .custom-form fieldset:not(:first-of-type) [type="hidden"] {
+        display: none !important;
+    }
 
     /* Mobile Responsive Styles */
     @media (max-width: 768px) {
         .timeline {
             display: none;
         }
-
-        
     }
-
-
 </style>
+
 @endpush
 
 @section('content')
@@ -132,40 +129,42 @@
                     </ul>
                     <div class="card custom-form">
                         
-                        <form id="customForm">
+                        <form action="{{ route('admin.stdAdmission') }}" method="POST" autocomplete="off" id="add-student-form">
+                            @csrf
                             <fieldset>
                                 <h2>Academic Details</h2>
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="academicYear" class="required">Academic Year:</label>
-                                            <select id="academicYear" name="academicYear" class="form-control" required>
-                                                <option value="">Select Academic Year</option>
-                                                <option value="2023-2024">2023-2024</option>
-                                                <option value="2024-2025">2024-2025</option>
-                                                <option value="2025-2026">2025-2026</option>
+                                            <select class="form-control" name="academic_year" id="academic_yeasr">
+                                                @php
+                                                    $currentYear = date('Y');
+                                                @endphp
+                                                @for ($i = $currentYear - 5; $i <= $currentYear + 5; $i++)
+                                                    <option value="{{ $i }}" <?php if($i == $currentYear){echo "selected";}?> >
+                                                        {{ $i }} - {{ $i + 1 }}
+                                                    </option>
+                                                @endfor
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="versionName" class="required">Version Name:</label>
-                                            <select id="versionName" name="versionName" class="form-control" required>
-                                                <option value="">Select Version Name</option>
-                                                <option value="Version A">Version A</option>
-                                                <option value="Version B">Version B</option>
-                                                <option value="Version C">Version C</option>
+                                            <select class="form-control version_id" name="version_id" id="version_id">
+                                                <option value="">{{ __('language.select_version') }}</option>
+                                                @foreach ($versions as $version)
+                                                    <option value="{{ $version->id }}">{{ $version->version_name }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="className" class="required">Class Name:</label>
-                                            <select id="className" name="className" class="form-control" required>
-                                                <option value="">Select Class Name</option>
-                                                <option value="Class 1">Class 1</option>
-                                                <option value="Class 2">Class 2</option>
-                                                <option value="Class 3">Class 3</option>
+                                            <select class="form-control class_id" name="class_id" id="class_id" disabled required>
+                                                <option value="">{{ __('language.select_class') }}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -173,12 +172,9 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="sectionName" class="required">Section Name:</label>
-                                            <select id="sectionName" name="sectionName" class="form-control" required>
-                                                <option value="">Select Section Name</option>
-                                                <option value="Section A">Section A</option>
-                                                <option value="Section B">Section B</option>
-                                                <option value="Section C">Section C</option>
+                                            <label for="section_id" class="required">Section Name:</label>
+                                            <select id="section_id" name="section_id" class="form-control section_id" disabled required>
+                                                <option value="">{{ __('language.select_section') }}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -186,7 +182,7 @@
                                         <div class="form-group">
                                             <label for="rollNo" class="required">Roll No:</label>
                                             <div class="input-group">
-                                                <input type="text" id="rollNo" name="rollNo" class="form-control" placeholder="Roll No" required>
+                                                <input type="text" id="rollNo" name="roll_no" class="form-control" placeholder="Roll No" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">
                                                         <i class="fa fa-user"></i>
@@ -198,7 +194,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="admissiondate" class="required">Admission Date:</label>
-                                            <input type="date" id="admissiondate" name="admissiondate" class="form-control" required>
+                                            <input type="date" id="admissiondate" name="admission_date" class="form-control" required>
                                         </div>
                                     </div>
                                 </div>
@@ -206,7 +202,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="studentCategory" class="required">Student Category:</label>
-                                            <select id="studentCategory" name="studentCategory" class="form-control" required>
+                                            <select id="studentCategory" name="std_category" class="form-control" required>
                                                 <option value="">Select Student Category</option>
                                                 <option value="Category A">Category A</option>
                                                 <option value="Category B">Category B</option>
@@ -242,7 +238,7 @@
                                                     <i class="fas fa-user"></i>
                                                 </span>
                                             </div>
-                                            <input type="text" id="studentFullName" name="studentFullName" class="form-control" required>
+                                            <input type="text" id="studentFullName" name="std_name" class="form-control" required>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4">
@@ -253,7 +249,7 @@
                                                     <i class="fas fa-user"></i>
                                                 </span>
                                             </div>
-                                            <input type="text" id="studentFullNameBangla" name="studentFullNameBangla" class="form-control">
+                                            <input type="text" id="studentFullNameBangla" name="std_name_bn" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4">
@@ -264,7 +260,7 @@
                                                     <i class="fas fa-user"></i>
                                                 </span>
                                             </div>
-                                            <input type="text" id="fatherName" name="fatherName" class="form-control" required>
+                                            <input type="text" id="fatherName" name="std_fname" class="form-control" required>
                                         </div>
                                     </div>
                                 </div>
@@ -277,7 +273,7 @@
                                                     <i class="fas fa-user"></i>
                                                 </span>
                                             </div>
-                                            <input type="text" id="motherName" name="motherName" class="form-control" required>
+                                            <input type="text" id="motherName" name="std_mname" class="form-control" required>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4">
@@ -288,7 +284,7 @@
                                                     <i class="fas fa-phone"></i>
                                                 </span>
                                             </div>
-                                            <input type="tel" id="studentPhone" name="studentPhone" class="form-control" required>
+                                            <input type="tel" id="studentPhone" name="std_phone" class="form-control" required>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4">
@@ -299,7 +295,7 @@
                                                     <i class="fas fa-phone"></i>
                                                 </span>
                                             </div>
-                                            <input type="tel" id="studentPhoneAlt" name="studentPhoneAlt" class="form-control">
+                                            <input type="tel" id="studentPhoneAlt" name="std_phone1" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -312,7 +308,7 @@
                                                     <i class="fas fa-calendar"></i>
                                                 </span>
                                             </div>
-                                            <input type="date" id="dob" name="dob" class="form-control" required>
+                                            <input type="date" id="dob" name="std_dob" class="form-control" required>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4">
@@ -323,12 +319,12 @@
                                                     <i class="fas fa-envelope"></i>
                                                 </span>
                                             </div>
-                                            <input type="email" id="email" name="email" class="form-control">
+                                            <input type="email" id="email" name="std_email" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label for="bloodGroup">Blood Group:</label>
-                                        <select id="bloodGroup" name="bloodGroup" class="form-control">
+                                        <select id="bloodGroup" name="blood_group" class="form-control">
                                             <option value="A+">A+</option>
                                             <option value="A-">A-</option>
                                             <option value="B+">B+</option>
@@ -343,15 +339,15 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
                                         <label for="presentAddress" class="required">Present Address:</label>
-                                        <textarea id="presentAddress" name="presentAddress" class="form-control" rows="5" required></textarea>
+                                        <textarea id="presentAddress" name="std_present_address" class="form-control" rows="5" required></textarea>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label for="permanentAddress" class="required">Permanent Address:</label>
-                                        <textarea id="permanentAddress" name="permanentAddress" class="form-control" rows="5" required></textarea>
+                                        <textarea id="permanentAddress" name="std_permanent_address" class="form-control" rows="5" required></textarea>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label for="gender" class="required">Gender:</label>
-                                        <select id="gender" name="gender" class="form-control" required>
+                                        <select id="gender" name="std_gender" class="form-control" required>
                                             <option value="male">Male</option>
                                             <option value="female">Female</option>
                                             <option value="other">Other</option>
@@ -376,7 +372,7 @@
                                                     <i class="fas fa-briefcase"></i>
                                                 </span>
                                             </div>
-                                            <input type="text" id="fatherOccupation" name="fatherOccupation" class="form-control">
+                                            <input type="text" id="fatherOccupation" name="std_f_occupation" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4">
@@ -387,7 +383,7 @@
                                                     <i class="fas fa-briefcase"></i>
                                                 </span>
                                             </div>
-                                            <input type="text" id="motherOccupation" name="motherOccupation" class="form-control">
+                                            <input type="text" id="motherOccupation" name="std_m_occupation" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4">
@@ -398,7 +394,7 @@
                                                     <i class="fas fa-dollar-sign"></i>
                                                 </span>
                                             </div>
-                                            <input type="number" id="yearlyIncome" name="yearlyIncome" class="form-control">
+                                            <input type="number" id="yearlyIncome" name="f_yearly_income" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -411,7 +407,7 @@
                                 <h2>Image Upload</h2>
                                 <div class="form-group">
                                     <label for="pic">Upload Your Photo:</label>
-                                    <input type="file" id="pic" name="pic" accept="image/*">
+                                    <input type="file" id="pic" name="std_picture" accept="image/*">
                                 </div>
                                 <!-- Other form fields for Step 3 -->
                                 <div class="btn-container">
@@ -431,7 +427,7 @@
                                                     <i class="fas fa-user"></i>
                                                 </span>
                                             </div>
-                                            <input type="text" id="guardianName" name="guardianName" class="form-control">
+                                            <input type="text" id="guardianName" name="std_gurdian_name" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4">
@@ -442,7 +438,7 @@
                                                     <i class="fas fa-users"></i>
                                                 </span>
                                             </div>
-                                            <input type="text" id="relationship" name="relationship" class="form-control">
+                                            <input type="text" id="relationship" name="std_gurdian_relation" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4">
@@ -453,13 +449,13 @@
                                                     <i class="fas fa-phone"></i>
                                                 </span>
                                             </div>
-                                            <input type="tel" id="guardianPhone" name="guardianPhone" class="form-control">
+                                            <input type="tel" id="guardianPhone" name="std_gurdian_mobile" class="form-control">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="guardianAddress">Guardian's Address:</label>
-                                    <textarea id="guardianAddress" name="guardianAddress" class="form-control summernote" rows="3"></textarea>
+                                    <textarea id="guardianAddress" name="std_gurdian_address" class="form-control summernote" rows="3"></textarea>
                                 </div>
                                 <div class="btn-container">
                                     <button type="button" class="btn btn-primary previous">Previous</button>
@@ -480,6 +476,84 @@
 
 @push('adminjs')
 
+<script>
+
+$.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+
+$(document).ready(function() {
+    // When the "Version" dropdown changes
+    $('.version_id').on('change', function() {
+        var versionId = $(this).val();
+        
+        // Enable the "Class" dropdown
+        $('.class_id').prop('disabled', false).data('version-id', versionId);
+        
+        // Add the extra option to the "Class" dropdown
+        $('.class_id').html('<option value="">-- Please select a class --</option>');
+        
+        // Make an AJAX request to fetch classes based on the selected version
+        $.ajax({
+            url: '{{ route('admin.getClassesByVersion') }}',
+            method: 'POST',
+            data: {
+                version_id: versionId,
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(data) {
+                var classDropdown = $('.class_id');
+                
+                // Populate the "Class" dropdown with the fetched data
+                $.each(data.classes, function(key, value) {
+                    classDropdown.append($('<option>', {
+                        value: value.id,
+                        text: value.class_name
+                    }));
+                });
+            }
+        });
+    });
+
+    // When the "Class" dropdown changes
+    $('.class_id').on('change', function() {
+        var classId = $(this).val();
+        var versionId = $(this).data('version-id'); // Retrieve the version_id
+        
+        // Enable the "Section" dropdown
+        $('.section_id').prop('disabled', false).data('version-id', versionId); // Pass version_id to the Section dropdown
+        
+        // Add the extra option to the "Section" dropdown
+        $('.section_id').html('<option value="">-- Please select a section --</option>');
+        
+        // Make an AJAX request to fetch sections based on the selected class
+        $.ajax({
+            url: '{{ route('admin.getSectionByClass') }}',
+            method: 'POST',
+            data: {
+                class_id: classId,
+                version_id: versionId, // Pass version_id to the server
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(data) {
+                var sectionDropdown = $('.section_id');
+                
+                // Populate the "Section" dropdown with the fetched data
+                $.each(data.sections, function(key, value) {
+                    sectionDropdown.append($('<option>', {
+                        value: value.id,
+                        text: value.section_name
+                    }));
+                });
+            }
+        });
+    });
+});
+
+</script>
 <script>
     $(document).ready(function() {
         var currentStep = 1;
@@ -588,6 +662,10 @@
         }
     });
 </script>
+
+
+
+    
 
 
 
