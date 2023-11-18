@@ -21,8 +21,8 @@ class DependentController extends Controller
     {
         $classId = $request->input('class_id');
         $versionId = $request->input('version_id');
+        
         $sections = Section::where(['class_id' => $classId, 'version_id' => $versionId])->get();
-
         return response()->json(['sections' => $sections]);
     }
 }
