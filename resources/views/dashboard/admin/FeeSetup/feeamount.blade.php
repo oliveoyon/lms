@@ -11,57 +11,55 @@
 
 @section('content')
     <style>
-       /* Style the table */
-#fee-frequencies-table {
-    border: 1px solid #ccc;
-    border-collapse: collapse;
-    width: 100%;
-    margin-top: 10px;
-}
+        /* Style the table */
+        #fee-frequencies-table {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 10px;
+        }
 
-/* #fee-frequencies-table th {
-    background-color: #007bff;
-    color: #fff;
-    border: 1px solid #ccc;
-    padding: 8px;
-    text-align: left;
-} */
+        /* #fee-frequencies-table th {
+            background-color: #007bff;
+            color: #fff;
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        } */
 
-#fee-frequencies-table td {
-    border: 1px solid #ccc;
-    padding: 8px;
-}
+        #fee-frequencies-table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+        }
 
-/* Style the Edit and Delete buttons */
-/* .btn-group button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 6px 12px;
-    cursor: pointer;
-} */
+        /* Style the Edit and Delete buttons */
+        /* .btn-group button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 6px 12px;
+            cursor: pointer;
+        } */
 
-.btn-group button:hover {
-    background-color: #0056b3;
-}
+        .btn-group button:hover {
+            background-color: #0056b3;
+        }
 
-/* Style the list within the table cell */
-td ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
+        /* Style the list within the table cell */
+        td ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
 
-td li {
-    margin-bottom: 5px;
-}
+        td li {
+            margin-bottom: 5px;
+        }
 
-/* Add space between the button group and cell content */
-td .btn-group {
-    margin-top: 10px;
-}
-
-
+        /* Add space between the button group and cell content */
+        td .btn-group {
+            margin-top: 10px;
+        }
     </style>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -74,7 +72,8 @@ td .btn-group {
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('language.fee_amount_group') }}</a></li>
+                            <li class="breadcrumb-item"><a
+                                    href="{{ route('admin.home') }}">{{ __('language.fee_amount_group') }}</a></li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -98,7 +97,8 @@ td .btn-group {
                                         <li class="nav-item">
                                             <button class="btn btn-success btn-sm" data-toggle="modal"
                                                 data-target="#addFeeAmountModal">
-                                                <i class="fas fa-plus-square mr-1"></i> {{ __('language.fee_amount_group_add') }}
+                                                <i class="fas fa-plus-square mr-1"></i>
+                                                {{ __('language.fee_amount_group_add') }}
                                             </button>
                                         </li>
                                     </ul>
@@ -106,7 +106,8 @@ td .btn-group {
                             </div>
                             <div class="card-body table-responsive">
                                 <!-- Your table for fee frequencies listing goes here -->
-                                <table class="table table-bordered table-striped table-hover table-sm example" id="fee-frequencies-table">
+                                <table class="table table-bordered table-striped table-hover table-sm example"
+                                    id="fee-frequencies-table">
                                     <thead style="border-top: 1px solid #b4b4b4">
                                         <th style="width: 15px">#</th>
                                         <th>{{ __('language.fee_amount_group_name') }}</th>
@@ -125,7 +126,7 @@ td .btn-group {
                                                     $groupedFeeAmounts[$groupKey][] = [
                                                         'fee_head_name' => $feeAmount->academicFeeHead->aca_feehead_name,
                                                         'amount' => $feeAmount->amount,
-                                                        'id' => $feeAmount->id
+                                                        'id' => $feeAmount->id,
                                                     ];
                                                 @endphp
                                             @endforeach
@@ -134,7 +135,7 @@ td .btn-group {
                                                 @php
                                                     // Split the group key to extract group name, class name, and academic year
                                                     [$groupName, $className, $academicYear] = explode('-', $groupKey);
-                                                    
+
                                                     $groupIds = [];
                                                     foreach ($feeAmounts as $fee) {
                                                         $groupIds[] = $fee['id'];
@@ -144,7 +145,7 @@ td .btn-group {
                                                     $groupIdsString = implode(',', $groupIds);
 
                                                     $class = \App\Models\Admin\EduClasses::find($className[0]);
-                                                
+
                                                 @endphp
                                                 <tr data-row-id="{{ $loop->iteration }}">
                                                     <td>{{ $loop->iteration }}</td>
@@ -152,26 +153,27 @@ td .btn-group {
                                                     <td>
                                                         <ul>
                                                             @foreach ($feeAmounts as $fee)
-                                                                <li>{{ $fee['fee_head_name'] }} - {{ $fee['amount'] }}</li>
+                                                                <li>{{ $fee['fee_head_name'] }} - {{ $fee['amount'] }}
+                                                                </li>
                                                             @endforeach
                                                         </ul>
                                                     </td>
-                                                    <td>{{ $class->class_name .' - '. $class->version->version_name }}</td>
+                                                    <td>{{ $class->class_name . ' - ' . $class->version->version_name }}
+                                                    </td>
                                                     <td>{{ $academicYear }}</td>
-                                                    <td></td> <!-- You may leave this column empty or display some other data if needed -->
+                                                    <td></td>
+                                                    <!-- You may leave this column empty or display some other data if needed -->
                                                     <td>
                                                         <div class="btn-group">
-                                                            <button
-                                                                type="button"
+                                                            <button type="button"
                                                                 class="btn btn-warning btn-xs edit-group-button"
-                                                                data-toggle="modal"
-                                                                data-target="#editGroupModal"
-                                                                data-id="{{ $groupIdsString }}" 
-                                                                data-row-id="{{ $loop->iteration }}"
-                                                            >
+                                                                data-toggle="modal" data-target="#editGroupModal"
+                                                                data-id="{{ $groupIdsString }}"
+                                                                data-row-id="{{ $loop->iteration }}">
                                                                 <i class="fas fa-edit"></i>
                                                             </button>
-                                                            <button type="button" class="btn btn-danger btn-xs" data-id="{{ $groupIdsString }}" id="deleteFeeAmountBtn">
+                                                            <button type="button" class="btn btn-danger btn-xs"
+                                                                data-id="{{ $groupIdsString }}" id="deleteFeeAmountBtn">
                                                                 <i class="fas fa-trash-alt"></i>
                                                             </button>
                                                         </div>
@@ -186,10 +188,10 @@ td .btn-group {
 
                                     </tbody>
                                 </table>
-                                
-                                
-                                
-                                
+
+
+
+
                             </div>
                         </div>
                     </div>
@@ -202,7 +204,8 @@ td .btn-group {
                     <div class="modal-dialog modal-dialog-centered modal-lg">
                         <div class="modal-content">
                             <div class="modal-header bg-success">
-                                <h5 class="modal-title" id="addFeeAmountModalLabel">{{ __('language.fee_amount_group_add') }}
+                                <h5 class="modal-title" id="addFeeAmountModalLabel">
+                                    {{ __('language.fee_amount_group_add') }}
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -274,32 +277,36 @@ td .btn-group {
                     </div>
                 </div>
 
-                
-<!-- Edit Group Modal -->
-<div class="modal fade editmodal" id="editGroupModal" tabindex="-1" role="dialog" aria-labelledby="editGroupModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editGroupModalLabel">{{ __('language.fee_amount_group_edit') }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form  action="{{ route('admin.updateAcademicFeeAmountDetails') }}" method="post" autocomplete="off" id="update-fee-amount-form">
-                    @csrf
-                    <div id="dynamicInputFields">
-                        <!-- Input fields will be added here -->
+
+                <!-- Edit Group Modal -->
+                <div class="modal fade editmodal" id="editGroupModal" tabindex="-1" role="dialog"
+                    aria-labelledby="editGroupModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editGroupModalLabel">
+                                    {{ __('language.fee_amount_group_edit') }}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{ route('admin.updateAcademicFeeAmountDetails') }}" method="post"
+                                    autocomplete="off" id="update-fee-amount-form">
+                                    @csrf
+                                    <div id="dynamicInputFields">
+                                        <!-- Input fields will be added here -->
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit"
+                                            class="btn btn-block btn-success">{{ __('language.update') }}</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-block btn-success">{{ __('language.update') }}</button>
-                    </div>
-                </form>
-            </div>
-            
-        </div>
-    </div>
-</div>
+                </div>
 
 
 
@@ -407,9 +414,14 @@ td .btn-group {
         });
 
         $(document).ready(function() {
+            // Handle fee amount form submission
             $('#add-fee-amount-form').on('submit', function(e) {
                 e.preventDefault();
                 var form = this;
+
+                // Show the loader overlay
+                $('#loader-overlay').show();
+
                 $.ajax({
                     url: $(form).attr('action'),
                     method: $(form).attr('method'),
@@ -418,6 +430,7 @@ td .btn-group {
                     dataType: 'json',
                     contentType: false,
                     beforeSend: function() {
+                        // Clear any previous error messages
                         $(form).find('span.error-text').text('');
                     },
                     success: function(data) {
@@ -427,8 +440,12 @@ td .btn-group {
                                 $(form).find('span.' + prefix + '_error').text(val[0]);
                             });
                         } else {
-                            // Handle successful academic fee amount addition
+                            // Handle successful fee amount addition
                             var redirectUrl = data.redirect;
+
+                            // Hide the loader overlay on success
+                            $('#loader-overlay').hide();
+
                             $('#addFeeAmountModal').modal('hide');
                             $('#add-fee-amount-form')[0].reset();
                             toastr.success(data.msg);
@@ -437,18 +454,25 @@ td .btn-group {
                                 window.location.href = redirectUrl;
                             }, 1000);
                         }
+                    },
+                    complete: function() {
+                        // Hide the loader overlay on completion (success or failure)
+                        $('#loader-overlay').hide();
                     }
                 });
             });
 
 
+
         });
 
-        $(document).on('click', '.edit-group-button', function () {
+        $(document).on('click', '.edit-group-button', function() {
             var aca_feehead_ids = $(this).data('id');
             var rowId = $(this).data('row-id');
 
-            $.get("{{ route('admin.getGroupData') }}", { aca_feehead_ids: aca_feehead_ids }, function (data) {
+            $.get("{{ route('admin.getGroupData') }}", {
+                aca_feehead_ids: aca_feehead_ids
+            }, function(data) {
                 $('#editGroupModal').modal('show');
                 var inputFieldsHtml = '';
 
@@ -484,9 +508,14 @@ td .btn-group {
         });
 
 
-        $('#update-fee-amount-form').on('submit', function (e) {
+        // Handle fee amount form submission
+        $('#update-fee-amount-form').on('submit', function(e) {
             e.preventDefault();
             var form = this;
+
+            // Show the loader overlay
+            $('#loader-overlay').show();
+
             $.ajax({
                 url: $(form).attr('action'),
                 method: $(form).attr('method'),
@@ -494,33 +523,44 @@ td .btn-group {
                 processData: false,
                 dataType: 'json',
                 contentType: false,
-                beforeSend: function () {
+                beforeSend: function() {
+                    // Clear any previous error messages
                     $(form).find('span.error-text').text('');
                 },
-                success: function (data) {
+                success: function(data) {
                     if (data.code == 0) {
                         // Handle validation errors
-                        $.each(data.error, function (prefix, val) {
+                        $.each(data.error, function(prefix, val) {
                             $(form).find('span.' + prefix + '_error').text(val[0]);
                         });
                     } else {
                         // Handle successful fee frequency update
                         var redirectUrl = data.redirect;
+
+                        // Hide the loader overlay on success
+                        $('#loader-overlay').hide();
+
                         $('.editmodal').modal('hide');
                         $('.editmodal').find('form')[0].reset();
                         toastr.success(data.msg);
 
-                        setTimeout(function () {
+                        setTimeout(function() {
                             window.location.href = redirectUrl;
                         }, 1000);
                     }
+                },
+                complete: function() {
+                    // Hide the loader overlay on completion (success or failure)
+                    $('#loader-overlay').hide();
                 }
             });
         });
 
-        $(document).on('click', '#deleteFeeAmountBtn', function () {
+        // Handle fee amount deletion
+        $(document).on('click', '#deleteFeeAmountBtn', function() {
             var fee_amount_id = $(this).data('id');
-            var url = '<?= route("admin.deleteAcademicFeeAmount"); ?>';
+            var url = '<?= route('admin.deleteAcademicFeeAmount') ?>';
+
             Swal.fire({
                 title: 'Are you sure?',
                 text: 'You want to delete this fee amount group',
@@ -528,28 +568,36 @@ td .btn-group {
                 showCancelButton: true,
                 confirmButtonText: 'Yes, delete it',
                 cancelButtonText: 'Cancel',
-            }).then(function (result) {
-                if (result.isConfirmed) {
-                    $.post(url, { fee_amount_id: fee_amount_id }, function (data) {
+                showLoaderOnConfirm: true,
+                preConfirm: function() {
+                    // Show the loader overlay
+                    $('#loader-overlay').show();
+
+                    return $.post(url, {
+                        fee_amount_id: fee_amount_id
+                    }, function(data) {
                         if (data.code == 1) {
                             var redirectUrl = data.redirect;
                             toastr.success(data.msg);
-                            setTimeout(function () {
+                            setTimeout(function() {
                                 window.location.href = redirectUrl;
                             }, 1000);
                         } else {
                             toastr.error(data.msg);
                         }
                     }, 'json');
+                },
+                allowOutsideClick: function() {
+                    // Hide the loader overlay on outside click
+                    $('#loader-overlay').hide();
+                    return true;
                 }
             });
         });
-
     </script>
     <script>
         $(document).ready(function() {
             $('.example').DataTable();
         });
     </script>
-    
 @endpush

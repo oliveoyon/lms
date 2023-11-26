@@ -667,27 +667,7 @@
                 </a>
             </li>
             
-            
-            
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-
-        
-        
-
-          
-        
-          
+           
           <li class="nav-item">
             <a href="{{ route('admin.logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="nav-link">
               <i class="nav-icon fas fa-sign-out-alt"></i>
@@ -704,6 +684,11 @@
   </aside>
 
  @yield('content')
+
+ 
+ <div id="loader-overlay">
+    <div id="loader"></div>
+</div>
 
   <!-- Main Footer -->
   <footer class="main-footer">
