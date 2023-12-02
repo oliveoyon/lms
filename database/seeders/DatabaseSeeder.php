@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
@@ -14,6 +15,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $admins = [
+            'admin_hash_id' => md5(uniqid(rand(), true)),
+            'school_id' => 100, // Adjust this value based on your needs
+            'name' => 'Admin User',
+            'email' => 'admin@email.com', // Change this email address
+            'password' => Hash::make(1234), // Change this password
+            'verify' => 1, // Set to 1 if you want to mark the email as verified
+            'remember_token' => '',
+            'created_at' => now(),
+            'updated_at' => now(),
+            'pin' => 102, // Adjust this if needed
+            'user_status' => 1, // Set to 1 if you want to mark the user as active
+        ];
+
+        DB::table('admins')->insert($admins);
+
+        
         // Version Table Starts
 
         $versions = [

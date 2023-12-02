@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\AcademicFeeGroup;
 use App\Models\Admin\EduClasses;
 use App\Models\Admin\Section;
 use Illuminate\Http\Request;
@@ -24,5 +25,13 @@ class DependentController extends Controller
         
         $sections = Section::where(['class_id' => $classId, 'version_id' => $versionId])->get();
         return response()->json(['sections' => $sections]);
+    }
+
+    public function getFeegroupByAcademicYear(Request $request)
+    {
+        $academic_year = $request->input('academic_year');
+        $feegroups = AcademicFeeGroup::where(['academic_year' => $academic_year, 'aca_group_status' => 1])->get();
+
+        return response()->json(['feegroups' => $feegroups]);
     }
 }

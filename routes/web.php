@@ -123,10 +123,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Student Management
         Route::get('student-admission', [StudentManagement::class, 'admission'])->name('admission');
         Route::post('/stdAdmission', [StudentManagement::class, 'stdAdmission'])->name('stdAdmission');
+        Route::get('/data', [StudentManagement::class, 'data'])->name('data');
 
         // Dependent Controller
         Route::post('/get-classes-by-version', [DependentController::class, 'getClassesByVersion'])->name('getClassesByVersion');
         Route::post('/get-sections-by-class', [DependentController::class, 'getSectionByClass'])->name('getSectionByClass');
+        Route::post('/get-feegroup-by-ay', [DependentController::class, 'getFeegroupByAcademicYear'])->name('getFeegroupByAcademicYear');
 
 
 
