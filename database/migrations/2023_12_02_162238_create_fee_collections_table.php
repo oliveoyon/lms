@@ -13,14 +13,21 @@ return new class extends Migration
     {
         Schema::create('fee_collections', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained('students')->onDelete('cascade');
-            $table->foreignId('academic_fee_group_id')->constrained('academic_fee_groups')->onDelete('cascade');
+            $table->string('fee_collection_hash_id');
+            $table->foreignId('std_id')->constrained('students')->onDelete('cascade');
+            $table->foreignId('fee_group_id')->constrained('academic_fee_groups')->onDelete('cascade');
+            $table->foreignId('aca_feehead_id')->constrained('academic_fee_heads')->onDelete('cascade');
+            $table->foreignId('aca_feeamount_id')->constrained('academic_fee_amounts')->onDelete('cascade');
             $table->double('payable_amount');
             $table->double('amount_paid')->default(0);
             $table->boolean('is_paid')->default(false);
+            $table->dateTime('paid_date')->nullable();
             $table->date('due_date');
             $table->text('fee_description')->nullable(); // Added fee_description column
             $table->timestamps();
+            $table->integer('academic_year');
+            $table->integer('fee_collection_status');
+            $table->integer('school_id');
         });
     }
 
