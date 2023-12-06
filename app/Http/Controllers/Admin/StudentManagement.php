@@ -75,7 +75,7 @@ class StudentManagement extends Controller
             $std_id = $lastTwoDigits . str_pad(Student::max('id') + 1, 3, '0', STR_PAD_LEFT);
 
             if ($request->hasFile('std_picture')) {
-                $path = 'img/menu_img/';
+                $path = 'img/std_img/';
                 $file = $request->file('std_picture');
                 $fileExtension = $file->getClientOriginalExtension(); // Get the file extension
                 $file_name = $std_id . '.' . $fileExtension;
@@ -372,6 +372,13 @@ class StudentManagement extends Controller
         }
     }
 
+    public function stdlist()
+    {
+        $versions = EduVersions::get()->where('version_status', 1);
+        $feegroups = AcademicFeeGroup::get()->where('aca_group_status', 1);
+        return view('dashboard.admin.StudentManagement.student_list', compact( 'versions', 'feegroups'));
+    }
+
     public function bulkstdAdmission2(Request $request)
     {
         if ($request->hasFile('upload')) {
@@ -384,6 +391,41 @@ class StudentManagement extends Controller
             }
         }
     }
+    
+    public function getstdlist(Request $request)
+    {
+        $whr = [
+            'academic_students.academic_year' => $request->academic_year,
+            'academic_students.version_id' => $request->version_id,
+            'academic_students.class_id' => $request->class_id,
+            'academic_students.section_id' => $request->section_id,
+            'academic_students.st_aca_status' => 1,
+            'students.std_category' => $request->std_category,
+        ];
+
+        $whr = array_filter($whr);
+
+        $academicStudents = DB::table('academic_students')
+            ->where($whr)
+            ->join('students', 'academic_students.std_id', '=', 'students.std_id')
+            ->join('edu_versions', 'academic_students.version_id', '=', 'edu_versions.id')
+            ->join('edu_classes', 'academic_students.class_id', '=', 'edu_classes.id')
+            ->join('sections', 'academic_students.section_id', '=', 'sections.id')
+            ->select(
+                'academic_students.id',
+                'academic_students.academic_year',
+                'academic_students.std_id',
+                'students.std_name',
+                'students.std_name_bn',
+                'edu_versions.version_name',
+                'edu_classes.class_name',
+                'sections.section_name'
+            )
+            ->get();
+
+        return response()->json(['students' => $academicStudents]);
+    }
+
 
 
 

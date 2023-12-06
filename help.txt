@@ -1,0 +1,5 @@
+academic students status = 
+0 => Inactive
+1 => Active
+2 => TC Student
+3 => Regular completed

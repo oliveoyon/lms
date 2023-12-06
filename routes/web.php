@@ -125,6 +125,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/stdAdmission', [StudentManagement::class, 'stdAdmission'])->name('stdAdmission');
         Route::get('bulk-student-admission', [StudentManagement::class, 'bulkadmission'])->name('bulkadmission');
         Route::post('/bulkstdAdmission', [StudentManagement::class, 'bulkstdAdmission'])->name('bulkstdAdmission');
+        Route::get('student-list', [StudentManagement::class, 'stdlist'])->name('stdlist');
+        Route::post('/getstdlist', [StudentManagement::class, 'getstdlist'])->name('getstdlist');
         Route::get('/data', [StudentManagement::class, 'data'])->name('data');
 
         // Dependent Controller

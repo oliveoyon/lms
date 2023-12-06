@@ -227,13 +227,13 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('admin.admission') }}" class="nav-link">
                             <i class="fas fa-user-plus nav-icon"></i>
                             <p>{{ __('language.add_student') }}</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('admin.bulkadmission') }}" class="nav-link">
                             <i class="fas fa-upload nav-icon"></i>
                             <p>{{ __('language.add_bulk_student') }}</p>
                         </a>
@@ -245,7 +245,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('admin.stdlist') }}" class="nav-link">
                             <i class="far fa-list-alt nav-icon"></i>
                             <p>{{ __('language.student_list') }}</p>
                         </a>
