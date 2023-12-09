@@ -354,6 +354,18 @@ class DatabaseSeeder extends Seeder
 
         // Insert the academic fee groups
         DB::table('academic_fee_groups')->insert($feeGroups);
+
+        // Add event types as needed
+         $eventTypes = [
+            ['type_name' => 'Event', 'color' => '#FF5733', 'status' => 1, 'school_id' => 1],
+            ['type_name' => 'Workshop', 'color' => '#33FF57', 'status' => 1, 'school_id' => 1],
+            ['type_name' => 'Seminar', 'color' => '#5733FF', 'status' => 1, 'school_id' => 1],
+            // Add more event types as needed
+        ];
+
+        foreach ($eventTypes as $eventType) {
+            DB::table('event_types')->insert($eventType);
+        }
     }
 
     // Helper function to generate a random comma-separated list of fee head IDs

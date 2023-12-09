@@ -317,13 +317,13 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('admin.book-category-list') }}" class="nav-link">
                             <i class="far fa-folder-open nav-icon"></i>
                             <p>{{ __('language.book_category') }}</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('admin.book-list') }}" class="nav-link">
                             <i class="fas fa-book-open nav-icon"></i>
                             <p>{{ __('language.book_lists') }}</p>
                         </a>
@@ -358,7 +358,7 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('admin.teacher-list') }}" class="nav-link">
                             <i class="far fa-list-alt nav-icon"></i>
                             <p>{{ __('language.teacher_lists') }}</p>
                         </a>

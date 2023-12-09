@@ -3,8 +3,11 @@
 use App\Http\Controllers\Admin\AcademicController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\DependentController;
+use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\FeeSetupController;
+use App\Http\Controllers\Admin\LibraryController;
 use App\Http\Controllers\Admin\StudentManagement;
+use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -129,6 +132,33 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/getstdlist', [StudentManagement::class, 'getstdlist'])->name('getstdlist');
         Route::get('/data', [StudentManagement::class, 'data'])->name('data');
 
+        // Teacher Management
+        Route::get('teacher-list', [TeacherController::class, 'teacherlist'])->name('teacher-list');
+        Route::post('addTeacher', [TeacherController::class, 'addTeacher'])->name('addTeacher');
+        Route::post('getTeacherDetails', [TeacherController::class, 'getTeacherDetails'])->name('getTeacherDetails');
+        Route::post('updateTeacherDetails', [TeacherController::class, 'updateTeacherDetails'])->name('updateTeacherDetails');
+        Route::post('deleteTeacher', [TeacherController::class, 'deleteTeacher'])->name('deleteTeacher');
+
+        // Book Category Management
+        Route::get('book-category-list', [LibraryController::class, 'bookCategoryList'])->name('book-category-list');
+        Route::post('addBookCategory', [LibraryController::class, 'addBookCategory'])->name('addBookCategory');
+        Route::post('getBookCategoryDetails', [LibraryController::class, 'getBookCategoryDetails'])->name('getBookCategoryDetails');
+        Route::post('updateBookCategoryDetails', [LibraryController::class, 'updateBookCategoryDetails'])->name('updateBookCategoryDetails');
+        Route::post('deleteBookCategory', [LibraryController::class, 'deleteBookCategory'])->name('deleteBookCategory');
+        
+        Route::get('book-list', [LibraryController::class, 'bookList'])->name('book-list');
+        Route::post('addBook', [LibraryController::class, 'addBook'])->name('addBook');
+        Route::post('getBookDetails', [LibraryController::class, 'getBookDetails'])->name('getBookDetails');
+        Route::post('updateBookDetails', [LibraryController::class, 'updateBookDetails'])->name('updateBookDetails');
+        Route::post('deleteBook', [LibraryController::class, 'deleteBook'])->name('deleteBook');
+        
+        // Event Controller
+        Route::get('event-list', [EventController::class, 'eventList'])->name('event-list');
+        Route::post('addEvent', [EventController::class, 'addEvent'])->name('addEvent');
+        Route::post('getEventDetails', [EventController::class, 'getEventDetails'])->name('getEventDetails');
+        Route::post('updateEventDetails', [EventController::class, 'updateEventDetails'])->name('updateEventDetails');
+        Route::post('deleteEvent', [EventController::class, 'deleteEvent'])->name('deleteEvent');
+        
         // Dependent Controller
         Route::post('/get-classes-by-version', [DependentController::class, 'getClassesByVersion'])->name('getClassesByVersion');
         Route::post('/get-sections-by-class', [DependentController::class, 'getSectionByClass'])->name('getSectionByClass');
