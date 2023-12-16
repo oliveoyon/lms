@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AcademicController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\ClassRoutineController;
 use App\Http\Controllers\Admin\DependentController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\FeeSetupController;
@@ -139,6 +140,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('updateTeacherDetails', [TeacherController::class, 'updateTeacherDetails'])->name('updateTeacherDetails');
         Route::post('deleteTeacher', [TeacherController::class, 'deleteTeacher'])->name('deleteTeacher');
 
+        // Assigned Teacher Management
+        Route::get('assigned-teacher-list', [TeacherController::class, 'assignTeacherList'])->name('assigned-teacher-list');
+        Route::post('addAssignedTeacher', [TeacherController::class, 'addAssignedTeacher'])->name('addAssignedTeacher');
+        Route::post('getAssignedTeacherDetails', [TeacherController::class, 'getAssignedTeacherDetails'])->name('getAssignedTeacherDetails');
+        Route::post('updateAssignedTeacher', [TeacherController::class, 'updateAssignedTeacher'])->name('updateAssignedTeacher');
+        Route::post('deleteAssignedTeacher', [TeacherController::class, 'deleteAssignedTeacher'])->name('deleteAssignedTeacher');
+
+
         // Book Category Management
         Route::get('book-category-list', [LibraryController::class, 'bookCategoryList'])->name('book-category-list');
         Route::post('addBookCategory', [LibraryController::class, 'addBookCategory'])->name('addBookCategory');
@@ -162,10 +171,20 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Dependent Controller
         Route::post('/get-classes-by-version', [DependentController::class, 'getClassesByVersion'])->name('getClassesByVersion');
         Route::post('/get-sections-by-class', [DependentController::class, 'getSectionByClass'])->name('getSectionByClass');
+        Route::post('/getSubjectsByClass', [DependentController::class, 'getSubjectsByClass'])->name('getSubjectsByClass');
         Route::post('/get-feegroup-by-ay', [DependentController::class, 'getFeegroupByAcademicYear'])->name('getFeegroupByAcademicYear');
 
 
-
+        // View to display the form for creating a new class routine
+        Route::get('/create-class-periods', [ClassRoutineController::class, 'createClassRoutine'])->name('createClassRoutine');
+        Route::post('/addPeriods', [ClassRoutineController::class, 'addPeriods'])->name('addPeriods');
+        Route::get('/show-class-periods', [ClassRoutineController::class, 'showClassRoutine'])->name('showClassRoutine');
+        Route::post('/getPeriods', [ClassRoutineController::class, 'getPeriods'])->name('getPeriods');
+        Route::post('/updateClassPeriodDetails', [ClassRoutineController::class, 'updateClassPeriodDetails'])->name('updateClassPeriodDetails');
+        Route::get('/create-class-routine', [ClassRoutineController::class, 'createRoutine'])->name('createRoutine');
+        Route::post('/getRoutineData', [ClassRoutineController::class, 'getRoutineData'])->name('getRoutineData');
+        Route::post('/addRoutine', [ClassRoutineController::class, 'addRoutine'])->name('addRoutine');
+        Route::get('/testing', [ClassRoutineController::class, 'testing'])->name('testing');
 
     });
 });

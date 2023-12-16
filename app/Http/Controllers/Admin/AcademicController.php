@@ -7,6 +7,7 @@ use App\Models\Admin\EduClasses;
 use App\Models\Admin\EduVersions;
 use App\Models\Admin\Section;
 use App\Models\Admin\Subject;
+use App\Models\Admin\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -182,10 +183,11 @@ class AcademicController extends Controller
     public function sectionList()
     {
         $sections = Section::with(['eduClass', 'version'])->get();
-        $classes = EduClasses::get()->where('class_status', 1);;
-        $versions = EduVersions::get()->where('version_status', 1);;
+        $classes = EduClasses::get()->where('class_status', 1);
+        $versions = EduVersions::get()->where('version_status', 1);
+        $teachers = Teacher::get()->where('teacher_status', 1);
 
-        return view('dashboard.admin.academic.section', compact('sections', 'classes', 'versions'));
+        return view('dashboard.admin.academic.section', compact('sections', 'classes', 'versions', 'teachers'));
     }
 
 

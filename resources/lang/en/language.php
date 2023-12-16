@@ -132,7 +132,9 @@ return [
 
     // Routine Management
     "routine_mgmt" => "Routine Management",
-    "class_period" => "Class Period",
+    "class_period" => "Class Period", 
+    "create_class_period" => "Create Class Period",
+    "view_class_period" => "View Class Period",
     "class_routine" => "Class Routine",
 
     // Notice/Events Management

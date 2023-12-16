@@ -364,7 +364,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('admin.assigned-teacher-list') }}" class="nav-link">
                             <i class="fas fa-user-plus nav-icon"></i>
                             <p>{{ __('language.assign_teacher_to_course') }}</p>
                         </a>
@@ -381,13 +381,19 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('admin.showClassRoutine') }}" class="nav-link">
                             <i class="far fa-clock nav-icon"></i>
-                            <p>{{ __('language.class_period') }}</p>
+                            <p>{{ __('language.view_class_period') }}</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('admin.createClassRoutine') }}" class="nav-link">
+                            <i class="far fa-clock nav-icon"></i>
+                            <p>{{ __('language.create_class_period') }}</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.createRoutine') }}" class="nav-link">
                             <i class="far fa-calendar nav-icon"></i>
                             <p>{{ __('language.class_routine') }}</p>
                         </a>
@@ -404,7 +410,7 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('admin.event-list') }}" class="nav-link">
                             <i class="fas fa-bullhorn nav-icon"></i>
                             <p>{{ __('language.notice_events') }}</p>
                         </a>

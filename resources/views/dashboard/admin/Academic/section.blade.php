@@ -159,9 +159,9 @@
                                     <select class="form-control form-control-sm" name="class_teacher_id"
                                         id="class_teacher_name">
                                         <option value="">{{ __('language.select_class_teacher') }}</option>
-                                        <option value="1">Teacher 1</option>
-                                        <option value="2">Teacher 2</option>
-                                        <option value="3">Teacher 3</option>
+                                        @foreach ($teachers as $teacher)
+                                            <option value="{{ $teacher->id }}">{{ $teacher->teacher_name }}</option>
+                                        @endforeach
                                     </select>
                                     <span class="text-danger error-text class_teacher_id_error"></span>
                                 </div>
@@ -236,9 +236,9 @@
                                     <label for="class_teacher_id">{{ __('language.class_teacher') }}</label>
                                     <select class="form-control form-control-sm" name="class_teacher_id">
                                         <option value="">{{ __('language.select_class_teacher') }}</option>
-                                        <option value="1">Teacher 1</option>
-                                        <option value="2">Teacher 2</option>
-                                        <option value="3">Teacher 3</option>
+                                        @foreach ($teachers as $teacher)
+                                            <option value="{{ $teacher->id }}">{{ $teacher->teacher_name }}</option>
+                                        @endforeach
                                     </select>
                                     <span class="text-danger error-text class_teacher_id_error"></span>
                                 </div>
