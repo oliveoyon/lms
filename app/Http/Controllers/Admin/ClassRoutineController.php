@@ -42,16 +42,16 @@ class ClassRoutineController extends Controller
         }
 
         // Check for uniqueness in the class_routines table
-        $existingRecord = ClassRoutines::where([
-            'academic_year' => $request->input('academic_year'),
-            'version_id' => $request->input('version_id'),
-            'class_id' => $request->input('class_id'),
-            'section_id' => $request->input('section_id'),
-        ])->first();
+        // $existingRecord = ClassRoutines::where([
+        //     'academic_year' => $request->input('academic_year'),
+        //     'version_id' => $request->input('version_id'),
+        //     'class_id' => $request->input('class_id'),
+        //     'section_id' => $request->input('section_id'),
+        // ])->first();
 
-        if ($existingRecord) {
-            return response()->json(['code' => 0, 'error' => ['unique_combination' => 'Routine already exists for this section']]);
-        }
+        // if ($existingRecord) {
+        //     return response()->json(['code' => 0, 'error' => ['unique_combination' => 'Routine already exists for this section']]);
+        // }
 
         // Logic to save period details
         $classRoutine = new ClassRoutines();
@@ -128,7 +128,7 @@ class ClassRoutineController extends Controller
             // Commit the transaction
             DB::commit();
 
-            return response()->json(['code' => 1, 'msg' => __('language.periods_update_msg'), 'redirect' => 'admin/show-class-routines']);
+            return response()->json(['code' => 1, 'msg' => __('language.periods_update_msg'), 'redirect' => 'admin/show-class-periods']);
         } catch (\Exception $e) {
             // Rollback the transaction in case of an error
             DB::rollback();
