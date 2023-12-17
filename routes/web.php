@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AcademicController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AttendanceController;
 use App\Http\Controllers\Admin\ClassRoutineController;
 use App\Http\Controllers\Admin\DependentController;
 use App\Http\Controllers\Admin\EventController;
@@ -186,5 +187,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/addRoutine', [ClassRoutineController::class, 'addRoutine'])->name('addRoutine');
         Route::get('/testing', [ClassRoutineController::class, 'testing'])->name('testing');
 
+        // Attendance Management
+        Route::get('/attendance-input', [AttendanceController::class, 'attendanceInput'])->name('attendanceInput');
+        Route::post('/fetch-students', [AttendanceController::class, 'fetchStudents'])->name('fetchStudents');
+        Route::post('/addAttendance', [AttendanceController::class, 'addAttendance'])->name('addAttendance');
     });
 });
