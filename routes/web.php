@@ -185,6 +185,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/getRoutineData', [ClassRoutineController::class, 'getRoutineData'])->name('getRoutineData');
         Route::post('/addRoutine', [ClassRoutineController::class, 'addRoutine'])->name('addRoutine');
         Route::get('/testing', [ClassRoutineController::class, 'testing'])->name('testing');
+        Route::get('/showRoutine1', [ClassRoutineController::class, 'showRoutine1'])->name('showRoutine1');
+        Route::post('/fetchRoutine', [ClassRoutineController::class, 'fetchRoutine'])->name('fetchRoutine');
 
     });
 });
