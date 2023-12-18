@@ -5,27 +5,20 @@ namespace App\Models\Admin;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AcademicStudent extends Model
+class Attendances extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'std_hash_id',
+        'attendance_hash_id',
         'std_id',
-        'version_id',
         'class_id',
         'section_id',
         'roll_no',
         'academic_year',
-        'std_password',
-        'st_aca_status',
+        'attendance',
+        'attendance_date',
+        'month',
+        'fine_clearance',
         'school_id',
-        // Add other fields that you want to be mass assignable...
     ];
-
-    
-
-    public function student()
-    {
-        return $this->belongsTo(Student::class, 'std_id', 'std_id');
-    }
 }
