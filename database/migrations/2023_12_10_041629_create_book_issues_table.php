@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('book_issues', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained('students')->onDelete('cascade');
-            $table->foreignId('book_id')->constrained('books')->onDelete('cascade');
+            $table->integer('student_id');
+            $table->unsignedBigInteger('book_id')->constrained('books')->onDelete('cascade');
             $table->unsignedInteger('quantity')->default(1); // Number of copies issued
             $table->dateTime('issue_date');
             $table->dateTime('due_date');

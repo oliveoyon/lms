@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('leaves', function (Blueprint $table) {
             $table->id();
             $table->string('leave_hash_id')->unique();
-            $table->foreignId('student_id')->constrained('students');
+            $table->unsignedBigInteger('student_id')->constrained('students');
             $table->enum('leave_type', ['Medical', 'Vacation', 'Other']);
             $table->text('reason')->nullable();
             $table->date('start_date');

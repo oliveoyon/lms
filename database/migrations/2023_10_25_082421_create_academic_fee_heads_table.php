@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('aca_feehead_hash_id');
             $table->string('aca_feehead_name');
             $table->string('aca_feehead_description');
-            $table->foreignId('aca_feehead_freq')->constrained('fee_frequencies')->onDelete('cascade');
+            $table->unsignedBigInteger('aca_feehead_freq')->constrained('fee_frequencies')->onDelete('cascade');
             $table->integer('no_of_installment');
             $table->integer('status');
             $table->timestamps();

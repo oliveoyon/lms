@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('periods', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('class_routine_id')->constrained('class_routines')->onDelete('cascade');
+            $table->unsignedBigInteger('class_routine_id')->constrained('class_routines')->onDelete('cascade');
             $table->string('name');
             $table->time('start_time');
             $table->time('end_time');

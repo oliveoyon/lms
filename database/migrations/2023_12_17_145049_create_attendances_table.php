@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('attendance_hash_id')->unique(); // Unique identifier for attendance records
             $table->string('std_id', 15);
-            $table->foreignId('class_id')->constrained('edu_classes');
-            $table->foreignId('section_id')->constrained('sections'); // Assuming you have a sections table
+            $table->unsignedBigInteger('class_id')->constrained('edu_classes');
+            $table->unsignedBigInteger('section_id')->constrained('sections'); // Assuming you have a sections table
             $table->integer('roll_no');
             $table->integer('academic_year');
             $table->enum('attendance', ['Present', 'Absent', 'Late'])->default('Present');
