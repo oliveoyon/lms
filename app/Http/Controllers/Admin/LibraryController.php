@@ -3,9 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\AcademicStudent;
 use App\Models\Admin\Book;
 use App\Models\Admin\BookCategory;
+use App\Models\Admin\BookIssue;
+use App\Models\Admin\Student;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class LibraryController extends Controller
@@ -186,6 +191,132 @@ class LibraryController extends Controller
         } else {
             return response()->json(['code' => 0, 'msg' => __('language.something_went_wrong')]);
         }
+    }
+
+    public function book_issue()
+    {
+        return view('dashboard.admin.library.book_issue');
+    }
+
+    public function checkBookDetails(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'book_id' => 'required|string', // Add more validation rules as needed
+        ]);
+
+        // Perform logic to retrieve book details from your database based on $request->input('book_id')
+        // Replace this with your actual logic to fetch book details
+
+        // Example response (replace this with the actual book details from your database)
+        $bookDetails = [
+            'title' => 'Sample Book Title',
+            'author' => 'Sample Author',
+            // Add more details as needed
+        ];
+
+        return response()->json($bookDetails);
+    }
+
+    public function checkStudentBooks(Request $request)
+    {
+        $studentId = $request->input('studentId');
+
+        // Join the book_issues table with the books table based on book_id
+        $issuedBooks = DB::table('book_issues')
+            ->join('books', 'book_issues.book_id', '=', 'books.id')
+            ->where('book_issues.student_id', $studentId)
+            ->where('book_issues.issue_status', 'issued')
+            ->select('book_issues.*', 'books.book_title')
+            ->get();
+
+        foreach ($issuedBooks as $book) {
+            $book->issue_date = Carbon::parse($book->issue_date)->format('j F, Y');
+            $book->due_date = Carbon::parse($book->due_date)->format('j F, Y');
+        }
+
+
+        // Retrieve the student information
+        $student = DB::table('students')->where('std_id', $studentId)->first();
+
+        return response()->json([
+            'occupiedBooks' => $issuedBooks,
+            'students' => [$student], // Return student information as an array
+        ]);
+    }
+
+    
+
+
+    public function suggestions(Request $request)
+    {
+        $query = $request->input('query');
+
+        // Perform a simple query to find books that match the entered text
+        $books = Book::where('book_title', 'like', "%{$query}%")->limit(10)->get();
+
+        // Return the book suggestions as JSON
+        return response()->json($books);
+    }
+
+    public function storeBookIssues(Request $request)
+{
+    // Validate the incoming request data
+    $request->validate([
+        'student.studentId' => 'required', // Adjust the validation rules based on your requirements
+        'books.*.bookTitle' => 'required',
+        'books.*.quantity' => 'required|numeric',
+    ]);
+
+    // Retrieve and store the student data
+    $studentId = $request->input('student.studentId');
+    // Additional student data can be retrieved and stored here
+
+    // Retrieve and store the book entries
+    $bookEntries = $request->input('books');
+    foreach ($bookEntries as $bookEntry) {
+        $bookTitle = $bookEntry['bookTitle'];
+        $quantity = $bookEntry['quantity'];
+
+        // Assuming you have a model or method to retrieve the book_id based on the title
+        $bookId = Book::where('book_title', $bookTitle)->value('id');
+
+        // Ensure the $bookId is not null before creating the BookIssue record
+        if ($bookId !== null) {
+            // Create a new BookIssue instance with the necessary fields
+            BookIssue::create([
+                'student_id' => $studentId,
+                'book_id' => $bookId,
+                'quantity' => $quantity,
+                'issue_date' => Carbon::now(), // Uncomment if you want to set the current date as the issue date
+                'due_date' => Carbon::now()->addDays(14), // Uncomment if you want to set the due date to 14 days from the issue date
+            ]);
+
+            // You may want to perform additional logic or error handling here
+        } else {
+            // Handle the case where the book with the provided title was not found
+            // You may want to log an error, return a response, etc.
+        }
+    }
+
+    // Return a response as needed
+    return response()->json(['message' => 'Form submitted successfully']);
+}
+
+
+    public function getStudentList(Request $request)
+    {
+        $query = $request->query('query');
+
+        // Fetch student list based on the entered student ID
+        $students = DB::table('academic_students')
+            ->join('students', 'academic_students.std_id', '=', 'students.std_id')
+            ->where('academic_students.st_aca_status', 1)
+            ->where('students.std_id', 'like', '%' . $query . '%')
+            ->select('students.std_id', 'students.std_name')
+            ->get();
+
+        return response()->json($students);
     }
 
 }

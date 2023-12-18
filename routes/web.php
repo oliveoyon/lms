@@ -161,7 +161,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('getBookDetails', [LibraryController::class, 'getBookDetails'])->name('getBookDetails');
         Route::post('updateBookDetails', [LibraryController::class, 'updateBookDetails'])->name('updateBookDetails');
         Route::post('deleteBook', [LibraryController::class, 'deleteBook'])->name('deleteBook');
-        
+        Route::get('/book-issue', [LibraryController::class, 'book_issue'])->name('book_issue');
+        Route::post('/check-book-details', [LibraryController::class, 'checkBookDetails']);
+        Route::post('/check-student-books', [LibraryController::class, 'checkStudentBooks'])->name('checkStudentBooks');
+        Route::get('/suggestions', [LibraryController::class, 'suggestions'])->name('suggestions');
+        Route::post('store-book-issues', [LibraryController::class, 'storeBookIssues'])->name('storeBookIssues');
+        Route::get('get-student-list', [LibraryController::class, 'getStudentList'])->name('getStudentList');
+         
         // Event Controller
         Route::get('event-list', [EventController::class, 'eventList'])->name('event-list');
         Route::post('addEvent', [EventController::class, 'addEvent'])->name('addEvent');

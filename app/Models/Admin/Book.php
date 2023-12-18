@@ -27,4 +27,10 @@ class Book extends Model
         'school_id',
     ];
 
+    public function bookIssues()
+    {
+        return $this->hasMany(BookIssue::class);
+    }
+    
+
 }
