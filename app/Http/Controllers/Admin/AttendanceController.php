@@ -17,7 +17,7 @@ class AttendanceController extends Controller
     public function attendanceInput()
     {
         $versions = EduVersions::get()->where('version_status', 1);
-        return view('dashboard.admin.Attendance.attendance_input', compact( 'versions'));
+        return view('dashboard.admin.attendance.attendance_input', compact( 'versions'));
     }
 
     public function fetchStudents(Request $request)
