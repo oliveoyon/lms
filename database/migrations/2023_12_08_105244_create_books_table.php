@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('availability', 15)->default('available');
             $table->string('language', 15);
             $table->integer('book_status')->default(1); // Assuming 1 for 'active', 0 for 'inactive'
-            $table->foreignId('school_id')->constrained('schools')->onDelete('cascade');
+            $table->integer('school_id');
             $table->timestamps();
         });
         

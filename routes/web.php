@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\LibraryController;
 use App\Http\Controllers\Admin\StudentManagement;
 use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\User\UserController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +20,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
     // return redirect('/admin/login');
+});
+
+Route::get('/migrate-and-seed', function () {
+    // Run migration
+    Artisan::call('migrate');
+
+    // Run DatabaseSeeder seeder
+    Artisan::call('db:seed --class=DatabaseSeeder');
+
+    return 'Database migrated and seeded successfully.';
 });
 
 Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controllers\LanguageController@switchLang']);

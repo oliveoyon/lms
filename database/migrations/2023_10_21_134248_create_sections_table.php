@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('section_hash_id');
             $table->integer('version_id');
-            $table->foreignId('class_id')->constrained('edu_classess')->onDelete('cascade');
-            $table->integer('class_teacher_id')->nullable();
+            $table->unsignedBigInteger('class_id')->constrained('edu_classess')->onDelete('cascade');            $table->integer('class_teacher_id')->nullable();
             $table->string('section_name', 100);
             $table->integer('max_students');
             $table->integer('section_status');

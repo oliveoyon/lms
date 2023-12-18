@@ -13,17 +13,13 @@ return new class extends Migration
     {
         Schema::create('class_routines', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('version_id');
+            $table->unsignedBigInteger('version_id')->references('id')->on('versions');
             $table->unsignedBigInteger('academic_year');
-            $table->unsignedBigInteger('class_id');
-            $table->unsignedBigInteger('section_id');
+            $table->unsignedBigInteger('class_id')->references('id')->on('edu_classes');
+            $table->unsignedBigInteger('section_id')->references('id')->on('sections');
             $table->timestamps();
-    
-            // Add foreign key constraints if needed
-            $table->foreign('version_id')->references('id')->on('versions');
-            $table->foreign('class_id')->references('id')->on('edu_classes');
-            $table->foreign('section_id')->references('id')->on('sections');
         });
+
     }
 
     /**
