@@ -12,7 +12,7 @@ return [
     "inactive" => "InActive",
     "home" => "Home",
     "contact" => "Contact",
-    
+
     // Class Management
     "class_mgmt" => "Class Management",
     "class_list" => "Class List",
@@ -132,7 +132,7 @@ return [
 
     // Routine Management
     "routine_mgmt" => "Routine Management",
-    "class_period" => "Class Period", 
+    "class_period" => "Class Period",
     "create_class_period" => "Create Class Period",
     "view_class_period" => "View Class Period",
     "class_routine" => "Class Routine",
@@ -243,5 +243,8 @@ return [
     "event_edit_msg" => "Event updated successfully",
     "event_del_msg" => "Event deleted successfully",
 
+    "attendance_mgmt" => "Attendance Management",
+    "attendance_input" => "Attendance Input",
+    "attendance_edit" => "Attendance Edit",
 
 ];

@@ -51,10 +51,7 @@
                         <button type="button" class="close" id="closeCompletionAlert">&times;</button>
                         <span id="completionAlertText"></span>
                     </div>
-
-
-
-                        <form action="{{ route('admin.addAttendance') }}" method="POST" autocomplete="off" id="add-attendance-form">
+                        <form action="{{ route('admin.updateAttendance') }}" method="POST" autocomplete="off" id="edit-attendance-form">
                             @csrf
 
                             <div class="card">
@@ -118,11 +115,6 @@
                                                 <input type="date" id="attendance_date" name="attendance_date" class="form-control form-control-sm" required value="{{ now()->toDateString() }}">
                                             </div>
                                         </div>
-
-
-
-
-
                                     </div>
 
                                 </div>
@@ -163,36 +155,7 @@ $.ajaxSetup({
 
 $(document).ready(function() {
     // When the "Academic Year" dropdown changes
-    $('.academic_year').on('change', function() {
-        var academic_year = $(this).val();
 
-        // Enable the "Class" dropdown
-        $('.feesetup').prop('disabled', false).data('academic_year', academic_year);
-
-        // Add the extra option to the "Class" dropdown
-        $('.feesetup').html('<option value="">-- Please select a Fee --</option>');
-
-        // Make an AJAX request to fetch classes based on the selected version
-        $.ajax({
-            url: '{{ route('admin.getFeegroupByAcademicYear') }}',
-            method: 'POST',
-            data: {
-                academic_year: academic_year,
-                _token: '{{ csrf_token() }}'
-            },
-            success: function(data) {
-                var feeDropdown = $('.feesetup');
-
-                // Populate the "Class" dropdown with the fetched data
-                $.each(data.feegroups, function(key, value) {
-                    feeDropdown.append($('<option>', {
-                        value: value.id,
-                        text: value.aca_group_name
-                    }));
-                });
-            }
-        });
-    });
 
     // When the "Version" dropdown changes
     $('.version_id').on('change', function() {
@@ -261,63 +224,59 @@ $(document).ready(function() {
     });
 
 
-    $('#add-attendance-form').on('submit', function (e) {
-        e.preventDefault();
+    $('#edit-attendance-form').on('submit', function (e) {
+    e.preventDefault();
 
-        // Disable the submit button to prevent double-clicking
-        $(this).find(':submit').prop('disabled', true);
+    // Disable the submit button to prevent double-clicking
+    $(this).find(':submit').prop('disabled', true);
 
-        // Show the loader overlay
-        $('#loader-overlay').show();
+    // Show the loader overlay
+    $('#loader-overlay').show();
 
-        var form = this;
+    var form = this;
 
-        $.ajax({
-            url: $(form).attr('action'),
-            method: $(form).attr('method'),
-            data: new FormData(form),
-            processData: false,
-            dataType: 'json',
-            contentType: false,
-            beforeSend: function () {
-                $(form).find('span.error-text').text('');
-                // Remove 'is-invalid' class and error messages on form submission
-                $(form).find('.form-control').removeClass('is-invalid');
-                $(form).find('.invalid-feedback').text('');
-            },
-            success: function (data) {
-                if (data.code == 0) {
-                    $.each(data.error, function (field, messages) {
-                        // Add 'is-invalid' class to the input field
-                        $(form).find('[name="' + field + '"]').addClass('is-invalid');
-                        // Display the first error message for the field
-                        $(form).find('span.' + field + '_error').text(messages[0]);
-
-                        // Show Toastr error message
-
-
-                    });
-                    if (data.msg) {
-                            toastr.error(data.msg);
-                        }
-
-
-                } else {
-                    var redirectUrl = data.redirect;
-                    toastr.success(data.msg);
-
-                    setTimeout(function () {
-                        window.location.href = redirectUrl;
-                    }, 1000);
+    $.ajax({
+        url: $(form).attr('action'),
+        method: $(form).attr('method'),
+        data: new FormData(form),
+        processData: false,
+        dataType: 'json',
+        contentType: false,
+        beforeSend: function () {
+            $(form).find('span.error-text').text('');
+            // Remove 'is-invalid' class and error messages on form submission
+            $(form).find('.form-control').removeClass('is-invalid');
+            $(form).find('.invalid-feedback').text('');
+        },
+        success: function (data) {
+            if (data.code == 0) {
+                $.each(data.error, function (field, messages) {
+                    // Add 'is-invalid' class to the input field
+                    $(form).find('[name="' + field + '"]').addClass('is-invalid');
+                    // Display the first error message for the field
+                    $(form).find('span.' + field + '_error').text(messages[0]);
+                    // Show Toastr error message
+                });
+                if (data.msg) {
+                    toastr.error(data.msg);
                 }
-            },
-            complete: function () {
-                // Enable the submit button and hide the loader overlay
-                $(form).find(':submit').prop('disabled', false);
-                $('#loader-overlay').hide();
+            } else {
+                var redirectUrl = data.redirect;
+                toastr.success(data.msg);
+
+                setTimeout(function () {
+                    window.location.href = redirectUrl;
+                }, 1000);
             }
-        });
+        },
+        complete: function () {
+            // Enable the submit button and hide the loader overlay
+            $(form).find(':submit').prop('disabled', false);
+            $('#loader-overlay').hide();
+        }
     });
+});
+
 
 
 });
@@ -327,87 +286,96 @@ $(document).ready(function() {
 <!-- Add this script to your Blade file -->
 <script>
 $(document).ready(function () {
-    // Handle the change event of the section_id select box
-    $('#section_id').on('change', function () {
+
+
+    $('#section_id, #academic_year, #attendance_date').on('change', function () {
         // Fetch the selected values
         var academicYear = $('#academic_year').val();
         var versionId = $('#version_id').val();
         var classId = $('#class_id').val();
-        var sectionId = $(this).val();
+        var sectionId = $('#section_id').val();
+        var attendanceDate = $('#attendance_date').val();
 
-        // Make an Ajax request to fetch students based on the selected values
-        $.ajax({
-            url: '{{ route("admin.fetchStudents") }}', // Replace with your actual route
-            method: 'POST',
-            data: {
-                '_token': '{{ csrf_token() }}',
-                'academic_year': academicYear,
-                'version_id': versionId,
-                'class_id': classId,
-                'section_id': sectionId,
-            },
-            success: function (response) {
-                // Clear previous content
-                $('#records').html('');
+    // Make an Ajax request to fetch students based on the selected values
+    $.ajax({
+        url: '{{ route("admin.fetchAttendanceData") }}', // Replace with your actual route
+        method: 'POST',
+        data: {
+            '_token': '{{ csrf_token() }}',
+            'academic_year': academicYear,
+            'version_id': versionId,
+            'class_id': classId,
+            'section_id': sectionId,
+            'attendance_date': attendanceDate, // Pass the attendance_date parameter
+        },
+        success: function (response) {
+            // Clear previous content
+            $('#records').html('');
 
-                // Create a card for attendance information with dynamic heading
-                var cardHtml = '<div class="card">';
-                cardHtml += '<div class="card-header">';
-                cardHtml += '<h5 class="mb-0">Attendance Information</h5>';
-                cardHtml += '</div>';
-                cardHtml += '<div class="card-body">';
+            // Create a card for attendance information with dynamic heading
+            var cardHtml = '<div class="card">';
+            cardHtml += '<div class="card-header">';
+            cardHtml += '<h5 class="mb-0">Attendance Information</h5>';
+            cardHtml += '</div>';
+            cardHtml += '<div class="card-body">';
 
-                // Class Name
-                cardHtml += '<p class="card-text mb-2"><strong>Class Name:</strong> ' + response.classData.class_name + '</p>';
+            // Class Name
+            cardHtml += '<p class="card-text mb-2"><strong>Class Name:</strong> ' + response.classData.class_name + '</p>';
 
-                // Section Name
-                cardHtml += '<p class="card-text mb-2"><strong>Section Name:</strong> ' + response.sectionData.section_name + '</p>';
+            // Section Name
+            cardHtml += '<p class="card-text mb-2"><strong>Section Name:</strong> ' + response.sectionData.section_name + '</p>';
 
-                // Academic Year
-                cardHtml += '<p class="card-text mb-2"><strong>Academic Year:</strong> ' + academicYear + '</p>';
+            // Academic Year
+            cardHtml += '<p class="card-text mb-2"><strong>Academic Year:</strong> ' + academicYear + '</p>';
 
-                // Current Date
-                cardHtml += '<p class="card-text mb-2"><strong>Current Date:</strong> ' + response.currentDate + '</p>';
+            // Attendance Date
+            cardHtml += '<p class="card-text mb-2"><strong>Attendance Date:</strong> ' + attendanceDate + '</p>';
 
-                cardHtml += '<table class="table">';
-                cardHtml += '<thead><tr><th>Student Id</th><th>Student Name</th><th>Action</th></tr></thead>';
-                cardHtml += '<tbody>';
+            // Current Date
+            cardHtml += '<p class="card-text mb-2"><strong>Current Date:</strong> ' + response.currentDate + '</p>';
 
-                // Populate rows with student data
-                $.each(response.students, function (index, std) {
-                    cardHtml += '<tr>';
-                    cardHtml += '<td>' + std.std_id + '</td>';
-                    cardHtml += '<td>' + std.std_name + '</td>';
-                    cardHtml += '<td>';
-                    cardHtml += '<input type="radio" name="action_' + std.std_id + '" value="Absent" checked> Absent ';
-                    cardHtml += '<input type="radio" name="action_' + std.std_id + '" value="Present"> Present ';
-                    cardHtml += '<input type="radio" name="action_' + std.std_id + '" value="Late"> Late ';
-                    cardHtml += '</td>';
-                    cardHtml += '</tr>';
-                });
+            cardHtml += '<table class="table">';
+            cardHtml += '<thead><tr><th>Student Id</th><th>Student Name</th><th>Action</th></tr></thead>';
+            cardHtml += '<tbody>';
 
-                cardHtml += '</tbody>';
-                cardHtml += '</table>';
-                cardHtml += '<div class="mt-3">';
-                cardHtml += '<button type="button" class="btn btn-danger" onclick="toggleAllRadio(\'Absent\')">All Checked for Absent</button>';
-                cardHtml += '<button type="button" class="btn btn-success ml-2" onclick="toggleAllRadio(\'Present\')">All Checked for Present</button>';
-                cardHtml += '</div>';
-                cardHtml += '</div></div>';
+            // Populate rows with student data
+            $.each(response.students, function (index, std) {
+                cardHtml += '<tr>';
+                cardHtml += '<td>' + std.std_id + '</td>';
+                cardHtml += '<td>' + std.std_name + '</td>';
+                cardHtml += '<td>';
+                cardHtml += '<input type="radio" name="action_' + std.std_id + '" value="Absent" ' + (std.attendance === 'Absent' ? 'checked' : '') + '> Absent ';
+                cardHtml += '<input type="radio" name="action_' + std.std_id + '" value="Present" ' + (std.attendance === 'Present' ? 'checked' : '') + '> Present ';
+                cardHtml += '<input type="radio" name="action_' + std.std_id + '" value="Late" ' + (std.attendance === 'Late' ? 'checked' : '') + '> Late ';
+                cardHtml += '</td>';
+                cardHtml += '</tr>';
+            });
 
-                // Append the card to the #records div
-                $('#records').append(cardHtml);
-            },
-            error: function (error) {
-                console.error('Error fetching students:', error);
-            }
-        });
+            cardHtml += '</tbody>';
+            cardHtml += '</table>';
+            cardHtml += '<div class="mt-3">';
+            cardHtml += '<button type="button" class="btn btn-danger" onclick="toggleAllRadio(\'Absent\')">All Checked for Absent</button>';
+            cardHtml += '<button type="button" class="btn btn-success ml-2" onclick="toggleAllRadio(\'Present\')">All Checked for Present</button>';
+            cardHtml += '</div>';
+            cardHtml += '</div></div>';
+
+            // Append the card to the #records div
+            $('#records').append(cardHtml);
+        },
+        error: function (error) {
+            console.error('Error fetching attendance data:', error);
+        }
     });
+});
+
+
 });
 
 // Function to toggle all radio buttons for a specific value
 function toggleAllRadio(value) {
     $('input[type="radio"][value="' + value + '"]').prop('checked', true);
 }
+
 
 </script>
 

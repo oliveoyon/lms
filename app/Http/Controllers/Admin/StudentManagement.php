@@ -443,4 +443,33 @@ class StudentManagement extends Controller
 
         return response()->json(['students' => $academicStudents]);
     }
+
+    public function studentProfile()
+    {
+        $std_hash_id = '0e714e6244b1d41a63508ef84664e535';
+        $whr = [
+
+            'students.std_hash_id' => $std_hash_id,
+        ];
+        $student = DB::table('academic_students')
+            ->where($whr)
+            ->join('students', 'academic_students.std_id', '=', 'students.std_id')
+            ->join('edu_versions', 'academic_students.version_id', '=', 'edu_versions.id')
+            ->join('edu_classes', 'academic_students.class_id', '=', 'edu_classes.id')
+            ->join('sections', 'academic_students.section_id', '=', 'sections.id')
+            ->select(
+                'academic_students.id',
+                'academic_students.academic_year',
+                'academic_students.std_id',
+                'students.*',
+
+                'edu_versions.version_name',
+                'edu_classes.class_name',
+                'sections.section_name'
+            )
+            ->first();
+
+        // dd($student);
+        return view('dashboard.admin.StudentManagement.student_profile', compact('student'));
+    }
 }

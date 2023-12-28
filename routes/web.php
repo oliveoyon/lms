@@ -76,14 +76,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::middleware(['auth:admin', 'PreventBackHistory', 'is_admin_first_login'])->group(function () {
         Route::get('home', [AdminController::class, 'index'])->name('home');
-        
+
         // Version Management
         Route::get('version-list', [AcademicController::class, 'versionlist'])->name('version-list');
         Route::post('addVersion', [AcademicController::class, 'addVersion'])->name('addVersion');
         Route::post('getVersionDetails', [AcademicController::class, 'getVersionDetails'])->name('getVersionDetails');
         Route::post('updateVersionDetails', [AcademicController::class, 'updateVersionDetails'])->name('updateVersionDetails');
         Route::post('deleteVersion', [AcademicController::class, 'deleteVersion'])->name('deleteVersion');
-        
+
         // Class Management
         Route::get('class-list', [AcademicController::class, 'classlist'])->name('class-list');
         Route::post('addClass', [AcademicController::class, 'addClass'])->name('addClass');
@@ -97,7 +97,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('getSectionDetails', [AcademicController::class, 'getSectionDetails'])->name('getSectionDetails');
         Route::post('updateSectionDetails', [AcademicController::class, 'updateSectionDetails'])->name('updateSectionDetails');
         Route::post('deleteSection', [AcademicController::class, 'deleteSection'])->name('deleteSection');
-        
+
         // Subject Management
         Route::get('subject-list', [AcademicController::class, 'subjectList'])->name('subject-list');
         Route::post('addSubject', [AcademicController::class, 'addSubject'])->name('addSubject');
@@ -166,7 +166,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('getBookCategoryDetails', [LibraryController::class, 'getBookCategoryDetails'])->name('getBookCategoryDetails');
         Route::post('updateBookCategoryDetails', [LibraryController::class, 'updateBookCategoryDetails'])->name('updateBookCategoryDetails');
         Route::post('deleteBookCategory', [LibraryController::class, 'deleteBookCategory'])->name('deleteBookCategory');
-        
+
         Route::get('book-list', [LibraryController::class, 'bookList'])->name('book-list');
         Route::post('addBook', [LibraryController::class, 'addBook'])->name('addBook');
         Route::post('getBookDetails', [LibraryController::class, 'getBookDetails'])->name('getBookDetails');
@@ -178,14 +178,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/suggestions', [LibraryController::class, 'suggestions'])->name('suggestions');
         Route::post('store-book-issues', [LibraryController::class, 'storeBookIssues'])->name('storeBookIssues');
         Route::get('get-student-list', [LibraryController::class, 'getStudentList'])->name('getStudentList');
-         
+
         // Event Controller
         Route::get('event-list', [EventController::class, 'eventList'])->name('event-list');
         Route::post('addEvent', [EventController::class, 'addEvent'])->name('addEvent');
         Route::post('getEventDetails', [EventController::class, 'getEventDetails'])->name('getEventDetails');
         Route::post('updateEventDetails', [EventController::class, 'updateEventDetails'])->name('updateEventDetails');
         Route::post('deleteEvent', [EventController::class, 'deleteEvent'])->name('deleteEvent');
-        
+
         // Dependent Controller
         Route::post('/get-classes-by-version', [DependentController::class, 'getClassesByVersion'])->name('getClassesByVersion');
         Route::post('/get-sections-by-class', [DependentController::class, 'getSectionByClass'])->name('getSectionByClass');
@@ -210,5 +210,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/attendance-input', [AttendanceController::class, 'attendanceInput'])->name('attendanceInput');
         Route::post('/fetch-students', [AttendanceController::class, 'fetchStudents'])->name('fetchStudents');
         Route::post('/addAttendance', [AttendanceController::class, 'addAttendance'])->name('addAttendance');
+
+        Route::get('/edit-attendance', [AttendanceController::class, 'attendanceEdit'])->name('attendanceEdit');
+
+// Add this route in web.php
+Route::post('/fetch-attendance-data', [AttendanceController::class, 'fetchAttendanceData'])->name('fetchAttendanceData');
+Route::post('/updateAttendance', [AttendanceController::class, 'updateAttendance'])->name('updateAttendance');
+
+        Route::get('/student-profile', [StudentManagement::class, 'studentProfile'])->name('studentProfile');
+
+
     });
 });

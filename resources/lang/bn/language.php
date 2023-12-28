@@ -12,7 +12,7 @@ return [
     "inactive" => "একটিভ নয়",
     "home" => "হোম",
     "contact" => "যোগাযোগ",
-    
+
     // Class Management
     "class_mgmt" => "ক্লাস ম্যানেজমেন্ট",
     "class_list" => "শ্রেনির তালিকা",
@@ -98,7 +98,7 @@ return [
     "fee_amount_group_edit_msg" => "ফি এমাউন্ট গ্রুপ সফলভাবে আপডেট করা হয়েছে",
     "fee_amount_group_del_msg" => "ফি এমাউন্ট গ্রুপ তালিকা থেকে মুছে ফেলা হয়েছে",
 
-    
+
 
     // Manage Student
     "manage_student" => "ছাত্র-ছাত্রী পরিচালনা",
@@ -224,7 +224,7 @@ return [
     "edit_book" => "বই সম্পাদনা",
     "delete_book" => "বই মুছুন",
     "purchase_date" => "ক্রয়ের তারিখ",
-    
+
     "event_mgmt" => "ইভেন্ট ম্যানেজমেন্ট",
     "event_list" => "ইভেন্ট তালিকা",
     "add_event" => "ইভেন্ট যোগ করুন",
@@ -238,10 +238,14 @@ return [
     "end_date" => "শেষের তারিখ",
     "url" => "ইউআরএল",
     "color" => "রঙ",
-    'event_add' => 'ইভেন্ট যোগ করুন',
+    "event_add" => "ইভেন্ট যোগ করুন",
     "event_status" => "ইভেন্ট স্থিতি",
     "event_add_msg" => "ইভেন্ট সফলভাবে যোগ করা হয়েছে",
     "event_edit_msg" => "ইভেন্ট সফলভাবে আপডেট হয়েছে",
     "event_del_msg" => "ইভেন্ট সফলভাবে মোছা হয়েছে",
+
+    "attendance_mgmt" => "উপস্থিতি পরিচালনা",
+    "attendance_input" => "উপস্থিতি ইনপুট",
+    "attendance_edit" => "উপস্থিতি সম্পাদনা",
 
 ];

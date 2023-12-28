@@ -15,8 +15,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.1.0/css/adminlte.min.css">
-    
-    
+
+
     @stack('admincss')
     <link href="{{ asset('dashboard/css/custom.css') }}" rel="stylesheet">
 
@@ -44,7 +44,7 @@
       <li class="nav-item d-none d-sm-inline-block">
         <a href="{{ route('admin.home') }}" class="nav-link">{{ __('language.home') }}</a>
       </li>
-      
+
       <li class="nav-item d-none d-sm-inline-block">
         <a href="https://iconbangla.net" target="_blank" class="nav-link">{{ __('language.contact') }}</a>
       </li>
@@ -60,7 +60,7 @@
         @endforeach
         </div>
       </li>
-      
+
     </ul>
 
     <!-- Right navbar links -->
@@ -87,7 +87,7 @@
         </div>
       </li>
 
-     
+
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
@@ -103,7 +103,7 @@
           </a>
         </div>
       </li>
-      
+
     </ul>
   </nav>
   <!-- /.navbar -->
@@ -144,7 +144,7 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar text-sm flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          
+
             <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-school"></i>
@@ -180,7 +180,7 @@
                     </li>
                 </ul>
             </li>
-            
+
             <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-money-check-alt"></i>
@@ -216,7 +216,7 @@
                     </li>
                 </ul>
             </li>
-            
+
             <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-graduation-cap"></i>
@@ -258,7 +258,7 @@
                     </li>
                 </ul>
             </li>
-            
+
 
             <li class="nav-item">
                 <a href="#" class="nav-link">
@@ -348,6 +348,30 @@
                     </li>
                 </ul>
             </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-calendar-check"></i>
+                    <p>
+                        {{ __('language.attendance_mgmt') }}
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ route('admin.attendanceInput') }}" class="nav-link">
+                            <i class="fas fa-pencil-alt nav-icon"></i>
+                            <p>{{ __('language.attendance_input') }}</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.attendanceEdit') }}" class="nav-link">
+                            <i class="fas fa-edit nav-icon"></i>
+                            <p>{{ __('language.attendance_edit') }}</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
             <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-chalkboard-teacher"></i>
@@ -453,7 +477,7 @@
                     </li>
                 </ul>
             </li>
-            
+
             <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-warehouse"></i>
@@ -513,7 +537,7 @@
                     </li>
                 </ul>
             </li>
-            
+
             <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="nav-icon far fa-money-bill-alt"></i>
@@ -543,7 +567,7 @@
                     </li>
                 </ul>
             </li>
-            
+
             <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-certificate"></i>
@@ -579,7 +603,7 @@
                     </li>
                 </ul>
             </li>
-            
+
             <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-hotel"></i>
@@ -609,7 +633,7 @@
                     </li>
                 </ul>
             </li>
-            
+
             <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="nav-icon far fa-edit"></i>
@@ -627,7 +651,7 @@
                     </li>
                 </ul>
             </li>
-            
+
             <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-cog"></i>
@@ -663,7 +687,7 @@
                     </li>
                 </ul>
             </li>
-            
+
             <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="nav-icon far fa-envelope"></i>
@@ -672,8 +696,8 @@
                     </p>
                 </a>
             </li>
-            
-           
+
+
           <li class="nav-item">
             <a href="{{ route('admin.logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="nav-link">
               <i class="nav-icon fas fa-sign-out-alt"></i>
@@ -681,7 +705,7 @@
               <form action="{{ route('admin.logout') }}" id="logout-form" method="post">@csrf</form>
             </a>
           </li>
-          
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -691,7 +715,7 @@
 
  @yield('content')
 
- 
+
  <div id="loader-overlay">
     <div id="loader"></div>
 </div>
@@ -719,7 +743,7 @@
 @stack('adminjs')
 
 <script type="text/javascript">
- 
+
 // AdminLTe 3.0.x
 /** add active class and stay opened when selected */
 var url = window.location;
@@ -737,7 +761,7 @@ var url = window.location;
   $('.select2bs4').select2({
       theme: 'bootstrap4'
     });
-    
+
 
 </script>
 
