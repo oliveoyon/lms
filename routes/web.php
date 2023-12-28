@@ -210,15 +210,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/attendance-input', [AttendanceController::class, 'attendanceInput'])->name('attendanceInput');
         Route::post('/fetch-students', [AttendanceController::class, 'fetchStudents'])->name('fetchStudents');
         Route::post('/addAttendance', [AttendanceController::class, 'addAttendance'])->name('addAttendance');
-
         Route::get('/edit-attendance', [AttendanceController::class, 'attendanceEdit'])->name('attendanceEdit');
+        Route::post('/fetch-attendance-data', [AttendanceController::class, 'fetchAttendanceData'])->name('fetchAttendanceData');
+        Route::post('/updateAttendance', [AttendanceController::class, 'updateAttendance'])->name('updateAttendance');
 
-// Add this route in web.php
-Route::post('/fetch-attendance-data', [AttendanceController::class, 'fetchAttendanceData'])->name('fetchAttendanceData');
-Route::post('/updateAttendance', [AttendanceController::class, 'updateAttendance'])->name('updateAttendance');
-
-        Route::get('/student-profile', [StudentManagement::class, 'studentProfile'])->name('studentProfile');
+        Route::get('/student-profile/{std_hash_id}', [StudentManagement::class, 'studentProfile'])->name('studentProfile');
 
 
+        Route::get('/getfeedet', [StudentManagement::class, 'getfeedet'])->name('getfeedet');
     });
 });

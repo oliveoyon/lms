@@ -15,9 +15,9 @@
         font-size: 20px;
         color: white;
         font-family: 'Lucida Sans', 'SolaimanLipi'
-    } 
-    
-  
+    }
+
+
 </style>
 
 @endpush
@@ -46,16 +46,16 @@
                         <button type="button" class="close" id="closeErrorAlert">&times;</button>
                         <span id="errorAlertText"></span>
                     </div>
-                    
+
                     <div class="alert alert-success alert-dismissible" id="completionAlert" style="display: none;">
                         <button type="button" class="close" id="closeCompletionAlert">&times;</button>
                         <span id="completionAlertText"></span>
                     </div>
-                    
-                                           
+
+
                         <form action="{{ route('admin.getstdlist') }}" method="POST"  autocomplete="off" id="get-student-list">
                             @csrf
-                        
+
                             <div class="card">
                                 <div class="card-header bg-gray">
                                     <h3 class="card-title">Academic Details</h3>
@@ -121,22 +121,22 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
-                                    
-                                    
+
+
+
                                 </div>
                             </div>
-                        
-                            
-                        
+
+
+
                         </form>
-                        
-                    
+
+
                 </div>
             </div>
 
-            
-            
+
+
         </div>
     </div>
     <section class="content">
@@ -197,13 +197,13 @@ $(document).ready(function() {
     // When the "Academic Year" dropdown changes
     $('.academic_year').on('change', function() {
         var academic_year = $(this).val();
-        
+
         // Enable the "Class" dropdown
         $('.feesetup').prop('disabled', false).data('academic_year', academic_year);
-        
+
         // Add the extra option to the "Class" dropdown
         $('.feesetup').html('<option value="">-- Please select a Fee --</option>');
-        
+
         // Make an AJAX request to fetch classes based on the selected version
         $.ajax({
             url: '{{ route('admin.getFeegroupByAcademicYear') }}',
@@ -214,7 +214,7 @@ $(document).ready(function() {
             },
             success: function(data) {
                 var feeDropdown = $('.feesetup');
-                
+
                 // Populate the "Class" dropdown with the fetched data
                 $.each(data.feegroups, function(key, value) {
                     feeDropdown.append($('<option>', {
@@ -229,13 +229,13 @@ $(document).ready(function() {
     // When the "Version" dropdown changes
     $('.version_id').on('change', function() {
         var versionId = $(this).val();
-        
+
         // Enable the "Class" dropdown
         $('.class_id').prop('disabled', false).data('version-id', versionId);
-        
+
         // Add the extra option to the "Class" dropdown
         $('.class_id').html('<option value="">-- Please select a class --</option>');
-        
+
         // Make an AJAX request to fetch classes based on the selected version
         $.ajax({
             url: '{{ route('admin.getClassesByVersion') }}',
@@ -246,7 +246,7 @@ $(document).ready(function() {
             },
             success: function(data) {
                 var classDropdown = $('.class_id');
-                
+
                 // Populate the "Class" dropdown with the fetched data
                 $.each(data.classes, function(key, value) {
                     classDropdown.append($('<option>', {
@@ -262,13 +262,13 @@ $(document).ready(function() {
     $('.class_id').on('change', function() {
         var classId = $(this).val();
         var versionId = $(this).data('version-id'); // Retrieve the version_id
-        
+
         // Enable the "Section" dropdown
         $('.section_id').prop('disabled', false).data('version-id', versionId); // Pass version_id to the Section dropdown
-        
+
         // Add the extra option to the "Section" dropdown
         $('.section_id').html('<option value="">-- Please select a section --</option>');
-        
+
         // Make an AJAX request to fetch sections based on the selected class
         $.ajax({
             url: '{{ route('admin.getSectionByClass') }}',
@@ -280,7 +280,7 @@ $(document).ready(function() {
             },
             success: function(data) {
                 var sectionDropdown = $('.section_id');
-                
+
                 // Populate the "Section" dropdown with the fetched data
                 $.each(data.sections, function(key, value) {
                     sectionDropdown.append($('<option>', {
@@ -344,7 +344,7 @@ $(document).ready(function() {
                         '<div class="dropdown-menu dropdown-menu-right">' +
                             '<a class="dropdown-item" href="#"><i class="fas fa-edit"></i> Edit</a>' +
                             '<a class="dropdown-item" href="#"><i class="fas fa-trash-alt"></i> Delete</a>' +
-                            '<a class="dropdown-item" href="#"><i class="fas fa-eye"></i> View</a>' +
+                            '<a class="dropdown-item" href="/admin/student-profile/' + student.std_hash_id + '"><i class="fas fa-trash-alt"></i> Visit Profile</a>' +
                             '<a class="dropdown-item" href="#"><i class="fas fa-poll"></i> Get Result</a>' +
                             '<a class="dropdown-item" href="#"><i class="fas fa-money-bill"></i> Fee</a>' +
                             <!-- Add more actions as needed -->

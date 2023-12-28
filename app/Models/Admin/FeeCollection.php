@@ -15,13 +15,12 @@ class FeeCollection extends Model
         'aca_feehead_id',
         'aca_feeamount_id',
         'payable_amount',
-        'amount_paid',
         'is_paid',
-        'paid_date',
         'due_date',
         'fee_description',
-        'academic_year',
         'fee_collection_status',
+        'academic_year',
         'school_id',
     ];
+
 }

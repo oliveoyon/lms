@@ -7,6 +7,7 @@ use App\Models\Admin\AcademicFeeAmount;
 use App\Models\Admin\AcademicFeeGroup;
 use App\Models\Admin\AcademicFeeHead;
 use App\Models\Admin\AcademicStudent;
+use App\Models\Admin\Attendances;
 use App\Models\Admin\EduVersions;
 use App\Models\Admin\FeeCollection;
 use App\Models\Admin\Student;
@@ -20,6 +21,16 @@ use League\Csv\Reader;
 
 class StudentManagement extends Controller
 {
+    public function getfeedet()
+    {
+        $std_id = 23001;
+        $dependantController = new DependentController();
+        $totalDues = $dependantController->getTotalDues($std_id);
+        $detailedDues = $dependantController->getDetailedDues($std_id);
+        // dd($totalDues);
+        dd($detailedDues);
+    }
+
     public function admission()
     {
         $versions = EduVersions::get()->where('version_status', 1);
@@ -179,7 +190,6 @@ class StudentManagement extends Controller
                                     'aca_feeamount_id' => $feeAmount->id,
                                     'payable_amount' => $feeAmount->amount,
                                     'is_paid' => false,
-                                    'amount_paid' => 0,
                                     'due_date' => $dueDate,
                                     'fee_description' => $formattedDescription,
                                     'fee_collection_status' => 1,
@@ -276,7 +286,6 @@ class StudentManagement extends Controller
                         'Guardian Relation' => 'std_gurdian_relation',
                         'Guardian Phone' => 'std_gurdian_mobile',
                         'Guardian Address' => 'std_gurdian_address',
-                        'Profile Picture' => 'std_picture',
                     ];
 
                     $studentData = [
@@ -362,7 +371,6 @@ class StudentManagement extends Controller
                                             'aca_feeamount_id' => $feeAmount->id,
                                             'payable_amount' => $feeAmount->amount,
                                             'is_paid' => false,
-                                            'amount_paid' => 0,
                                             'due_date' => $dueDate,
                                             'fee_description' => $formattedDescription,
                                             'fee_collection_status' => 1,
@@ -434,6 +442,7 @@ class StudentManagement extends Controller
                 'academic_students.academic_year',
                 'academic_students.std_id',
                 'students.std_name',
+                'students.std_hash_id',
                 'students.std_name_bn',
                 'edu_versions.version_name',
                 'edu_classes.class_name',
@@ -444,13 +453,14 @@ class StudentManagement extends Controller
         return response()->json(['students' => $academicStudents]);
     }
 
-    public function studentProfile()
+    public function studentProfile($std_hash_id)
     {
-        $std_hash_id = '0e714e6244b1d41a63508ef84664e535';
+        // $std_hash_id = 'cb81ff56a28af5660ffa97cdf7dfdaff';
         $whr = [
 
             'students.std_hash_id' => $std_hash_id,
         ];
+
         $student = DB::table('academic_students')
             ->where($whr)
             ->join('students', 'academic_students.std_id', '=', 'students.std_id')
@@ -469,7 +479,28 @@ class StudentManagement extends Controller
             )
             ->first();
 
+            $attendanceData = Attendances::select(
+                DB::raw('MONTH(attendance_date) as month'),
+                DB::raw('SUM(CASE WHEN attendance = "Present" THEN 1 ELSE 0 END) as present_count'),
+                DB::raw('SUM(CASE WHEN attendance = "Absent" THEN 1 ELSE 0 END) as absent_count'),
+                DB::raw('SUM(CASE WHEN attendance = "Late" THEN 1 ELSE 0 END) as late_count'),
+                DB::raw('COUNT(*) as total_days')
+            )
+            ->where('std_id', $student->std_id)
+            ->groupBy(DB::raw('MONTH(attendance_date)'))
+            ->orderBy(DB::raw('MONTH(attendance_date)'))
+            ->get();
+
+            // Calculate the overall totals
+            $totalPresent = $attendanceData->sum('present_count');
+            $totalAbsent = $attendanceData->sum('absent_count');
+            $totalLate = $attendanceData->sum('late_count');
+
+            $dependantController = new DependentController();
+            $totalDues = $dependantController->getTotalDues($student->std_id);
+            $detailedDues = $dependantController->getDetailedDues($student->std_id);
+
         // dd($student);
-        return view('dashboard.admin.StudentManagement.student_profile', compact('student'));
+        return view('dashboard.admin.StudentManagement.student_profile', compact('student', 'attendanceData', 'totalPresent', 'totalAbsent', 'totalLate', 'totalDues', 'detailedDues'));
     }
 }
