@@ -15,9 +15,9 @@
         font-size: 20px;
         color: white;
         font-family: 'Lucida Sans', 'SolaimanLipi'
-    } 
-    
-  
+    }
+
+
 </style>
 
 @endpush
@@ -46,16 +46,16 @@
                         <button type="button" class="close" id="closeErrorAlert">&times;</button>
                         <span id="errorAlertText"></span>
                     </div>
-                    
+
                     <div class="alert alert-success alert-dismissible" id="completionAlert" style="display: none;">
                         <button type="button" class="close" id="closeCompletionAlert">&times;</button>
                         <span id="completionAlertText"></span>
                     </div>
-                    
+
                     <div class="card">
                         <div class="card-header bg-danger">
                             <h3 class="card-title">Bulk Student Admission</h3>
-                            
+
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                                 </button>
@@ -63,13 +63,16 @@
                         </div>
                         <div class="card-body bg-info">
                             <p>To upload bulk students, Download csv file from above button. Roll number should starts from as suggested roll and then increament one. Following fields are mendatory, fields are Roll No, Student Name, Student Phone, Father Name, Mother Name, Date of Birth, Gender, Present Address, Permanent Address, Student Category. If you dont fill these column in csv then it may create problem later. Date column should be filled as 2023-12-03</p>
-                            <a href="" class="btn btn-warning btn-sm btn-flat">Download Template</a>
+                            <a href="{{ asset('Students.csv') }}" download="Students.csv">
+                                <button type="button" class="btn btn-warning btn-sm btn-flat">Download Template</button>
+                            </a>
+
                         </div>
                     </div>
-                        
+
                         <form action="{{ route('admin.bulkstdAdmission') }}" method="POST"  enctype="multipart/form-data" autocomplete="off" id="add-student-form">
                             @csrf
-                        
+
                             <div class="card">
                                 <div class="card-header bg-gray">
                                     <h3 class="card-title">Academic Details</h3>
@@ -131,12 +134,12 @@
                                                 <label for="feeSetup" class="required">Fee Setup:</label>
                                                 <select id="feeSetup" name="feeSetup" class="form-control form-control-sm feesetup" id="feesetup" disabled>
                                                     <option value="">Please select a Fee</option>
-                                                    
+
                                                 </select>
                                             </div>
                                         </div>
 
-                                        
+
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="admissiondate" class="required">Admission Date:</label>
@@ -156,25 +159,25 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="feeSetup" class="required">Upload CSV:</label>
                                                 <input type="file" name="upload" id="">
                                             </div>
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                             </div>
-                        
+
                             <div class="btn-container">
                                 <button type="submit" class="btn btn-primary">Finish</button>
                             </div>
-                        
+
                         </form>
-                        
-                    
+
+
                 </div>
             </div>
         </div>
@@ -201,13 +204,13 @@ $(document).ready(function() {
     // When the "Academic Year" dropdown changes
     $('.academic_year').on('change', function() {
         var academic_year = $(this).val();
-        
+
         // Enable the "Class" dropdown
         $('.feesetup').prop('disabled', false).data('academic_year', academic_year);
-        
+
         // Add the extra option to the "Class" dropdown
         $('.feesetup').html('<option value="">-- Please select a Fee --</option>');
-        
+
         // Make an AJAX request to fetch classes based on the selected version
         $.ajax({
             url: '{{ route('admin.getFeegroupByAcademicYear') }}',
@@ -218,7 +221,7 @@ $(document).ready(function() {
             },
             success: function(data) {
                 var feeDropdown = $('.feesetup');
-                
+
                 // Populate the "Class" dropdown with the fetched data
                 $.each(data.feegroups, function(key, value) {
                     feeDropdown.append($('<option>', {
@@ -233,13 +236,13 @@ $(document).ready(function() {
     // When the "Version" dropdown changes
     $('.version_id').on('change', function() {
         var versionId = $(this).val();
-        
+
         // Enable the "Class" dropdown
         $('.class_id').prop('disabled', false).data('version-id', versionId);
-        
+
         // Add the extra option to the "Class" dropdown
         $('.class_id').html('<option value="">-- Please select a class --</option>');
-        
+
         // Make an AJAX request to fetch classes based on the selected version
         $.ajax({
             url: '{{ route('admin.getClassesByVersion') }}',
@@ -250,7 +253,7 @@ $(document).ready(function() {
             },
             success: function(data) {
                 var classDropdown = $('.class_id');
-                
+
                 // Populate the "Class" dropdown with the fetched data
                 $.each(data.classes, function(key, value) {
                     classDropdown.append($('<option>', {
@@ -266,13 +269,13 @@ $(document).ready(function() {
     $('.class_id').on('change', function() {
         var classId = $(this).val();
         var versionId = $(this).data('version-id'); // Retrieve the version_id
-        
+
         // Enable the "Section" dropdown
         $('.section_id').prop('disabled', false).data('version-id', versionId); // Pass version_id to the Section dropdown
-        
+
         // Add the extra option to the "Section" dropdown
         $('.section_id').html('<option value="">-- Please select a section --</option>');
-        
+
         // Make an AJAX request to fetch sections based on the selected class
         $.ajax({
             url: '{{ route('admin.getSectionByClass') }}',
@@ -284,7 +287,7 @@ $(document).ready(function() {
             },
             success: function(data) {
                 var sectionDropdown = $('.section_id');
-                
+
                 // Populate the "Section" dropdown with the fetched data
                 $.each(data.sections, function(key, value) {
                     sectionDropdown.append($('<option>', {

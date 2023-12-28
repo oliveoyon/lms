@@ -24,7 +24,7 @@ class StudentManagement extends Controller
     {
         $versions = EduVersions::get()->where('version_status', 1);
         $feegroups = AcademicFeeGroup::get()->where('aca_group_status', 1);
-        return view('dashboard.admin.StudentManagement.student_admission', compact( 'versions', 'feegroups'));
+        return view('dashboard.admin.StudentManagement.student_admission', compact('versions', 'feegroups'));
     }
 
     public function stdAdmission(Request $request)
@@ -80,13 +80,13 @@ class StudentManagement extends Controller
                 $fileExtension = $file->getClientOriginalExtension(); // Get the file extension
                 $file_name = $std_id . '.' . $fileExtension;
                 $upload = $file->storeAs($path, $file_name, 'public');
-            }else{
+            } else {
                 $file_name = '';
             }
-            
 
+            $std_hash_id = md5(uniqid(rand(), true));
             $student = new Student([
-                'std_hash_id' => md5(uniqid(rand(), true)),
+                'std_hash_id' => $std_hash_id,
                 'std_id' => $std_id,
                 'std_name' => $request->input('std_name'),
                 'std_name_bn' => $request->input('std_name_bn'),
@@ -116,13 +116,13 @@ class StudentManagement extends Controller
                 'std_picture' => $file_name,
                 'std_category' => $request->input('std_category'),
                 'std_status' => 1,
-                'school_id' => 100,
+                'school_id' => auth()->user()->school_id,
             ]);
             // Save the student
             $student->save();
 
             $studentaca = new AcademicStudent([
-                'std_hash_id' => md5(uniqid(rand(), true)),
+                'std_hash_id' => $std_hash_id,
                 'std_id' => $std_id,
                 'academic_year' => $request->input('academic_year'),
                 'version_id' => $request->input('version_id'),
@@ -131,7 +131,7 @@ class StudentManagement extends Controller
                 'std_password' => Hash::make($std_id),
                 'roll_no' => 1,
                 'st_aca_status' => 1,
-                'school_id' => 100,
+                'school_id' => auth()->user()->school_id,
             ]);
             // Save the student
             $studentaca->save();
@@ -183,21 +183,20 @@ class StudentManagement extends Controller
                                     'due_date' => $dueDate,
                                     'fee_description' => $formattedDescription,
                                     'fee_collection_status' => 1,
-                                    'school_id' => 1,
+                                    'school_id' => auth()->user()->school_id,
                                 ]);
                             }
                         }
                     }
                 }
             }
-            
-            
+
+
 
             // Commit the database transaction
             DB::commit();
 
             return response()->json(['code' => 1, 'msg' => __('language.std_add_msg'), 'redirect' => 'admin/student-admission']);
-        
         } catch (\Exception $e) {
             // If an exception occurs, rollback the database transaction
             DB::rollBack();
@@ -210,7 +209,7 @@ class StudentManagement extends Controller
     {
         $versions = EduVersions::get()->where('version_status', 1);
         $feegroups = AcademicFeeGroup::get()->where('aca_group_status', 1);
-        return view('dashboard.admin.StudentManagement.bulkstudent_admission', compact( 'versions', 'feegroups'));
+        return view('dashboard.admin.StudentManagement.bulkstudent_admission', compact('versions', 'feegroups'));
     }
 
     public function bulkstdAdmission(Request $request)
@@ -221,7 +220,6 @@ class StudentManagement extends Controller
         try {
             // Validate the request data
             $validator = Validator::make($request->all(), [
-                
                 'academic_year' => 'required|string|size:4',
                 'version_id' => 'required|exists:edu_versions,id',
                 'class_id' => 'required|exists:edu_classes,id',
@@ -230,8 +228,6 @@ class StudentManagement extends Controller
                 'std_picture' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
                 'std_category' => 'required|string|max:15',
                 'feeSetup' => 'required',
-                // 'std_status' => 'required|in:0,1',
-                // 'school_id' => 'required|exists:schools,id',
             ]);
 
             // If validation fails, throw an exception
@@ -240,52 +236,81 @@ class StudentManagement extends Controller
             }
 
             if ($request->hasFile('upload')) {
+                // Create a CSV reader
                 $csv = Reader::createFromPath($request->file('upload')->getPathname(), 'r');
-                
+
+
                 $csv->setHeaderOffset(0);
+                // $csv->addStreamFilter('convert.iconv.ISO-8859-15/UTF-8');
+                // Get the records including the header
                 $data = $csv->getRecords();
-                foreach ($data as $record) {
+
+                foreach ($data as $index => $record) {
+                    if ($index === 0) {
+                        // Skip the header row
+                        continue;
+                    }
+
                     // Actual Works Start individual task
                     $lastTwoDigits = substr($request->input('academic_year'), -2);
                     $std_id = $lastTwoDigits . str_pad(Student::max('id') + 1, 3, '0', STR_PAD_LEFT);
-                    
-                    $student = new Student([
-                        'std_hash_id' => md5(uniqid(rand(), true)),
+                    $std_hash_id = md5(uniqid(rand(), true));
+                    // Map headers to database fields
+                    $mapping = [
+                        'Student Name' => 'std_name',
+                        'Student Name (Bengali)' => 'std_name_bn',
+                        'Phone Number' => 'std_phone',
+                        'Alternate Phone' => 'std_phone1',
+                        'Father\'s Name' => 'std_fname',
+                        'Mother\'s Name' => 'std_mname',
+                        'Date of Birth' => 'std_dob',
+                        'Gender' => 'std_gender',
+                        'Email' => 'std_email',
+                        'Blood Type' => 'blood_group',
+                        'Present Address' => 'std_present_address',
+                        'Permanent Address' => 'std_permanent_address', // Make sure this is correctly mapped
+                        'Father\'s Occupation' => 'std_f_occupation',
+                        'Mother\'s Occupation' => 'std_m_occupation',
+                        'Yearly Income' => 'f_yearly_income',
+                        'Guardian Name' => 'std_gurdian_name',
+                        'Guardian Relation' => 'std_gurdian_relation',
+                        'Guardian Phone' => 'std_gurdian_mobile',
+                        'Guardian Address' => 'std_gurdian_address',
+                        'Profile Picture' => 'std_picture',
+                    ];
+
+                    $studentData = [
+                        'std_hash_id' => $std_hash_id,
                         'std_id' => $std_id,
-                        'std_name' => $record['std_name'],
-                        'std_name_bn' => $record['std_name_bn'],
                         'academic_year' => $request->input('academic_year'),
                         'version_id' => $request->input('version_id'),
                         'class_id' => $request->input('class_id'),
                         'section_id' => $request->input('section_id'),
                         'admission_date' => $request->input('admission_date'),
-                        'std_phone' => $record['std_phone'],
-                        'std_phone1' => $record['std_phone1'],
-                        'std_fname' => $record['std_fname'],
-                        'std_mname' => $record['std_mname'],
-                        'std_dob' => Carbon::createFromFormat('m/d/Y', $record['std_dob'])->format('Y-m-d'),
-                        'std_gender' => $record['std_gender'],
-                        'std_email' => $record['std_email'],
-                        'blood_group' => $record['blood_group'],
-                        'std_present_address' => $record['std_present_address'],
-                        'std_permanent_address' => $record['std_permanent_address'],
-                        'std_f_occupation' => $record['std_f_occupation'],
-                        'std_m_occupation' => $record['std_m_occupation'],
-                        'f_yearly_income' => $record['f_yearly_income'],
-                        'std_gurdian_name' => $record['std_gurdian_name'],
-                        'std_gurdian_relation' => $record['std_gurdian_relation'],
-                        'std_gurdian_mobile' => $record['std_gurdian_mobile'],
-                        'std_gurdian_address' => $record['std_gurdian_address'],
-                        'std_picture' => $record['std_picture'],
                         'std_category' => $request->input('std_category'),
                         'std_status' => 1,
-                        'school_id' => 100,
-                    ]);
+                        'school_id' => auth()->user()->school_id,
+                    ];
+
+                    foreach ($mapping as $header => $field) {
+                        if ($field === 'std_dob') {
+                            $studentData[$field] = Carbon::parse($record[$header])->format('Y-m-d');
+                        } elseif ($field === 'std_permanent_address') {
+                            // Make sure to use the correct header for "Permanent Address"
+                            $studentData[$field] = $record['Permanent Address'];
+                        } else {
+                            $studentData[$field] = $record[$header];
+                        }
+                    }
+
+                    $student = new Student($studentData);
+
                     // Save the student
                     $student->save();
-        
+
+                    // Create Academic Student record (you may customize this part)
                     $studentaca = new AcademicStudent([
-                        'std_hash_id' => md5(uniqid(rand(), true)),
+                        'std_hash_id' => $std_hash_id,
                         'std_id' => $std_id,
                         'academic_year' => $request->input('academic_year'),
                         'version_id' => $request->input('version_id'),
@@ -294,76 +319,69 @@ class StudentManagement extends Controller
                         'std_password' => Hash::make($std_id),
                         'roll_no' => 1,
                         'st_aca_status' => 1,
-                        'school_id' => 100,
+                        'school_id' => auth()->user()->school_id,
                     ]);
-                    // Save the student
+
+                    // Save the academic student
                     $studentaca->save();
+
+                    // Additional logic for fee collection (you may customize this part)
                     $id = $request->input('feeSetup');
                     $groups = AcademicFeeGroup::find($id);
 
-                        // Assuming $groups is not null
-                        if ($groups) {
-                            $feeIds = $groups->aca_feehead_id;
-                            $feeIdsArray = explode(",", $feeIds);
+                    if ($groups) {
+                        $feeIds = $groups->aca_feehead_id;
+                        $feeIdsArray = explode(",", $feeIds);
 
-                            foreach ($feeIdsArray as $feeId) {
-                                // Fetch academic_fee_heads information
-                                $feeHead = AcademicFeeHead::find($feeId);
+                        foreach ($feeIdsArray as $feeId) {
+                            $feeHead = AcademicFeeHead::find($feeId);
 
-                                if ($feeHead) {
-                                    // Divide no_of_installment by 12
+                            if ($feeHead) {
+                                $feeAmount = AcademicFeeAmount::where('aca_feehead_id', $feeId)
+                                    ->where('aca_group_id', $id)
+                                    ->first();
+
+                                if ($feeAmount) {
                                     $installments = $feeHead->no_of_installment;
 
-                                    // Fetch academic_fee_amounts information
-                                    $feeAmount = AcademicFeeAmount::where('aca_feehead_id', $feeId)
-                                        ->where('aca_group_id', $id) // Assuming you want to match aca_group_id
-                                        ->first();
+                                    for ($i = 1; $i <= $installments; $i++) {
+                                        $dueDate = now()->addMonths(($i - 1) * 12 / $installments + 1)->startOfMonth()->addDays(19);
+                                        $formattedDueDate = $dueDate->format('F');
 
-                                    // Now you can access the information and save into fee_collection table
-                                    if ($feeAmount) {
-                                        for ($i = 1; $i <= $installments; $i++) {
-                                            $dueDate = now()->addMonths(($i - 1) * 12 / $installments + 1)->startOfMonth()->addDays(19); // Calculate due date dynamically
-                                            $formattedDueDate = $dueDate->format('F'); // Get month name
-
-                                            // Add brackets and month name if installments is greater than one
-                                            $formattedDescription = $feeHead->aca_feehead_description;
-                                            if ($installments > 1) {
-                                                $formattedDescription .= " ($formattedDueDate)";
-                                            }
-
-                                            // Save into fee_collection table
-                                            FeeCollection::create([
-                                                'fee_collection_hash_id' => md5(uniqid(rand(), true)),
-                                                'std_id' => $std_id,
-                                                'academic_year' => $request->input('academic_year'),
-                                                'fee_group_id' => $groups->id,
-                                                'aca_feehead_id' => $feeId,
-                                                'aca_feeamount_id' => $feeAmount->id,
-                                                'payable_amount' => $feeAmount->amount,
-                                                'is_paid' => false,
-                                                'amount_paid' => 0,
-                                                'due_date' => $dueDate,
-                                                'fee_description' => $formattedDescription,
-                                                'fee_collection_status' => 1,
-                                                'school_id' => 1,
-                                            ]);
+                                        $formattedDescription = $feeHead->aca_feehead_description;
+                                        if ($installments > 1) {
+                                            $formattedDescription .= " ($formattedDueDate)";
                                         }
+
+                                        FeeCollection::create([
+                                            'fee_collection_hash_id' => md5(uniqid(rand(), true)),
+                                            'std_id' => $std_id,
+                                            'academic_year' => $request->input('academic_year'),
+                                            'fee_group_id' => $groups->id,
+                                            'aca_feehead_id' => $feeId,
+                                            'aca_feeamount_id' => $feeAmount->id,
+                                            'payable_amount' => $feeAmount->amount,
+                                            'is_paid' => false,
+                                            'amount_paid' => 0,
+                                            'due_date' => $dueDate,
+                                            'fee_description' => $formattedDescription,
+                                            'fee_collection_status' => 1,
+                                            'school_id' => auth()->user()->school_id,
+                                        ]);
                                     }
                                 }
                             }
                         }
+                    }
 
-                            // Actual Works end
+                    // Actual Works end
                 }
             }
-            
-
 
             // Commit the database transaction
             DB::commit();
 
             return response()->json(['code' => 1, 'msg' => __('language.std_add_msg'), 'redirect' => 'admin/bulk-student-admission']);
-        
         } catch (\Exception $e) {
             // If an exception occurs, rollback the database transaction
             DB::rollBack();
@@ -376,14 +394,14 @@ class StudentManagement extends Controller
     {
         $versions = EduVersions::get()->where('version_status', 1);
         $feegroups = AcademicFeeGroup::get()->where('aca_group_status', 1);
-        return view('dashboard.admin.StudentManagement.student_list', compact( 'versions', 'feegroups'));
+        return view('dashboard.admin.StudentManagement.student_list', compact('versions', 'feegroups'));
     }
 
     public function bulkstdAdmission2(Request $request)
     {
         if ($request->hasFile('upload')) {
             $csv = Reader::createFromPath($request->file('upload')->getPathname(), 'r');
-            
+
             $csv->setHeaderOffset(0);
             $data = $csv->getRecords();
             foreach ($data as $record) {
@@ -391,7 +409,7 @@ class StudentManagement extends Controller
             }
         }
     }
-    
+
     public function getstdlist(Request $request)
     {
         $whr = [
@@ -425,9 +443,4 @@ class StudentManagement extends Controller
 
         return response()->json(['students' => $academicStudents]);
     }
-
-
-
-
-
 }
