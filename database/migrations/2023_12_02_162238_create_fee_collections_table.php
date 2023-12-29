@@ -44,8 +44,6 @@ return new class extends Migration
             $table->integer('academic_year');
             $table->unsignedBigInteger('school_id');
             $table->timestamps();
-
-            $table->foreign('std_id')->references('id')->on('students')->onDelete('cascade');
             $table->foreign('fee_group_id')->references('id')->on('academic_fee_groups')->onDelete('cascade');
             $table->foreign('aca_feehead_id')->references('id')->on('academic_fee_heads')->onDelete('cascade');
             $table->foreign('aca_feeamount_id')->references('id')->on('academic_fee_amounts')->onDelete('cascade');

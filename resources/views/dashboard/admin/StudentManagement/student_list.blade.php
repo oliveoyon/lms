@@ -342,9 +342,9 @@ $(document).ready(function() {
                             '<i class="fas fa-cogs"></i>' +
                         '</button>' +
                         '<div class="dropdown-menu dropdown-menu-right">' +
-                            '<a class="dropdown-item" href="#"><i class="fas fa-edit"></i> Edit</a>' +
+                            '<a class="dropdown-item" href="/admin/edit-student/' + student.std_hash_id + '"><i class="fas fa-edit"></i> Edit</a>' +
                             '<a class="dropdown-item" href="#"><i class="fas fa-trash-alt"></i> Delete</a>' +
-                            '<a class="dropdown-item" href="/admin/student-profile/' + student.std_hash_id + '"><i class="fas fa-trash-alt"></i> Visit Profile</a>' +
+                            '<a class="dropdown-item" href="/admin/student-profile/' + student.std_hash_id + '"><i class="fas fa-user"></i> Visit Profile</a>' +
                             '<a class="dropdown-item" href="#"><i class="fas fa-poll"></i> Get Result</a>' +
                             '<a class="dropdown-item" href="#"><i class="fas fa-money-bill"></i> Fee</a>' +
                             <!-- Add more actions as needed -->

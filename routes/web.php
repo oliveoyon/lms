@@ -144,6 +144,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('student-list', [StudentManagement::class, 'stdlist'])->name('stdlist');
         Route::post('/getstdlist', [StudentManagement::class, 'getstdlist'])->name('getstdlist');
         Route::get('/data', [StudentManagement::class, 'data'])->name('data');
+        Route::post('/stdEdit', [StudentManagement::class, 'stdEdit'])->name('stdEdit');
 
         // Teacher Management
         Route::get('teacher-list', [TeacherController::class, 'teacherlist'])->name('teacher-list');
@@ -215,6 +216,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/updateAttendance', [AttendanceController::class, 'updateAttendance'])->name('updateAttendance');
 
         Route::get('/student-profile/{std_hash_id}', [StudentManagement::class, 'studentProfile'])->name('studentProfile');
+        Route::get('/edit-student/{std_hash_id}', [StudentManagement::class, 'editStudent'])->name('editStudent');
 
 
         Route::get('/getfeedet', [StudentManagement::class, 'getfeedet'])->name('getfeedet');
