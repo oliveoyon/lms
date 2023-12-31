@@ -16,11 +16,11 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">{{ __('language.version') }}</h1>
+                        <h1 class="m-0">Enroll Student</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('language.version') }}</a>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Enroll Student</a>
                             </li>
                         </ol>
                     </div><!-- /.col -->
@@ -39,26 +39,18 @@
                             <div class="card-header bg-navy">
                                 <h3 class="card-title">
                                     <i class="fas fa-chalkboard-teacher mr-1"></i>
-                                    {{ __('language.version_list') }}
+                                    Applied Students List
                                 </h3>
-                                <div class="card-tools">
-                                    <ul class="nav nav-pills ml-auto">
-                                        <li class="nav-item">
 
-                                            <button class="btn btn-success btn-sm" data-toggle="modal"
-                                                data-target="#addversions"><i class="fas fa-plus-square mr-1"></i>
-                                                {{ __('language.version_add') }}</button>
-                                        </li>
-                                    </ul>
-                                </div>
                             </div>
                             <div class="card-body table-responsive">
                                 <table class="table table-bordered table-striped table-hover table-sm" id="datas-table">
                                     <thead style="border-top: 1px solid #b4b4b4">
                                         <th style="width: 15px">#</th>
                                         <th>Student Name</th>
+                                        <th>Phone Number</th>
                                         <th>{{ __('language.status') }}</th>
-                                        <th style="width: 40px">{{ __('language.action') }} <button
+                                        <th>{{ __('language.action') }} <button
                                                 class="btn btn-sm btn-danger d-none"
                                                 id="deleteAllBtn">{{ __('language.deleteall') }}</button></th>
                                     </thead>
@@ -67,6 +59,7 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td class="font-weight-bold">{{ $student->std_name }}</td>
+                                                <td>{{ $student->std_phone }}</td>
                                                 <td
                                                     class="{{ $student->std_status == 1 ? 'text-success' : 'text-danger' }} font-weight-bold">
                                                     {{ $student->std_status == 1 ? 'Active' : 'Pending' }}
@@ -75,8 +68,9 @@
                                                 <td>
                                                     <div class="btn-group">
                                                         <button type="button" class="btn btn-warning btn-xs"
-                                                            data-id="{{ $student->std_phone }}" id="viewButton">View</button>
-
+                                                            data-id="{{ $student->std_phone }}"
+                                                            id="viewButton">Admission Form</button>
+                                                            <a class="btn btn-info btn-xs" href="{{ url('admin/applied-student-fullview/'.$student->std_hash_id) }}">Details</a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -136,6 +130,7 @@
     <!-- Toastr -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
+
     <script>
         new DataTable('#data-table');
     </script>
@@ -159,110 +154,44 @@
 
 
             $(document).on('click', '#viewButton', function() {
-                var version_id = $(this).data('id');
+                var std_phone = $(this).data('id');
 
-                $('.editStd').find('form')[0].reset();
-                $('.editStd').find('span.error-text').text('');
-                $.post("{{ route('admin.getVersionDetails') }}", {
-                    version_id: version_id
-                }, function(data) {
-                    //alert(data.details.version_name);
-                    var linkModal = $('.editVersion');
-                    $('.editStd').find('input[name="vid"]').val(data.details.id);
 
-                    $('.editStd').find('select[name="std_status"]').val(data.details
-                        .version_status);
-                    $('.editStd').modal('show');
-                }, 'json');
-            });
 
-            // Update Version RECORD
-            $('#update-version-form').on('submit', function(e) {
-                e.preventDefault();
-                var form = this;
-
-                // Disable the submit button to prevent double-clicking
-                $(form).find(':submit').prop('disabled', true);
-
-                // Show the loader overlay
-                $('#loader-overlay').show();
-
+                // Make an asynchronous AJAX request
                 $.ajax({
-                    url: $(form).attr('action'),
-                    method: $(form).attr('method'),
-                    data: new FormData(form),
-                    processData: false,
-                    dataType: 'json',
-                    contentType: false,
-                    beforeSend: function() {
-                        $(form).find('span.error-text').text('');
-                    },
+                    url: "/getslip1/" + std_phone,
+                    type: "GET",
+                    dataType: "json",
                     success: function(data) {
-                        if (data.code == 0) {
-                            $.each(data.error, function(prefix, val) {
-                                $(form).find('span.' + prefix + '_error').text(val[0]);
+                        if (data && data.htmlContent) {
+                            // Use a callback function for modal show
+                            updateModalContent(data.htmlContent, function() {
+                                $('.editStd').modal('show');
                             });
                         } else {
-                            var redirectUrl = data.redirect;
-                            $('.editVersion').modal('hide');
-                            $('.editVersion').find('form')[0].reset();
-                            toastr.success(data.msg);
-
-                            setTimeout(function() {
-                                window.location.href = redirectUrl;
-                            }, 1000); // Adjust the delay as needed (in milliseconds)
+                            console.error('Invalid response from the server.');
                         }
                     },
-                    complete: function() {
-                        // Enable the submit button and hide the loader overlay
-                        $(form).find(':submit').prop('disabled', false);
-                        $('#loader-overlay').hide();
+                    error: function(xhr, status, error) {
+                        console.error('Error occurred:', error);
                     }
                 });
             });
 
-            // DELETE Version RECORD
-            $(document).on('click', '#deleteVersionBtn', function() {
-                var version_id = $(this).data('id');
-                var url = '<?= route('admin.deleteVersion') ?>';
+            // Callback function to update modal content
+            function updateModalContent(content, callback) {
+                $('.editStd').find('.modal-body').html(content);
 
-                swal.fire({
-                    title: 'Are you sure?',
-                    html: 'You want to <b>delete</b> this version name',
-                    showCancelButton: true,
-                    showCloseButton: true,
-                    cancelButtonText: 'Cancel',
-                    confirmButtonText: 'Yes, Delete',
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#3085d6',
+                // Call the callback function
+                if (typeof callback === 'function') {
+                    callback();
+                }
+            }
 
-                    allowOutsideClick: false
-                }).then(function(result) {
-                    if (result.value) {
-                        // Show the loader overlay
-                        $('#loader-overlay').show();
 
-                        $.post(url, {
-                            version_id: version_id
-                        }, function(data) {
-                            if (data.code == 1) {
-                                var redirectUrl = data.redirect;
-                                toastr.success(data.msg);
 
-                                setTimeout(function() {
-                                    window.location.href = redirectUrl;
-                                }, 1000); // Adjust the delay as needed (in milliseconds)
 
-                            } else {
-                                toastr.error(data.msg);
-                            }
-                        }, 'json').always(function() {
-                            // Hide the loader overlay regardless of the request result
-                            $('#loader-overlay').hide();
-                        });
-                    }
-                });
-            });
 
         });
     </script>

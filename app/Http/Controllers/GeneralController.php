@@ -158,4 +158,25 @@ class GeneralController extends Controller
         // $mpdf->Image('https://via.placeholder.com/150', 0, 0, 210, 297, 'jpg', '', true, false);
         // $mpdf->Output();
     }
+
+    public function getslip1($std_hash_id)
+    {
+
+        $user = DB::table('applied_students')
+            ->where('std_phone', $std_hash_id)
+            ->join('edu_classes', 'applied_students.class_id', '=', 'edu_classes.id')
+            // ->join('edu_versions', 'applied_students.version_id', '=', 'edu_versions.id')
+            ->select('applied_students.*', 'edu_classes.class_name')
+            ->first();
+
+
+        $data = [
+            'user' => $user
+        ];
+
+        $htmlContent = \View::make('print_admission_form', $data)->render();
+
+        return response()->json(['htmlContent' => $htmlContent]);
+
+    }
 }

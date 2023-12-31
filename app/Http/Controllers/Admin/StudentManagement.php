@@ -640,4 +640,134 @@ class StudentManagement extends Controller
         $send['students'] = AppliedStudent::get();
         return view('dashboard.admin.StudentManagement.enroll', $send);
     }
+
+    public function fullView($std_hash_id)
+    {
+        $versions = EduVersions::get()->where('version_status', 1);
+        $feegroups = AcademicFeeGroup::get()->where('aca_group_status', 1);
+
+        // Retrieve data from both tables
+        $academicStudent = AcademicStudent::where('std_hash_id', $std_hash_id)->first();
+        $student = AppliedStudent::where('std_hash_id', $std_hash_id)->first();
+
+        return view('dashboard.admin.StudentManagement.appliedStd_fullview', compact('versions', 'feegroups', 'academicStudent', 'student'));
+    }
+
+    public function stdAppliedEdit(Request $request)
+    {
+        DB::beginTransaction();
+
+        try {
+            // Validate the request data
+            $validator = Validator::make($request->all(), [
+                // 'std_id' => 'required|string|max:15|unique:students,std_id',
+                'std_name' => 'required|string|max:100',
+                'std_name_bn' => 'nullable|string|max:200',
+                'academic_year' => 'required|string|size:4',
+                'version_id' => 'required|exists:edu_versions,id',
+                'class_id' => 'required|exists:edu_classes,id',
+                // 'section_id' => 'required|exists:sections,id',
+                // 'admission_date' => 'nullable|date',
+                'std_phone' => 'required|string|max:15',
+                'std_phone1' => 'nullable|string|max:15',
+                'std_fname' => 'required|string|max:100',
+                'std_mname' => 'required|string|max:100',
+                'std_dob' => 'nullable|date',
+                'std_gender' => 'required|string|in:male,female,other',
+                'std_email' => 'nullable|email|max:100',
+                'blood_group' => 'nullable|string|in:A+,A-,B+,B-,AB+,AB-,O+,O-',
+                'std_present_address' => 'required|string|max:200',
+                'std_permanent_address' => 'required|string|max:200',
+                'std_f_occupation' => 'nullable|string|max:30',
+                'std_m_occupation' => 'nullable|string|max:30',
+                'f_yearly_income' => 'nullable|numeric',
+                'std_gurdian_name' => 'nullable|string|max:100',
+                'std_gurdian_relation' => 'nullable|string|max:30',
+                'std_gurdian_mobile' => 'nullable|string|max:15',
+                'std_gurdian_address' => 'nullable|string|max:200',
+                'std_picture' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+                // 'std_category' => 'required|string|max:15',
+                'std_status' => 'required|in:0,1,2',
+                // 'school_id' => 'required|exists:schools,id',
+            ]);
+
+            // If validation fails, throw an exception
+            if ($validator->fails()) {
+                return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
+            }
+
+            $stdHashId = $request->input('std_hash_id');
+            $student = AppliedStudent::where('std_hash_id', $stdHashId)->first();
+
+            $dataToUpdate = [
+                'std_name' => $request->input('std_name'),
+                'std_name_bn' => $request->input('std_name_bn'),
+                // 'section_id' => $request->input('section_id'),
+                // 'admission_date' => $request->input('admission_date'),
+                'std_phone' => $request->input('std_phone'),
+                'std_phone1' => $request->input('std_phone1'),
+                'std_fname' => $request->input('std_fname'),
+                'std_mname' => $request->input('std_mname'),
+                'std_dob' => $request->input('std_dob'),
+                'std_gender' => $request->input('std_gender'),
+                'std_email' => $request->input('std_email'),
+                'blood_group' => $request->input('blood_group'),
+                'std_present_address' => $request->input('std_present_address'),
+                'std_permanent_address' => $request->input('std_permanent_address'),
+                'std_f_occupation' => $request->input('std_f_occupation'),
+                'std_m_occupation' => $request->input('std_m_occupation'),
+                'f_yearly_income' => $request->input('f_yearly_income'),
+                'std_gurdian_name' => $request->input('std_gurdian_name'),
+                'std_gurdian_relation' => $request->input('std_gurdian_relation'),
+                'std_gurdian_mobile' => $request->input('std_gurdian_mobile'),
+                'std_gurdian_address' => $request->input('std_gurdian_address'),
+                // 'std_category' => $request->input('std_category'),
+                'std_status' => $request->input('std_status'),
+            ];
+
+            // Check if a new file is being uploaded
+            // if ($request->hasFile('std_picture')) {
+            //     // Delete the old file
+            //     if ($student->std_picture) {
+            //         $oldFilePath = 'public/img/std_img/' . $student->std_picture;
+            //         if (Storage::exists($oldFilePath)) {
+            //             Storage::delete($oldFilePath);
+            //         }
+            //     }
+
+            //     // Upload the new file
+            //     $path = 'img/std_img/';
+            //     $file = $request->file('std_picture');
+            //     $fileExtension = $file->getClientOriginalExtension();
+            //     $file_name = $stdHashId . '.' . $fileExtension;
+            //     $upload = $file->storeAs($path, $file_name, 'public');
+
+            //     // Add the image field to the data to update
+            //     $dataToUpdate['std_picture'] = $file_name;
+            // }
+            // Update or insert the student record
+            AppliedStudent::updateOrInsert(['std_hash_id' => $stdHashId], $dataToUpdate);
+
+
+
+            // $studentaca = [
+            //     'section_id' => $request->input('section_id'),
+            //     'roll_no' => 1,
+            //     'st_aca_status' => 1,
+            // ];
+            // // Save the student
+            // AcademicStudent::updateOrInsert(['std_hash_id' => $stdHashId], $studentaca);
+
+
+            // Commit the database transaction
+            DB::commit();
+
+            return response()->json(['code' => 1, 'msg' => __('language.std_add_msg'), 'redirect' => 'admin/student-enroll']);
+        } catch (\Exception $e) {
+            // If an exception occurs, rollback the database transaction
+            DB::rollBack();
+
+            return response()->json(['code' => 0, 'msg' => 'Something went wrong', 'error' => $e->getMessage()]);
+        }
+    }
 }
