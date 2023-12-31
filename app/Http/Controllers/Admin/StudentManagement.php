@@ -306,7 +306,6 @@ class StudentManagement extends Controller
                         if ($field === 'std_dob') {
                             $studentData[$field] = Carbon::parse($record[$header])->format('Y-m-d');
                         } elseif ($field === 'std_permanent_address') {
-                            // Make sure to use the correct header for "Permanent Address"
                             $studentData[$field] = $record['Permanent Address'];
                         } else {
                             $studentData[$field] = $record[$header];

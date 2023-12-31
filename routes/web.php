@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\FeeSetupController;
 use App\Http\Controllers\Admin\LibraryController;
 use App\Http\Controllers\Admin\StudentManagement;
 use App\Http\Controllers\Admin\TeacherController;
+use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
@@ -21,6 +22,10 @@ Route::get('/', function () {
     return view('welcome');
     // return redirect('/admin/login');
 });
+
+Route::get('admission-form', [GeneralController::class, 'admissionApply'])->name('admissionApply');
+Route::post('/get-classes-by-version', [GeneralController::class, 'getClassesByVersion'])->name('getClassesByVersion');
+Route::post('/stdApply', [GeneralController::class, 'stdApply'])->name('stdApply');
 
 Route::get('/migrate-and-seed', function () {
     // Run migration
@@ -174,7 +179,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('updateBookDetails', [LibraryController::class, 'updateBookDetails'])->name('updateBookDetails');
         Route::post('deleteBook', [LibraryController::class, 'deleteBook'])->name('deleteBook');
         Route::get('/book-issue', [LibraryController::class, 'book_issue'])->name('book_issue');
-        Route::post('/check-book-details', [LibraryController::class, 'checkBookDetails']);
         Route::post('/check-student-books', [LibraryController::class, 'checkStudentBooks'])->name('checkStudentBooks');
         Route::get('/suggestions', [LibraryController::class, 'suggestions'])->name('suggestions');
         Route::post('store-book-issues', [LibraryController::class, 'storeBookIssues'])->name('storeBookIssues');

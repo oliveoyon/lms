@@ -238,7 +238,7 @@ $.ajaxSetup({
                 var studentInfoHTML = '<h3>Student Information</h3>';
                 studentInfoHTML += '<p><strong>Student ID:</strong> ' + student.std_id + '</p>';
                 studentInfoHTML += '<p><strong>Student Name:</strong> ' + student.std_name + '</p>';
-                
+
                 studentInfoHTML += '<h3>Occupied Books</h3>';
                 studentInfoHTML += '<table class="table">';
                 studentInfoHTML += '<thead><tr><th>Book Title</th><th>Quantity</th><th>Remarks</th><th>Issue Date</th><th>Due Date</th></tr></thead>';
@@ -389,50 +389,64 @@ $.ajaxSetup({
 
 <script>
     function submitBookIssueForm() {
-        // Add CSRF token to the headers
-        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+    var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
-        // Gather data from the student section
-        var studentData = {
-            studentId: $('#studentId').val(),
-            // Include other student-related data if needed
+    // Show the loader overlay
+    $('#loader-overlay').show();
+
+    var studentData = {
+        studentId: $('#studentId').val(),
+    };
+    var bookEntriesData = [];
+    $('#bookRowsContainer tr').each(function(index, row) {
+        var bookEntry = {
+            bookTitle: $(row).find('td:eq(1)').text(),
+            quantity: $(row).find('input[name="quantity[]"]').val(),
+            remarks: $(row).find('input[name="remarks[]"]').val(),
         };
+        bookEntriesData.push(bookEntry);
+    });
+    var formData = {
+        student: studentData,
+        books: bookEntriesData,
+    };
 
-        // Gather data from the book entries section
-        var bookEntriesData = [];
-        $('#bookRowsContainer tr').each(function(index, row) {
-            var bookEntry = {
-                bookTitle: $(row).find('td:eq(1)').text(),
-                quantity: $(row).find('input[name="quantity[]"]').val(),
-                remarks: $(row).find('input[name="remarks[]"]').val(),
-                // Include other book-related data if needed
-            };
-            bookEntriesData.push(bookEntry);
-        });
+    $.ajax({
+        url: '{{ route("admin.storeBookIssues") }}', // Replace with your actual route
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': csrfToken
+        },
+        data: formData,
+        success: function(data) {
+            console.log('Form submitted successfully:', data);
+            if (data.code === 0) {
+                $.each(data.error, function(prefix, val) {
+                    // Display validation errors
+                    // Replace this with your actual error handling logic
+                    console.error(prefix, val);
+                });
+            } else {
+                // Redirect to the specified URL
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                }
 
-        // Combine student and book data
-        var formData = {
-            student: studentData,
-            books: bookEntriesData,
-        };
+                // Hide the loader overlay
+                $('#loader-overlay').hide();
 
-        // Example: Send data to the server using AJAX
-        $.ajax({
-            url: '{{ route("admin.storeBookIssues") }}', // Update with your server endpoint
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': csrfToken
-            },
-            data: formData,
-            success: function(response) {
-                console.log('Form submitted successfully:', response);
-                // You may want to update the UI or take further actions after successful submission
-            },
-            error: function(error) {
-                console.error('Error submitting form:', error);
+                toastr.success(data.message);
             }
-        });
-    }
+        },
+        error: function(error) {
+            console.error('Error submitting form:', error);
+
+            // Hide the loader overlay on error
+            $('#loader-overlay').hide();
+        }
+    });
+}
+
     $(document).ready(function() {
         // ... (previous code)
 
