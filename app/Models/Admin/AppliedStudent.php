@@ -37,5 +37,6 @@ class AppliedStudent extends Model
         'std_picture',
         'std_status',
         'school_id',
+        'std_birth_reg',
     ];
 }

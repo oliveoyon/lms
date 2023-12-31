@@ -9,6 +9,8 @@ use App\Models\Admin\EduVersions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use PDF;
+
 
 class GeneralController extends Controller
 {
@@ -34,11 +36,11 @@ class GeneralController extends Controller
                 'version_id' => 'required|exists:edu_versions,id',
                 'class_id' => 'required|exists:edu_classes,id',
                 'admission_date' => 'nullable|date',
-                'std_phone' => 'required|string|max:15',
+                'std_phone' => 'required|string|max:11|unique:applied_students,std_phone',
                 'std_phone1' => 'nullable|string|max:15',
                 'std_fname' => 'required|string|max:100',
                 'std_mname' => 'required|string|max:100',
-                'std_dob' => 'nullable|date',
+                'std_dob' => 'required|date',
                 'std_gender' => 'required|string|in:male,female,other',
                 'std_email' => 'nullable|email|max:100',
                 'blood_group' => 'nullable|string|in:A+,A-,B+,B-,AB+,AB-,O+,O-',
@@ -51,7 +53,7 @@ class GeneralController extends Controller
                 'std_gurdian_relation' => 'nullable|string|max:30',
                 'std_gurdian_mobile' => 'nullable|string|max:15',
                 'std_gurdian_address' => 'nullable|string|max:200',
-                'std_picture' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+                'std_picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             ]);
 
             // If validation fails, throw an exception
@@ -71,6 +73,7 @@ class GeneralController extends Controller
             }
 
             $std_hash_id = md5(uniqid(rand(), true));
+
             $student = new AppliedStudent([
                 'std_hash_id' => $std_hash_id,
                 'std_name' => $request->input('std_name'),
@@ -96,6 +99,7 @@ class GeneralController extends Controller
                 'std_gurdian_mobile' => $request->input('std_gurdian_mobile'),
                 'std_gurdian_address' => $request->input('std_gurdian_address'),
                 'std_picture' => $file_name,
+                'std_birth_reg' => $request->input('std_birth_reg'),
                 'std_category' => $request->input('std_category'),
                 'std_status' => 0,
                 'school_id' => 101,
@@ -106,7 +110,7 @@ class GeneralController extends Controller
             // Commit the database transaction
             DB::commit();
 
-            return response()->json(['code' => 1, 'msg' => 'Application has been submitted successfully', 'redirect' => 'admission-form']);
+            return response()->json(['code' => 1, 'msg' => 'Application has been submitted successfully', 'redirect' => 'getslip/' . $request->input('std_phone')]);
         } catch (\Exception $e) {
             // If an exception occurs, rollback the database transaction
             DB::rollBack();
@@ -123,5 +127,35 @@ class GeneralController extends Controller
         return response()->json(['classes' => $classes]);
     }
 
+    public function getslip($std_hash_id)
+    {
 
+        $user = DB::table('applied_students')
+            ->where('std_phone', $std_hash_id)
+            ->join('edu_classes', 'applied_students.class_id', '=', 'edu_classes.id')
+            // ->join('edu_versions', 'applied_students.version_id', '=', 'edu_versions.id')
+            ->select('applied_students.*', 'edu_classes.class_name')
+            ->first();
+
+            if (!$user) {
+                return redirect('/admission-form')->withErrors(['error' => 'No data found.']);
+            }
+
+        // dd($user);
+
+        $data = [
+            'user' => $user
+        ];
+
+        $pdf = PDF::loadView('print_admission_form', $data);
+        $pdf->output();
+
+        return $pdf->stream('document.pdf');
+
+        // $mpdf = new \Mpdf\Mpdf();
+
+        // // $mpdf->WriteHTML('<img src="https://via.placeholder.com/150" alt="">');
+        // $mpdf->Image('https://via.placeholder.com/150', 0, 0, 210, 297, 'jpg', '', true, false);
+        // $mpdf->Output();
+    }
 }

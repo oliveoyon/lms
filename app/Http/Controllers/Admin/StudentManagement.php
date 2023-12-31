@@ -7,6 +7,7 @@ use App\Models\Admin\AcademicFeeAmount;
 use App\Models\Admin\AcademicFeeGroup;
 use App\Models\Admin\AcademicFeeHead;
 use App\Models\Admin\AcademicStudent;
+use App\Models\Admin\AppliedStudent;
 use App\Models\Admin\Attendances;
 use App\Models\Admin\EduVersions;
 use App\Models\Admin\FeeCollection;
@@ -632,5 +633,11 @@ class StudentManagement extends Controller
 
             return response()->json(['code' => 0, 'msg' => 'Something went wrong', 'error' => $e->getMessage()]);
         }
+    }
+
+    public function enroll()
+    {
+        $send['students'] = AppliedStudent::get();
+        return view('dashboard.admin.StudentManagement.enroll', $send);
     }
 }

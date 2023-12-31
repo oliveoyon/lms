@@ -26,6 +26,7 @@ Route::get('/', function () {
 Route::get('admission-form', [GeneralController::class, 'admissionApply'])->name('admissionApply');
 Route::post('/get-classes-by-version', [GeneralController::class, 'getClassesByVersion'])->name('getClassesByVersion');
 Route::post('/stdApply', [GeneralController::class, 'stdApply'])->name('stdApply');
+Route::get('/getslip/{std_hash_id}', [GeneralController::class, 'getslip'])->name('getslip');
 
 Route::get('/migrate-and-seed', function () {
     // Run migration
@@ -150,6 +151,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/getstdlist', [StudentManagement::class, 'getstdlist'])->name('getstdlist');
         Route::get('/data', [StudentManagement::class, 'data'])->name('data');
         Route::post('/stdEdit', [StudentManagement::class, 'stdEdit'])->name('stdEdit');
+        Route::get('student-enroll', [StudentManagement::class, 'enroll'])->name('enroll');
 
         // Teacher Management
         Route::get('teacher-list', [TeacherController::class, 'teacherlist'])->name('teacher-list');

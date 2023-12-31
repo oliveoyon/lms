@@ -82,21 +82,50 @@
         }
 
         .toast-success {
-        background-color: #000000; /* Vibrant yellow background color for success messages */
-        color: #000000; /* Dark text color for success messages */
-        border: 3px solid #ffffff; /* Border color for success messages */
-    }
+            background-color: #000000;
+            /* Vibrant yellow background color for success messages */
+            color: #000000;
+            /* Dark text color for success messages */
+            border: 3px solid #ffffff;
+            /* Border color for success messages */
+        }
 
-    /* Optionally, you can style the close button */
-    .toast-success button.toast-close-button {
-        color: #000000; /* Close button color for success messages */
-        font-weight: bolder; /* Make the close button text bolder */
-    }
+        /* Optionally, you can style the close button */
+        .toast-success button.toast-close-button {
+            color: #000000;
+            /* Close button color for success messages */
+            font-weight: bolder;
+            /* Make the close button text bolder */
+        }
 
-    /* Optionally, you can style the title */
-    .toast-success .toast-title {
-        font-weight: bold; /* Make the title bold for success messages */
-    }
+        /* Optionally, you can style the title */
+        .toast-success .toast-title {
+            font-weight: bold;
+            /* Make the title bold for success messages */
+        }
+
+        .toast-error {
+            background-color: #fe0202;
+            /* Vibrant yellow background color for success messages */
+            color: #ffffff;
+            /* Dark text color for success messages */
+            border: 3px solid #ffffff;
+            /* Border color for success messages */
+        }
+
+        /* Optionally, you can style the close button */
+        .toast-error button.toast-close-button {
+            color: #000000;
+            /* Close button color for success messages */
+            font-weight: bolder;
+            /* Make the close button text bolder */
+        }
+
+        /* Optionally, you can style the title */
+        .toast-error .toast-title {
+            font-weight: bold;
+            /* Make the title bold for success messages */
+        }
 
         .required:after {
             content: " *";
@@ -118,6 +147,49 @@
     <div class="content-section">
         <h1>Shalikha Thana High School</h1>
         <p>Online Admission Form</p>
+        <p>If you already applied and want to print your Admission Form<br><button type="button"
+                class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal">
+                Click Here</button>
+        </p>
+        @if ($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ $errors->first('error') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
+
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header bg-info">
+                        <h4 class="modal-title text-warning">Type Your Phone</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal Body -->
+                    <div class="modal-body">
+                        <!-- Form inside the modal -->
+                        <div class="form-group">
+                            <label for="phoneInput">Type Your Phone:</label>
+                            <input type="tel" required class="form-control" id="phoneInput"
+                                placeholder="Type your phone" pattern="\d{11}">
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="submitForm()">Submit</button>
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="container">
@@ -220,7 +292,8 @@
                                         </span>
                                     </div>
                                     <input type="tel" id="studentPhone" name="std_phone"
-                                        class="form-control form-control-sm">
+                                        class="form-control form-control-sm" pattern="\d{11}">
+
                                 </div>
                             </div>
 
@@ -473,7 +546,9 @@
                     dataType: 'json',
                     contentType: false,
                     beforeSend: function() {
-                        $(form).find('span.error-text').text('');
+                        // Clear previous error messages
+                        toastr.clear();
+                        $(form).find('.is-invalid').removeClass('is-invalid');
                     },
                     success: function(data) {
                         if (data.code == 0) {
@@ -481,9 +556,11 @@
                                 // Add 'is-invalid' class to the input field
                                 $(form).find('[name="' + field + '"]').addClass(
                                     'is-invalid');
-                                // Display the first error message for the field
-                                $(form).find('span.' + field + '_error').text(messages[
-                                    0]);
+
+                                // Display the first error message for the field using Toastr
+                                toastr.error(messages[0], '', {
+                                    closeButton: true
+                                });
                             });
                         } else {
                             var redirectUrl = data.redirect;
@@ -492,8 +569,13 @@
 
                             setTimeout(function() {
                                 window.location.href = redirectUrl;
-                            }, 5000);
+                            }, 3000);
                         }
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle any other errors (e.g., server error)
+                        console.error(xhr.responseText);
+                        toastr.error('An error occurred. Please try again.');
                     },
                     complete: function() {
                         // Enable the submit button and hide the loader overlay
@@ -504,8 +586,29 @@
             });
 
 
+
         });
     </script>
+
+    <script>
+        function submitForm() {
+            // Get the entered phone number
+            var phoneNumber = document.getElementById('phoneInput').value;
+
+            // Check if the phone number is not blank
+            if (phoneNumber.trim() !== '') {
+                // Construct the URL with the phone number
+                var url = '/getslip/' + encodeURIComponent(phoneNumber);
+
+                // Redirect to the constructed URL
+                window.location.href = url;
+            } else {
+                // Display an alert if the phone number is blank
+                alert('Please enter a valid phone number.');
+            }
+        }
+    </script>
+
 </body>
 
 </html>
