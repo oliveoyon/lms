@@ -20,8 +20,8 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a
-                                    href="{{ route('admin.home') }}">{{ __('language.fee_frequency') }}</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('language.dashboard') }}</a></li>
+                            <li class="breadcrumb-item">{{ __('language.fee_frequency') }}</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -138,21 +138,21 @@
                                                 <label
                                                     for="installment_period">{{ __('language.installment_period') }}</label>
                                                 <input type="text" class="form-control form-control-sm"
-                                                    name="installment_period" placeholder="Installment Period">
+                                                    name="installment_period" placeholder="{{ __('language.installment_period') }}">
                                                 <span class="text-danger error-text installment_period_error"></span>
                                             </div>
                                             <div class="form-group">
                                                 <label for="freq_status">Status</label>
                                                 <select class="form-control form-control-sm" name="freq_status"
                                                     id="freq_status">
-                                                    <option value="1">Active</option>
-                                                    <option value="0">Inactive</option>
+                                                    <option value="1">{{ __('language.active') }}</option>
+                                                    <option value="0">{{ __('language.inactive') }}</option>
                                                 </select>
                                                 <span class="text-danger error-text freq_status_error"></span>
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-success">Save</button>
+                                    <button type="submit" class="btn btn-success">{{ __('language.save') }}</button>
                                 </form>
                             </div>
                         </div>
@@ -166,7 +166,7 @@
                     data-backdrop="static">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                         <div class="modal-content">
-                            <div class="modal-header">
+                            <div class="modal-header bg-purple">
                                 <h5 class="modal-title" id="editFeeFrequencyLabel">
                                     {{ __('language.fee_frequency_edit') }}</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -209,8 +209,8 @@
                                                 <label for="freq_status">Status</label>
                                                 <select class="form-control form-control-sm" name="freq_status"
                                                     id="freq_status">
-                                                    <option value="1">Active</option>
-                                                    <option value="0">Inactive</option>
+                                                    <option value="1">{{ __('language.active') }}</option>
+                                                    <option value="0">{{ __('language.inactive') }}</option>
                                                 </select>
                                                 <span class="text-danger error-text freq_status_error"></span>
                                             </div>
@@ -218,7 +218,7 @@
                                     </div>
                                     <div class="form-group">
                                         <button type="submit"
-                                            class="btn btn-block btn-success">{{ __('language.update') }}</button>
+                                            class="btn btn-block  bg-purple">{{ __('language.update') }}</button>
                                     </div>
                                 </form>
                             </div>

@@ -21,8 +21,11 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a
-                                    href="{{ route('admin.home') }}">{{ __('language.class_mgmt') }}</a></li>
+
+                        </ol>
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('language.dashboard') }}</a></li>
+                            <li class="breadcrumb-item">{{ __('language.class_mgmt') }}</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -159,7 +162,7 @@
                     aria-hidden="true" data-keyboard="false" data-backdrop="static">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
-                            <div class="modal-header">
+                            <div class="modal-header bg-purple">
                                 <h5 class="modal-title" id="editClassLabel">{{ __('language.class_edit') }}</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -202,7 +205,7 @@
 
                                     <div class="form-group">
                                         <button type="submit"
-                                            class="btn btn-block btn-success">{{ __('language.update') }}</button>
+                                            class="btn btn-block bg-purple">{{ __('language.update') }}</button>
                                     </div>
                                 </form>
                             </div>

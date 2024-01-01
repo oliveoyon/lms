@@ -1,5 +1,5 @@
 @extends('dashboard.admin.layouts.admin-layout-with-cdn')
-@section('title', 'Fee Head')
+@section('title', 'Student Admission')
 @push('admincss')
     <!-- DataTables -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.2.0/dist/sweetalert2.min.css">
@@ -15,9 +15,9 @@
         font-size: 20px;
         color: white;
         font-family: 'Lucida Sans', 'SolaimanLipi'
-    } 
-    
-  
+    }
+
+
 </style>
 
 @endpush
@@ -28,11 +28,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">{{ __('language.fee_head') }}</h1>
+                    <h1 class="m-0">{{ __('language.student_admission') }}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('language.fee_head') }}</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('language.dashboard') }}</a></li>
+                        <li class="breadcrumb-item">{{ __('language.student_admission') }}</li>
                     </ol>
                 </div>
             </div>
@@ -46,20 +47,20 @@
                         <button type="button" class="close" id="closeErrorAlert">&times;</button>
                         <span id="errorAlertText"></span>
                     </div>
-                    
+
                     <div class="alert alert-success alert-dismissible" id="completionAlert" style="display: none;">
                         <button type="button" class="close" id="closeCompletionAlert">&times;</button>
                         <span id="completionAlertText"></span>
                     </div>
-                    
-                    
-                        
+
+
+
                         <form action="{{ route('admin.stdAdmission') }}" method="POST" autocomplete="off" id="add-student-form">
                             @csrf
-                        
+
                             <div class="card">
                                 <div class="card-header bg-gray">
-                                    <h3 class="card-title">Academic Details</h3>
+                                    <h3 class="card-title">{{ __('language.academic_details') }}</h3>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                                         </button>
@@ -69,15 +70,15 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="academicYear" class="required">Academic Year:</label>
-                                                <select class="form-control form-control-sm academic_year" name="academic_year" id="academic_yeasr">
-                                                    <option value="">Academic Year</option>
+                                                <label for="academicYear" class="required">{{ __('language.academic_year') }}</label>
+                                                <select class="form-control form-control-sm academic_year" name="academic_year" id="academic_year">
+                                                    <option value="">{{ __('language.academic_year') }}</option>
                                                     @php
                                                         $currentYear = date('Y');
                                                     @endphp
-                                                    @for ($i = $currentYear - 5; $i <= $currentYear + 5; $i++)
+                                                    @for ($i = $currentYear - 10; $i <= $currentYear + 10; $i++)
                                                         <option value="{{ $i }}">
-                                                            {{ $i }} - {{ $i + 1 }}
+                                                            {{ $i }}
                                                         </option>
                                                     @endfor
                                                 </select>
@@ -85,7 +86,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="versionName" class="required">Version Name:</label>
+                                                <label for="versionName" class="required">{{ __('language.version_name') }}</label>
                                                 <select class="form-control form-control-sm version_id" name="version_id" id="version_id">
                                                     <option value="">{{ __('language.select_version') }}</option>
                                                     @foreach ($versions as $version)
@@ -96,7 +97,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="className" class="required">Class Name:</label>
+                                                <label for="className" class="required">{{ __('language.class_name') }}</label>
                                                 <select class="form-control form-control-sm class_id" name="class_id" id="class_id" disabled>
                                                     <option value="">{{ __('language.select_class') }}</option>
                                                 </select>
@@ -106,7 +107,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="section_id" class="required">Section Name:</label>
+                                                <label for="section_id" class="required">{{ __('language.section_name') }}</label>
                                                 <select id="section_id" name="section_id" class="form-control form-control-sm section_id" disabled>
                                                     <option value="">{{ __('language.select_section') }}</option>
                                                 </select>
@@ -114,9 +115,9 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="rollNo" class="required">Roll No:</label>
+                                                <label for="rollNo" class="required">{{ __('language.roll_no') }}</label>
                                                 <div class="input-group">
-                                                    <input type="text" id="rollNo" name="roll_no" class="form-control form-control-sm" placeholder="Roll No">
+                                                    <input type="text" id="rollNo" name="roll_no" class="form-control form-control-sm" placeholder="{{ __('language.roll_no') }}">
                                                     <div class="input-group-append">
                                                         <span class="input-group-text">
                                                             <i class="fa fa-user"></i>
@@ -127,7 +128,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="admissiondate" class="required">Admission Date:</label>
+                                                <label for="admissiondate" class="required">{{ __('language.admission_date') }}</label>
                                                 <input type="date" id="admissiondate" name="admission_date" class="form-control form-control-sm">
                                             </div>
                                         </div>
@@ -135,9 +136,9 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="studentCategory" class="required">Student Category:</label>
+                                                <label for="studentCategory" class="required">{{ __('language.std_category') }}</label>
                                                 <select id="studentCategory" name="std_category" class="form-control form-control-sm">
-                                                    <option value="">Select Student Category</option>
+                                                    <option value="">{{ __('language.select') }}</option>
                                                     <option value="Regular">Regular</option>
                                                     <option value="Transferred">Transferred</option>
                                                     <option value="Interchanged">Interchanged</option>
@@ -146,21 +147,21 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="feeSetup" class="required">Fee Setup:</label>
+                                                <label for="feeSetup" class="required">{{ __('language.fee_setup') }}</label>
                                                 <select id="feeSetup" name="feeSetup" class="form-control form-control-sm feesetup" id="feesetup" disabled>
                                                     <option value="">Please select a Fee</option>
-                                                    
+
                                                 </select>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                             </div>
-                        
+
                             <div class="card">
                                 <div class="card-header bg-gray">
-                                    <h3 class="card-title">Personal Details</h3>
+                                    <h3 class="card-title">{{ __('language.personal_details') }}</h3>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                                         </button>
@@ -169,7 +170,7 @@
                                 <div class="card-body">
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
-                                            <label for="studentFullName" class="required">Student Full Name (In English):</label>
+                                            <label for="studentFullName" class="required">{{ __('language.student_full_name') }}</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -180,7 +181,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="studentFullNameBangla">Student Full Name (In Bangla):</label>
+                                            <label for="studentFullNameBangla">{{ __('language.student_full_name_bangla') }}</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -191,7 +192,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="fatherName" class="required">Father's Name:</label>
+                                            <label for="fatherName" class="required">{{ __('language.fathers_name') }}</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -204,7 +205,7 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
-                                            <label for="motherName" class="required">Mother's Name:</label>
+                                            <label for="motherName" class="required">{{ __('language.mothers_name') }}</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -215,7 +216,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="studentPhone" class="required">Student's Phone:</label>
+                                            <label for="studentPhone" class="required">{{ __('language.students_phone') }}</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -226,7 +227,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="studentPhoneAlt">Student's Phone Alternative:</label>
+                                            <label for="studentPhoneAlt">{{ __('language.students_phone_alternative') }}</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -239,7 +240,7 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
-                                            <label for="dob" class="required">Date of Birth:</label>
+                                            <label for="dob" class="required">{{ __('language.date_of_birth') }}</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -250,7 +251,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="email">Email:</label>
+                                            <label for="email">{{ __('language.email') }}</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -261,7 +262,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="bloodGroup">Blood Group:</label>
+                                            <label for="bloodGroup">{{ __('language.blood_group') }}</label>
                                             <select id="bloodGroup" name="blood_group" class="form-control form-control-sm">
                                                 <option value="A+">A+</option>
                                                 <option value="A-">A-</option>
@@ -276,15 +277,15 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
-                                            <label for="presentAddress" class="required">Present Address:</label>
+                                            <label for="presentAddress" class="required">{{ __('language.present_address') }}</label>
                                             <textarea id="presentAddress" name="std_present_address" class="form-control form-control-sm" rows="5"></textarea>
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="permanentAddress" class="required">Permanent Address:</label>
+                                            <label for="permanentAddress" class="required">{{ __('language.permanent_address') }}</label>
                                             <textarea id="permanentAddress" name="std_permanent_address" class="form-control form-control-sm" rows="5"></textarea>
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="gender" class="required">Gender:</label>
+                                            <label for="gender" class="required">{{ __('language.gender') }}</label>
                                             <select id="gender" name="std_gender" class="form-control form-control-sm">
                                                 <option value="male">Male</option>
                                                 <option value="female">Female</option>
@@ -294,10 +295,10 @@
                                     </div>
                                 </div>
                             </div>
-                        
+
                             <div class="card">
                                 <div class="card-header bg-gray">
-                                    <h3 class="card-title">Parents/Guardian Details</h3>
+                                    <h3 class="card-title">{{ __('language.parents_guardian_details') }}</h3>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                                         </button>
@@ -306,7 +307,7 @@
                                 <div class="card-body">
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
-                                            <label for="fatherOccupation">Father's Occupation:</label>
+                                            <label for="fatherOccupation">{{ __('language.fathers_occupation') }}</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -317,7 +318,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="motherOccupation">Mother's Occupation:</label>
+                                            <label for="motherOccupation">{{ __('language.mothers_occupation') }}</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -328,7 +329,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="yearlyIncome">Yearly Income:</label>
+                                            <label for="yearlyIncome">{{ __('language.yearly_income') }}</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -341,10 +342,10 @@
                                     </div>
                                 </div>
                             </div>
-                        
+
                             <div class="card">
                                 <div class="card-header bg-gray">
-                                    <h3 class="card-title">Image Upload</h3>
+                                    <h3 class="card-title">{{ __('language.image_upload') }}</h3>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                                         </button>
@@ -352,15 +353,15 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="pic">Upload Your Photo:</label>
+                                        <label for="pic">{{ __('language.image_upload') }}</label>
                                         <input type="file" id="pic" name="std_picture" accept="image/*">
                                     </div>
                                 </div>
                             </div>
-                        
+
                             <div class="card">
                                 <div class="card-header bg-gray">
-                                    <h3 class="card-title">Guardian's Information (If the student does not live with parents)</h3>
+                                    <h3 class="card-title">{{ __('language.guardians_information') }}</h3>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                                         </button>
@@ -369,7 +370,7 @@
                                 <div class="card-body">
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
-                                            <label for="guardianName">Guardian's Name:</label>
+                                            <label for="guardianName">{{ __('language.guardians_name') }}</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -380,7 +381,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="relationship">Relationship with Student:</label>
+                                            <label for="relationship">{{ __('language.relationship_with_student') }}</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -391,7 +392,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="guardianPhone">Guardian's Phone:</label>
+                                            <label for="guardianPhone">{{ __('language.guardians_phone') }}</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -403,19 +404,19 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="guardianAddress">Guardian's Address:</label>
+                                        <label for="guardianAddress">{{ __('language.guardians_address') }}</label>
                                         <textarea id="guardianAddress" name="std_gurdian_address" class="form-control form-control-sm summernote" rows="3"></textarea>
                                     </div>
                                 </div>
                             </div>
-                        
+
                             <div class="btn-container">
-                                <button type="submit" class="btn btn-primary">Finish</button>
+                                <button type="submit" class="btn btn-primary">{{ __('language.save') }}</button>
                             </div>
-                        
+
                         </form>
-                        
-                    
+
+
                 </div>
             </div>
         </div>
@@ -442,13 +443,13 @@ $(document).ready(function() {
     // When the "Academic Year" dropdown changes
     $('.academic_year').on('change', function() {
         var academic_year = $(this).val();
-        
+
         // Enable the "Class" dropdown
         $('.feesetup').prop('disabled', false).data('academic_year', academic_year);
-        
+
         // Add the extra option to the "Class" dropdown
         $('.feesetup').html('<option value="">-- Please select a Fee --</option>');
-        
+
         // Make an AJAX request to fetch classes based on the selected version
         $.ajax({
             url: '{{ route('admin.getFeegroupByAcademicYear') }}',
@@ -459,7 +460,7 @@ $(document).ready(function() {
             },
             success: function(data) {
                 var feeDropdown = $('.feesetup');
-                
+
                 // Populate the "Class" dropdown with the fetched data
                 $.each(data.feegroups, function(key, value) {
                     feeDropdown.append($('<option>', {
@@ -474,13 +475,13 @@ $(document).ready(function() {
     // When the "Version" dropdown changes
     $('.version_id').on('change', function() {
         var versionId = $(this).val();
-        
+
         // Enable the "Class" dropdown
         $('.class_id').prop('disabled', false).data('version-id', versionId);
-        
+
         // Add the extra option to the "Class" dropdown
         $('.class_id').html('<option value="">-- Please select a class --</option>');
-        
+
         // Make an AJAX request to fetch classes based on the selected version
         $.ajax({
             url: '{{ route('admin.getClassesByVersion') }}',
@@ -491,7 +492,7 @@ $(document).ready(function() {
             },
             success: function(data) {
                 var classDropdown = $('.class_id');
-                
+
                 // Populate the "Class" dropdown with the fetched data
                 $.each(data.classes, function(key, value) {
                     classDropdown.append($('<option>', {
@@ -507,13 +508,13 @@ $(document).ready(function() {
     $('.class_id').on('change', function() {
         var classId = $(this).val();
         var versionId = $(this).data('version-id'); // Retrieve the version_id
-        
+
         // Enable the "Section" dropdown
         $('.section_id').prop('disabled', false).data('version-id', versionId); // Pass version_id to the Section dropdown
-        
+
         // Add the extra option to the "Section" dropdown
         $('.section_id').html('<option value="">-- Please select a section --</option>');
-        
+
         // Make an AJAX request to fetch sections based on the selected class
         $.ajax({
             url: '{{ route('admin.getSectionByClass') }}',
@@ -525,7 +526,7 @@ $(document).ready(function() {
             },
             success: function(data) {
                 var sectionDropdown = $('.section_id');
-                
+
                 // Populate the "Section" dropdown with the fetched data
                 $.each(data.sections, function(key, value) {
                     sectionDropdown.append($('<option>', {

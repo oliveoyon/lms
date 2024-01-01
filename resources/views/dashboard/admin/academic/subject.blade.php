@@ -33,8 +33,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a
-                                    href="{{ route('admin.home') }}">{{ __('language.dashboard') }}</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('language.dashboard') }}</a></li>
                             <li class="breadcrumb-item active">{{ __('language.subject') }}</li>
                         </ol>
                     </div><!-- /.col -->
@@ -163,8 +162,17 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="academic_year">{{ __('language.academic_year') }}</label>
-                                    <input type="text" class="form-control form-control-sm" name="academic_year"
-                                        id="academic_year" placeholder="{{ __('language.academic_year') }}">
+                                    <select class="form-control form-control-sm academic_year" name="academic_year" id="academic_year">
+                                        <option value="">{{ __('language.academic_year') }}</option>
+                                        @php
+                                            $currentYear = date('Y');
+                                        @endphp
+                                        @for ($i = $currentYear - 10; $i <= $currentYear + 10; $i++)
+                                            <option value="{{ $i }}">
+                                                {{ $i }}
+                                            </option>
+                                        @endfor
+                                    </select>
                                     <span class="text-danger error-text academic_year_error"></span>
                                 </div>
                                 <div class="form-group">
@@ -191,8 +199,8 @@
         aria-hidden="true" data-keyboard="false" data-backdrop="static">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editSubjectLabel">Edit Subject</h5>
+                <div class="modal-header bg-purple">
+                    <h5 class="modal-title" id="editSubjectLabel">{{ __('language.subject_edit') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -218,14 +226,23 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="academic_year">{{ __('language.academic_year') }}</label>
-                                    <input type="text" class="form-control form-control-sm" name="academic_year"
-                                        placeholder="{{ __('language.academic_year') }}">
+                                    <select class="form-control form-control-sm academic_year" name="academic_year" id="academic_year">
+                                        <option value="">{{ __('language.academic_year') }}</option>
+                                        @php
+                                            $currentYear = date('Y');
+                                        @endphp
+                                        @for ($i = $currentYear - 10; $i <= $currentYear + 10; $i++)
+                                            <option value="{{ $i }}">
+                                                {{ $i }}
+                                            </option>
+                                        @endfor
+                                    </select>
                                     <span class="text-danger error-text academic_year_error"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="version_id">Version</label>
+                                    <label for="version_id">{{ __('language.version') }}</label>
                                     <select class="form-control form-control-sm version_id" name="version_id"
                                         id="version_id">
                                         <option value="">{{ __('language.select_version') }}</option>
@@ -236,7 +253,7 @@
                                     <span class="text-danger error-text version_id_error"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="class_id">Class</label>
+                                    <label for="class_id">{{ __('language.class') }}</label>
                                     <select class="form-control form-control-sm class_id" name="class_id" id="class_id">
                                         @foreach ($classes as $class)
                                             <option value="{{ $class->id }}">{{ $class->class_name }}</option>
@@ -245,17 +262,17 @@
                                     <span class="text-danger error-text class_id_error"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="subject_status">Status</label>
+                                    <label for="subject_status">{{ __('language.status') }}</label>
                                     <select class="form-control form-control-sm" name="subject_status">
-                                        <option value="1">Active</option>
-                                        <option value="0">Inactive</option>
+                                        <option value="1">{{ __('language.active') }}</option>
+                                        <option value="0">{{ __('language.inactive') }}</option>
                                     </select>
                                     <span class="text-danger error-text subject_status_error"></span>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-block btn-success">Update</button>
+                            <button type="submit" class="btn btn-block bg-purple">{{ __('language.update') }}</button>
                         </div>
                     </form>
                 </div>
@@ -371,7 +388,7 @@
                     $('.editSubject').find('select[name="class_id"]').val(data.details.class_id);
                     $('.editSubject').find('input[name="subject_code"]').val(data.details
                         .subject_code);
-                    $('.editSubject').find('input[name="academic_year"]').val(data.details
+                    $('.editSubject').find('select[name="academic_year"]').val(data.details
                         .academic_year);
                     $('.editSubject').find('select[name="class_id"]').val(data.details.class_id);
                     $('.editSubject').find('select[name="subject_status"]').val(data.details

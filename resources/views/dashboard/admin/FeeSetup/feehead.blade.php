@@ -19,8 +19,8 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a
-                                    href="{{ route('admin.home') }}">{{ __('language.fee_head') }}</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('language.dashboard') }}</a></li>
+                            <li class="breadcrumb-item">{{ __('language.fee_head') }}</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -173,7 +173,7 @@
         aria-hidden="true" data-keyboard="false" data-backdrop="static">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg-purple">
                     <h5 class="modal-title" id="editFeeHeadLabel">{{ __('language.fee_head_edit') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -222,7 +222,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-success">{{ __('language.update') }}</button>
+                        <button type="submit" class="btn  bg-purple">{{ __('language.update') }}</button>
                     </form>
                 </div>
             </div>

@@ -29,8 +29,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a
-                                    href="{{ route('admin.home') }}">{{ __('language.dashboard') }}</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('language.dashboard') }}</a></li>
                             <li class="breadcrumb-item active">{{ __('language.section') }}</li>
                         </ol>
                     </div><!-- /.col -->
@@ -182,7 +181,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-success">{{ __('language.save') }}</button>
+                        <button type="submit" class="btn btn-success btn-blocked">{{ __('language.save') }}</button>
                     </form>
                 </div>
             </div>
@@ -193,7 +192,7 @@
         aria-hidden="true" data-keyboard="false" data-backdrop="static">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg-purple">
                     <h5 class="modal-title" id="editSectionLabel">{{ __('language.section_edit') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -259,7 +258,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-block btn-success">{{ __('language.update') }}</button>
+                            <button type="submit" class="btn btn-block  bg-purple">{{ __('language.update') }}</button>
                         </div>
                     </form>
                 </div>

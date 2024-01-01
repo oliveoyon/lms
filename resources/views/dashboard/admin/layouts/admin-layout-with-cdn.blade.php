@@ -239,7 +239,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('admin.enroll') }}" class="nav-link">
                             <i class="far fa-check-circle nav-icon"></i>
                             <p>{{ __('language.enroll_student') }}</p>
                         </a>

@@ -21,8 +21,8 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a
-                                    href="{{ route('admin.home') }}">{{ __('language.aca_fee_group') }}</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('language.dashboard') }}</a></li>
+                            <li class="breadcrumb-item">{{ __('language.aca_fee_group') }}</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -39,14 +39,14 @@
                             <div class="card-header bg-navy">
                                 <h3 class="card-title">
                                     <i class="fas fa-money-bill-wave mr-1"></i>
-                                    {{ __('language.fee_group_list') }}
+                                    {{ __('language.fee_amount_group_list') }}
                                 </h3>
                                 <div class="card-tools">
                                     <ul class="nav nav-pills ml-auto">
                                         <li class="nav-item">
                                             <button class="btn btn-success btn-sm" data-toggle="modal"
                                                 data-target="#addFeeGroupModal">
-                                                <i class="fas fa-plus-square mr-1"></i> {{ __('language.fee_group_add') }}
+                                                <i class="fas fa-plus-square mr-1"></i> {{ __('language.fee_amount_group_add') }}
                                             </button>
                                         </li>
                                     </ul>
@@ -112,7 +112,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-success">
-                    <h5 class="modal-title" id="addFeeGroupModalLabel">{{ __('language.fee_group_add') }}</h5>
+                    <h5 class="modal-title" id="addFeeGroupModalLabel">{{ __('language.fee_amount_group_add') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -124,9 +124,9 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="aca_group_name">{{ __('language.fee_group_name') }}</label>
+                                    <label for="aca_group_name">{{ __('language.fee_amount_group_name') }}</label>
                                     <input type="text" class="form-control form-control-sm" id="aca_group_name"
-                                        name="aca_group_name" placeholder="{{ __('language.fee_group_name') }}">
+                                        name="aca_group_name" placeholder="{{ __('language.fee_amount_group_name') }}">
                                     <span class="text-danger error-text aca_group_name_error"></span>
                                 </div>
 
@@ -134,15 +134,14 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="academic_year">{{ __('language.academic_year') }}</label>
-                                    <select class="form-control form-control-sm" name="academic_year" id="academic_yeasr">
+                                    <select class="form-control form-control-sm academic_year" name="academic_year" id="academic_year">
+                                        <option value="">{{ __('language.academic_year') }}</option>
                                         @php
                                             $currentYear = date('Y');
                                         @endphp
-                                        @for ($i = $currentYear - 5; $i <= $currentYear + 5; $i++)
-                                            <option value="{{ $i }}" <?php if ($i == $currentYear) {
-                                                echo 'selected';
-                                            } ?>>
-                                                {{ $i }} - {{ $i + 1 }}
+                                        @for ($i = $currentYear - 10; $i <= $currentYear + 10; $i++)
+                                            <option value="{{ $i }}">
+                                                {{ $i }}
                                             </option>
                                         @endfor
                                     </select>
@@ -169,14 +168,14 @@
                                     <label for="aca_group_status">{{ __('language.status') }}</label>
                                     <select class="form-control form-control-sm" id="aca_group_status"
                                         name="aca_group_status">
-                                        <option value="1">Active</option>
-                                        <option value="0">Inactive</option>
+                                        <option value="1">{{ __('language.active') }}</option>
+                                        <option value="0">{{ __('language.inactive') }}</option>
                                     </select>
                                     <span class="text-danger error-text aca_group_status_error"></span>
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-success">{{ __('language.save') }}</button>
+                        <button type="submit" class="btn btn-block btn-success">{{ __('language.save') }}</button>
                     </form>
                 </div>
             </div>
@@ -190,8 +189,8 @@
         aria-labelledby="editFeeGroupModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header bg-warning">
-                    <h5 class="modal-title" id="editFeeGroupModalLabel">{{ __('language.fee_group_edit') }}</h5>
+                <div class="modal-header bg-purple">
+                    <h5 class="modal-title" id="editFeeGroupModalLabel">{{ __('language.fee_amount_group_edit') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -204,9 +203,9 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="aca_group_name">{{ __('language.fee_group_name') }}</label>
+                                    <label for="aca_group_name">{{ __('language.fee_amount_group_name') }}</label>
                                     <input type="text" class="form-control form-control-sm" id="aca_group_name"
-                                        name="aca_group_name" placeholder="{{ __('language.fee_group_name') }}">
+                                        name="aca_group_name" placeholder="{{ __('language.fee_amount_group_name') }}">
                                     <span class="text-danger error-text aca_group_name_error"></span>
                                 </div>
 
@@ -214,16 +213,14 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="academic_year">{{ __('language.academic_year') }}</label>
-                                    <select class="form-control form-control-sm" name="academic_year"
-                                        id="academic_yeasr">
+                                    <select class="form-control form-control-sm academic_year" name="academic_year" id="academic_year">
+                                        <option value="">{{ __('language.academic_year') }}</option>
                                         @php
                                             $currentYear = date('Y');
                                         @endphp
-                                        @for ($i = $currentYear - 5; $i <= $currentYear + 5; $i++)
-                                            <option value="{{ $i }}" <?php if ($i == $currentYear) {
-                                                echo 'selected';
-                                            } ?>>
-                                                {{ $i }} - {{ $i + 1 }}
+                                        @for ($i = $currentYear - 10; $i <= $currentYear + 10; $i++)
+                                            <option value="{{ $i }}">
+                                                {{ $i }}
                                             </option>
                                         @endfor
                                     </select>
@@ -250,14 +247,14 @@
                                     <label for="aca_group_status">{{ __('language.status') }}</label>
                                     <select class="form-control form-control-sm" id="aca_group_status"
                                         name="aca_group_status">
-                                        <option value="1">Active</option>
-                                        <option value="0">Inactive</option>
+                                        <option value="1">{{ __('language.active') }}</option>
+                                        <option value="0">{{ __('language.inactive') }}</option>
                                     </select>
                                     <span class="text-danger error-text aca_group_status_error"></span>
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-success">{{ __('language.update') }}</button>
+                        <button type="submit" class="btn btn-block bg-purple">{{ __('language.update') }}</button>
                     </form>
                 </div>
 

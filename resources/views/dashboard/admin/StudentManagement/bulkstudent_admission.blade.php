@@ -1,5 +1,5 @@
 @extends('dashboard.admin.layouts.admin-layout-with-cdn')
-@section('title', 'Fee Head')
+@section('title', 'Bulk Student Admission')
 @push('admincss')
     <!-- DataTables -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.2.0/dist/sweetalert2.min.css">
@@ -28,11 +28,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">{{ __('language.fee_head') }}</h1>
+                    <h1 class="m-0">{{ __('language.bulk_student_admission') }}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('language.fee_head') }}</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('language.dashboard') }}</a></li>
+                        <li class="breadcrumb-item">{{ __('language.bulk_student_admission') }}</li>
                     </ol>
                 </div>
             </div>
@@ -54,7 +55,7 @@
 
                     <div class="card">
                         <div class="card-header bg-danger">
-                            <h3 class="card-title">Bulk Student Admission</h3>
+                            <h3 class="card-title">{{ __('language.bulk_student_admission') }}</h3>
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
@@ -62,7 +63,7 @@
                             </div>
                         </div>
                         <div class="card-body bg-info">
-                            <p>To upload bulk students, Download csv file from above button. Roll number should starts from as suggested roll and then increament one. Following fields are mendatory, fields are Roll No, Student Name, Student Phone, Father Name, Mother Name, Date of Birth, Gender, Present Address, Permanent Address, Student Category. If you dont fill these column in csv then it may create problem later. Date column should be filled as 2023-12-03</p>
+                            <p>{{ __('language.bulk_student_upload_instructions') }}</p>
                             <a href="{{ asset('Students.csv') }}" download="Students.csv">
                                 <button type="button" class="btn btn-warning btn-sm btn-flat">Download Template</button>
                             </a>
@@ -75,7 +76,7 @@
 
                             <div class="card">
                                 <div class="card-header bg-gray">
-                                    <h3 class="card-title">Academic Details</h3>
+                                    <h3 class="card-title">{{ __('language.academic_details') }}</h3>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                                         </button>
@@ -85,15 +86,15 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="academicYear" class="required">Academic Year:</label>
-                                                <select class="form-control form-control-sm academic_year" name="academic_year" id="academic_yeasr">
-                                                    <option value="">Academic Year</option>
+                                                <label for="academicYear" class="required">{{ __('language.academic_year') }}</label>
+                                                <select class="form-control form-control-sm academic_year" name="academic_year" id="academic_year">
+                                                    <option value="">{{ __('language.academic_year') }}</option>
                                                     @php
                                                         $currentYear = date('Y');
                                                     @endphp
-                                                    @for ($i = $currentYear - 5; $i <= $currentYear + 5; $i++)
+                                                    @for ($i = $currentYear - 10; $i <= $currentYear + 10; $i++)
                                                         <option value="{{ $i }}">
-                                                            {{ $i }} - {{ $i + 1 }}
+                                                            {{ $i }}
                                                         </option>
                                                     @endfor
                                                 </select>
@@ -101,7 +102,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="versionName" class="required">Version Name:</label>
+                                                <label for="versionName" class="required">{{ __('language.version_name') }}</label>
                                                 <select class="form-control form-control-sm version_id" name="version_id" id="version_id">
                                                     <option value="">{{ __('language.select_version') }}</option>
                                                     @foreach ($versions as $version)
@@ -112,7 +113,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="className" class="required">Class Name:</label>
+                                                <label for="className" class="required">{{ __('language.class_name') }}</label>
                                                 <select class="form-control form-control-sm class_id" name="class_id" id="class_id" disabled>
                                                     <option value="">{{ __('language.select_class') }}</option>
                                                 </select>
@@ -122,7 +123,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="section_id" class="required">Section Name:</label>
+                                                <label for="section_id" class="required">{{ __('language.section_name') }}</label>
                                                 <select id="section_id" name="section_id" class="form-control form-control-sm section_id" disabled>
                                                     <option value="">{{ __('language.select_section') }}</option>
                                                 </select>
@@ -131,7 +132,7 @@
 
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="feeSetup" class="required">Fee Setup:</label>
+                                                <label for="feeSetup" class="required">{{ __('language.fee_setup') }}</label>
                                                 <select id="feeSetup" name="feeSetup" class="form-control form-control-sm feesetup" id="feesetup" disabled>
                                                     <option value="">Please select a Fee</option>
 
@@ -142,7 +143,7 @@
 
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="admissiondate" class="required">Admission Date:</label>
+                                                <label for="admissiondate" class="required">{{ __('language.admission_date') }}</label>
                                                 <input type="date" id="admissiondate" name="admission_date" class="form-control form-control-sm">
                                             </div>
                                         </div>
@@ -150,7 +151,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="studentCategory" class="required">Student Category:</label>
+                                                <label for="studentCategory" class="required">{{ __('language.std_category') }}</label>
                                                 <select id="studentCategory" name="std_category" class="form-control form-control-sm">
                                                     <option value="">Select Student Category</option>
                                                     <option value="Regular">Regular</option>
@@ -162,7 +163,7 @@
 
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="feeSetup" class="required">Upload CSV:</label>
+                                                <label for="feeSetup" class="required">{{ __('language.upload_csv') }}</label>
                                                 <input type="file" name="upload" id="">
                                             </div>
                                         </div>
@@ -172,7 +173,7 @@
                             </div>
 
                             <div class="btn-container">
-                                <button type="submit" class="btn btn-primary">Finish</button>
+                                <button type="submit" class="btn btn-primary">{{ __('language.save') }}</button>
                             </div>
 
                         </form>

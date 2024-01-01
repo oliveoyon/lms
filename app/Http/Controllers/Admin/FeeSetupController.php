@@ -15,7 +15,7 @@ use Illuminate\Validation\Rule;
 
 class FeeSetupController extends Controller
 {
-    
+
     public function feeFrequencyList()
     {
         $send['feeFrequencies'] = FeeFrequency::get();
@@ -26,12 +26,12 @@ class FeeSetupController extends Controller
     public function addFeeFrequency(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'freq_name' => 'required|string|max:255|unique:fee_frequencies', 
+            'freq_name' => 'required|string|max:255|unique:fee_frequencies',
             'no_of_installment' => 'required|integer',
             'installment_period' => 'nullable|string|max:30',
             'freq_status' => 'required|integer',
         ]);
-        
+
 
         if ($validator->fails()) {
             return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
@@ -45,7 +45,7 @@ class FeeSetupController extends Controller
         $feeFrequency->freq_status = $request->input('freq_status');
 
         if ($feeFrequency->save()) {
-            return response()->json(['code' => 1, 'msg' => 'Fee frequency has been successfully added', 'redirect' => 'admin/fee-frequency-list']);
+            return response()->json(['code' => 1, 'msg' => __('language.fee_frequency_add_msg'), 'redirect' => 'admin/fee-frequency-list']);
         } else {
             return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
         }
@@ -55,7 +55,7 @@ class FeeSetupController extends Controller
     {
         $feeFrequencyId = $request->fee_frequency_id;
         $feeFrequency = FeeFrequency::find($feeFrequencyId);
-        
+
         return response()->json(['details' => $feeFrequency]);
     }
 
@@ -65,12 +65,12 @@ class FeeSetupController extends Controller
         $feeFrequency = FeeFrequency::find($feeFrequencyId);
 
         $validator = Validator::make($request->all(), [
-            'freq_name' => 'required|string|max:255|unique:fee_frequencies,freq_name,'.$feeFrequencyId.',id', 
+            'freq_name' => 'required|string|max:255|unique:fee_frequencies,freq_name,'.$feeFrequencyId.',id',
             'no_of_installment' => 'required|integer',
             'installment_period' => 'nullable|string|max:30',
             'freq_status' => 'required|integer',
         ]);
-        
+
 
         if ($validator->fails()) {
             return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
@@ -82,7 +82,7 @@ class FeeSetupController extends Controller
         $feeFrequency->freq_status = $request->input('freq_status');
 
         if ($feeFrequency->save()) {
-            return response()->json(['code' => 1, 'msg' => 'Fee frequency has been successfully updated', 'redirect' => 'admin/fee-frequency-list']);
+            return response()->json(['code' => 1, 'msg' => __('language.fee_frequency_edit_msg'), 'redirect' => 'admin/fee-frequency-list']);
         } else {
             return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
         }
@@ -100,12 +100,12 @@ class FeeSetupController extends Controller
 
             if ($feeFrequency) {
                 $feeFrequency->delete();
-                return response()->json(['code' => 1, 'msg' => 'Fee frequency has been deleted from the database', 'redirect' => 'admin/fee-frequency-list']);
+                return response()->json(['code' => 1, 'msg' => __('language.fee_frequency_del_msg'), 'redirect' => 'admin/fee-frequency-list']);
             } else {
                 return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
             }
         } else {
-            return response()->json(['code' => 0, 'msg' => 'Cannot delete the fee frequency as it is used in academic fee heads.']);
+            return response()->json(['code' => 0, 'msg' => __('language.fee_frequency_cant_del_msg')]);
         }
     }
 
@@ -121,19 +121,19 @@ class FeeSetupController extends Controller
     {
         $no_of_installment = FeeFrequency::find($request->input('aca_feehead_freq'))->no_of_installment;
         $validator = Validator::make($request->all(), [
-            'aca_feehead_name' => 'required|string|max:255|unique:academic_fee_heads,aca_feehead_name', 
+            'aca_feehead_name' => 'required|string|max:255|unique:academic_fee_heads,aca_feehead_name',
             'aca_feehead_description' => 'required|string',
             'aca_feehead_freq' => 'required|integer',
             'status' => 'required|integer',
         ]);
-        
+
 
         if ($validator->fails()) {
             return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
         } else {
             $academicFeeHead = new AcademicFeeHead();
             $academicFeeHead->aca_feehead_hash_id = md5(uniqid(rand(), true));
-            
+
             $academicFeeHead->aca_feehead_name = $request->input('aca_feehead_name');
             $academicFeeHead->aca_feehead_description = $request->input('aca_feehead_description');
             $academicFeeHead->aca_feehead_freq = $request->input('aca_feehead_freq');
@@ -143,7 +143,7 @@ class FeeSetupController extends Controller
             $query = $academicFeeHead->save();
 
             if ($query) {
-                return response()->json(['code' => 1, 'msg' => __('language.academic_fee_head_add_msg'), 'redirect' => 'admin/academic-fee-head-list']);
+                return response()->json(['code' => 1, 'msg' => __('language.fee_head_add_msg'), 'redirect' => 'admin/academic-fee-head-list']);
             } else {
                 return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
             }
@@ -171,7 +171,7 @@ class FeeSetupController extends Controller
             'aca_feehead_freq' => 'required|integer',
             'status' => 'required|integer',
         ]);
-        
+
 
         if ($validator->fails()) {
             return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
@@ -184,7 +184,7 @@ class FeeSetupController extends Controller
             $query = $academicFeeHead->save();
 
             if ($query) {
-                return response()->json(['code' => 1, 'msg' => __('language.academic_fee_head_edit_msg'), 'redirect' => 'admin/academic-fee-head-list']);
+                return response()->json(['code' => 1, 'msg' => __('language.fee_head_edit_msg'), 'redirect' => 'admin/academic-fee-head-list']);
             } else {
                 return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
             }
@@ -194,24 +194,24 @@ class FeeSetupController extends Controller
     public function deleteAcademicFeeHead(Request $request)
     {
         $academicFeeHeadId = $request->academic_feehead_id;
-        
+
         // Check if the academic fee head is associated with any fee group
         $isUsedInFeeGroups = AcademicFeeGroup::where('aca_feehead_id', 'like', "%$academicFeeHeadId%")->exists();
 
         if ($isUsedInFeeGroups) {
-            return response()->json(['code' => 0, 'msg' => 'This academic fee head is used in fee groups and cannot be deleted.']);
+            return response()->json(['code' => 0, 'msg' => __('language.fee_head_cant_del')]);
         }
 
         $query = AcademicFeeHead::find($academicFeeHeadId);
 
         if (!$query) {
-            return response()->json(['code' => 0, 'msg' => 'Academic fee head not found']);
+            return response()->json(['code' => 0, 'msg' => __('language.fee_head_not_found')]);
         }
 
         $query = $query->delete();
 
         if ($query) {
-            return response()->json(['code' => 1, 'msg' => __('language.academic_fee_head_del_msg'), 'redirect' => 'admin/academic-fee-head-list']);
+            return response()->json(['code' => 1, 'msg' => __('language.fee_head_del_msg'), 'redirect' => 'admin/academic-fee-head-list']);
         } else {
             return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
         }
@@ -278,7 +278,7 @@ class FeeSetupController extends Controller
             $query = $feeGroup->save();
 
             if ($query) {
-                return response()->json(['code' => 1, 'msg' => __('language.fee_group_add_msg'), 'redirect' => 'admin/academic-fee-group-list']);
+                return response()->json(['code' => 1, 'msg' => __('language.fee_amount_group_add_msg'), 'redirect' => 'admin/academic-fee-group-list']);
             } else {
                 return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
             }
@@ -319,7 +319,7 @@ class FeeSetupController extends Controller
                     }
                 },
             ],
-            
+
         ]);
 
         if ($validator->fails()) {
@@ -336,7 +336,7 @@ class FeeSetupController extends Controller
             $query = $feeGroup->save();
 
             if ($query) {
-                return response()->json(['code' => 1, 'msg' => __('language.fee_group_edit_msg'), 'redirect' => 'admin/academic-fee-group-list']);
+                return response()->json(['code' => 1, 'msg' => __('language.fee_amount_group_edit_msg'), 'redirect' => 'admin/academic-fee-group-list']);
             } else {
                 return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
             }
@@ -350,7 +350,7 @@ class FeeSetupController extends Controller
         $query = $query->delete();
 
         if ($query) {
-            return response()->json(['code' => 1, 'msg' => __('language.fee_group_del_msg'), 'redirect' => 'admin/academic-fee-group-list']);
+            return response()->json(['code' => 1, 'msg' => __('language.fee_amount_group_del_msg'), 'redirect' => 'admin/academic-fee-group-list']);
         } else {
             return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
         }
@@ -480,24 +480,24 @@ class FeeSetupController extends Controller
             foreach ($amountIds as $amountId => $val) {
                 // Remove any single quotes from the keys
                 $amountId = trim($amountId, "'");
-            
+
                 // You should validate and sanitize the input here
-            
+
                 // Get the amount record by its ID
                 $academicFeeAmount = AcademicFeeAmount::find($amountId);
-            
+
                 if (!$academicFeeAmount) {
                     return response()->json(['code' => 0, 'error' => 'Academic fee amount not found']);
                 }
-            
+
                 // Update the amount field based on your requirements
                 $newAmount = $val; // Define how you want to update the amount here
-            
+
                 // Update the amount field
                 $academicFeeAmount->amount = $newAmount;
                 $academicFeeAmount->save();
             }
-            
+
 
             return response()->json(['code' => 1, 'msg' => __('language.fee_amount_group_edit_msg'), 'redirect' => 'admin/academic-fee-amount-list']);
         } catch (\Exception $e) {
@@ -518,7 +518,7 @@ class FeeSetupController extends Controller
         foreach ($amountIdsArray as $amountId ) {
             // Remove any single quotes from the keys
             $amountId = trim($amountId, "'");
-        
+
             $query = AcademicFeeAmount::find($amountId);
             if ($query) {
                 $query->delete();

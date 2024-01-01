@@ -1,5 +1,5 @@
 @extends('dashboard.admin.layouts.admin-layout-with-cdn')
-@section('title', 'Version')
+@section('title', 'Enroll Student')
 @push('admincss')
     <!-- DataTables -->
     <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
@@ -16,14 +16,14 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Enroll Student</h1>
+                        <h1 class="m-0">{{ __('language.enroll_student') }}</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Enroll Student</a>
-                            </li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('language.dashboard') }}</a></li>
+                            <li class="breadcrumb-item">{{ __('language.enroll_student') }}</li>
                         </ol>
-                    </div><!-- /.col -->
+                    </div>
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
         </div>
@@ -47,8 +47,8 @@
                                 <table class="table table-bordered table-striped table-hover table-sm" id="datas-table">
                                     <thead style="border-top: 1px solid #b4b4b4">
                                         <th style="width: 15px">#</th>
-                                        <th>Student Name</th>
-                                        <th>Phone Number</th>
+                                        <th>{{ __('language.student_name') }}</th>
+                                        <th>{{ __('language.students_phone') }}</th>
                                         <th>{{ __('language.status') }}</th>
                                         <th>{{ __('language.action') }} <button
                                                 class="btn btn-sm btn-danger d-none"

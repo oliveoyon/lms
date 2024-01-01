@@ -1,5 +1,5 @@
 @extends('dashboard.admin.layouts.admin-layout-with-cdn')
-@section('title', 'Fee Head')
+@section('title', 'Students List')
 @push('admincss')
     <!-- DataTables -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.2.0/dist/sweetalert2.min.css">
@@ -28,11 +28,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">{{ __('language.fee_head') }}</h1>
+                    <h1 class="m-0">{{ __('language.student_list') }}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('language.fee_head') }}</a></li>
+                        <li class="breadcrumb-item">{{ __('language.student_list') }}</li>
                     </ol>
                 </div>
             </div>
@@ -58,7 +59,7 @@
 
                             <div class="card">
                                 <div class="card-header bg-gray">
-                                    <h3 class="card-title">Academic Details</h3>
+                                    <h3 class="card-title">{{ __('language.academic_details') }}</h3>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                                         </button>
@@ -68,14 +69,14 @@
                                     <div class="row align-items-end">
                                         <div class="col-md-2">
                                             <div class="form-group">
-                                                <select class="form-control form-control-sm academic_year" name="academic_year" id="academic_yeasr">
-                                                    <option value="">Academic Year</option>
+                                                <select class="form-control form-control-sm academic_year" name="academic_year" id="academic_year">
+                                                    <option value="">{{ __('language.academic_year') }}</option>
                                                     @php
                                                         $currentYear = date('Y');
                                                     @endphp
-                                                    @for ($i = $currentYear - 5; $i <= $currentYear + 5; $i++)
+                                                    @for ($i = $currentYear - 10; $i <= $currentYear + 10; $i++)
                                                         <option value="{{ $i }}">
-                                                            {{ $i }} - {{ $i + 1 }}
+                                                            {{ $i }}
                                                         </option>
                                                     @endfor
                                                 </select>
@@ -108,7 +109,7 @@
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <select id="studentCategory" name="std_category" class="form-control form-control-sm">
-                                                    <option value="">Student Category</option>
+                                                    <option value="">{{ __('language.std_category') }}</option>
                                                     <option value="Regular">Regular</option>
                                                     <option value="Transferred">Transferred</option>
                                                     <option value="Interchanged">Interchanged</option>
@@ -117,7 +118,7 @@
                                         </div>
                                         <div class="col-md-2">
                                             <div class="form-group">
-                                                <button type="submit" class="btn btn-primary btn-sm btn-block">Submit</button>
+                                                <button type="submit" class="btn btn-primary btn-sm btn-block">{{ __('language.submit') }}</button>
                                             </div>
                                         </div>
                                     </div>
@@ -154,13 +155,13 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Student ID</th>
-                                    <th>Student Name</th>
-                                    <th>Student Name (Bengali)</th>
-                                    <th>Version Name</th>
-                                    <th>Class Name</th>
-                                    <th>Section Name</th>
-                                    <th>Action</th>
+                                    <th>{{ __('language.student_id') }}</th>
+                                    <th>{{ __('language.student_full_name') }}</th>
+                                    <th>{{ __('language.student_full_name_bangla') }}</th>
+                                    <th>{{ __('language.version_name') }}</th>
+                                    <th>{{ __('language.class_name') }}</th>
+                                    <th>{{ __('language.section_name') }}</th>
+                                    <th>{{ __('language.action') }}</th>
                                 </tr>
                                 </thead>
                                 <tbody id="student-table-body">

@@ -72,8 +72,8 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a
-                                    href="{{ route('admin.home') }}">{{ __('language.fee_amount_group') }}</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('language.dashboard') }}</a></li>
+                            <li class="breadcrumb-item">{{ __('language.fee_amount_group') }}</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -283,7 +283,7 @@
                     aria-labelledby="editGroupModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                         <div class="modal-content">
-                            <div class="modal-header">
+                            <div class="modal-header bg-purple">
                                 <h5 class="modal-title" id="editGroupModalLabel">
                                     {{ __('language.fee_amount_group_edit') }}</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -299,7 +299,7 @@
                                     </div>
                                     <div class="form-group">
                                         <button type="submit"
-                                            class="btn btn-block btn-success">{{ __('language.update') }}</button>
+                                            class="btn btn-block bg-purple">{{ __('language.update') }}</button>
                                     </div>
                                 </form>
                             </div>
