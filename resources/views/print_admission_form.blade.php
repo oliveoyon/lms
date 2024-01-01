@@ -68,7 +68,7 @@
 
     <div class="header">
         <div class="left-section">
-            <img class="student-image" src="{{ asset('storage/img/applied_std_img/'.$user->std_picture) }}" alt="Student Image">
+            <img class="student-image" src="{{ public_path('storage/img/applied_std_img/'.$user->std_picture) }}" alt="Student Image">
 
             {{-- <div class="barcode">
                 <img style="height: 40px;" class="student-image" src="{{ public_path('barcode.gif') }}" alt="Student Image">
