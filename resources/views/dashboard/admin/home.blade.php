@@ -28,8 +28,7 @@
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid">
-            <!-- Small boxes (Stat box) -->
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-12 col-sm-6 col-md-3" id="totalsale">
                 <div class="info-box">
                   <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
@@ -88,7 +87,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
       </div><!-- /.container-fluid -->
     </div>
