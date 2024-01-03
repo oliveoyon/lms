@@ -11,12 +11,15 @@ use App\Http\Controllers\Admin\LibraryController;
 use App\Http\Controllers\Admin\StudentManagement;
 use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\GeneralController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
+Route::get('tests', [TestController::class, 'test']);
 
 Route::get('/', function () {
     return view('dashboard.admin.login1');

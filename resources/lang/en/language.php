@@ -152,7 +152,12 @@ return [
     "student_name" => "Student's Name",
     "submit" => "Submit",
     "student_id" => "Student ID",
-
+    "click_here" => "Click Here",
+    "online_form" => "Online Application Form",
+    "already_applied" => "If you already applied and want to print your Admission Form",
+    "type_phone" => "Type your phone no..",
+    "close" => "Close",
+    "birth_certificate" => "Birth Certificate No.",
     // Exam Management
     "exam_mgmt" => "Exam Management",
     "exam_lists" => "Exam Lists",

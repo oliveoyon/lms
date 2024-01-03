@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.2.0/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
+    <link href="https://fonts.maateen.me/solaiman-lipi/font.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body,
@@ -21,6 +21,7 @@
             /* Dark gray to black gradient */
             color: #fff;
             /* White text for better contrast */
+            font-family: solaimanlipi;
         }
 
         .content-section {
@@ -146,10 +147,10 @@
 
     <div class="content-section">
         <h1>Shalikha Thana High School</h1>
-        <p>Online Admission Form</p>
-        <p>If you already applied and want to print your Admission Form<br><button type="button"
+        <p>{{ __('language.online_form') }}</p>
+        <p>{{ __('language.already_applied') }}<br><button type="button"
                 class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal">
-                Click Here</button>
+                {{ __('language.click_here') }}</button>
         </p>
         @if ($errors->any())
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -160,6 +161,24 @@
             </div>
         @endif
 
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#languageCollapse" aria-expanded="false">
+            <img height="13px" src="{{ asset('dashboard/img/'.App::getLocale().'.png') }}" alt=""> {{ Config::get('languages')[App::getLocale()] }}
+        </button>
+
+        <!-- Language Selection Options -->
+        <div class="collapse" id="languageCollapse">
+            <div class="card card-body">
+                @foreach (Config::get('languages') as $lang => $language)
+                    @if ($lang != App::getLocale())
+                        <a class="dropdown-item" href="{{ route('lang.switch', $lang) }}">
+                            <img height="15px" src="{{ asset('dashboard/img/'.$lang.'.png') }}" alt=""> {{$language}}
+                        </a>
+                    @endif
+                @endforeach
+            </div>
+        </div>
+
+
 
         <div class="modal" id="myModal">
             <div class="modal-dialog">
@@ -167,7 +186,7 @@
 
                     <!-- Modal Header -->
                     <div class="modal-header bg-info">
-                        <h4 class="modal-title text-warning">Type Your Phone</h4>
+                        <h4 class="modal-title text-warning">{{ __('language.type_phone') }}</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
 
@@ -175,16 +194,16 @@
                     <div class="modal-body">
                         <!-- Form inside the modal -->
                         <div class="form-group">
-                            <label for="phoneInput">Type Your Phone:</label>
+                            <label for="phoneInput">{{ __('language.type_phone') }}</label>
                             <input type="tel" required class="form-control" id="phoneInput"
-                                placeholder="Type your phone" pattern="\d{11}">
+                                placeholder="{{ __('language.type_phone') }}" pattern="\d{11}">
                         </div>
-                        <button type="button" class="btn btn-primary" onclick="submitForm()">Submit</button>
+                        <button type="button" class="btn btn-primary" onclick="submitForm()">{{ __('language.submit') }}</button>
                     </div>
 
                     <!-- Modal Footer -->
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('language.close') }}</button>
                     </div>
 
                 </div>
@@ -198,10 +217,10 @@
                 <div class="form-container">
                     <form action="{{ route('stdApply') }}" method="POST" autocomplete="off" id="add-student-form">
                         @csrf
-                        <h4>Academic Details</h4>
+                        <h4>{{ __('language.academic_details') }}</h4>
                         <div class="form-row custom-form-row  form-segment">
                             <div class="col-md-4">
-                                <label for="academicYear" class="required">Academic Year:</label>
+                                <label for="academicYear" class="required">{{ __('language.academic_year') }}</label>
                                 <select class="form-control form-control-sm academic_year" name="academic_year"
                                     id="academic_year">
                                     <option value="2024">2024</option>
@@ -209,7 +228,7 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label for="versionName" class="required">Version Name:</label>
+                                <label for="versionName" class="required">{{ __('language.version_name') }}</label>
                                 <select class="form-control form-control-sm version_id" name="version_id"
                                     id="version_id">
                                     <option value="">{{ __('language.select_version') }}</option>
@@ -220,7 +239,7 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label for="className" class="required">Class Name:</label>
+                                <label for="className" class="required">{{ __('language.class_name') }}</label>
                                 <select class="form-control form-control-sm class_id" name="class_id" id="class_id"
                                     disabled>
                                     <option value="">{{ __('language.select_class') }}</option>
@@ -229,10 +248,10 @@
 
 
                         </div>
-                        <h4>Personal Details</h4>
+                        <h4>{{ __('language.personal_details') }}</h4>
                         <div class="form-row custom-form-row  form-segment">
                             <div class="col-md-4">
-                                <label for="studentFullName" class="required">Student Full Name (In English):</label>
+                                <label for="studentFullName" class="required">{{ __('language.student_full_name') }}</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
@@ -245,7 +264,7 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label for="studentFullNameBangla">Student Full Name (In Bangla):</label>
+                                <label for="studentFullNameBangla">{{ __('language.student_full_name_bangla') }}</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
@@ -258,7 +277,7 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label for="fatherName" class="required">Father's Name:</label>
+                                <label for="fatherName" class="required">{{ __('language.fathers_name') }}</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
@@ -271,7 +290,7 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label for="motherName" class="required">Mother's Name:</label>
+                                <label for="motherName" class="required">{{ __('language.mothers_name') }}</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
@@ -284,7 +303,7 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label for="studentPhone" class="required">Student's Phone:</label>
+                                <label for="studentPhone" class="required">{{ __('language.students_phone') }}</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
@@ -298,7 +317,7 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label for="studentPhoneAlt">Student's Phone Alternative:</label>
+                                <label for="studentPhoneAlt">{{ __('language.students_phone_alternative') }}</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
@@ -311,7 +330,7 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label for="dob" class="required">Date of Birth:</label>
+                                <label for="dob" class="required">{{ __('language.date_of_birth') }}</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
@@ -324,7 +343,7 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label for="email">Email:</label>
+                                <label for="email">{{ __('language.email') }}</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
@@ -337,7 +356,7 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label for="bloodGroup">Blood Group:</label>
+                                <label for="bloodGroup">{{ __('language.blood_group') }}</label>
                                 <select id="bloodGroup" name="blood_group" class="form-control form-control-sm">
                                     <option value="A+">A+</option>
                                     <option value="A-">A-</option>
@@ -351,19 +370,19 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label for="presentAddress" class="required">Present Address:</label>
+                                <label for="presentAddress" class="required">{{ __('language.present_address') }}</label>
                                 <textarea id="presentAddress" name="std_present_address" class="form-control form-control-sm" rows="5"></textarea>
                             </div>
 
                             <div class="col-md-4">
-                                <label for="permanentAddress" class="required">Permanent Address:</label>
+                                <label for="permanentAddress" class="required">{{ __('language.permanent_address') }}</label>
                                 <textarea id="permanentAddress" name="std_permanent_address" class="form-control form-control-sm" rows="5"></textarea>
                             </div>
 
                             <div class="col-md-4">
-                                <label for="gender" class="required">Birth Certificate No:</label>
+                                <label for="gender" class="required">{{ __('language.birth_certificate') }}</label>
                                 <input type="text" name="std_birth_reg" class="form-control form-control-sm">
-                                <label for="gender" class="required">Gender:</label>
+                                <label for="gender" class="required">{{ __('language.gender') }}</label>
                                 <select id="gender" name="std_gender" class="form-control form-control-sm">
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
@@ -372,10 +391,10 @@
                             </div>
 
                         </div>
-                        <h4>Parents/Guardian Details</h4>
+                        <h4>P{{ __('language.parents_guardian_details') }}</h4>
                         <div class="form-row custom-form-row  form-segment">
                             <div class="col-md-4">
-                                <label for="fatherOccupation">Father's Occupation:</label>
+                                <label for="fatherOccupation">{{ __('language.fathers_occupation') }}</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
@@ -388,7 +407,7 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label for="motherOccupation">Mother's Occupation:</label>
+                                <label for="motherOccupation">{{ __('language.mothers_occupation') }}</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
@@ -401,7 +420,7 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label for="yearlyIncome">Yearly Income:</label>
+                                <label for="yearlyIncome">{{ __('language.yearly_income') }}</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
@@ -413,16 +432,16 @@
                                 </div>
                             </div>
                         </div>
-                        <h4>Photo Upload</h4>
+                        <h4>{{ __('language.image_upload') }}</h4>
                         <div class="form-row custom-form-row  form-segment">
                             <div class="form-group">
                                 <input type="file" id="pic" name="std_picture" accept="image/*">
                             </div>
                         </div>
-                        <h4>Guardian's Information (If the student does not live with parents)</h4>
+                        <h4>{{ __('language.guardians_information') }}</h4>
                         <div class="form-row custom-form-row  form-segment">
                             <div class="form-group col-md-4">
-                                <label for="guardianName">Guardian's Name:</label>
+                                <label for="guardianName">{{ __('language.guardians_name') }}</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
@@ -434,7 +453,7 @@
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="relationship">Relationship with Student:</label>
+                                <label for="relationship">{{ __('language.relationship_with_student') }}</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
@@ -446,7 +465,7 @@
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="guardianPhone">Guardian's Phone:</label>
+                                <label for="guardianPhone">{{ __('language.guardians_phone') }}</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
@@ -459,14 +478,14 @@
                             </div>
                             <div class="form-group col-md-12">
                                 <div class="form-group">
-                                    <label for="guardianAddress">Guardian's Address:</label>
+                                    <label for="guardianAddress">{{ __('language.guardians_address') }}</label>
                                     <textarea id="guardianAddress" name="std_gurdian_address" class="form-control form-control-sm summernote"
                                         rows="3"></textarea>
                                 </div>
                             </div>
 
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block bg-success">Submit</button>
+                        <button type="submit" class="btn btn-primary btn-block bg-success">{{ __('language.save') }}</button>
                         <br>
                     </form>
                 </div>

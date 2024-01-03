@@ -355,10 +355,13 @@ class StudentManagement extends Controller
                                     $installments = $feeHead->no_of_installment;
 
                                     for ($i = 1; $i <= $installments; $i++) {
-                                        $dueDate = now()->addMonths(($i - 1) * 12 / $installments + 1)->startOfMonth()->addDays(19);
-                                        $formattedDueDate = $dueDate->format('F');
+                                        // Calculate due date with an adjustment to start from January
+                                        $dueDate = now()->addMonths(($i - 1) * 12 / $installments)->startOfYear()->addMonths($i - 1)->addDays(19);
 
+                                        // The rest of your code remains unchanged
+                                        $formattedDueDate = $dueDate->format('F');
                                         $formattedDescription = $feeHead->aca_feehead_description;
+
                                         if ($installments > 1) {
                                             $formattedDescription .= " ($formattedDueDate)";
                                         }
@@ -378,6 +381,7 @@ class StudentManagement extends Controller
                                             'school_id' => auth()->user()->school_id,
                                         ]);
                                     }
+
                                 }
                             }
                         }
