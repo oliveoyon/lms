@@ -11,7 +11,6 @@ use App\Http\Controllers\Admin\LibraryController;
 use App\Http\Controllers\Admin\StudentManagement;
 use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\GeneralController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Artisan;

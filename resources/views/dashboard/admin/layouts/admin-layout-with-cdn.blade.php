@@ -329,7 +329,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('admin.book_issue') }}" class="nav-link">
                             <i class="fas fa-file-import nav-icon"></i>
                             <p>{{ __('language.issue_book') }}</p>
                         </a>
@@ -727,7 +727,7 @@
       Developed By: IconBangla
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2023 <a href="">BizTrack</a></strong> All Right Reserved
+    <strong>Copyright &copy; <?php echo date('Y');?> <a href="">EduFlow</a></strong> All Right Reserved
   </footer>
 </div>
 <!-- ./wrapper -->
