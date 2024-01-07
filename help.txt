@@ -59,3 +59,31 @@ function(){
     dd($dueAmountByStudent->get());
 
 }
+
+
+as per today dues or bill
+fuction getdues(){
+    public function test()
+    {
+        $currentDate = now();
+        $totalDuesByStudent = DB::table('students')
+        ->select(
+            'students.std_id',
+            'students.std_name',
+            'fee_collections.payable_amount',
+            'fp.total_amount_paid',
+            DB::raw('SUM(COALESCE(fee_collections.payable_amount, 0) - COALESCE(fp.total_amount_paid, 0)) as total_due_amount')
+        )
+        ->leftJoin('fee_collections', function ($join) use ($currentDate) {
+            $join->on('students.std_id', '=', 'fee_collections.std_id')
+                ->where('fee_collections.is_paid', 0) // Unpaid fees
+                ->whereDate('fee_collections.due_date', '>=', $currentDate->format('Y-m-d')); // Due date on or before the current date
+        })
+        ->leftJoin(DB::raw('(SELECT fee_collection_id, SUM(amount_paid) as total_amount_paid FROM fee_payments GROUP BY fee_collection_id) as fp'), 'fee_collections.id', '=', 'fp.fee_collection_id')
+        ->groupBy('students.std_id', 'students.std_name', 'fee_collections.payable_amount', 'fp.total_amount_paid')
+        ->get();
+
+
+        dd($totalDuesByStudent);
+    }
+}

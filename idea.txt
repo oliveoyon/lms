@@ -1,0 +1,12 @@
+Waiver/personal discount
+
+if any student get waiver lets say 10% or 200 Tk discount from tution fee,
+from effective date, bill_collection table will be modified or reduced payable_amount
+
+Fine Calculation
+for fine monthly, i need to add in fee_collections table, suppose one student is apsent
+for 1 day,then 50 taka will be added in fee_collections table, suppose he is absent
+another day in same month, then row will be updated (data will come from attendence table)
+for another fine like library or other, it will be same. if teacher wants to discount
+release then row will be updated accordingly
+

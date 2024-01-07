@@ -20,6 +20,8 @@ class IsAdminFirstLogin
         if(!Auth::guard('admin')->user()->verify){
             return redirect()->route('admin.changepass');
         }
+
+
         return $next($request);
     }
 }

@@ -70,7 +70,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Dhaka',
 
     /*
     |--------------------------------------------------------------------------
@@ -168,7 +168,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Mccarlosen\LaravelMpdf\LaravelMpdfServiceProvider::class
+        Mccarlosen\LaravelMpdf\LaravelMpdfServiceProvider::class,
+        Milon\Barcode\BarcodeServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -184,7 +185,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
-        'PDF' => Mccarlosen\LaravelMpdf\Facades\LaravelMpdf::class
+        'PDF' => Mccarlosen\LaravelMpdf\Facades\LaravelMpdf::class,
+        'Milon\Barcode\BarcodeServiceProvider',
     ])->toArray(),
 
 ];

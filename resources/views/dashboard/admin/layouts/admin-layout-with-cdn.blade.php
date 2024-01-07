@@ -662,7 +662,7 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('admin.genSetting') }}" class="nav-link">
                             <i class="fas fa-sliders-h nav-icon"></i>
                             <p>{{ __('language.general_settings') }}</p>
                         </a>

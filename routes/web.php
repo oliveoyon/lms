@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\DependentController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\FeeSetupController;
 use App\Http\Controllers\Admin\LibraryController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\StudentManagement;
 use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\GeneralController;
@@ -230,5 +231,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/stdAppliedEdit', [StudentManagement::class, 'stdAppliedEdit'])->name('stdAppliedEdit');
 
         Route::get('/getfeedet', [StudentManagement::class, 'getfeedet'])->name('getfeedet');
+
+        //Setting Management
+        Route::get('/general-settings', [SettingController::class, 'genSetting'])->name('genSetting');
+        Route::post('/edit-general-settings', [SettingController::class, 'editGenSetting'])->name('editGenSetting');
     });
 });

@@ -31,7 +31,41 @@ class DatabaseSeeder extends Seeder
 
         DB::table('admins')->insert($admins);
 
-        
+        DB::table('general_settings')->insert([
+            'set_hash_id' => md5(uniqid(rand(), true)),
+            'school_title' => 'Bangla Demo School',
+            'school_title_bn' => 'বাংলা ডেমো স্কুল',
+            'school_short_name' => 'BDS',
+            'school_code' => '12345',
+            'school_eiin_no' => '123456',
+            'school_email' => 'school@example.com',
+            'school_phone' => '1234567890',
+            'school_phone1' => '0987654321',
+            'school_phone2' => '1122334455',
+            'school_fax' => '9876543210',
+            'school_address' => 'Dhaka, Bangladesh',
+            'school_country' => 'Bangladesh',
+            'currency_sign' => '৳',
+            'currency_name' => 'Bangladeshi Taka',
+            'school_geocode' => 'your_geocode',
+            'school_facebook' => 'facebook.com/school',
+            'school_twitter' => 'twitter.com/school',
+            'school_google' => 'plus.google.com/school',
+            'school_linkedin' => 'linkedin.com/school',
+            'school_youtube' => 'youtube.com/school',
+            'school_copyrights' => '© 2024 Bangla Demo School',
+            'school_logo' => 'your_logo_filename.png',
+            'currency' => 'BDT',
+            'set_status' => 1,
+            'timezone' => 'Asia/Dhaka',
+            'language' => 'en',
+            'enable_notifications' => true,
+            'school_id' => 1,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+
         // Version Table Starts
 
         $versions = [
@@ -50,7 +84,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ];
-        
+
         DB::table('edu_versions')->insert($versions);
 
         // Version Table Ends
@@ -382,5 +416,5 @@ class DatabaseSeeder extends Seeder
     }
 
 
-    
+
 }

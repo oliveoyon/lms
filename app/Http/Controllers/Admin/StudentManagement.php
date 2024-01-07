@@ -729,41 +729,10 @@ class StudentManagement extends Controller
                 'std_status' => $request->input('std_status'),
             ];
 
-            // Check if a new file is being uploaded
-            // if ($request->hasFile('std_picture')) {
-            //     // Delete the old file
-            //     if ($student->std_picture) {
-            //         $oldFilePath = 'public/img/std_img/' . $student->std_picture;
-            //         if (Storage::exists($oldFilePath)) {
-            //             Storage::delete($oldFilePath);
-            //         }
-            //     }
 
-            //     // Upload the new file
-            //     $path = 'img/std_img/';
-            //     $file = $request->file('std_picture');
-            //     $fileExtension = $file->getClientOriginalExtension();
-            //     $file_name = $stdHashId . '.' . $fileExtension;
-            //     $upload = $file->storeAs($path, $file_name, 'public');
-
-            //     // Add the image field to the data to update
-            //     $dataToUpdate['std_picture'] = $file_name;
-            // }
             // Update or insert the student record
             AppliedStudent::updateOrInsert(['std_hash_id' => $stdHashId], $dataToUpdate);
 
-
-
-            // $studentaca = [
-            //     'section_id' => $request->input('section_id'),
-            //     'roll_no' => 1,
-            //     'st_aca_status' => 1,
-            // ];
-            // // Save the student
-            // AcademicStudent::updateOrInsert(['std_hash_id' => $stdHashId], $studentaca);
-
-
-            // Commit the database transaction
             DB::commit();
 
             return response()->json(['code' => 1, 'msg' => __('language.std_add_msg'), 'redirect' => 'admin/student-enroll']);

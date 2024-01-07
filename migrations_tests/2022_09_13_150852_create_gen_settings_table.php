@@ -20,7 +20,7 @@ class CreateGenSettingsTable extends Migration
             $table->string('school_title_bn', 100);
             $table->string('school_short_name', 15);
             $table->string('school_code', 100);
-            $table->string('school_reg_no', 100);
+            $table->string('school_eiin_no', 100);
             $table->string('school_email', 100);
             $table->string('school_phone', 15);
             $table->string('school_phone1', 15);

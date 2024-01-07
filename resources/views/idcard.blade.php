@@ -19,8 +19,8 @@
         }
 
         .card {
-            width: 2.125in;
-            height: 3.375in;
+            width: 53.98mm;
+            height: 85.6mm;
             background-color: #fff;
             /* White card background */
             /* border-radius: 10px; */
@@ -40,7 +40,7 @@
         }
 
         .photo {
-            width: 70px;
+            width: 75px;
             margin: 10px auto;
             overflow: hidden;
         }
@@ -54,6 +54,7 @@
 
         .info-container {
             padding: 5px;
+            padding-top: 0px;
             text-align: center;
             color: white;
 
@@ -61,7 +62,7 @@
 
         .info-container h1 {
             margin: 1px 0;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             color: #028814;
             /* Dark gray text color */
@@ -97,9 +98,10 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 20px;
+            padding: 10;
             text-align: center;
             color: white;
+            /* margin-bottom: 5px; */
         }
 
         /* Additional styles for the back part */
@@ -112,6 +114,7 @@
         .back p {
             font-size: 12px;
             color: #000000;
+            margin-bottom: 2px;
         }
     </style>
 </head>
@@ -128,32 +131,48 @@
             <div class="info-container">
                 <!-- Your centered text content goes here -->
                 <h1>{{ $card->name }}</h1>
-                <p>Student ID: {{ $card->std_id }}</p>
-                <p>Class: {{ $card->class }}</p>
-                <p>DOB: {{ $card->dob }}</p>
+                <p style="font-size: 12px">Student ID: {{ $card->std_id }}</p>
+                <p style="font-size: 12px">Class: {{ $card->class }}</p>
+                <p style="font-size: 12px">DOB: {{ $card->dob }}</p>
             </div>
         </div>
 
-        <div class="barcode-signature-container">
-            <img src="{{ public_path('barcode.gif') }}" alt="Barcode"
+        {{-- <div class="barcode-signature-container">
+            <img src="{{ public_path('barcode.gif') }}" alt="Principal Signature"
                 style="width: 80%; max-width: 80px; height: auto; flex-shrink: 0; margin-left: 10px;">
             <img src="{{ public_path('barcode.gif') }}" alt="Principal Signature"
                 style="width: 80%; max-width: 80px; height: auto; flex-shrink: 0; margin-left: 10px;">
-        </div>
+        </div> --}}
 
+        <div style="text-align: center">
+            <?php
+                $barcodeImage = 'data:image/png;base64,' . DNS1D::getBarcodePNG('23001', 'C39', 1, 20);
+                echo '<img  src="' . $barcodeImage . '" alt="barcode"  />';
+            ?>
+        </div>
 
 
     </div>
 
     <div class="card">
         <div class="back">
-            <h1>Back Part Information</h1>
-            <p>Full Name:<br><span style="font-weight:bold">{{ $card->full_name }}</span></p>
+            {{-- <h1>Back Part Information</h1> --}}
+            <p><span style="font-weight:bold">{{ $card->full_name }}</span></p>
             <p>Blood Group: {{ $card->blood_group }}</p>
             <p>Emergency Contact: {{ $card->emergency }}</p>
-            <p>If you found this card, please contact the school at:</p>
-            <p>{{ $card->school_address }} <br> {{ $card->school_contact }}</p>
+            <p>If you found this card, Contact:</p>
+            <p><span style="font-weight:bold">{{ $card->school_name }}</span> <br> {{ $card->school_address }} <br> {{ $card->school_contact }}</p>
         </div>
+
+
+
+        <div style="text-align: center">
+            <?php
+                $barcodeImage = 'data:image/png;base64,' . DNS2D::getBarcodePNG('https://shalikhaschool.edu.bd/', 'QRCODE');
+                echo '<img  height="40" src="' . $barcodeImage . '" alt="barcode"  />';
+            ?>
+        </div>
+
 
 
     </div>
