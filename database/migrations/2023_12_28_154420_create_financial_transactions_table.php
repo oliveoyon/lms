@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('financial_transactions', function (Blueprint $table) {
             $table->id();
             $table->string('transaction_hash_id')->unique();
+            $table->string('trnx_id')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->string('transaction_type');
             $table->unsignedBigInteger('related_id');

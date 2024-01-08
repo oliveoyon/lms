@@ -17,6 +17,7 @@ return new class extends Migration
             $table->double('amount_paid');
             $table->dateTime('payment_date');
             $table->string('payment_method')->nullable();
+            $table->string('trnx_id')->nullable();
             $table->unsignedBigInteger('status');
             $table->unsignedBigInteger('school_id');
             $table->timestamps();

@@ -1,154 +1,270 @@
 @extends('dashboard.admin.layouts.admin-layout-with-cdn')
 @section('title', 'Dashboard')
 @push('admincss')
-<link rel="stylesheet" href="dist/css/custom.css">
 @endpush
 
 @section('content')
-     <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Dashboard</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Dashboard</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboard</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
 
-    <!-- Main content -->
-    <div class="content">
-      <div class="container-fluid">
-            <!-- <div class="row">
-              <div class="col-12 col-sm-6 col-md-3" id="totalsale">
-                <div class="info-box">
-                  <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Today's Sale</span>
-                    <span class="info-box-number">
-                    
-                    </span>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="col-12 col-sm-6 col-md-3" id="totalpurchase">
-                <div class="info-box mb-3">
-                  <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-shopping-basket"></i></span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Today's Purchase</span>
-                    <span class="info-box-number"></span>
-                  </div>
-                </div>
-              </div>
-              
-              
-              <div class="clearfix hidden-md-up"></div>
-                <div class="col-12 col-sm-6 col-md-3" id="receivale">
-                  <div class="info-box mb-3">
-                    <span class="info-box-icon bg-success elevation-1"><i class="fas fa-user-friends"></i></span>
-                    <div class="info-box-content">
-                      <span class="info-box-text">Total Receivable</span>
-                      <span class="info-box-number"></span>
+        <section class="content">
+            <div class="container-fluid">
+                <h2 class="text-center">Enhanced Search</h2>
+                <form action="{{ route('admin.generateBill') }}" method="post" id="bill-search">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-10 offset-md-1">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Result Type:</label>
+                                        <select class="select2" multiple="multiple" data-placeholder="Any"
+                                            style="width: 100%;">
+                                            <option>Text only</option>
+                                            <option>Images</option>
+                                            <option>Video</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label>Academic Year</label>
+                                        <select class="select2" style="width: 100%;" name="ac">
+                                            <option value="">All Years</option>
+                                            @php
+                                                $currentYear = date('Y');
+                                            @endphp
+                                            @for ($i = $currentYear - 10; $i <= $currentYear + 10; $i++)
+                                                <option value="{{ $i }}"
+                                                    {{ $i == $currentYear ? 'selected' : '' }}>
+                                                    {{ $i }}
+                                                </option>
+                                            @endfor
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label>Month</label>
+                                        <select class="select2" style="width: 100%;" name="mon">
+                                            <option value="">Every Month</option>
+                                            @php
+                                                $currentMonth = date('n');
+                                            @endphp
+                                            @for ($i = 1; $i <= 12; $i++)
+                                                <option value="{{ $i }}"
+                                                    {{ $i == $currentMonth ? 'selected' : '' }}>
+                                                    {{ date('F', mktime(0, 0, 0, $i, 1)) }}
+                                                </option>
+                                            @endfor
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group input-group-lg">
+                                    <input type="search" name="std_id" class="form-control form-control-lg"
+                                        placeholder="Student ID" value="">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-lg btn-default">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-              </div>
-              
-              <div class="col-12 col-sm-6 col-md-3" id="payable">
-                <div class="info-box mb-3">
-                  <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-luggage-cart"></i></span>
-                  <div class="info-box-content">
-                    <span class="info-box-text">Total Payable</span>
-                    <span class="info-box-number"></span> 
-                  </div>
+                </form>
+                <div class="row mt-3">
+                    <div class="col-md-10 offset-md-1">
+                        <div class="list-group">
+                            <div id="generateBill"></div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-
-            <div class="row">
-              <div class="col-md-12">
-                <div class="card card-outline card-success">
-                  <div class="card-header">
-                      <h3 class="card-title" style="color:black; font-weight:bold">Quick Actions</h3> 
-                  </div>
-                  <div class="card-body">
-                      <a class="btn btn-app bg-secondary" href="" style="color:black"><i class="fas fa-shopping-cart"></i> POS</a>
-                      
-                     
-                  </div>
-                </div>
-              </div>
-            </div> -->
-
-      </div><!-- /.container-fluid -->
+        </section>
     </div>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
+    <!-- /.content-wrapper -->
 
 
-  <div class="modal fade modal-fullscreen" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header bg-info">
-          <h5 class="modal-title" id="modalTitle"></h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+        <div class="p-3">
+            <h5>Title</h5>
+            <p>Sidebar content</p>
         </div>
-        <div class="modal-body">
-            <div id="printThis" class="printme">
-            <div id="abc"></div>
-            </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <span class="hello"><input type="button" class="btn btn-success" value="Print" onclick="printDiv()"></span>
-          
-          <span class="addprint"></span>
-        </div>
-      </div>
-    </div>
-  </div>
+    </aside>
+    <!-- /.control-sidebar -->
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-    <div class="p-3">
-      <h5>Title</h5>
-      <p>Sidebar content</p>
-    </div>
-  </aside>
-  <!-- /.control-sidebar -->
 
-  
-  
+
 @endsection
 
 @push('adminjs')
-<!-- Toastr -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <!-- Toastr -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"
+        integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<script>
-    toastr.options.preventDuplicates = true;
-      $.ajaxSetup({
-          headers:{
-              'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
-          }
-      });
-    
-      
-    </script>  
-  
+    <script>
+        toastr.options.preventDuplicates = true;
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2({
+                minimumResultsForSearch: Infinity
+            });
+
+
+            $('#bill-search').on('submit', function(e) {
+                e.preventDefault();
+
+                // Disable the submit button to prevent double-clicking
+                $(this).find(':submit').prop('disabled', true);
+
+                // Show the loader overlay
+                $('#loader-overlay').show();
+
+                var form = this;
+
+                $.ajax({
+                    url: $(form).attr('action'),
+                    method: $(form).attr('method'),
+                    data: new FormData(form),
+                    processData: false,
+                    dataType: 'json',
+                    contentType: false,
+                    beforeSend: function() {
+                        // Clear any previous error messages
+                        $(form).find('span.error-text').text('');
+                    },
+                    success: function(data) {
+                        // Clear existing content in the #generateBill container
+                        $('#generateBill').html('');
+
+                        // Check if the JSON response contains HTML
+                        if (data.html) {
+                            // Append the received HTML to the container
+                            $('#generateBill').html(data.html);
+                        } else {
+                            // Handle the case when no HTML is received
+                            console.error('No HTML received in the response.');
+                        }
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        // Handle AJAX error
+                        console.error('Error:', errorThrown);
+                    },
+                    complete: function() {
+                        // Enable the submit button and hide the loader overlay
+                        $(form).find(':submit').prop('disabled', false);
+                        $('#loader-overlay').hide();
+                    }
+                });
+            });
+
+
+
+
+        });
+    </script>
+    {{-- <script>
+        $(document).ready(function() {
+            // Click event listener for dynamically generated buttons
+            $(document).on('click', '.open-modal-btn', function() {
+                var month = $(this).data('month');
+                var stdId = $(this).data('std-id');
+                var academicYear = $(this).data('academic-year');
+
+                // Populate modal content based on the clicked button
+                populateModalContent(month, stdId, academicYear);
+
+                // Show the modal
+                $('#billModal').modal('show');
+            });
+
+            // Function to dynamically populate modal content based on the clicked button
+            function populateModalContent(month, stdId, academicYear) {
+                // Your code to update modal content based on the month, stdId, and academicYear
+                var content = '<p>Student ID: ' + stdId + '</p>';
+                content += '<p>Month: ' + month + '</p>';
+                content += '<p>Academic Year: ' + academicYear + '</p>';
+                // Add more content as needed
+
+                // Set the content in the modal
+                $('#modal-content').html(content);
+            }
+        });
+    </script> --}}
+
+    <script>
+        $(document).ready(function() {
+            // Click event listener for dynamically generated buttons
+            $(document).on('click', '.open-modal-btn', function() {
+                var month = $(this).data('month');
+                var stdId = $(this).data('std-id');
+                var academicYear = $(this).data('academic-year');
+
+                // Populate modal content based on the clicked button
+                populateModalContent(month, stdId, academicYear);
+
+                // Show the modal
+                $('#billModal').modal('show');
+            });
+
+            // Function to dynamically populate modal content based on the clicked button
+            function populateModalContent(month, stdId, academicYear) {
+                // Perform an AJAX request to fetch the data for the selected month, stdId, and academicYear
+                $.ajax({
+                    url: "{{route('admin.fetchColletcData')}}", // Replace with your actual route
+                    method: 'POST', // Change the method to POST
+                    data: {
+                        _token: '{{ csrf_token() }}', // Add CSRF token for POST requests
+                        month: month,
+                        stdId: stdId,
+                        academicYear: academicYear
+                    },
+                    success: function(data) {
+                        // Update modal content with the received data
+                        $('#modal-content').html(data.html);
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        console.error('Error:', errorThrown);
+                    }
+                });
+            }
+        });
+    </script>
+
+
+
 
 
 @endpush

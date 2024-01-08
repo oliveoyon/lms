@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.2.0/dist/sweetalert2.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
 @endpush
 
 @section('content')
@@ -250,10 +249,7 @@
 
                                             <div class="form-group">
                                                 <label for="classes">{{ __('language.class') }}</label>
-                                                <select class="select2bs4" multiple="multiple" name="class_id[]"
-                                                    data-placeholder="Select a State"
-                                                    data-dropdown-css-class="select2-purple" style="width: 100%;"
-                                                    data-select2-id="15" tabindex="-1" aria-hidden="true">
+                                                <select class="form-control form-control-sm select2" multiple="multiple" name="class_id[]" style="width: 100%;" >
                                                     <option>Select Class (Multiple)</option>
                                                     @foreach ($classes as $class)
                                                         <option value="{{ $class->id }}">{{ $class->class_name }}
@@ -323,7 +319,7 @@
 
 
 @push('adminjs')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
 
     <!-- SweetAlert2 -->
@@ -598,6 +594,7 @@
     <script>
         $(document).ready(function() {
             $('.example').DataTable();
+            $('.select2').select2();
         });
     </script>
 @endpush

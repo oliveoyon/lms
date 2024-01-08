@@ -87,3 +87,39 @@ fuction getdues(){
         dd($totalDuesByStudent);
     }
 }
+
+
+specific month wise,
+
+public function getDuebyStdasToday($std_id)
+    {
+        $currentDate = Carbon::parse('2024-02-15');
+        $targetMonth = $currentDate->month;
+        $targetYear = $currentDate->year;
+
+        // Get the last date of the month
+        $lastDateOfMonth = $currentDate->endOfMonth()->format('Y-m-d');
+
+        $totalDuesByStudent = DB::table('students')
+            ->select(
+                'students.std_id',
+                'students.std_name',
+                'fee_collections.*',
+                'fp.total_amount_paid',
+                DB::raw('SUM(COALESCE(fee_collections.payable_amount, 0) - COALESCE(fp.total_amount_paid, 0)) as total_due_amount')
+            )
+            ->leftJoin('fee_collections', function ($join) use ($targetMonth, $targetYear, $lastDateOfMonth) {
+                $join->on('students.std_id', '=', 'fee_collections.std_id')
+                    ->where('fee_collections.is_paid', 0) // Unpaid fees
+                    ->whereMonth('fee_collections.due_date', '=', $targetMonth)
+                    ->whereYear('fee_collections.due_date', '=', $targetYear)
+                    ->where('fee_collections.due_date', '<=', $lastDateOfMonth); // Filter by due date less than or equal to the last date of the month
+            })
+            ->leftJoin(DB::raw('(SELECT fee_collection_id, SUM(amount_paid) as total_amount_paid FROM fee_payments GROUP BY fee_collection_id) as fp'), 'fee_collections.id', '=', 'fp.fee_collection_id')
+            ->where('fee_collections.std_id', $std_id)
+            ->groupBy('fee_collections.id', 'fee_collections.due_date', 'fee_collections.payable_amount', 'fee_collections.fee_description', 'students.std_id', 'students.std_name')
+            ->orderBy('fee_collections.id', 'ASC')
+            ->get();
+
+        return $totalDuesByStudent;
+    }

@@ -7,6 +7,7 @@ use App\Models\Admin\AcademicFeeGroup;
 use App\Models\Admin\EduClasses;
 use App\Models\Admin\Section;
 use App\Models\Admin\Subject;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -95,10 +96,37 @@ class DependentController extends Controller
                 $query->where('fee_collections.is_paid', 0) // Unpaid fees
                     ->orWhere('fee_payments.amount_paid', '<', 'fee_collections.payable_amount'); // Partially paid fees
             })
-            ->where('fee_collections.due_date', '>', $currentDate) // Future due date
+            // ->where('fee_collections.due_date', '>', $currentDate) // Future due date
             ->groupBy('fee_collections.id', 'students.std_id', 'students.std_name', 'fee_collections.payable_amount', 'fee_collections.due_date', 'fee_collections.fee_description');
 
 
         return ($receivableReport->get());
+    }
+
+    public function getDuebyStdasToday($std_id)
+    {
+        $currentDate = Carbon::parse('2024-02-15');
+        $startOfMonth = $currentDate->startOfYear()->format('Y-m-d'); // Start of the year
+        $endOfMonth = $currentDate->endOfMonth()->format('Y-m-d');
+        $totalDuesByStudent = DB::table('students')
+            ->select(
+                'students.std_id',
+                'students.std_name',
+                'fee_collections.*',
+                'fp.total_amount_paid',
+                DB::raw('SUM(COALESCE(fee_collections.payable_amount, 0) - COALESCE(fp.total_amount_paid, 0)) as total_due_amount')
+            )
+            ->leftJoin('fee_collections', function ($join) use ($startOfMonth, $endOfMonth) {
+                $join->on('students.std_id', '=', 'fee_collections.std_id')
+                    ->where('fee_collections.is_paid', 0) // Unpaid fees
+                    ->whereBetween('fee_collections.due_date', [$startOfMonth, $endOfMonth]); // Due date within the specified range
+            })
+            ->leftJoin(DB::raw('(SELECT fee_collection_id, SUM(amount_paid) as total_amount_paid FROM fee_payments GROUP BY fee_collection_id) as fp'), 'fee_collections.id', '=', 'fp.fee_collection_id')
+            ->where('fee_collections.std_id', $std_id)
+            ->groupBy('fee_collections.id', 'fee_collections.due_date', 'fee_collections.payable_amount',  'fee_collections.fee_description', 'students.std_id', 'students.std_name')
+            ->orderBy('fee_collections.id', 'ASC')
+            ->get();
+
+        return $totalDuesByStudent;
     }
 }

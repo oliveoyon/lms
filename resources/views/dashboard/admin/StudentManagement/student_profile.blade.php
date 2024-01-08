@@ -219,7 +219,7 @@
 
                                             <!-- Render the organized data -->
                                             @foreach ($groupedData as $month => $monthData)
-                                            <h4>{{ $month }}</h4>
+                                            <h4>{{ $month.' '.date('Y', strtotime($data->due_date)) }}</h4>
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>

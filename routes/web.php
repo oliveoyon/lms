@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('tests', [TestController::class, 'test']);
+Route::get('tests', [TestController::class, 'test3']);
 
 Route::get('/', function () {
     return view('dashboard.admin.login1');
@@ -235,5 +235,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         //Setting Management
         Route::get('/general-settings', [SettingController::class, 'genSetting'])->name('genSetting');
         Route::post('/edit-general-settings', [SettingController::class, 'editGenSetting'])->name('editGenSetting');
+
+        Route::post('/generate-bill', [SettingController::class, 'generateBill'])->name('generateBill');
+        Route::post('/fetchColletcData', [SettingController::class, 'fetchColletcData'])->name('fetchColletcData');
+        Route::post('/collectBill', [SettingController::class, 'collectBill'])->name('collectBill');
     });
 });
