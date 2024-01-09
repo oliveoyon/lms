@@ -161,7 +161,7 @@ class SettingController extends Controller
 
         // Modal HTML (outside the loop)
         $html .= '<div class="modal fade" id="billModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">';
-        $html .= '<div class="modal-dialog" role="document">';
+        $html .= '<div class="modal-dialog modal-lg" role="document">';
         $html .= '<div class="modal-content">';
         $html .= '<div class="modal-header">';
         $html .= '<h5 class="modal-title" id="exampleModalLabel">Collect Bill</h5>';
@@ -195,7 +195,7 @@ class SettingController extends Controller
                 }
                 // Start a new card
                 $html .= '<div class="card">';
-                $html .= '<div class="card-header">' . $month .  '</div>';
+                $html .= '<div class="card-header" style="background-color:#223344; color:white; font-weight: bold">' . $month .  '</div>';
                 $html .= '<div class="card-body">';
                 $html .= '<table class="table">';
                 $html .= '<thead>';
