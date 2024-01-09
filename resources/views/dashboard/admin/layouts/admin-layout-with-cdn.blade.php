@@ -259,6 +259,30 @@
                 </ul>
             </li>
 
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-file-invoice-dollar"></i>
+                    <p>
+                        {{ __('language.fees_collection') }}
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            <i class="fas fa-hand-holding-usd nav-icon"></i>
+                            <p>{{ __('language.collect_fee') }}</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.bulkadmission') }}" class="nav-link">
+                            <i class="fas fa-file-upload nav-icon"></i>
+                            <p>{{ __('language.custom_fee_generate') }}</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
 
             <li class="nav-item">
                 <a href="#" class="nav-link">

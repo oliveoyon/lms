@@ -347,7 +347,7 @@ $(document).ready(function() {
                             '<a class="dropdown-item" href="#"><i class="fas fa-trash-alt"></i> Delete</a>' +
                             '<a class="dropdown-item" href="/admin/student-profile/' + student.std_hash_id + '"><i class="fas fa-user"></i> Visit Profile</a>' +
                             '<a class="dropdown-item" href="#"><i class="fas fa-poll"></i> Get Result</a>' +
-                            '<a class="dropdown-item" href="#"><i class="fas fa-money-bill"></i> Fee</a>' +
+                            '<a class="dropdown-item" href="/admin/collect-fees/' + student.std_hash_id + '"><i class="fas fa-money-bill"></i> Collect Fee</a>' +
                             <!-- Add more actions as needed -->
                         '</div>' +
                     '</div>' +

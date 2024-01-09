@@ -324,4 +324,8 @@ return [
     "timezone" => "Timezone",
     "enable_notifications" => "Enable Notifications",
 
+    "fees_collection" => "Fees Collection",
+    "collect_fee" => "Collect Fee",
+    "custom_fee_generate" => "Custom Fee Generate",
+
 ];

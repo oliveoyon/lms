@@ -325,4 +325,8 @@ return [
     "timezone" => "সময় অঞ্চল",
     "enable_notifications" => "বিজ্ঞপ্তি চালু করুন",
 
+    "fees_collection" => "ফি সংগ্রহ",
+    "collect_fee" => "ফি সংগ্রহ করুন",
+    "custom_fee_generate" => "কাস্টম ফি তৈরি করুন",
+
 ];

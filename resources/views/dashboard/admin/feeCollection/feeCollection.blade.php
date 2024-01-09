@@ -70,8 +70,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="input-group input-group-lg">
-                                    <input type="search" name="std_id" class="form-control"
-                                        placeholder="Student ID" value="">
+                                    <input type="search" name="std_id" class="form-control" placeholder="Student ID" value="{{ isset($student_id) ? $student_id : '' }}">
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-lg btn-default">
                                             <i class="fa fa-search"></i>
@@ -184,34 +183,7 @@
 
         });
     </script>
-    {{-- <script>
-        $(document).ready(function() {
-            // Click event listener for dynamically generated buttons
-            $(document).on('click', '.open-modal-btn', function() {
-                var month = $(this).data('month');
-                var stdId = $(this).data('std-id');
-                var academicYear = $(this).data('academic-year');
 
-                // Populate modal content based on the clicked button
-                populateModalContent(month, stdId, academicYear);
-
-                // Show the modal
-                $('#billModal').modal('show');
-            });
-
-            // Function to dynamically populate modal content based on the clicked button
-            function populateModalContent(month, stdId, academicYear) {
-                // Your code to update modal content based on the month, stdId, and academicYear
-                var content = '<p>Student ID: ' + stdId + '</p>';
-                content += '<p>Month: ' + month + '</p>';
-                content += '<p>Academic Year: ' + academicYear + '</p>';
-                // Add more content as needed
-
-                // Set the content in the modal
-                $('#modal-content').html(content);
-            }
-        });
-    </script> --}}
 
     <script>
         $(document).ready(function() {
@@ -251,9 +223,4 @@
             }
         });
     </script>
-
-
-
-
-
 @endpush

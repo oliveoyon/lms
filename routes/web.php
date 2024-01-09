@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AttendanceController;
 use App\Http\Controllers\Admin\ClassRoutineController;
 use App\Http\Controllers\Admin\DependentController;
 use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\Admin\FeeCollectionController;
 use App\Http\Controllers\Admin\FeeSetupController;
 use App\Http\Controllers\Admin\LibraryController;
 use App\Http\Controllers\Admin\SettingController;
@@ -236,8 +237,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/general-settings', [SettingController::class, 'genSetting'])->name('genSetting');
         Route::post('/edit-general-settings', [SettingController::class, 'editGenSetting'])->name('editGenSetting');
 
-        Route::post('/generate-bill', [SettingController::class, 'generateBill'])->name('generateBill');
-        Route::post('/fetchColletcData', [SettingController::class, 'fetchColletcData'])->name('fetchColletcData');
-        Route::post('/collectBill', [SettingController::class, 'collectBill'])->name('collectBill');
+        Route::get('/collect-fees/{std_id?}', [FeeCollectionController::class, 'collectFee'])->name('collectFee');
+        Route::post('/generate-bill', [FeeCollectionController::class, 'generateBill'])->name('generateBill');
+        Route::post('/fetchColletcData', [FeeCollectionController::class, 'fetchColletcData'])->name('fetchColletcData');
+        Route::post('/collectBill', [FeeCollectionController::class, 'collectBill'])->name('collectBill');
     });
 });
