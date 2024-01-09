@@ -178,21 +178,24 @@ class SettingController extends Controller
         $html .= '</div>';
         $html .= '</div>';
         $html .= '</div>';
-
+        $monthTotal = 0;
         foreach ($dueReport as $row) {
             $month = date('F Y', strtotime($row->due_date));
-
+            $monthTotal = $monthTotal + $row->remaining_due_amount;
+            
+            
             if ($currentMonth !== $month) {
                 // Close the previous card if it's not the first one
+                
                 if ($currentMonth !== null) {
+                    
                     $html .= '</table>';
                     $html .= '</div>';
                     $html .= '</div>';
                 }
-
                 // Start a new card
                 $html .= '<div class="card">';
-                $html .= '<div class="card-header">' . $month . '</div>';
+                $html .= '<div class="card-header">' . $month .  '</div>';
                 $html .= '<div class="card-body">';
                 $html .= '<table class="table">';
                 $html .= '<thead>';
@@ -204,7 +207,15 @@ class SettingController extends Controller
                 $html .= '</tr>';
                 $html .= '</thead>';
                 $html .= '<tbody>';
-                $html .= '<button type="button" class="btn btn-primary open-modal-btn" data-toggle="modal" data-target="#billModal" data-month="' . $month . '" data-std-id="' . $row->std_id . '" data-academic-year="' . $row->academic_year . '">Collect Bill</button>';
+                if($monthTotal == 0){
+                    $html .= '<h4 class="badge badge-success" style="font-size:14px;"><i class="far fa-clock"></i> Bill Paid for '.$month.'</h4>';
+                    // $html .= '<button type="button" class="btn btn-primary open-modal-btn" data-toggle="modal" data-target="#billModal" data-month="' . $month . '" data-std-id="' . $row->std_id . '" data-academic-year="' . $row->academic_year . '">Collect Bill</button>';
+
+
+                }else{
+                    $html .= '<button type="button" class="btn btn-primary open-modal-btn" data-toggle="modal" data-target="#billModal" data-month="' . $month . '" data-std-id="' . $row->std_id . '" data-academic-year="' . $row->academic_year . '">Collect Bill</button>';
+                    
+                }
             }
 
             // Add row data to the current table
@@ -217,6 +228,8 @@ class SettingController extends Controller
 
             $currentMonth = $month;
         }
+
+        
 
         // Close the last card
         if ($currentMonth !== null) {
@@ -256,7 +269,7 @@ class SettingController extends Controller
             ->leftJoin('students as s', 'fc.std_id', '=', 's.std_id')
             ->where('fc.std_id', $request->stdId)
             ->where('fc.academic_year', $request->academicYear)
-            ->whereMonth('fc.due_date', $numericMonth)
+            ->whereMonth('fc.due_date', '<=', $numericMonth)
             ->groupBy('fc.id', 's.std_name', 'fc.std_id', 'fc.due_date', 'fc.academic_year', 'fc.payable_amount', 'fc.fee_description', 'fc.fee_collection_status', 'fc.school_id', 'due_month')
             ->orderBy('fc.due_date')
             ->orderBy('due_month')
@@ -280,6 +293,7 @@ class SettingController extends Controller
 
         // Loop through each row in the data
         foreach ($dueReport as $row) {
+            if($row->remaining_due_amount == 0){continue;}
             $html .= '<tr>';
             $html .= '<td>' . $row->payable_amount . '</td>';
             $html .= '<td>' . $row->amount_paid . '</td>';
@@ -331,6 +345,8 @@ class SettingController extends Controller
 
         for ($i = 0; $i < count($request->fee_collection_id); $i++) {
             $feeCollectionId = $request->fee_collection_id[$i];
+
+            if($request->remaining[$i] == 0){continue;}
 
             $updateData = [
                 'is_paid' => 1,

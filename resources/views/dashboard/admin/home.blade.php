@@ -26,23 +26,12 @@
 
         <section class="content">
             <div class="container-fluid">
-                <h2 class="text-center">Enhanced Search</h2>
+                <h2 class="text-center">Bill Collection</h2>
                 <form action="{{ route('admin.generateBill') }}" method="post" id="bill-search">
                     @csrf
                     <div class="row">
                         <div class="col-md-10 offset-md-1">
                             <div class="row">
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label>Result Type:</label>
-                                        <select class="select2" multiple="multiple" data-placeholder="Any"
-                                            style="width: 100%;">
-                                            <option>Text only</option>
-                                            <option>Images</option>
-                                            <option>Video</option>
-                                        </select>
-                                    </div>
-                                </div>
                                 <div class="col-3">
                                     <div class="form-group">
                                         <label>Academic Year</label>
@@ -81,7 +70,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="input-group input-group-lg">
-                                    <input type="search" name="std_id" class="form-control form-control-lg"
+                                    <input type="search" name="std_id" class="form-control"
                                         placeholder="Student ID" value="">
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-lg btn-default">
