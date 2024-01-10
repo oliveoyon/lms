@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\FeePayment;
 use App\Models\Admin\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Mpdf\Mpdf;
 
 class FeeCollectionController extends Controller
 {
@@ -277,6 +279,56 @@ class FeeCollectionController extends Controller
             DB::table('fee_payments')->insert($paymentData);
         }
 
-        return redirect()->route('admin.collectFee');
+        // Reporting Starts
+
+        $trnxId = $trnx_id;
+
+        $send['payments'] = DB::table('fee_payments')
+        ->select(
+            'fee_payments.id',
+            'fee_payments.fee_collection_id',
+            'fee_payments.amount_paid',
+            'fee_payments.payment_date',
+            'fee_payments.payment_method',
+            'fee_payments.trnx_id',
+            'fee_payments.status',
+            'fee_payments.school_id',
+            'fee_collections.id as fee_collection_id',
+            'fee_collections.fee_description',
+            'students.std_name'
+        )
+        ->join('fee_collections', 'fee_payments.fee_collection_id', '=', 'fee_collections.id')
+        ->join('students', 'fee_collections.std_id', '=', 'students.std_id')
+        ->where('fee_payments.trnx_id', $trnxId)
+        ->get();
+
+        $cr80Width = 53.98;
+        $cr80Height = 85.6;
+
+        // Initialize mPDF with CR80 size in millimeters
+        $mpdf = new Mpdf([
+            'mode' => 'utf-8',
+            // 'format' => [$cr80Width, $cr80Height], // Set the custom size for CR80 card in portrait
+            'margin_left' => 0,
+            'margin_right' => 0,
+            'margin_top' => 0,
+            'margin_bottom' => 0,
+        ]);
+        $mpdf->SetWatermarkText('PAID');
+        $mpdf->showWatermarkText = true;
+        $mpdf->watermarkTextAlpha = 0.1;
+        // $mpdf->SetWatermarkImage('logo.png');
+        // $mpdf->showWatermarkImage = true;
+        // $mpdf->watermarkImageAlpha = 0.1;
+        $mpdf->SetAutoPageBreak(true);
+
+        $mpdf->SetAuthor('IconBangla');
+
+        $bladeViewPath = 'dashboard.admin.feeCollection.fee_invoice';
+        $html = view($bladeViewPath, $send)->render();
+        $mpdf->WriteHTML($html);
+        return $mpdf->Output('invoice.pdf', 'I');
+
+        // return redirect()->route('admin.collectFee');
     }
 }

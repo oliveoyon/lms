@@ -16,4 +16,9 @@ class FeePayment extends Model
         'status',
         'school_id',
     ];
+
+    public function feeCollection()
+    {
+        return $this->belongsTo(FeeCollection::class, 'fee_collection_id', 'id');
+    }
 }
