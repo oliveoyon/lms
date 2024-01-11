@@ -1,131 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>School Fees Invoice</title>
-
-    <!-- Your custom CSS styles -->
+    <title>Invoice</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            margin-top: 20px;
         }
 
-        .invoice-container {
-            max-width: 800px;
-            width: 100%;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            border-radius: 8px;
-            overflow: hidden;
+        .container {
+            width: 90%;
+            margin: 0 auto;
         }
 
-        .invoice-header {
-            text-align: center;
-            width: 100%;
-            margin-bottom: 20px;
+        .header {
+            margin-bottom: 30px;
         }
 
-        .column {
-            width: 48%;
+        .photo {
             float: left;
-            margin-right: 4%;
+            margin-right: 20px;
+            width: 20%;
+        }
+
+        .school_info {
+            float: left;
+        }
+
+        h1,
+        h2 {
+            margin: 0;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+
+        .info-column {
+            float: left;
             margin-bottom: 20px;
+            margin-right: 0; /* No margin between the columns */
         }
 
-        .details {
-            margin-bottom: 10px;
+        .left {
+            width: 60%;
         }
 
-        .invoice-table {
+
+        table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
 
-        .invoice-table, .invoice-table th, .invoice-table td {
-            border: 1px solid #ccc;
-        }
-
-        .invoice-table th, .invoice-table td {
-            padding: 10px;
+        th,
+        td {
+            padding: 8px;
             text-align: left;
+            border: 1px solid #ddd;
         }
 
-        .total-amount {
-            margin-top: 20px;
-            text-align: right;
+        th {
+            background-color: #f2f2f2;
         }
 
         .amount-in-words {
+            text-align: center;
+            clear: both;
+            /* Clear the float to prevent issues */
             margin-top: 20px;
         }
 
-        .footer {
+        .thank-you {
             margin-top: 20px;
-            text-align: center;
-            width: 100%;
-            clear: both;
+        }
+
+        /* Add space between columns in the no-border-table */
+        .info-column:not(:last-child) {
+            margin-right: 4%;
+            /* Adjust the margin as needed */
         }
     </style>
 </head>
+
 <body>
-
-    <div class="invoice-container">
-        <div class="invoice-header">
-            <h2>School Fees Invoice</h2>
-        </div>
-        <div class="column">
-            <div class="details">School Name: Your School Name</div>
-            <div class="details">Address: 123 School Street, City, Country</div>
-            <div class="details">Phone: +1 (123) 456-7890</div>
-            <div class="details">Website: www.yourschoolwebsite.com</div>
-            <div class="details">Serial Number: INV123456</div>
-            <div class="details">Date: January 10, 2024</div>
-        </div>
-        <div class="column">
-            <div class="details">Student Name: John Doe</div>
-            <div class="details">Student ID: 12345</div>
-            <div class="details">Payment Mode: Online Payment</div>
+    <div class="container">
+        <div class="header">
+            <div class="photo">
+                <img src="{{ public_path('storage/img/logo/logo.png') }}" alt="School Logo">
+            </div>
+            <div class="school_info">
+                <h1>Shalikha Thana High School</h1>
+                <p>Hajrahati, Shalikha, Magura</p>
+                <p>Phone: 123-456-7890</p>
+                <p>Email: shalikhaschool@gmail.com</p>
+                <p>Web: https://shalikhaschool.edu.bd/</p>
+            </div>
         </div>
 
-        <table class="invoice-table">
+        <div class="info">
+            <div class="info-column left">
+                <h2>Student Information</h2>
+                <p>Student Name: John Doe</p>
+                <p>Class: 10th Grade</p>
+                <p>Roll Number: 123</p>
+            </div>
+
+            <div class="info-column">
+                <h2>Bill Information</h2>
+                <p>Invoice No: 00123</p>
+                <p>Payment Method: Cash</p>
+                <p>Payment Date: January 11, 2024</p>
+            </div>
+        </div>
+
+        <div style="clear: both;"></div> <!-- Clear the float -->
+
+        <table>
             <thead>
                 <tr>
-                    <th>Serial</th>
-                    <th>Description</th>
-                    <th>Amount</th>
+                    <th>S/N</th>
+                    <th>Particular</th>
+                    <th style="text-align: right">Amount</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>1</td>
                     <td>Tuition Fee</td>
-                    <td>$500.00</td>
+                    <td style="text-align: right;">$500</td>
                 </tr>
                 <tr>
                     <td>2</td>
-                    <td>Books and Materials</td>
-                    <td>$50.00</td>
+                    <td>Library Fee</td>
+                    <td style="text-align: right">$50</td>
                 </tr>
                 <!-- Add more rows as needed -->
             </tbody>
         </table>
-        <div class="total-amounts">
-            <p><strong>Total Amount: $550.00</strong></p>
+
+        <div class="total" style="text-align: right;  padding-right:5px;">
+            <p>Subtotal: $550</p>
+            <p>Total: $550</p>
         </div>
+
         <div class="amount-in-words">
-            <p><strong>Amount in Words:</strong> Five Hundred and Fifty Dollars Only</p>
+            <p>In words: Five hundred and fifty dollars only</p>
         </div>
-        <div class="footer">
+
+        <div class="thank-you">
             <p>Thank you for your payment!</p>
         </div>
     </div>
-
 </body>
+
 </html>

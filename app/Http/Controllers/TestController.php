@@ -85,21 +85,21 @@ class TestController extends Controller
     {
         $currentDate = now();
         $totalDuesByStudent = DB::table('students')
-        ->select(
-            'students.std_id',
-            'students.std_name',
-            'fee_collections.payable_amount',
-            'fp.total_amount_paid',
-            DB::raw('SUM(COALESCE(fee_collections.payable_amount, 0) - COALESCE(fp.total_amount_paid, 0)) as total_due_amount')
-        )
-        ->leftJoin('fee_collections', function ($join) use ($currentDate) {
-            $join->on('students.std_id', '=', 'fee_collections.std_id')
-                ->where('fee_collections.is_paid', 0) // Unpaid fees
-                ->whereDate('fee_collections.due_date', '>=', $currentDate->format('Y-m-d')); // Due date on or before the current date
-        })
-        ->leftJoin(DB::raw('(SELECT fee_collection_id, SUM(amount_paid) as total_amount_paid FROM fee_payments GROUP BY fee_collection_id) as fp'), 'fee_collections.id', '=', 'fp.fee_collection_id')
-        ->groupBy('students.std_id', 'students.std_name', 'fee_collections.payable_amount', 'fp.total_amount_paid')
-        ->get();
+            ->select(
+                'students.std_id',
+                'students.std_name',
+                'fee_collections.payable_amount',
+                'fp.total_amount_paid',
+                DB::raw('SUM(COALESCE(fee_collections.payable_amount, 0) - COALESCE(fp.total_amount_paid, 0)) as total_due_amount')
+            )
+            ->leftJoin('fee_collections', function ($join) use ($currentDate) {
+                $join->on('students.std_id', '=', 'fee_collections.std_id')
+                    ->where('fee_collections.is_paid', 0) // Unpaid fees
+                    ->whereDate('fee_collections.due_date', '>=', $currentDate->format('Y-m-d')); // Due date on or before the current date
+            })
+            ->leftJoin(DB::raw('(SELECT fee_collection_id, SUM(amount_paid) as total_amount_paid FROM fee_payments GROUP BY fee_collection_id) as fp'), 'fee_collections.id', '=', 'fp.fee_collection_id')
+            ->groupBy('students.std_id', 'students.std_name', 'fee_collections.payable_amount', 'fp.total_amount_paid')
+            ->get();
 
 
         dd($totalDuesByStudent);
@@ -110,52 +110,47 @@ class TestController extends Controller
         $trnxId = '1704738425';
 
         $send['payments'] = DB::table('fee_payments')
-        ->select(
-            'fee_payments.id',
-            'fee_payments.fee_collection_id',
-            'fee_payments.amount_paid',
-            'fee_payments.payment_date',
-            'fee_payments.payment_method',
-            'fee_payments.trnx_id',
-            'fee_payments.status',
-            'fee_payments.school_id',
-            'fee_collections.id as fee_collection_id',
-            'fee_collections.fee_description',
-            'students.std_name'
-        )
-        ->join('fee_collections', 'fee_payments.fee_collection_id', '=', 'fee_collections.id')
-        ->join('students', 'fee_collections.std_id', '=', 'students.std_id')
-        ->where('fee_payments.trnx_id', $trnxId)
-        ->get();
+            ->select(
+                'fee_payments.id',
+                'fee_payments.fee_collection_id',
+                'fee_payments.amount_paid',
+                'fee_payments.payment_date',
+                'fee_payments.payment_method',
+                'fee_payments.trnx_id',
+                'fee_payments.status',
+                'fee_payments.school_id',
+                'fee_collections.id as fee_collection_id',
+                'fee_collections.fee_description',
+                'students.std_name'
+            )
+            ->join('fee_collections', 'fee_payments.fee_collection_id', '=', 'fee_collections.id')
+            ->join('students', 'fee_collections.std_id', '=', 'students.std_id')
+            ->where('fee_payments.trnx_id', $trnxId)
+            ->get();
 
 
 
-        $cr80Width = 53.98;
-        $cr80Height = 85.6;
+        $cr80Width = 80; // Width in millimeters
 
-        // Initialize mPDF with CR80 size in millimeters
         $mpdf = new Mpdf([
             'mode' => 'utf-8',
-            // 'format' => [$cr80Width, $cr80Height], // Set the custom size for CR80 card in portrait
-            'margin_left' => 0,
-            'margin_right' => 0,
+            'format' => [80,150], // Set the custom width for the POS printer
+            // 'width' => 80,
+            'margin_left' => 5,
+            'margin_right' => 5,
             'margin_top' => 0,
             'margin_bottom' => 0,
         ]);
         $mpdf->SetWatermarkText('PAID');
         $mpdf->showWatermarkText = true;
         $mpdf->watermarkTextAlpha = 0.1;
-        // $mpdf->SetWatermarkImage('logo.png');
-        // $mpdf->showWatermarkImage = true;
-        // $mpdf->watermarkImageAlpha = 0.1;
         $mpdf->SetAutoPageBreak(true);
-
         $mpdf->SetAuthor('IconBangla');
-
-        $bladeViewPath = 'dashboard.admin.feeCollection.fee_invoice';
+        $bladeViewPath = 'dashboard.admin.feeCollection.fee_invoice_pos';
         $html = view($bladeViewPath, $send)->render();
         $mpdf->WriteHTML($html);
         return $mpdf->Output('invoice.pdf', 'I');
+
 
         // return view('dashboard.admin.feeCollection.fee_invoice');
     }
