@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Admin\DependentController;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\FeePayment;
 use Illuminate\Http\Request;
@@ -121,37 +122,55 @@ class TestController extends Controller
                 'fee_payments.school_id',
                 'fee_collections.id as fee_collection_id',
                 'fee_collections.fee_description',
-                'students.std_name'
+                'students.std_name',
+                'students.std_id',
+                'edu_classes.class_name'
             )
             ->join('fee_collections', 'fee_payments.fee_collection_id', '=', 'fee_collections.id')
             ->join('students', 'fee_collections.std_id', '=', 'students.std_id')
+            ->join('edu_classes', 'students.class_id', '=', 'edu_classes.id')
             ->where('fee_payments.trnx_id', $trnxId)
             ->get();
+            $totalword = $send['payments']->sum('amount_paid');
+            $numberService = new DependentController();
+            $send['words'] = $numberService->numberToWords($totalword);
 
 
+        $is_pos = false;
+        $width = 0; //should be in database
+        $height = 0; // should be in database
 
-        $cr80Width = 80; // Width in millimeters
+        $send['printmeta'] = [
+            'fontsize' => 10,
+            'width' => 80
+        ];
 
-        $mpdf = new Mpdf([
-            'mode' => 'utf-8',
-            'format' => [80,150], // Set the custom width for the POS printer
-            // 'width' => 80,
-            'margin_left' => 5,
-            'margin_right' => 5,
-            'margin_top' => 0,
-            'margin_bottom' => 0,
-        ]);
-        $mpdf->SetWatermarkText('PAID');
-        $mpdf->showWatermarkText = true;
-        $mpdf->watermarkTextAlpha = 0.1;
-        $mpdf->SetAutoPageBreak(true);
-        $mpdf->SetAuthor('IconBangla');
-        $bladeViewPath = 'dashboard.admin.feeCollection.fee_invoice_pos';
-        $html = view($bladeViewPath, $send)->render();
-        $mpdf->WriteHTML($html);
-        return $mpdf->Output('invoice.pdf', 'I');
+        if($is_pos){
+            return view('dashboard.admin.feeCollection.fee_invoice_pos', $send);
+        }else{
 
+            // $cr80Width = 80; //80 Width in millimeters
+            $mpdf = new Mpdf([
+                'mode' => 'utf-8',
+                'format' => [190,236], //it will come from database
+                // 'width' => 80,
+                // 'margin_left' => 5,
+                // 'margin_right' => 5,
+                // 'margin_top' => 0,
+                // 'margin_bottom' => 0,
+            ]);
 
-        // return view('dashboard.admin.feeCollection.fee_invoice');
+            $mpdf->SetWatermarkText('PAID');
+            $mpdf->showWatermarkText = true;
+            $mpdf->watermarkTextAlpha = 0.1;
+            $mpdf->SetAutoPageBreak(true);
+            $mpdf->SetAuthor('IconBangla');
+            $bladeViewPath = 'dashboard.admin.feeCollection.fee_invoice';
+            $html = view($bladeViewPath, $send)->render();
+            $mpdf->WriteHTML($html);
+            return $mpdf->Output('invoice.pdf', 'I');
+
+        }
+
     }
 }

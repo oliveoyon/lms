@@ -7,10 +7,11 @@
     <style>
         body {
             font-family: monospace; /* Use a monospace font for consistent character spacing */
+            font-size: {{ $printmeta['fontsize'] }}px;
         }
 
         .container {
-            width: 80mm; /* Adjust based on your paper width */
+            width: {{ $printmeta['width'] }}mm; /* Adjust based on your paper width */
             margin: 0 auto;
         }
 
@@ -50,24 +51,25 @@
         <div class="line"></div>
 
         <div class="item">
-            <span>Student Name: John Doe Abdul Karim</span>
+            <span>Student Name: {{ $payments[0]->std_name }}</span>
         </div>
         <div class="item">
-            <span>Class: 10th Grade</span>
+            <span>Class: {{ $payments[0]->class_name }}</span>
         </div>
         <div class="item">
-            <span>Roll Number: 123</span>
+            <span>Student ID: {{ $payments[0]->std_id }}</span>
         </div>
 
         <div class="line"></div>
 
         <div class="item">
             <span>Invoice No: 00123</span>
-            <span style="float: right;">Payment Method: Cash</span>
+            <span style="float: right;">Payment Method: {{ $payments[0]->payment_method }}</span>
         </div>
         <div class="item">
-            <span>Payment Date: January 11, 2024</span>
+            <span>Payment Date: {{ \Carbon\Carbon::parse($payments[0]->payment_date)->format('F d, Y') }}</span>
         </div>
+
 
         <div class="line"></div>
 
@@ -76,11 +78,17 @@
             <span>Particular</span>
             <span style="float: right;">Amount</span>
         </div>
+
+        @foreach ($payments as $payment)
         <div class="item">
-            <span>1. Tuition Fee</span>
-            <span style="float: right;">$100.00</span>
+            <span>{{$loop->iteration}}. {{$payment->fee_description}}</span>
+            <span style="float: right;">${{$payment->amount_paid}}</span>
         </div>
+        @endforeach
+
+
         <!-- Add more items as needed -->
+
 
         <div class="line"></div>
 
@@ -95,5 +103,10 @@
             <p>Thank you for your payment!</p>
         </div>
     </div>
+    <script>
+        window.onload = function() {
+            window.print();
+        }
+    </script>
 </body>
 </html>

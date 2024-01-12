@@ -10,3 +10,8 @@ another day in same month, then row will be updated (data will come from attende
 for another fine like library or other, it will be same. if teacher wants to discount
 release then row will be updated accordingly
 
+
+there will be a POS page setup
+
+Width, font,
+

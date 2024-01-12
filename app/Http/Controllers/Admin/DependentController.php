@@ -129,4 +129,91 @@ class DependentController extends Controller
 
         return $totalDuesByStudent;
     }
+
+    // app/helpers.php
+
+    public function numberToWords($number)
+    {
+        $ones = array(
+            0 => 'Zero',
+            1 => 'One',
+            2 => 'Two',
+            3 => 'Three',
+            4 => 'Four',
+            5 => 'Five',
+            6 => 'Six',
+            7 => 'Seven',
+            8 => 'Eight',
+            9 => 'Nine',
+        );
+
+        $tens = array(
+            10 => 'Ten',
+            11 => 'Eleven',
+            12 => 'Twelve',
+            13 => 'Thirteen',
+            14 => 'Fourteen',
+            15 => 'Fifteen',
+            16 => 'Sixteen',
+            17 => 'Seventeen',
+            18 => 'Eighteen',
+            19 => 'Nineteen',
+        );
+
+        $twenties = array(
+            2 => 'Twenty',
+            3 => 'Thirty',
+            4 => 'Forty',
+            5 => 'Fifty',
+            6 => 'Sixty',
+            7 => 'Seventy',
+            8 => 'Eighty',
+            9 => 'Ninety',
+        );
+
+        $hundreds = array(
+            1 => 'One Hundred',
+            2 => 'Two Hundred',
+            3 => 'Three Hundred',
+            4 => 'Four Hundred',
+            5 => 'Five Hundred',
+            6 => 'Six Hundred',
+            7 => 'Seven Hundred',
+            8 => 'Eight Hundred',
+            9 => 'Nine Hundred',
+        );
+
+        if ($number < 0 || $number > 1000000) {
+            return 'Number out of range';
+        }
+
+        if ($number < 10) {
+            return $ones[$number];
+        } elseif ($number < 20) {
+            return $tens[$number];
+        } elseif ($number < 100) {
+            $ten = (int)($number / 10);
+            $one = $number % 10;
+
+            return $twenties[$ten] . ($one > 0 ? ' ' . $ones[$one] : '');
+        } elseif ($number < 1000) {
+            $hundred = (int)($number / 100);
+            $remainder = $number % 100;
+
+            $result = $hundreds[$hundred] . ($remainder > 0 ? ' and ' . $this->numberToWords($remainder) : '');
+        } elseif ($number < 100000) {
+            $thousand = (int)($number / 1000);
+            $remainder = $number % 1000;
+
+            $result = $this->numberToWords($thousand) . ' Thousand' . ($remainder > 0 ? ' ' . $this->numberToWords($remainder) : '');
+        } else {
+            $hundredThousand = (int)($number / 100000);
+            $remainder = $number % 100000;
+
+            $result = $this->numberToWords($hundredThousand) . ' Hundred Thousand' . ($remainder > 0 ? ' ' . $this->numberToWords($remainder) : '');
+        }
+
+        return $result.' Only';
+    }
+
 }

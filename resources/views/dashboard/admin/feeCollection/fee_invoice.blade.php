@@ -148,7 +148,7 @@
         </div>
 
         <div class="amount-in-words">
-            <p>In words: Five hundred and fifty dollars only</p>
+            <p>In words: {{ $words }}</p>
         </div>
 
         <div class="thank-you">
