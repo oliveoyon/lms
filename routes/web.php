@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\FeeCollectionController;
 use App\Http\Controllers\Admin\FeeSetupController;
 use App\Http\Controllers\Admin\LibraryController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\StudentManagement;
 use App\Http\Controllers\Admin\TeacherController;
@@ -241,5 +242,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/generate-bill', [FeeCollectionController::class, 'generateBill'])->name('generateBill');
         Route::post('/fetchColletcData', [FeeCollectionController::class, 'fetchColletcData'])->name('fetchColletcData');
         Route::post('/collectBill', [FeeCollectionController::class, 'collectBill'])->name('collectBill');
+
+        // Reports
+        Route::get('class-list-report', [ReportController::class, 'classlist_report'])->name('class-list-report');
+        Route::post('/generate-pdf', [ReportController::class, 'generatePdf'])->name('generate-pdf');
+
+
     });
 });

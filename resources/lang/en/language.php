@@ -328,4 +328,19 @@ return [
     "collect_fee" => "Collect Fee",
     "custom_fee_generate" => "Custom Fee Generate",
 
+    //Reports
+    "print_report" => "Print Report",
+    "reports" => "Reports",
+    "class_reports" => "Class Reports",
+    "class_list_report" => "Class List Report",
+    "class_details_report" => "Class Details Report",
+    "active_inactive_classes_report" => "Active/Inactive Classes Report",
+    "class_enrollment_report" => "Class Enrollment Report",
+    "version_wise_class_report" => "Version-wise Class Report",
+    "class_history_report" => "Class History Report",
+    "class_statistics_report" => "Class Statistics Report",
+    "class_status_change_report" => "Class Status Change Report",
+    "class_hash_id_usage_report" => "Class Hash ID Usage Report",
+    "class_summary_report" => "Class Summary Report",
+
 ];

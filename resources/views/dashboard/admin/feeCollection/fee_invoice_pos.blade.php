@@ -82,7 +82,7 @@
         @foreach ($payments as $payment)
         <div class="item">
             <span>{{$loop->iteration}}. {{$payment->fee_description}}</span>
-            <span style="float: right;">${{$payment->amount_paid}}</span>
+            <span style="float: right;">{{$payment->amount_paid}}</span>
         </div>
         @endforeach
 
@@ -94,7 +94,7 @@
 
         <div class="total">
             <span>Total:</span>
-            <span style="float: right;">$100.00</span>
+            <span style="float: right;">{{$payments->sum('amount_paid')}}</span>
         </div>
 
         <div class="line"></div>

@@ -7,7 +7,7 @@
     <title>Invoice</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: bangla;
             margin-top: 20px;
         }
 
@@ -101,55 +101,13 @@
             </div>
         </div>
 
-        <div class="info">
-            <div class="info-column left">
-                <h2>Student Information</h2>
-                <p>Student Name: {{ $payments[0]->std_name }}</p>
-                <p>Class: {{ $payments[0]->class_name }}</p>
-                <p>Student ID: {{ $payments[0]->std_id }}</p>
-            </div>
-
-            <div class="info-column">
-                <h2>Bill Information</h2>
-                <p>Invoice No: 00123</p>
-                <p>Payment Method: {{ $payments[0]->payment_method }}</p>
-                <p>Payment Date: {{ \Carbon\Carbon::parse($payments[0]->payment_date)->format('d F, Y') }}</p>
-            </div>
-        </div>
+        <h2 style="text-align: center">{!! $title !!}</h2>
 
         <div style="clear: both;"></div> <!-- Clear the float -->
 
-        <table>
-            <thead>
-                <tr>
-                    <th>S/N</th>
-                    <th>Particular</th>
-                    <th style="text-align: right">Amount</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($payments as $payment)
-                <tr>
-                    <td>{{$loop->iteration}}</td>
-                    <td>{{$payment->fee_description}}</td>
-                    <td style="text-align: right;">{{$payment->amount_paid}}</td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+        {!! $data !!}
 
-        <div class="total" style="text-align: right;  padding-right:6px;">
-            <p>Subtotal: {{$payments->sum('amount_paid')}}</p>
-            <p>Total: {{$payments->sum('amount_paid')}}</p>
-        </div>
 
-        <div class="amount-in-words">
-            <p>In words: {{ $words }}</p>
-        </div>
-
-        <div class="thank-you">
-            <p>Thank you for your payment!</p>
-        </div>
     </div>
 </body>
 

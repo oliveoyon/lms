@@ -329,4 +329,19 @@ return [
     "collect_fee" => "ফি সংগ্রহ করুন",
     "custom_fee_generate" => "কাস্টম ফি তৈরি করুন",
 
+    //Reports
+    "print_report" => "প্রিন্ট রিপোর্ট",
+    "reports" => "রিপোর্টস",
+    "class_reports" => "ক্লাস রিপোর্টস",
+    "class_list_report" => "ক্লাস তালিকা রিপোর্ট",
+    "class_details_report" => "ক্লাস বিবরণ রিপোর্ট",
+    "active_inactive_classes_report" => "সক্রিয়/অসক্রিয় ক্লাস রিপোর্ট",
+    "class_enrollment_report" => "ক্লাস এনরোলমেন্ট রিপোর্ট",
+    "version_wise_class_report" => "ভার্সন ভিত্তিক ক্লাস রিপোর্ট",
+    "class_history_report" => "ক্লাস ইতিহাস রিপোর্ট",
+    "class_statistics_report" => "ক্লাস পরিসংখ্যান রিপোর্ট",
+    "class_status_change_report" => "ক্লাস স্থিতি পরিবর্তন রিপোর্ট",
+    "class_hash_id_usage_report" => "ক্লাস হ্যাশ আইডি ব্যবহার রিপোর্ট",
+    "class_summary_report" => "ক্লাস সংক্ষেপ রিপোর্ট",
+
 ];

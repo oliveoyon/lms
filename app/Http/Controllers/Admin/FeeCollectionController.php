@@ -295,40 +295,54 @@ class FeeCollectionController extends Controller
             'fee_payments.school_id',
             'fee_collections.id as fee_collection_id',
             'fee_collections.fee_description',
-            'students.std_name'
+            'students.std_name',
+            'students.std_id',
+            'edu_classes.class_name'
         )
         ->join('fee_collections', 'fee_payments.fee_collection_id', '=', 'fee_collections.id')
         ->join('students', 'fee_collections.std_id', '=', 'students.std_id')
+        ->join('edu_classes', 'students.class_id', '=', 'edu_classes.id')
         ->where('fee_payments.trnx_id', $trnxId)
         ->get();
 
-        $cr80Width = 53.98;
-        $cr80Height = 85.6;
+        $totalword = $send['payments']->sum('amount_paid');
+        $numberService = new DependentController();
+        $send['words'] = $numberService->numberToWords($totalword);
 
-        // Initialize mPDF with CR80 size in millimeters
-        $mpdf = new Mpdf([
-            'mode' => 'utf-8',
-            // 'format' => [$cr80Width, $cr80Height], // Set the custom size for CR80 card in portrait
-            'margin_left' => 0,
-            'margin_right' => 0,
-            'margin_top' => 0,
-            'margin_bottom' => 0,
-        ]);
-        $mpdf->SetWatermarkText('PAID');
-        $mpdf->showWatermarkText = true;
-        $mpdf->watermarkTextAlpha = 0.1;
-        // $mpdf->SetWatermarkImage('logo.png');
-        // $mpdf->showWatermarkImage = true;
-        // $mpdf->watermarkImageAlpha = 0.1;
-        $mpdf->SetAutoPageBreak(true);
+        $is_pos = true;
+        $width = 0; //should be in database
+        $height = 0; // should be in database
 
-        $mpdf->SetAuthor('IconBangla');
+        $send['printmeta'] = [
+            'fontsize' => 10,
+            'width' => 80
+        ];
 
-        $bladeViewPath = 'dashboard.admin.feeCollection.fee_invoice';
-        $html = view($bladeViewPath, $send)->render();
-        $mpdf->WriteHTML($html);
-        return $mpdf->Output('invoice.pdf', 'I');
+        if($is_pos){
+            return view('dashboard.admin.feeCollection.fee_invoice_pos', $send);
+        }else{
 
-        // return redirect()->route('admin.collectFee');
+            // $cr80Width = 80; //80 Width in millimeters
+            $mpdf = new Mpdf([
+                'mode' => 'utf-8',
+                'format' => [190,236], //it will come from database
+                // 'width' => 80,
+                // 'margin_left' => 5,
+                // 'margin_right' => 5,
+                // 'margin_top' => 0,
+                // 'margin_bottom' => 0,
+            ]);
+
+            $mpdf->SetWatermarkText('PAID');
+            $mpdf->showWatermarkText = true;
+            $mpdf->watermarkTextAlpha = 0.1;
+            $mpdf->SetAutoPageBreak(true);
+            $mpdf->SetAuthor('IconBangla');
+            $bladeViewPath = 'dashboard.admin.feeCollection.fee_invoice';
+            $html = view($bladeViewPath, $send)->render();
+            $mpdf->WriteHTML($html);
+            return $mpdf->Output('invoice.pdf', 'I');
+
+        }
     }
 }

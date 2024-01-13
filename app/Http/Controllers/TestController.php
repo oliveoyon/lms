@@ -136,7 +136,7 @@ class TestController extends Controller
             $send['words'] = $numberService->numberToWords($totalword);
 
 
-        $is_pos = false;
+        $is_pos = true;
         $width = 0; //should be in database
         $height = 0; // should be in database
 
