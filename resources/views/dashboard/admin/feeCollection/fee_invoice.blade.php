@@ -8,12 +8,11 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin-top: 20px;
         }
 
         .container {
-            width: 90%;
-            margin: 0 auto;
+            width: 100%;
+            /* margin: 0 auto; */
         }
 
         .header {

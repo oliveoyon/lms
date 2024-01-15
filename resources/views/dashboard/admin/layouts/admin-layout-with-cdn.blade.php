@@ -186,7 +186,7 @@
             <ul class="nav nav-treeview">
                 <!-- Class List Report -->
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('admin.class-list-report') }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>{{ __('language.class_list_report') }}</p>
                     </a>

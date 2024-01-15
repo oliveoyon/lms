@@ -8,11 +8,10 @@
     <style>
         body {
             font-family: bangla;
-            margin-top: 20px;
         }
 
         .container {
-            width: 90%;
+            width: 100%;
             margin: 0 auto;
         }
 

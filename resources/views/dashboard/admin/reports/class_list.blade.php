@@ -117,7 +117,6 @@
                     pdf_data: data,
                     title: 'value1',
                     orientation: 'P',
-                    // Add more key-value pairs as needed
                 },
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -131,7 +130,7 @@
                             '<div class="modal-dialog modal-dialog-centered modal-lg" role="document">';
                         modalContent += '<div class="modal-content">';
                         modalContent += '<div class="modal-header">';
-                        modalContent += '<h5 class="modal-title" id="pdfModalLabel">Generated PDF</h5>';
+                        modalContent += '<h5 class="modal-title" id="pdfModalLabel">Generated Report</h5>';
                         modalContent +=
                             '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
                         modalContent += '<span aria-hidden="true">&times;</span>';
@@ -163,13 +162,11 @@
                     } else {
                         console.error('Invalid PDF response:', response);
                         alert('Error generating PDF. Please try again.');
-                        // You can display an error message or take other actions
                     }
                 },
                 error: function(xhr, status, error) {
                     console.error('AJAX request failed:', error);
                     alert('Error generating PDF. Please try again.');
-                    // You can display an error message or take other actions
                 },
                 complete: function() {
                     // Hide the loader overlay when the request is complete
@@ -180,7 +177,6 @@
 
         function isValidUrl(url) {
             // Implement a function to check if the URL is valid based on your requirements
-            // For simplicity, you can use a basic check like:
             return /^https?:\/\/.+/.test(url);
         }
     </script>

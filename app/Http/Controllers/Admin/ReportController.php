@@ -16,7 +16,12 @@ class ReportController extends Controller
         $send['title'] = $request->input('title');
         $mpdf = new Mpdf([
             'mode' => 'utf-8',
-            'orientation' => $request->input('orientation')
+            'format' => 'A4',
+            'orientation' => $request->input('orientation'),
+            // 'margin_left' => 5,
+            // 'margin_right' => 5,
+            'margin_top' => 5,
+            'margin_bottom' => 5,
         ]);
 
         $mpdf->SetAutoPageBreak(true);

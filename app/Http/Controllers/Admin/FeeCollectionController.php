@@ -309,7 +309,7 @@ class FeeCollectionController extends Controller
         $numberService = new DependentController();
         $send['words'] = $numberService->numberToWords($totalword);
 
-        $is_pos = true;
+        $is_pos = false;
         $width = 0; //should be in database
         $height = 0; // should be in database
 
@@ -325,12 +325,13 @@ class FeeCollectionController extends Controller
             // $cr80Width = 80; //80 Width in millimeters
             $mpdf = new Mpdf([
                 'mode' => 'utf-8',
-                'format' => [190,236], //it will come from database
+                'format' => 'A4-P',
+                // 'format' => [190,236], //it will come from database
                 // 'width' => 80,
                 // 'margin_left' => 5,
                 // 'margin_right' => 5,
-                // 'margin_top' => 0,
-                // 'margin_bottom' => 0,
+                'margin_top' => 5,
+                'margin_bottom' => 5,
             ]);
 
             $mpdf->SetWatermarkText('PAID');
