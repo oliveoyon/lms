@@ -93,10 +93,8 @@
             </div>
             <div class="school_info">
                 <h1>Shalikha Thana High School</h1>
-                <p>Hajrahati, Shalikha, Magura</p>
-                <p>Phone: 123-456-7890</p>
-                <p>Email: shalikhaschool@gmail.com</p>
-                <p>Web: https://shalikhaschool.edu.bd/</p>
+                <p>Hajrahati, Shalikha, Magura, Phone: 123-456-7890</p>
+                <p>Email: shalikhaschool@gmail.com, Web: https://shalikhaschool.edu.bd/</p>
             </div>
         </div>
 

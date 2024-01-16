@@ -49,4 +49,20 @@ class ReportController extends Controller
         $send['versions'] = EduVersions::get()->where('version_status', 1);
         return view('dashboard.admin.reports.class_list', $send);
     }
+
+    public function version_classlist_report()
+    {
+        $versions = EduVersions::get()->where('version_status', 1);
+        return view('dashboard.admin.reports.version_class_list', compact('versions'));
+    }
+
+    public function versionWiseClassList(Request $request)
+    {
+
+        $classes = EduClasses::select('edu_classes.*', 'edu_versions.version_name')
+            ->join('edu_versions', 'edu_classes.version_id', '=', 'edu_versions.id')
+            ->where('edu_classes.version_id', $request->version_id)
+            ->get();
+        return response()->json(['classes' => $classes]);
+    }
 }

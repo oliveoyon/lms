@@ -245,6 +245,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Reports
         Route::get('class-list-report', [ReportController::class, 'classlist_report'])->name('class-list-report');
+        Route::get('version-wise-class-list-report', [ReportController::class, 'version_classlist_report'])->name('version-wise-class-list-report');
+        Route::post('/versionWiseClassList', [ReportController::class, 'versionWiseClassList'])->name('versionWiseClassList');
         Route::post('/generate-pdf', [ReportController::class, 'generatePdf'])->name('generate-pdf');
 
 

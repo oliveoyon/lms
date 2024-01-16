@@ -65,8 +65,6 @@
                                             <th style="width: 10px">#</th>
                                             <th>{{ __('language.class_name') }}</th>
                                             <th>{{ __('language.version') }}</th>
-                                            <th>{{ __('language.numeric') }}</th>
-                                            <th>{{ __('language.status') }}</th>
                                         </thead>
                                         <tbody>
                                             @foreach ($classes as $class)
@@ -74,11 +72,6 @@
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td class="font-weight-bold">{{ $class->class_name }}</td>
                                                     <td>{{ $class->version->version_name }}</td>
-                                                    <td>{{ $class->class_numeric }}</td>
-                                                    <td
-                                                        class="{{ $class->class_status == 1 ? 'text-success' : 'text-danger' }} font-weight-bold">
-                                                        {{ $class->class_status == 1 ? __('language.active') : __('language.inactive') }}
-                                                    </td>
                                                 </tr>
                                             @endforeach
 
