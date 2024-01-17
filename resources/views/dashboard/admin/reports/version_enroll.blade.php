@@ -40,7 +40,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <form action="{{ route('admin.versionWiseClassList') }}" method="POST" autocomplete="off" id="get-version-wise-class-list">
+                    <form action="{{ route('admin.versionWiseEnrollment') }}" method="POST" autocomplete="off" id="get-version-wise-class-list">
                         @csrf
                         <div class="card">
                             <div class="card-header bg-gray">
@@ -53,6 +53,20 @@
                             </div>
                             <div class="card-body">
                                 <div class="row align-items-end">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <select class="form-control form-control-sm academic_year" name="academic_year" id="academic_year">
+                                                <option value="">{{ __('language.academic_year') }}</option>
+                                                @php
+                                                $currentYear = date('Y');
+                                                @endphp
+                                                @for ($i = $currentYear - 10; $i <= $currentYear + 10; $i++) <option value="{{ $i }}">
+                                                    {{ $i }}
+                                                    </option>
+                                                    @endfor
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <select class="form-control form-control-sm version_id" name="version_id" id="version_id">
@@ -107,8 +121,11 @@
                                 <table class="table table-bordered table-striped table-hover table-sm" id="class-table">
                                     <thead style="border-top: 1px solid #b4b4b4">
                                         <th style="width: 10px">#</th>
+                                        <th>{{ __('language.academic_year') }}</th>
                                         <th>{{ __('language.class_name') }}</th>
                                         <th>{{ __('language.version') }}</th>
+                                        <th>Total Section</th>
+                                        <th>Total Enrolled Students</th>
                                     </thead>
                                     <tbody id="result-table-body">
                                         <!-- Rows will be dynamically populated here -->
@@ -178,8 +195,11 @@
                                 var classData = classes[i];
                                 var row = '<tr>' +
                                     '<td>' + serialNumber + '</td>' +
+                                    '<td>' + classData.academic_year + '</td>' +
                                     '<td>' + classData.class_name + '</td>' +
                                     '<td>' + classData.version_name + '</td>' +
+                                    '<td>' + classData.total_sections + '</td>' +
+                                    '<td>' + classData.total_students + '</td>' +
                                     '</tr>';
                                 tableBody.append(row);
 
@@ -222,7 +242,7 @@
             method: 'POST',
             data: {
                 pdf_data: data,
-                title: 'Version Wise Class List',
+                title: 'Class Wise Students Enrollment',
                 orientation: 'P',
             },
             headers: {

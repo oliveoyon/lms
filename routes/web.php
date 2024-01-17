@@ -247,6 +247,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('class-list-report', [ReportController::class, 'classlist_report'])->name('class-list-report');
         Route::get('version-wise-class-list-report', [ReportController::class, 'version_classlist_report'])->name('version-wise-class-list-report');
         Route::post('/versionWiseClassList', [ReportController::class, 'versionWiseClassList'])->name('versionWiseClassList');
+        Route::get('version-wise-enrollment', [ReportController::class, 'version_enroll'])->name('version-wise-enrollment');
+        Route::post('/versionWiseEnrollment', [ReportController::class, 'versionWiseEnrollment'])->name('versionWiseEnrollment');
+        Route::match(['get', 'post'], '/class-summery', [ReportController::class, 'class_summery'])->name('class_summery');
+
         Route::post('/generate-pdf', [ReportController::class, 'generatePdf'])->name('generate-pdf');
 
 
