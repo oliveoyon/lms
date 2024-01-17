@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\AcademicStudent;
+use App\Models\Admin\Attendances;
 use App\Models\Admin\EduClasses;
 use App\Models\Admin\EduVersions;
+use App\Models\Admin\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Mpdf\Mpdf;
 
 class ReportController extends Controller
@@ -140,5 +144,154 @@ class ReportController extends Controller
 
         $versions = EduVersions::get()->where('version_status', 1);
         return view('dashboard.admin.reports.class_summery', compact('versions'));
+    }
+
+    public function class_statistics(Request $request)
+    {
+        if ($request->isMethod('post')) {
+
+            // Validate the request data
+            $validator = Validator::make($request->all(), [
+                'academic_year' => 'required',
+                'version_id' => 'required',
+                'class_id' => 'required',
+            ]);
+
+            // Check if validation fails
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 400);
+            }
+
+            // Retrieve validated data
+            $academicYear = $request->input('academic_year');
+            $versionId = $request->input('version_id');
+            $classId = $request->input('class_id');
+
+            // Attendance Statistics with Percentage
+            $send['attendanceStats'] = DB::table('students')
+                ->leftJoin('attendances', function ($join) use ($academicYear, $versionId, $classId) {
+                    $join->on('students.std_id', '=', 'attendances.std_id')
+                        ->where('attendances.academic_year', $academicYear)
+                        // ->where('attendances.version_id', $versionId)
+                        ->where('attendances.class_id', $classId);
+                })
+                ->select(
+                    'students.std_gender',
+                    'students.std_category',
+                    DB::raw('count(*) as total_students'),
+                    DB::raw('sum(case when attendances.attendance = "Present" then 1 else 0 end) as present_students'),
+                    DB::raw('sum(case when attendances.attendance = "Absent" then 1 else 0 end) as absent_students'),
+                    DB::raw('sum(case when attendances.attendance = "Late" then 1 else 0 end) as latecomers'),
+                )
+                ->groupBy('students.std_gender', 'students.std_category')
+                ->get();
+
+            // dd($attendanceStats);
+            // Blood Group-wise Statistics
+            $send['bloodGroupStats'] = DB::table('students')
+                ->where('academic_year', $academicYear)
+                ->where('version_id', $versionId)
+                ->where('class_id', $classId)
+                ->select(
+                    DB::raw('CASE
+                    WHEN blood_group = "A+" THEN "A+"
+                    WHEN blood_group = "B+" THEN "B+"
+                    WHEN blood_group = "AB+" THEN "AB+"
+                    WHEN blood_group = "O+" THEN "O+"
+                    WHEN blood_group = "A-" THEN "A-"
+                    WHEN blood_group = "B-" THEN "B-"
+                    WHEN blood_group = "AB-" THEN "AB-"
+                    WHEN blood_group = "O-" THEN "O-"
+                    ELSE "Unknown"
+                END as blood_group_category'),
+                    DB::raw('count(*) as count')
+                )
+                ->groupBy('blood_group_category')
+                ->pluck('count', 'blood_group_category');
+
+
+
+
+            return response()->json($send);
+        }
+
+        $versions = EduVersions::get()->where('version_status', 1);
+        return view('dashboard.admin.reports.class_statistics', compact('versions'));
+    }
+
+    public function class_statistics1(Request $request)
+    {
+
+        // Retrieve validated data
+        $academicYear = $request->input('academic_year');
+        $versionId = $request->input('version_id');
+        $classId = $request->input('class_id');
+
+        // Attendance Statistics with Percentage
+        $send['attendanceStats'] = DB::table('students')
+            ->leftJoin('attendances', function ($join) use ($academicYear, $versionId, $classId) {
+                $join->on('students.std_id', '=', 'attendances.std_id')
+                    ->where('attendances.academic_year', $academicYear)
+                    // ->where('attendances.version_id', $versionId)
+                    ->where('attendances.class_id', $classId);
+            })
+            ->select(
+                'students.std_gender',
+                'students.std_category',
+                DB::raw('count(*) as total_students'),
+                DB::raw('sum(case when attendances.attendance = "Present" then 1 else 0 end) as present_students'),
+                DB::raw('sum(case when attendances.attendance = "Absent" then 1 else 0 end) as absent_students'),
+                DB::raw('sum(case when attendances.attendance = "Late" then 1 else 0 end) as latecomers'),
+            )
+            ->groupBy('students.std_gender', 'students.std_category')
+            ->get();
+
+        // dd($attendanceStats);
+        // Blood Group-wise Statistics
+        $send['bloodGroupStats'] = DB::table('students')
+            ->where('academic_year', $academicYear)
+            ->where('version_id', $versionId)
+            ->where('class_id', $classId)
+            ->select(
+                DB::raw('CASE
+                    WHEN blood_group = "A+" THEN "A+"
+                    WHEN blood_group = "B+" THEN "B+"
+                    WHEN blood_group = "AB+" THEN "AB+"
+                    WHEN blood_group = "O+" THEN "O+"
+                    WHEN blood_group = "A-" THEN "A-"
+                    WHEN blood_group = "B-" THEN "B-"
+                    WHEN blood_group = "AB-" THEN "AB-"
+                    WHEN blood_group = "O-" THEN "O-"
+                    ELSE "Unknown"
+                END as blood_group_category'),
+                DB::raw('count(*) as count')
+            )
+            ->groupBy('blood_group_category')
+            ->pluck('count', 'blood_group_category');
+
+
+        // dd($bloodGroupStats);
+
+        // Age Distribution Statistics
+        $send['ageDistributionStats'] = DB::table('students')
+            ->where('academic_year', $academicYear)
+            ->where('version_id', $versionId)
+            ->where('class_id', $classId)
+            ->select(DB::raw('YEAR(NOW()) - YEAR(std_dob) as age_group'), DB::raw('count(*) as count'))
+            ->groupBy('age_group')
+            ->get();
+
+        // dd($ageDistributionStats);
+
+        // Income Distribution Statistics
+        $send['incomeDistributionStats'] = DB::table('students')
+            ->where('academic_year', $academicYear)
+            ->where('version_id', $versionId)
+            ->where('class_id', $classId)
+            ->select(DB::raw('ROUND(f_yearly_income / 10000) * 10000 as income_range'), DB::raw('count(*) as count'))
+            ->groupBy('income_range')
+            ->get();
+
+        dd($send);
     }
 }

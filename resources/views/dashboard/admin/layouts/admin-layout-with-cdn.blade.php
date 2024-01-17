@@ -191,41 +191,23 @@
                         <p>{{ __('language.class_list_report') }}</p>
                     </a>
                 </li>
-                <!-- Class Details Report -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>{{ __('language.class_details_report') }}</p>
-                    </a>
-                </li>
-                <!-- Active/Inactive Classes Report -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>{{ __('language.active_inactive_classes_report') }}</p>
-                    </a>
-                </li>
+
+
                 <!-- Class Enrollment Report -->
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('admin.version-wise-enrollment') }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>{{ __('language.class_enrollment_report') }}</p>
                     </a>
                 </li>
                 <!-- Version-wise Class Report -->
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('admin.version-wise-class-list-report') }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>{{ __('language.version_wise_class_report') }}</p>
                     </a>
                 </li>
-                <!-- Class History Report -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>{{ __('language.class_history_report') }}</p>
-                    </a>
-                </li>
+
                 <!-- Class Statistics Report -->
                 <li class="nav-item">
                     <a href="#" class="nav-link">
@@ -233,23 +215,10 @@
                         <p>{{ __('language.class_statistics_report') }}</p>
                     </a>
                 </li>
-                <!-- Class Status Change Report -->
+
+
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>{{ __('language.class_status_change_report') }}</p>
-                    </a>
-                </li>
-                <!-- Class Hash ID Usage Report -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>{{ __('language.class_hash_id_usage_report') }}</p>
-                    </a>
-                </li>
-                <!-- Class Summary Report -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('admin.class_summery') }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>{{ __('language.class_summary_report') }}</p>
                     </a>

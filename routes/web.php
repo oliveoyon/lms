@@ -250,7 +250,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('version-wise-enrollment', [ReportController::class, 'version_enroll'])->name('version-wise-enrollment');
         Route::post('/versionWiseEnrollment', [ReportController::class, 'versionWiseEnrollment'])->name('versionWiseEnrollment');
         Route::match(['get', 'post'], '/class-summery', [ReportController::class, 'class_summery'])->name('class_summery');
-
+        Route::match(['get', 'post'], '/class-stats', [ReportController::class, 'class_statistics'])->name('class_statistics');
         Route::post('/generate-pdf', [ReportController::class, 'generatePdf'])->name('generate-pdf');
 
 
