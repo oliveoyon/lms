@@ -219,79 +219,259 @@ class ReportController extends Controller
         return view('dashboard.admin.reports.class_statistics', compact('versions'));
     }
 
-    public function class_statistics1(Request $request)
+    public function class_student_count(Request $request)
     {
+        if ($request->isMethod('post')) {
+            $academicYear = request('academic_year');
+            $versionId = request('version_id');
+            $classId = request('class_id');
 
-        // Retrieve validated data
-        $academicYear = $request->input('academic_year');
-        $versionId = $request->input('version_id');
-        $classId = $request->input('class_id');
+            // Build the query
+            $classes = DB::table('students')
+                ->select(DB::raw('students.academic_year, edu_versions.version_name as version, edu_classes.class_name as class, sections.section_name as section, count(students.id) as student_count'))
+                ->join('edu_versions', 'students.version_id', '=', 'edu_versions.id')
+                ->join('edu_classes', 'students.class_id', '=', 'edu_classes.id')
+                ->join('sections', 'students.section_id', '=', 'sections.id')
+                ->when($academicYear, function ($query) use ($academicYear) {
+                    return $query->where('students.academic_year', $academicYear);
+                })
+                ->when($versionId, function ($query) use ($versionId) {
+                    return $query->where('students.version_id', $versionId);
+                })
+                ->when($classId, function ($query) use ($classId) {
+                    return $query->where('students.class_id', $classId);
+                })
+                ->groupBy('students.academic_year', 'edu_versions.version_name', 'edu_classes.class_name', 'sections.section_name')
+                ->orderBy('students.academic_year', 'asc')
+                ->orderBy('edu_versions.version_name', 'asc')
+                ->orderBy('edu_classes.class_name', 'asc')
+                ->orderBy('sections.section_name', 'asc')
+                ->get();
 
-        // Attendance Statistics with Percentage
-        $send['attendanceStats'] = DB::table('students')
-            ->leftJoin('attendances', function ($join) use ($academicYear, $versionId, $classId) {
-                $join->on('students.std_id', '=', 'attendances.std_id')
-                    ->where('attendances.academic_year', $academicYear)
-                    // ->where('attendances.version_id', $versionId)
-                    ->where('attendances.class_id', $classId);
+            return response()->json(['classes' => $classes]);
+        }
+
+        $versions = EduVersions::get()->where('version_status', 1);
+        return view('dashboard.admin.reports.class_wise_student_count', compact('versions'));
+    }
+
+    public function subject_list(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            $academicYear = request('academic_year');
+            $versionId = request('version_id');
+            $classId = request('class_id');
+
+            // Build the query
+            $classes = DB::table('subjects')
+                ->select(DB::raw('subjects.academic_year, edu_versions.version_name as version, edu_classes.class_name as class, subjects.subject_code, subjects.subject_name, subjects.subject_status'))
+                ->join('edu_versions', 'subjects.version_id', '=', 'edu_versions.id')
+                ->join('edu_classes', 'subjects.class_id', '=', 'edu_classes.id')
+                ->when($academicYear, function ($query) use ($academicYear) {
+                    return $query->where('subjects.academic_year', $academicYear);
+                })
+                ->when($versionId, function ($query) use ($versionId) {
+                    return $query->where('subjects.version_id', $versionId);
+                })
+                ->when($classId, function ($query) use ($classId) {
+                    return $query->where('subjects.class_id', $classId);
+                })
+                ->orderBy('subjects.academic_year', 'asc')
+                ->orderBy('edu_versions.version_name', 'asc')
+                ->orderBy('edu_classes.class_name', 'asc')
+                ->orderBy('subjects.subject_code', 'asc')
+                ->get();
+
+            return response()->json(['classes' => $classes]);
+        }
+
+        $versions = EduVersions::get()->where('version_status', 1);
+        return view('dashboard.admin.reports.class_wise_subject_list', compact('versions'));
+    }
+
+    public function subject_count(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            $academicYear = request('academic_year');
+            $versionId = request('version_id');
+            $classId = request('class_id');
+
+            // Build the query
+            $classes = DB::table('subjects')
+                ->select(DB::raw('subjects.academic_year, edu_versions.version_name as version, edu_classes.class_name as class, count(subjects.id) as subject_count'))
+                ->join('edu_versions', 'subjects.version_id', '=', 'edu_versions.id')
+                ->join('edu_classes', 'subjects.class_id', '=', 'edu_classes.id')
+                ->when($academicYear, function ($query) use ($academicYear) {
+                    return $query->where('subjects.academic_year', $academicYear);
+                })
+                ->when($versionId, function ($query) use ($versionId) {
+                    return $query->where('subjects.version_id', $versionId);
+                })
+                ->when($classId, function ($query) use ($classId) {
+                    return $query->where('subjects.class_id', $classId);
+                })
+                ->groupBy('subjects.academic_year', 'edu_versions.version_name', 'edu_classes.class_name')
+                ->orderBy('subjects.academic_year', 'asc')
+                ->orderBy('edu_versions.version_name', 'asc')
+                ->orderBy('edu_classes.class_name', 'asc')
+                ->get();
+
+            return response()->json(['classes' => $classes]);
+        }
+
+        $versions = EduVersions::get()->where('version_status', 1);
+        return view('dashboard.admin.reports.class_wise_subject_count', compact('versions'));
+    }
+
+    public function section_wise_teacher(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            $academicYear = request('academic_year');
+            $versionId = request('version_id');
+            $classId = request('class_id');
+            $sectionId = request('section_id');
+
+            // Build the query
+            $classes = DB::table('assign_teachers')
+                ->select(
+                    'assign_teachers.academic_year',
+                    'edu_versions.version_name as version',
+                    'edu_classes.class_name as class',
+                    'sections.section_name as section',
+                    'subjects.subject_name as subject',
+                    'teachers.teacher_name as teacher',
+                    'teachers.teacher_mobile as mobile',
+                    'teachers.teacher_email as email',
+                    'assign_teachers.status'
+                )
+                ->join('edu_versions', 'assign_teachers.version_id', '=', 'edu_versions.id')
+                ->join('edu_classes', 'assign_teachers.class_id', '=', 'edu_classes.id')
+                ->join('sections', 'assign_teachers.section_id', '=', 'sections.id')
+                ->join('subjects', 'assign_teachers.subject_id', '=', 'subjects.id')
+                ->join('teachers', 'assign_teachers.teacher_id', '=', 'teachers.id')
+                ->when($academicYear, function ($query) use ($academicYear) {
+                    return $query->where('assign_teachers.academic_year', $academicYear);
+                })
+                ->when($versionId, function ($query) use ($versionId) {
+                    return $query->where('assign_teachers.version_id', $versionId);
+                })
+                ->when($classId, function ($query) use ($classId) {
+                    return $query->where('assign_teachers.class_id', $classId);
+                })
+                ->when($sectionId, function ($query) use ($sectionId) {
+                    return $query->where('assign_teachers.section_id', $sectionId);
+                })
+                ->orderBy('assign_teachers.academic_year', 'asc')
+                ->orderBy('edu_versions.version_name', 'asc')
+                ->orderBy('edu_classes.class_name', 'asc')
+                ->orderBy('sections.section_name', 'asc')
+                ->get();
+
+            return response()->json(['classes' => $classes]);
+        }
+
+        $versions = EduVersions::get()->where('version_status', 1);
+        return view('dashboard.admin.reports.section_wise_teacher', compact('versions'));
+    }
+
+    public function guardian_list(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            $academicYear = request('academic_year');
+            $versionId = request('version_id');
+            $classId = request('class_id');
+            $sectionId = request('section_id');
+
+            // Build the query
+            $classes = DB::table('students')
+            ->select(
+                'students.academic_year',
+                'edu_versions.version_name as version',
+                'edu_classes.class_name as class',
+                'sections.section_name as section',
+                'students.std_name as student_name',
+                'students.std_fname as student_fname',
+                'students.std_mname as student_mname',
+                'students.std_phone as student_phone',
+                'students.std_present_address as address',
+                'students.std_gurdian_name as guardian_name',
+                'students.std_gurdian_relation as guardian_relation',
+                'students.std_gurdian_mobile as guardian_mobile',
+                'students.std_gurdian_address as guardian_address'
+            )
+            ->join('edu_versions', 'students.version_id', '=', 'edu_versions.id')
+            ->join('edu_classes', 'students.class_id', '=', 'edu_classes.id')
+            ->leftJoin('sections', 'students.section_id', '=', 'sections.id') // Left join to include optional section_id
+            ->when($academicYear, function ($query) use ($academicYear) {
+                return $query->where('students.academic_year', $academicYear);
             })
+            ->when($versionId, function ($query) use ($versionId) {
+                return $query->where('students.version_id', $versionId);
+            })
+            ->when($classId, function ($query) use ($classId) {
+                return $query->where('students.class_id', $classId);
+            })
+            ->when($sectionId, function ($query) use ($sectionId) {
+                return $query->where('students.section_id', $sectionId);
+            })
+            ->orderBy('students.academic_year', 'asc')
+            ->orderBy('edu_versions.version_name', 'asc')
+            ->orderBy('edu_classes.class_name', 'asc')
+            ->orderBy('sections.section_name', 'asc')
+            ->orderBy('students.std_name', 'asc')
+            ->get();
+            return response()->json(['classes' => $classes]);
+        }
+
+        $versions = EduVersions::get()->where('version_status', 1);
+        return view('dashboard.admin.reports.guardian_list', compact('versions'));
+    }
+
+    public function class_attendance(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            $academicYear = request('academic_year');
+            $versionId = request('version_id');
+            $classId = request('class_id');
+            $sectionId = request('section_id');
+            $monthId = request('month_id');
+            $monthId = 'January';
+
+            // Build the query
+            $classes = DB::table('attendances')
             ->select(
-                'students.std_gender',
-                'students.std_category',
-                DB::raw('count(*) as total_students'),
-                DB::raw('sum(case when attendances.attendance = "Present" then 1 else 0 end) as present_students'),
-                DB::raw('sum(case when attendances.attendance = "Absent" then 1 else 0 end) as absent_students'),
-                DB::raw('sum(case when attendances.attendance = "Late" then 1 else 0 end) as latecomers'),
+                'attendances.academic_year',
+                'edu_classes.class_name as class',
+                'sections.section_name as section',
+                'attendances.attendance_date',
+                'attendances.attendance'
             )
-            ->groupBy('students.std_gender', 'students.std_category')
+            ->join('edu_classes', 'attendances.class_id', '=', 'edu_classes.id')
+            ->leftJoin('sections', 'attendances.section_id', '=', 'sections.id') // Left join to include optional section_id
+            ->when($academicYear, function ($query) use ($academicYear) {
+                return $query->where('attendances.academic_year', $academicYear);
+            })
+            ->when($classId, function ($query) use ($classId) {
+                return $query->where('attendances.class_id', $classId);
+            })
+            ->when($sectionId, function ($query) use ($sectionId) {
+                return $query->where('attendances.section_id', $sectionId);
+            })
+            ->when($monthId, function ($query) use ($monthId) {
+                return $query->where('attendances.month', $monthId);
+            })
+            ->orderBy('attendances.academic_year', 'asc')
+            ->orderBy('edu_classes.class_name', 'asc')
+            ->orderBy('sections.section_name', 'asc')
+            ->orderBy('attendances.attendance_date', 'asc')
             ->get();
+            dd($classes);
+            return response()->json(['classes' => $classes]);
+        }
 
-        // dd($attendanceStats);
-        // Blood Group-wise Statistics
-        $send['bloodGroupStats'] = DB::table('students')
-            ->where('academic_year', $academicYear)
-            ->where('version_id', $versionId)
-            ->where('class_id', $classId)
-            ->select(
-                DB::raw('CASE
-                    WHEN blood_group = "A+" THEN "A+"
-                    WHEN blood_group = "B+" THEN "B+"
-                    WHEN blood_group = "AB+" THEN "AB+"
-                    WHEN blood_group = "O+" THEN "O+"
-                    WHEN blood_group = "A-" THEN "A-"
-                    WHEN blood_group = "B-" THEN "B-"
-                    WHEN blood_group = "AB-" THEN "AB-"
-                    WHEN blood_group = "O-" THEN "O-"
-                    ELSE "Unknown"
-                END as blood_group_category'),
-                DB::raw('count(*) as count')
-            )
-            ->groupBy('blood_group_category')
-            ->pluck('count', 'blood_group_category');
+        
 
-
-        // dd($bloodGroupStats);
-
-        // Age Distribution Statistics
-        $send['ageDistributionStats'] = DB::table('students')
-            ->where('academic_year', $academicYear)
-            ->where('version_id', $versionId)
-            ->where('class_id', $classId)
-            ->select(DB::raw('YEAR(NOW()) - YEAR(std_dob) as age_group'), DB::raw('count(*) as count'))
-            ->groupBy('age_group')
-            ->get();
-
-        // dd($ageDistributionStats);
-
-        // Income Distribution Statistics
-        $send['incomeDistributionStats'] = DB::table('students')
-            ->where('academic_year', $academicYear)
-            ->where('version_id', $versionId)
-            ->where('class_id', $classId)
-            ->select(DB::raw('ROUND(f_yearly_income / 10000) * 10000 as income_range'), DB::raw('count(*) as count'))
-            ->groupBy('income_range')
-            ->get();
-
-        dd($send);
+        $versions = EduVersions::get()->where('version_status', 1);
+        return view('dashboard.admin.reports.class_attendance', compact('versions'));
     }
 }

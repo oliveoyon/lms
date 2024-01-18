@@ -251,6 +251,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/versionWiseEnrollment', [ReportController::class, 'versionWiseEnrollment'])->name('versionWiseEnrollment');
         Route::match(['get', 'post'], '/class-summery', [ReportController::class, 'class_summery'])->name('class_summery');
         Route::match(['get', 'post'], '/class-stats', [ReportController::class, 'class_statistics'])->name('class_statistics');
+
+        Route::match(['get', 'post'], '/class-wise-student-enrollment', [ReportController::class, 'class_student_count'])->name('class_student_count');
+        Route::match(['get', 'post'], '/class-wise-subject-list', [ReportController::class, 'subject_list'])->name('subject_list');
+        Route::match(['get', 'post'], '/class-wise-subject-count', [ReportController::class, 'subject_count'])->name('subject_count');
+        Route::match(['get', 'post'], '/section-wise-teacher', [ReportController::class, 'section_wise_teacher'])->name('section_wise_teacher');
+        Route::match(['get', 'post'], '/students-information', [ReportController::class, 'guardian_list'])->name('guardian_list');
+        Route::match(['get', 'post'], '/class-wise-attendance', [ReportController::class, 'class_attendance'])->name('class_attendance');
         Route::post('/generate-pdf', [ReportController::class, 'generatePdf'])->name('generate-pdf');
 
 

@@ -210,7 +210,7 @@
 
                 <!-- Class Statistics Report -->
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('admin.class_statistics') }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>{{ __('language.class_statistics_report') }}</p>
                     </a>
