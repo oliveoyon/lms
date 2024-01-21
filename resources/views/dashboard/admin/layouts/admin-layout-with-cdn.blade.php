@@ -34,7 +34,7 @@
 
         /* Additional styling for nested submenus */
         [class*="sidebar-dark-"] .nav-sidebar>.nav-item>.nav-treeview .nav-treeview {
-            background-color: #333;
+            background-color: #022142;
             /* Set a different background color for nested submenus */
         }
     </style>
@@ -216,13 +216,53 @@
                     </a>
                 </li>
 
-
                 <li class="nav-item">
                     <a href="{{ route('admin.class_summery') }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>{{ __('language.class_summary_report') }}</p>
                     </a>
                 </li>
+
+
+                <li class="nav-item">
+                    <a href="{{ route('admin.class_student_count') }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Student Enrollment</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('admin.subject_list') }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Class Wise Subject</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.subject_count') }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Class Wise Total Subject</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.section_wise_teacher') }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Class Teacher</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.guardian_list') }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Guardian Information</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.class_attendance') }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Class Attendance Report</p>
+                    </a>
+                </li>
+
+
             </ul>
         </li>
     </ul>

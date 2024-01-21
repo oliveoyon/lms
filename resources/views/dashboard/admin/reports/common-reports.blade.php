@@ -41,7 +41,8 @@
         .info-column {
             float: left;
             margin-bottom: 20px;
-            margin-right: 0; /* No margin between the columns */
+            margin-right: 0;
+            /* No margin between the columns */
         }
 
         .left {
@@ -87,18 +88,27 @@
 
 <body>
     <div class="container">
-        <div class="header">
-            <div class="photo">
-                <img src="{{ public_path('storage/img/logo/logo.png') }}" alt="School Logo">
+        <!--mpdf
+        <htmlpageheader name="myheader">
+            <div class="header">
+                <div class="photo">
+                    <img src="{{ public_path('storage/img/logo/logo.png') }}" alt="School Logo">
+                </div>
+                <div class="school_info">
+                    <h1>Shalikha Thana High School</h1>
+                    <p>Hajrahati, Shalikha, Magura, Phone: 123-456-7890</p>
+                    <p>Email: shalikhaschool@gmail.com, Web: https://shalikhaschool.edu.bd/</p>
+                </div>
             </div>
-            <div class="school_info">
-                <h1>Shalikha Thana High School</h1>
-                <p>Hajrahati, Shalikha, Magura, Phone: 123-456-7890</p>
-                <p>Email: shalikhaschool@gmail.com, Web: https://shalikhaschool.edu.bd/</p>
-            </div>
-        </div>
+        </htmlpageheader>
 
-        <h2 style="text-align: center">{!! $title !!}</h2>
+        <sethtmlpageheader name="myheader" value="on" show-this-page="1" />
+        mpdf-->
+
+
+
+
+        <h2 style="text-align: center; margin-top: 0px; padding-top: 0px;">{!! $title !!}</h2>
 
         <div style="clear: both;"></div> <!-- Clear the float -->
 

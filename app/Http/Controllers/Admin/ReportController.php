@@ -25,8 +25,9 @@ class ReportController extends Controller
             'orientation' => $request->input('orientation'),
             // 'margin_left' => 5,
             // 'margin_right' => 5,
-            'margin_top' => 5,
+            'margin_top' => 35,
             'margin_bottom' => 5,
+            'margin_header' => 5,
         ]);
 
         $mpdf->SetAutoPageBreak(true);
@@ -469,7 +470,7 @@ class ReportController extends Controller
             return response()->json(['classes' => $classes]);
         }
 
-        
+
 
         $versions = EduVersions::get()->where('version_status', 1);
         return view('dashboard.admin.reports.class_attendance', compact('versions'));
