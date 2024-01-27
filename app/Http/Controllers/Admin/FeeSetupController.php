@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin\AcademicFeeAmount;
 use App\Models\Admin\AcademicFeeGroup;
 use App\Models\Admin\AcademicFeeHead;
+use App\Models\Admin\AcademicStudent;
 use App\Models\Admin\EduClasses;
+use App\Models\Admin\EduVersions;
+use App\Models\Admin\FeeCollection;
 use App\Models\Admin\FeeFrequency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -65,7 +68,7 @@ class FeeSetupController extends Controller
         $feeFrequency = FeeFrequency::find($feeFrequencyId);
 
         $validator = Validator::make($request->all(), [
-            'freq_name' => 'required|string|max:255|unique:fee_frequencies,freq_name,'.$feeFrequencyId.',id',
+            'freq_name' => 'required|string|max:255|unique:fee_frequencies,freq_name,' . $feeFrequencyId . ',id',
             'no_of_installment' => 'required|integer',
             'installment_period' => 'nullable|string|max:30',
             'freq_status' => 'required|integer',
@@ -515,7 +518,7 @@ class FeeSetupController extends Controller
         // Create an array to store the IDs of successfully deleted records
         $deletedIds = [];
 
-        foreach ($amountIdsArray as $amountId ) {
+        foreach ($amountIdsArray as $amountId) {
             // Remove any single quotes from the keys
             $amountId = trim($amountId, "'");
 
@@ -535,11 +538,72 @@ class FeeSetupController extends Controller
     }
 
 
+    public function customFeeGen(Request $request)
+    {
+        if ($request->isMethod('post')) {
+
+            $validator = Validator::make($request->all(), [
+                'academic_year' => 'required|integer',
+                'amount' => 'required|numeric',
+                'fee_desc' => 'required',
+                'month' => 'required|array|min:1',
+            ]);
+
+
+            if ($validator->fails()) {
+                return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
+            }
+
+            $academicYear = $request->input('academic_year');
+            $versionId = $request->input('version_id');
+            $classId = $request->input('class_id');
+            $sectionId = $request->input('section_id');
+            $stdIds = $request->input('std_id'); // Assuming std_id is an array
+            $feeDesc = $request->input('fee_desc');
+            $month = $request->input('month');
+            $amount = $request->input('amount');
+
+            $query = AcademicStudent::query();
+
+            $query->when($academicYear, function ($query) use ($academicYear) {
+                return $query->where('academic_students.academic_year', $academicYear);
+            })
+                ->when($versionId, function ($query) use ($versionId) {
+                    return $query->where('academic_students.version_id', $versionId);
+                })
+                ->when($classId, function ($query) use ($classId) {
+                    return $query->where('academic_students.class_id', $classId);
+                })
+                ->when($stdIds !== null, function ($query) use ($stdIds) {
+                    return $query->whereIn('academic_students.std_id', $stdIds);
+                });
+
+            $result = $query->get(['std_id']);
+
+            foreach($result as $r){
+                for ($i=0; $i < count($month) ; $i++) {
+                    $dueDate = now()->addMonths($month[$i] - 1)->startOfMonth()->addDays(19);                    FeeCollection::create([
+                        'fee_collection_hash_id' => md5(uniqid(rand(), true)),
+                        'std_id' => $r->std_id,
+                        'fee_group_id' => 0,
+                        'aca_feehead_id' => 0,
+                        'aca_feeamount_id' => 0,
+                        'academic_year' => $academicYear,
+                        'payable_amount' => $amount,
+                        'is_paid' => false,
+                        'due_date' => $dueDate,
+                        'fee_description' => $feeDesc,
+                        'fee_collection_status' => 1,
+                        'school_id' => auth()->user()->school_id,
+                    ]);
+                }
+            }
+            return response()->json(['code' => 1, 'msg' => __('language.periods_add_msg'), 'redirect' => 'admin/custom-fee-generate']);
+        }
 
 
 
-
-
-
-
+        $versions = EduVersions::get()->where('version_status', 1);
+        return view('dashboard.admin.feeSetup.feeGenerate', compact('versions'));
+    }
 }

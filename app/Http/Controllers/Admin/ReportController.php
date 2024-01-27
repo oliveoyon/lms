@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\AcademicFeeAmount;
+use App\Models\Admin\AcademicFeeGroup;
+use App\Models\Admin\AcademicFeeHead;
 use App\Models\Admin\AcademicStudent;
 use App\Models\Admin\Attendances;
 use App\Models\Admin\EduClasses;
 use App\Models\Admin\EduVersions;
+use App\Models\Admin\FeeFrequency;
 use App\Models\Admin\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -475,4 +479,44 @@ class ReportController extends Controller
         $versions = EduVersions::get()->where('version_status', 1);
         return view('dashboard.admin.reports.class_attendance', compact('versions'));
     }
+
+    // Fee Setup Reports
+
+    public function FrequencyList()
+    {
+        $send['feeFrequencies'] = FeeFrequency::get();
+        return view('dashboard.admin.reports.frequencylist', $send);
+    }
+
+    public function FeeHeadList()
+    {
+        $send['academicFeeHeads'] = AcademicFeeHead::all();
+        $send['feeFrequencies'] = FeeFrequency::get()->where('freq_status', 1);
+        return view('dashboard.admin.reports.feehead', $send);
+    }
+
+    public function FeeGroupList()
+    {
+        $send['feeHeads'] = AcademicFeeHead::get()->where('status', 1);
+        $academicFeeGroups = AcademicFeeGroup::get();
+
+        $academicFeeGroups->each(function ($feeGroup) {
+            $acaFeeheadIds = explode(',', $feeGroup->aca_feehead_id);
+            $acaFeeheadNames = AcademicFeeHead::whereIn('id', $acaFeeheadIds)
+                ->pluck('aca_feehead_name')
+                ->implode(', ');
+            $feeGroup->aca_feehead_id = $acaFeeheadNames;
+        });
+        $send['academicFeeGroups'] = $academicFeeGroups;
+        return view('dashboard.admin.reports.feegroups', $send);
+    }
+
+    public function FeeAmountList()
+    {
+        $academicFeeAmounts = AcademicFeeAmount::orderBy('class_id', 'asc')->with('academicFeeGroup', 'academicFeeHead', 'eduClass')->get();
+        $feeGroups = AcademicFeeGroup::all();
+        $classes = EduClasses::get()->where('class_status', 1);;
+        return view('dashboard.admin.reports.feeamount', compact('academicFeeAmounts', 'feeGroups', 'classes'));
+    }
+
 }

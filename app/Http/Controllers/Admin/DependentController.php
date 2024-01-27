@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin\AcademicFeeGroup;
+use App\Models\Admin\AcademicStudent;
 use App\Models\Admin\EduClasses;
 use App\Models\Admin\Section;
 use App\Models\Admin\Subject;
@@ -20,6 +21,24 @@ class DependentController extends Controller
 
         return response()->json(['classes' => $classes]);
     }
+
+    public function fetchStudentsName(Request $request)
+    {
+        $conditions = [
+            'academic_students.academic_year' => $request->input('academic_year'),
+            'academic_students.version_id' => $request->input('version_id'),
+            'academic_students.class_id' => $request->input('class_id'),
+            'academic_students.section_id' => $request->input('section_id'),
+            'academic_students.st_aca_status' => 1,
+        ];
+
+        $students = AcademicStudent::where($conditions)
+            ->join('students', 'academic_students.std_id', '=', 'students.std_id')
+            ->get(['academic_students.std_id', 'students.std_name']);
+
+        return response()->json(['students' => $students]);
+    }
+
 
     public function getSectionByClass(Request $request)
     {

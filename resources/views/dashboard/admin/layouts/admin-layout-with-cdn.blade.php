@@ -63,7 +63,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img height="13px" src="{{ asset('dashboard/img/' . App::getLocale() . '.png') }}" alt="">
+                        <img height="13px" src="{{ asset('dashboard/img/' . App::getLocale() . '.png') }}"
+                            alt="">
                         {{ Config::get('languages')[App::getLocale()] }}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -165,108 +166,125 @@
                         data-accordion="false">
 
                         <!-- Multilevel Menu -->
-<li class="nav-item has-treeview">
-    <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-chart-bar"></i>
-        <p>
-            {{ __('language.reports') }}
-            <i class="right fas fa-angle-left"></i>
-        </p>
-    </a>
-    <ul class="nav nav-treeview">
-        <!-- Class Reports Heading -->
-        <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-                <i class="far fa-building nav-icon"></i>
-                <p>
-                    {{ __('language.class_reports') }}
-                    <i class="right fas fa-angle-left"></i>
-                </p>
-            </a>
-            <ul class="nav nav-treeview">
-                <!-- Class List Report -->
-                <li class="nav-item">
-                    <a href="{{ route('admin.class-list-report') }}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>{{ __('language.class_list_report') }}</p>
-                    </a>
-                </li>
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-chart-bar"></i>
+                                <p>
+                                    {{ __('language.reports') }}
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <!-- Class Reports Heading -->
+                                <li class="nav-item has-treeview">
+                                    <a href="#" class="nav-link">
+                                        <i class="far fa-building nav-icon"></i>
+                                        <p>
+                                            {{ __('language.class_reports') }}
+                                            <i class="right fas fa-angle-left"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <!-- Class List Report -->
+                                        <li class="nav-item">
+                                            <a href="{{ route('admin.class-list-report') }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>{{ __('language.class_list_report') }}</p>
+                                            </a>
+                                        </li>
 
 
-                <!-- Class Enrollment Report -->
-                <li class="nav-item">
-                    <a href="{{ route('admin.version-wise-enrollment') }}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>{{ __('language.class_enrollment_report') }}</p>
-                    </a>
-                </li>
-                <!-- Version-wise Class Report -->
-                <li class="nav-item">
-                    <a href="{{ route('admin.version-wise-class-list-report') }}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>{{ __('language.version_wise_class_report') }}</p>
-                    </a>
-                </li>
+                                        <!-- Class Enrollment Report -->
+                                        <li class="nav-item">
+                                            <a href="{{ route('admin.version-wise-enrollment') }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>{{ __('language.class_enrollment_report') }}</p>
+                                            </a>
+                                        </li>
+                                        <!-- Version-wise Class Report -->
+                                        <li class="nav-item">
+                                            <a href="{{ route('admin.version-wise-class-list-report') }}"
+                                                class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>{{ __('language.version_wise_class_report') }}</p>
+                                            </a>
+                                        </li>
 
-                <!-- Class Statistics Report -->
-                <li class="nav-item">
-                    <a href="{{ route('admin.class_statistics') }}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>{{ __('language.class_statistics_report') }}</p>
-                    </a>
-                </li>
+                                        <!-- Class Statistics Report -->
+                                        <li class="nav-item">
+                                            <a href="{{ route('admin.class_statistics') }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>{{ __('language.class_statistics_report') }}</p>
+                                            </a>
+                                        </li>
 
-                <li class="nav-item">
-                    <a href="{{ route('admin.class_summery') }}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>{{ __('language.class_summary_report') }}</p>
-                    </a>
-                </li>
-
-
-                <li class="nav-item">
-                    <a href="{{ route('admin.class_student_count') }}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Student Enrollment</p>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="{{ route('admin.subject_list') }}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Class Wise Subject</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.subject_count') }}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Class Wise Total Subject</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.section_wise_teacher') }}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Class Teacher</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.guardian_list') }}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Guardian Information</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.class_attendance') }}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Class Attendance Report</p>
-                    </a>
-                </li>
+                                        <li class="nav-item">
+                                            <a href="{{ route('admin.class_summery') }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>{{ __('language.class_summary_report') }}</p>
+                                            </a>
+                                        </li>
 
 
-            </ul>
-        </li>
-    </ul>
-</li>
+                                        <li class="nav-item">
+                                            <a href="{{ route('admin.class_student_count') }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Student Enrollment</p>
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="{{ route('admin.subject_list') }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Class Wise Subject</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{ route('admin.subject_count') }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Class Wise Total Subject</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{ route('admin.section_wise_teacher') }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Class Teacher</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{ route('admin.guardian_list') }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Guardian Information</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{ route('admin.class_attendance') }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Class Attendance Report</p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item has-treeview">
+                                    <a href="#" class="nav-link">
+                                        <i class="far fa-building nav-icon"></i>
+                                        <p>
+                                            Fee Reports
+                                            <i class="right fas fa-angle-left"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <!-- Class List Report -->
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Fee Frequency List</p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
 
                         <li class="nav-item">
                             <a href="#" class="nav-link">
@@ -339,7 +357,6 @@
                                 </li>
                             </ul>
                         </li>
-
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-graduation-cap"></i>
@@ -381,7 +398,6 @@
                                 </li>
                             </ul>
                         </li>
-
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-file-invoice-dollar"></i>
@@ -392,21 +408,19 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="" class="nav-link">
+                                    <a href="{{ route('admin.collectFee') }}" class="nav-link">
                                         <i class="fas fa-hand-holding-usd nav-icon"></i>
                                         <p>{{ __('language.collect_fee') }}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('admin.bulkadmission') }}" class="nav-link">
+                                    <a href="{{ route('admin.customFeeGen') }}" class="nav-link">
                                         <i class="fas fa-file-upload nav-icon"></i>
                                         <p>{{ __('language.custom_fee_generate') }}</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
-
-
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-clipboard"></i>

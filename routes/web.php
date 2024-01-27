@@ -123,6 +123,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('getFeeFrequencyDetails', [FeeSetupController::class, 'getFeeFrequencyDetails'])->name('getFeeFrequencyDetails');
         Route::post('updateFeeFrequencyDetails', [FeeSetupController::class, 'updateFeeFrequencyDetails'])->name('updateFeeFrequencyDetails');
         Route::post('deleteFeeFrequency', [FeeSetupController::class, 'deleteFeeFrequency'])->name('deleteFeeFrequency');
+        Route::match(['get', 'post'], '/custom-fee-generate', [FeeSetupController::class, 'customFeeGen'])->name('customFeeGen');
 
         // Academic Fee Head Management
         Route::get('academic-fee-head-list', [FeeSetupController::class, 'academicFeeHeadList'])->name('academic-fee-head-list');
@@ -204,6 +205,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/get-sections-by-class', [DependentController::class, 'getSectionByClass'])->name('getSectionByClass');
         Route::post('/getSubjectsByClass', [DependentController::class, 'getSubjectsByClass'])->name('getSubjectsByClass');
         Route::post('/get-feegroup-by-ay', [DependentController::class, 'getFeegroupByAcademicYear'])->name('getFeegroupByAcademicYear');
+        Route::post('/fetch-students-name', [DependentController::class, 'fetchStudentsName'])->name('fetchStudentsName');
 
 
         // View to display the form for creating a new class routine
@@ -258,6 +260,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::match(['get', 'post'], '/section-wise-teacher', [ReportController::class, 'section_wise_teacher'])->name('section_wise_teacher');
         Route::match(['get', 'post'], '/students-information', [ReportController::class, 'guardian_list'])->name('guardian_list');
         Route::match(['get', 'post'], '/class-wise-attendance', [ReportController::class, 'class_attendance'])->name('class_attendance');
+        Route::get('fee-frequency-lists', [ReportController::class, 'FrequencyList'])->name('FrequencyList');
+        Route::get('academic-fee-head-lists', [ReportController::class, 'FeeHeadList'])->name('FeeHeadList');
+        Route::get('academic-fee-group-lists', [ReportController::class, 'FeeGroupList'])->name('FeeGroupList');
+        Route::get('academic-fee-amount-lists', [ReportController::class, 'FeeAmountList'])->name('FeeAmountList');
+
+
+
+
         Route::post('/generate-pdf', [ReportController::class, 'generatePdf'])->name('generate-pdf');
 
 
