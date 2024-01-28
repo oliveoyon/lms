@@ -528,8 +528,8 @@ class ReportController extends Controller
                 $feeGroup->aca_feehead_id = $acaFeeheadNames;
             });
             $classes = $academicFeeGroups;
-           
-            
+
+
             // dd($classes);
             return response()->json(['classes' => $classes]);
         }
@@ -549,13 +549,13 @@ class ReportController extends Controller
 
 
             $whr = [
-                'academic_year' => $academicYear,
-                'class_id' => $classId,
-                'section_id' => $sectionId,
-                'version_id' => $vserionId,
+                'academic_students.academic_year' => $academicYear,
+                'academic_students.class_id' => $classId,
+                'academic_students.section_id' => $sectionId,
+                'academic_students.version_id' => $vserionId,
             ];
             $whr = array_filter($whr);
-            
+
 
 
             $classes = DB::table('academic_students')
@@ -566,7 +566,7 @@ class ReportController extends Controller
             ->join('sections', 'academic_students.section_id', '=', 'sections.id')
             ->join('edu_versions', 'academic_students.version_id', '=', 'edu_versions.id')
             ->where($whr)
-            
+
             ->where('fee_collections.is_paid', '=', false)
             ->whereRaw("MONTH(fee_collections.due_date) <= ?", [$currentMonth]) // Compare with current month
             ->select(
@@ -580,8 +580,8 @@ class ReportController extends Controller
             )
             ->groupBy('academic_students.academic_year', 'academic_students.std_id', 'students.std_name', 'edu_classes.class_name', 'sections.section_name', 'edu_versions.version_name')
             ->get();
-           
-            
+
+
             // dd($classes);
             return response()->json(['classes' => $classes]);
         }

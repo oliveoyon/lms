@@ -108,7 +108,7 @@
                 method: 'POST',
                 data: {
                     pdf_data: data,
-                    title: 'value1',
+                    title: 'Class List',
                     orientation: 'P',
                 },
                 headers: {

@@ -20,14 +20,23 @@
         }
 
         .photo {
-            float: left;
-            margin-right: 20px;
-            width: 20%;
-        }
+    float: left;
+    width: 15%;
+}
 
-        .school_info {
-            float: left;
-        }
+.school_info {
+    float: left;
+    text-align: center;
+    width: 70%;
+}
+
+.right {
+    float: right;
+    width: 15%;
+    text-align: right;
+    padding-top: -90px; /* Adjust as needed to vertically align the barcode with the logo */
+}
+
 
         h1,
         h2 {
@@ -38,15 +47,12 @@
             margin: 5px 0;
         }
 
-        .info-column {
-            float: left;
-            margin-bottom: 20px;
-            margin-right: 0;
-            /* No margin between the columns */
+        h1{
+            font-size: 22px;
         }
 
-        .left {
-            width: 60%;
+        h2{
+            font-size: 20px;
         }
 
 
@@ -88,16 +94,25 @@
 
 <body>
     <div class="container">
+        @php
+            $gs = \App\Models\Admin\GeneralSetting::find(1);
+        @endphp
         <!--mpdf
         <htmlpageheader name="myheader">
             <div class="header">
                 <div class="photo">
-                    <img src="{{ public_path('storage/img/logo/logo.png') }}" alt="School Logo">
+                    <img src="{{ public_path('storage/img/logo/'.$gs->school_logo) }}" alt="School Logo">
                 </div>
                 <div class="school_info">
-                    <h1>Shalikha Thana High School</h1>
-                    <p>Hajrahati, Shalikha, Magura, Phone: 123-456-7890</p>
-                    <p>Email: shalikhaschool@gmail.com, Web: https://shalikhaschool.edu.bd/</p>
+                    <h1>{{$gs->school_title}}</h1>
+                    <p>{{$gs->school_address}}, Phone: {{$gs->school_phone}}, {{$gs->school_phone1}}</p>
+                    <p>Email: {{$gs->school_email}}, Web: https://shalikhaschool.edu.bd/</p>
+                </div>
+                <div class="right">
+                    <?php
+                        // $barcodeImage = 'data:image/png;base64,' . DNS2D::getBarcodePNG('https://shalikhaschool.edu.bd/', 'QRCODE');
+                        // echo '<img width="80%"  src="' . $barcodeImage . '" alt="barcode"  />';
+                    ?>
                 </div>
             </div>
         </htmlpageheader>
