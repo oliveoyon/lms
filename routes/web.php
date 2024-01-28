@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('tests', [TestController::class, 'test4']);
+Route::get('tests', [TestController::class, 'test5']);
 
 Route::get('/', function () {
     return view('dashboard.admin.login1');
@@ -262,8 +262,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::match(['get', 'post'], '/class-wise-attendance', [ReportController::class, 'class_attendance'])->name('class_attendance');
         Route::get('fee-frequency-lists', [ReportController::class, 'FrequencyList'])->name('FrequencyList');
         Route::get('academic-fee-head-lists', [ReportController::class, 'FeeHeadList'])->name('FeeHeadList');
-        Route::get('academic-fee-group-lists', [ReportController::class, 'FeeGroupList'])->name('FeeGroupList');
+        Route::match(['get', 'post'], '/academic-fee-group-lists', [ReportController::class, 'FeeGroupList'])->name('FeeGroupList');
         Route::get('academic-fee-amount-lists', [ReportController::class, 'FeeAmountList'])->name('FeeAmountList');
+        Route::match(['get', 'post'], '/due-fee-list', [ReportController::class, 'dueFeeList'])->name('dueFeeList');
 
 
 

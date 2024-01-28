@@ -68,7 +68,6 @@
                                             <th>{{ __('language.amount') }}</th>
                                             <th>{{ __('language.class_name') }}</th>
                                             <th>{{ __('language.academic_year') }}</th>
-                                            <th>{{ __('language.status') }}</th>
                                         </thead>
                                         <tbody>
                                             @if (count($academicFeeAmounts) > 0)
@@ -122,7 +121,6 @@
                                                         <td>{{ $class->class_name . ' - ' . $class->version->version_name }}
                                                         </td>
                                                         <td>{{ $academicYear }}</td>
-                                                        <td></td>
                                                         <!-- You may leave this column empty or display some other data if needed -->
 
                                                     </tr>

@@ -85,7 +85,7 @@ class TestController extends Controller
     public function test3()
     {
         $currentDate = now();
-        $totalDuesByStudent = DB::table('students')
+        $totalDuesByStudent = DB::table('students')->where('students.std_id', 24001)
             ->select(
                 'students.std_id',
                 'students.std_name',
@@ -131,9 +131,9 @@ class TestController extends Controller
             ->join('edu_classes', 'students.class_id', '=', 'edu_classes.id')
             ->where('fee_payments.trnx_id', $trnxId)
             ->get();
-            $totalword = $send['payments']->sum('amount_paid');
-            $numberService = new DependentController();
-            $send['words'] = $numberService->numberToWords($totalword);
+        $totalword = $send['payments']->sum('amount_paid');
+        $numberService = new DependentController();
+        $send['words'] = $numberService->numberToWords($totalword);
 
 
         $is_pos = true;
@@ -145,14 +145,14 @@ class TestController extends Controller
             'width' => 80
         ];
 
-        if($is_pos){
+        if ($is_pos) {
             return view('dashboard.admin.feeCollection.fee_invoice_pos', $send);
-        }else{
+        } else {
 
             // $cr80Width = 80; //80 Width in millimeters
             $mpdf = new Mpdf([
                 'mode' => 'utf-8',
-                'format' => [190,236], //it will come from database
+                'format' => [190, 236], //it will come from database
                 // 'width' => 80,
                 // 'margin_left' => 5,
                 // 'margin_right' => 5,
@@ -169,8 +169,43 @@ class TestController extends Controller
             $html = view($bladeViewPath, $send)->render();
             $mpdf->WriteHTML($html);
             return $mpdf->Output('invoice.pdf', 'I');
-
         }
+    }
 
+    public function test5()
+    {
+
+        $academicYear = '2024';
+        $classId = 1;
+        $sectionId = 1;
+        $vserionId = 1;
+        $currentMonth = now()->format('m'); // Get the current month
+
+        $dueReports = DB::table('academic_students')
+            ->leftJoin('fee_collections', 'academic_students.std_id', '=', 'fee_collections.std_id')
+            ->leftJoin('fee_payments', 'fee_collections.id', '=', 'fee_payments.fee_collection_id')
+            ->join('students', 'academic_students.std_id', '=', 'students.std_id')
+            ->join('edu_classes', 'academic_students.class_id', '=', 'edu_classes.id')
+            ->join('sections', 'academic_students.section_id', '=', 'sections.id')
+            ->join('edu_versions', 'academic_students.version_id', '=', 'edu_versions.id')
+            ->where('academic_students.academic_year', '=', $academicYear)
+            ->where('academic_students.class_id', '=', $classId)
+            ->where('academic_students.section_id', '=', $sectionId)
+            ->where('academic_students.version_id', '=', $vserionId)
+            ->where('fee_collections.is_paid', '=', false)
+            ->whereRaw("MONTH(fee_collections.due_date) <= ?", [$currentMonth]) // Compare with current month
+            ->select(
+                'academic_students.academic_year',
+                'academic_students.std_id',
+                'students.std_name',
+                'edu_classes.class_name',
+                'sections.section_name',
+                'edu_versions.version_name',
+                DB::raw('SUM(fee_collections.payable_amount) - COALESCE(SUM(fee_payments.amount_paid), 0) as total_due')
+            )
+            ->groupBy('academic_students.academic_year', 'academic_students.std_id', 'students.std_name', 'edu_classes.class_name', 'sections.section_name', 'edu_versions.version_name')
+            ->get();
+
+        dd($dueReports);
     }
 }

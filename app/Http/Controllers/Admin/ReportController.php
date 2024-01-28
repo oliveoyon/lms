@@ -470,7 +470,7 @@ class ReportController extends Controller
             ->orderBy('sections.section_name', 'asc')
             ->orderBy('attendances.attendance_date', 'asc')
             ->get();
-            dd($classes);
+            // dd($classes);
             return response()->json(['classes' => $classes]);
         }
 
@@ -495,27 +495,108 @@ class ReportController extends Controller
         return view('dashboard.admin.reports.feehead', $send);
     }
 
-    public function FeeGroupList()
-    {
-        $send['feeHeads'] = AcademicFeeHead::get()->where('status', 1);
-        $academicFeeGroups = AcademicFeeGroup::get();
+    // public function FeeGroupList()
+    // {
+    //     $send['feeHeads'] = AcademicFeeHead::get()->where('status', 1);
+    //     $academicFeeGroups = AcademicFeeGroup::get();
 
-        $academicFeeGroups->each(function ($feeGroup) {
-            $acaFeeheadIds = explode(',', $feeGroup->aca_feehead_id);
-            $acaFeeheadNames = AcademicFeeHead::whereIn('id', $acaFeeheadIds)
-                ->pluck('aca_feehead_name')
-                ->implode(', ');
-            $feeGroup->aca_feehead_id = $acaFeeheadNames;
-        });
-        $send['academicFeeGroups'] = $academicFeeGroups;
-        return view('dashboard.admin.reports.feegroups', $send);
+    //     $academicFeeGroups->each(function ($feeGroup) {
+    //         $acaFeeheadIds = explode(',', $feeGroup->aca_feehead_id);
+    //         $acaFeeheadNames = AcademicFeeHead::whereIn('id', $acaFeeheadIds)
+    //             ->pluck('aca_feehead_name')
+    //             ->implode(', ');
+    //         $feeGroup->aca_feehead_id = $acaFeeheadNames;
+    //     });
+    //     $send['academicFeeGroups'] = $academicFeeGroups;
+    //     return view('dashboard.admin.reports.feegroups', $send);
+    // }
+
+    public function FeeGroupList(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            $academicYear = request('academic_year');
+            $whr = [
+                'academic_year' => $academicYear,
+            ];
+            $whr = array_filter($whr);
+            $academicFeeGroups = AcademicFeeGroup::where($whr)->get();
+            $academicFeeGroups->each(function ($feeGroup) {
+                $acaFeeheadIds = explode(',', $feeGroup->aca_feehead_id);
+                $acaFeeheadNames = AcademicFeeHead::whereIn('id', $acaFeeheadIds)
+                    ->pluck('aca_feehead_name')
+                    ->implode(', ');
+                $feeGroup->aca_feehead_id = $acaFeeheadNames;
+            });
+            $classes = $academicFeeGroups;
+           
+            
+            // dd($classes);
+            return response()->json(['classes' => $classes]);
+        }
+
+        $versions = EduVersions::get()->where('version_status', 1);
+        return view('dashboard.admin.reports.feegroup', compact('versions'));
+    }
+
+    public function dueFeeList(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            $academicYear = request('academic_year');
+            $classId = request('class_id');
+            $sectionId = request('section_id');
+            $vserionId = request('version_id');
+            $currentMonth = now()->format('m'); // Get the current month
+
+
+            $whr = [
+                'academic_year' => $academicYear,
+                'class_id' => $classId,
+                'section_id' => $sectionId,
+                'version_id' => $vserionId,
+            ];
+            $whr = array_filter($whr);
+            
+
+
+            $classes = DB::table('academic_students')
+            ->leftJoin('fee_collections', 'academic_students.std_id', '=', 'fee_collections.std_id')
+            ->leftJoin('fee_payments', 'fee_collections.id', '=', 'fee_payments.fee_collection_id')
+            ->join('students', 'academic_students.std_id', '=', 'students.std_id')
+            ->join('edu_classes', 'academic_students.class_id', '=', 'edu_classes.id')
+            ->join('sections', 'academic_students.section_id', '=', 'sections.id')
+            ->join('edu_versions', 'academic_students.version_id', '=', 'edu_versions.id')
+            ->where($whr)
+            
+            ->where('fee_collections.is_paid', '=', false)
+            ->whereRaw("MONTH(fee_collections.due_date) <= ?", [$currentMonth]) // Compare with current month
+            ->select(
+                'academic_students.academic_year',
+                'academic_students.std_id',
+                'students.std_name',
+                'edu_classes.class_name',
+                'sections.section_name',
+                'edu_versions.version_name',
+                DB::raw('SUM(fee_collections.payable_amount) - COALESCE(SUM(fee_payments.amount_paid), 0) as total_due')
+            )
+            ->groupBy('academic_students.academic_year', 'academic_students.std_id', 'students.std_name', 'edu_classes.class_name', 'sections.section_name', 'edu_versions.version_name')
+            ->get();
+           
+            
+            // dd($classes);
+            return response()->json(['classes' => $classes]);
+        }
+
+        $versions = EduVersions::get()->where('version_status', 1);
+        return view('dashboard.admin.reports.dueList', compact('versions'));
     }
 
     public function FeeAmountList()
     {
-        $academicFeeAmounts = AcademicFeeAmount::orderBy('class_id', 'asc')->with('academicFeeGroup', 'academicFeeHead', 'eduClass')->get();
+        $academicFeeAmounts = AcademicFeeAmount::orderBy('class_id', 'asc')->with('academicFeeGroup', 'academicFeeHead', 'eduClass')
+        // ->Where('academic_year', 2024)
+        ->get();
         $feeGroups = AcademicFeeGroup::all();
-        $classes = EduClasses::get()->where('class_status', 1);;
+        $classes = EduClasses::get()->where('class_status', 1);
         return view('dashboard.admin.reports.feeamount', compact('academicFeeAmounts', 'feeGroups', 'classes'));
     }
 

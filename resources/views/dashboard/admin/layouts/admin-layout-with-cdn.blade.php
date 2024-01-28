@@ -276,9 +276,27 @@
                                     <ul class="nav nav-treeview">
                                         <!-- Class List Report -->
                                         <li class="nav-item">
-                                            <a href="#" class="nav-link">
+                                            <a href="{{ route('admin.FrequencyList') }}" class="nav-link">
                                                 <i class="far fa-circle nav-icon"></i>
                                                 <p>Fee Frequency List</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{ route('admin.FeeHeadList') }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Fee Head List</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{ route('admin.FeeGroupList') }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Fee Group List</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{ route('admin.FeeAmountList') }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Fee Amount List</p>
                                             </a>
                                         </li>
                                     </ul>

@@ -342,5 +342,6 @@ return [
     "class_status_change_report" => "Class Status Change Report",
     "class_hash_id_usage_report" => "Class Hash ID Usage Report",
     "class_summary_report" => "Class Summary Report",
+    "total_due" => "Total Due",
 
 ];
