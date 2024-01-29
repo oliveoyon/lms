@@ -343,5 +343,6 @@ return [
     "class_status_change_report" => "ক্লাস স্থিতি পরিবর্তন রিপোর্ট",
     "class_hash_id_usage_report" => "ক্লাস হ্যাশ আইডি ব্যবহার রিপোর্ট",
     "class_summary_report" => "ক্লাস সংক্ষেপ রিপোর্ট",
+    "total_due" => "সর্বমোট",
 
 ];
