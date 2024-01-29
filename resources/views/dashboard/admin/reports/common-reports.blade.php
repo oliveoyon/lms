@@ -120,9 +120,6 @@
         <sethtmlpageheader name="myheader" value="on" show-this-page="1" />
         mpdf-->
 
-
-
-
         <h2 style="text-align: center; margin-top: 0px; padding-top: 0px;">{!! $title !!}</h2>
 
         <div style="clear: both;"></div> <!-- Clear the float -->
