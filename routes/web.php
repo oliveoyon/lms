@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('tests', [TestController::class, 'test5']);
+Route::get('tests', [TestController::class, 'test']);
 
 Route::get('/', function () {
     return view('dashboard.admin.login1');

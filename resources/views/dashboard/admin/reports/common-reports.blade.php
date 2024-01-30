@@ -20,22 +20,23 @@
         }
 
         .photo {
-    float: left;
-    width: 15%;
-}
+            float: left;
+            width: 15%;
+        }
 
-.school_info {
-    float: left;
-    text-align: center;
-    width: 70%;
-}
+        .school_info {
+            float: left;
+            text-align: center;
+            width: 70%;
+        }
 
-.right {
-    float: right;
-    width: 15%;
-    text-align: right;
-    padding-top: -90px; /* Adjust as needed to vertically align the barcode with the logo */
-}
+        .right {
+            float: right;
+            width: 15%;
+            text-align: right;
+            padding-top: -90px;
+            /* Adjust as needed to vertically align the barcode with the logo */
+        }
 
 
         h1,
@@ -47,11 +48,11 @@
             margin: 5px 0;
         }
 
-        h1{
+        h1 {
             font-size: 22px;
         }
 
-        h2{
+        h2 {
             font-size: 20px;
         }
 
@@ -95,7 +96,7 @@
 <body>
     <div class="container">
         @php
-            $gs = \App\Models\Admin\GeneralSetting::find(1);
+        $gs = \App\Models\Admin\GeneralSetting::find(1);
         @endphp
         <!--mpdf
         <htmlpageheader name="myheader">
@@ -110,8 +111,8 @@
                 </div>
                 <div class="right">
                     <?php
-                        // $barcodeImage = 'data:image/png;base64,' . DNS2D::getBarcodePNG('https://shalikhaschool.edu.bd/', 'QRCODE');
-                        // echo '<img width="80%"  src="' . $barcodeImage . '" alt="barcode"  />';
+                    $barcodeImage = 'data:image/png;base64,' . DNS2D::getBarcodePNG('https://shalikhaschool.edu.bd/', 'QRCODE');
+                    echo '<img width="80%"  src="' . $barcodeImage . '" alt="barcode"  />';
                     ?>
                 </div>
             </div>
@@ -119,6 +120,9 @@
 
         <sethtmlpageheader name="myheader" value="on" show-this-page="1" />
         mpdf-->
+
+
+
 
         <h2 style="text-align: center; margin-top: 0px; padding-top: 0px;">{!! $title !!}</h2>
 
