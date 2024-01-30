@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('inv_categories', function (Blueprint $table) {
+        Schema::create('units', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->string('category_hash_id');
-            $table->string('category_name', 200);
-            $table->integer('status');
+            $table->string('unit_hash_id');
+            $table->string('unit_name', 100);
+            $table->integer('unit_status');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('inv_categories');
+        Schema::dropIfExists('units');
     }
 };

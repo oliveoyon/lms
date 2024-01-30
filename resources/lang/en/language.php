@@ -344,4 +344,27 @@ return [
     "class_summary_report" => "Class Summary Report",
     "total_due" => "Total Due",
 
+    "category_list" => "Category List",
+    "category_add" => "Add a Category",
+    "category_edit" => "Modify a Category",
+    "category_name" => "Category Name",
+    "category_add_msg" => "Category added successfully!",
+    "category_edit_msg" => "Category updated successfully!",
+
+    "unit_list" => "Unit List",
+    "unit_add" => "Add a Unit",
+    "unit_name" => "Unit Name",
+    "unit_add_msg" => "Unit added successfully!",
+    "unit_edit_msg" => "Unit updated successfully!",
+    "unit_edit" => "Edit Unit",
+    "unit_del_msg" => "Unit deleted successfully!",
+    "category_del_msg" => "Category deleted successfully!",
+    "store_list" => "Store List",
+    "store_add" => "Add a Store",
+    "store_name" => "Store Name",
+    "store_add_msg" => "Store added successfully!",
+    "store_edit_msg" => "Store updated successfully!",
+    "store_edit" => "Edit Store",
+    "store_del_msg" => "Store deleted successfully!",
+
 ];

@@ -8,11 +8,13 @@ use App\Http\Controllers\Admin\DependentController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\FeeCollectionController;
 use App\Http\Controllers\Admin\FeeSetupController;
+use App\Http\Controllers\Admin\InvCategoryController;
 use App\Http\Controllers\Admin\LibraryController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\StudentManagement;
 use App\Http\Controllers\Admin\TeacherController;
+use App\Http\Controllers\Admin\UnitController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\User\UserController;
@@ -244,6 +246,27 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/generate-bill', [FeeCollectionController::class, 'generateBill'])->name('generateBill');
         Route::post('/fetchColletcData', [FeeCollectionController::class, 'fetchColletcData'])->name('fetchColletcData');
         Route::post('/collectBill', [FeeCollectionController::class, 'collectBill'])->name('collectBill');
+
+        //Inventory Management
+        Route::get('category-list', [InvCategoryController::class, 'categorylist'])->name('category-list');
+        Route::post('addCategory', [InvCategoryController::class, 'addCategory'])->name('addCategory');
+        Route::post('getCategoryDetails', [InvCategoryController::class, 'getCategoryDetails'])->name('getCategoryDetails');
+        Route::post('updateCategoryDetails', [InvCategoryController::class, 'updateCategoryDetails'])->name('updateCategoryDetails');
+        Route::post('deleteCategory', [InvCategoryController::class, 'deleteCategory'])->name('deleteCategory');
+
+        // Unit Management
+        Route::get('unit-list', [UnitController::class, 'unitlist'])->name('unit-list');
+        Route::post('addUnit', [UnitController::class, 'addUnit'])->name('addUnit');
+        Route::post('getUnitDetails', [UnitController::class, 'getUnitDetails'])->name('getUnitDetails');
+        Route::post('updateUnitDetails', [UnitController::class, 'updateUnitDetails'])->name('updateUnitDetails');
+        Route::post('deleteUnit', [UnitController::class, 'deleteUnit'])->name('deleteUnit');
+
+        // Store Management
+        Route::get('store-list', [UnitController::class, 'storelist'])->name('store-list');
+        Route::post('addStore', [UnitController::class, 'addStore'])->name('addStore');
+        Route::post('getStoreDetails', [UnitController::class, 'getStoreDetails'])->name('getStoreDetails');
+        Route::post('updateStoreDetails', [UnitController::class, 'updateStoreDetails'])->name('updateStoreDetails');
+        Route::post('deleteStore', [UnitController::class, 'deleteStore'])->name('deleteStore');
 
         // Reports
         Route::get('class-list-report', [ReportController::class, 'classlist_report'])->name('class-list-report');
