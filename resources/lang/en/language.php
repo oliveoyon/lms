@@ -367,4 +367,16 @@ return [
     "store_edit" => "Edit Store",
     "store_del_msg" => "Store deleted successfully!",
 
+    "supplier_list" => "Supplier List",
+    "supplier" => "Supplier",
+    "supplier_add" => "Add Supplier",
+    "supplier_edit" => "Edit Supplier",
+    "supplier_name" => "Supplier Name",
+    "supplier_address" => "Supplier Address",
+    "supplier_phone" => "Supplier Phone",
+    "supplier_email" => "Supplier Email",
+    "supplier_add_msg" => "Supplier added successfully!",
+    "supplier_edit_msg" => "Supplier updated successfully!",
+    "supplier_delete_msg" => "Supplier deleted successfully!",
+
 ];

@@ -268,6 +268,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('updateStoreDetails', [UnitController::class, 'updateStoreDetails'])->name('updateStoreDetails');
         Route::post('deleteStore', [UnitController::class, 'deleteStore'])->name('deleteStore');
 
+        // Supplier Management
+        Route::get('supplier-list', [UnitController::class, 'supplierlist'])->name('supplier-list');
+        Route::post('addSupplier', [UnitController::class, 'addSupplier'])->name('addSupplier');
+        Route::post('getSupplierDetails', [UnitController::class, 'getSupplierDetails'])->name('getSupplierDetails');
+        Route::post('updateSupplierDetails', [UnitController::class, 'updateSupplierDetails'])->name('updateSupplierDetails');
+        Route::post('deleteSupplier', [UnitController::class, 'deleteSupplier'])->name('deleteSupplier');
+
         // Reports
         Route::get('class-list-report', [ReportController::class, 'classlist_report'])->name('class-list-report');
         Route::get('version-wise-class-list-report', [ReportController::class, 'version_classlist_report'])->name('version-wise-class-list-report');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Store;
+use App\Models\Admin\Supplier;
 use App\Models\Admin\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -161,6 +162,96 @@ class UnitController extends Controller
 
         if ($query) {
             return response()->json(['code' => 1, 'msg' => __('language.store_del_msg') , 'redirect' => 'admin/store-list']);
+        } else {
+            return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
+        }
+    }
+
+    public function supplierlist()
+    {
+        $send['suppliers'] = Supplier::get();
+        return view('dashboard.admin.inventory.supplier', $send);
+    }
+
+    public function addSupplier(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'supplier_name' => 'required|string|max:255',
+            'supplier_address' => 'required|string|max:255',
+            'supplier_phone' => 'required|regex:/^[0-9]{11}$/|unique:suppliers', 
+            'supplier_email' => 'nullable|email|max:255',
+            'supplier_status' => 'required|integer',
+        ]);
+
+        if (!$validator->passes()) {
+            return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
+        } else {
+            $supplier = new Supplier();
+            $supplier->supplier_hash_id = md5(uniqid(rand(), true));
+            $supplier->supplier_name = $request->input('supplier_name');
+            $supplier->supplier_address = $request->input('supplier_address');
+            $supplier->supplier_email = $request->input('supplier_email');
+            $supplier->supplier_phone = $request->input('supplier_phone');
+            $supplier->supplier_status = $request->input('supplier_status');
+            $query = $supplier->save();
+
+            if (!$query) {
+                return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
+            } else {
+                return response()->json(['code' => 1, 'msg' => __('language.supplier_add_msg') , 'redirect'=> 'admin/supplier-list']);
+            }
+        }
+    }
+
+    public function getSupplierDetails(Request $request)
+    {
+        $supplier_id = $request->supplier_id;
+        $supplierDetails = Supplier::find($supplier_id);
+        return response()->json(['details' => $supplierDetails]);
+    }
+
+    //UPDATE Category DETAILS
+    public function updateSupplierDetails(Request $request)
+    {
+        $supplier_id = $request->supplier_id;
+        $supplier = Supplier::find($supplier_id);
+
+        $validator = Validator::make($request->all(), [
+            'supplier_name' => 'required|string|max:255|unique:suppliers,supplier_name,' . $supplier->id,
+    'supplier_address' => 'required|string|max:255',
+    'supplier_phone' => 'required|regex:/^[0-9]{11}$/|unique:suppliers,supplier_phone,' . $supplier->id,
+    'supplier_email' => 'nullable|email|max:255',
+    'supplier_status' => 'required|integer',
+        ]);
+
+        if (!$validator->passes()) {
+            return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
+        } else {
+
+            $supplier->supplier_name = $request->input('supplier_name');
+            $supplier->supplier_address = $request->input('supplier_address');
+            $supplier->supplier_email = $request->input('supplier_email');
+            $supplier->supplier_phone = $request->input('supplier_phone');
+            $supplier->supplier_status = $request->input('supplier_status');
+            $query = $supplier->save();
+
+            if (!$query) {
+                return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
+            } else {
+                return response()->json(['code' => 1, 'msg' => __('language.supplier_edit_msg') , 'redirect'=> 'admin/supplier-list']);
+            }
+        }
+    }
+
+    public function deleteSupplier(Request $request)
+    {
+        $supplier_id = $request->supplier_id;
+        $query = Supplier::find($supplier_id);
+        $query = $query->delete();
+
+
+        if ($query) {
+            return response()->json(['code' => 1, 'msg' => __('language.supplier_del_msg') , 'redirect' => 'admin/supplier-list']);
         } else {
             return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
         }

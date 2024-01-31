@@ -368,4 +368,16 @@ return [
     "store_edit" => "স্টোর সম্পাদনা করুন",
     "store_del_msg" => "স্টোর সফলভাবে মোছা হয়েছে!",
 
+    "supplier_list" => "সরবরাহকারী তালিকা",
+    "supplier" => "সরবরাহকারী",
+    "supplier_add" => "সরবরাহকারী যোগ করুন",
+    "supplier_edit" => "সরবরাহকারী সম্পাদনা করুন",
+    "supplier_name" => "সরবরাহকারীর নাম",
+    "supplier_address" => "সরবরাহকারীর ঠিকানা",
+    "supplier_phone" => "সরবরাহকারীর ফোন",
+    "supplier_email" => "সরবরাহকারীর ইমেইল",
+    "supplier_add_msg" => "সরবরাহকারী সফলভাবে যোগ করা হয়েছে!",
+    "supplier_edit_msg" => "সরবরাহকারী সফলভাবে আপডেট হয়েছে!",
+    "supplier_delete_msg" => "সরবরাহকারী সফলভাবে মোছা হয়েছে!",
+
 ];
