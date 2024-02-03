@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\StudentManagement;
 use App\Http\Controllers\Admin\TeacherController;
+use App\Http\Controllers\Admin\TransportController;
 use App\Http\Controllers\Admin\UnitController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\TestController;
@@ -267,6 +268,36 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('getStoreDetails', [UnitController::class, 'getStoreDetails'])->name('getStoreDetails');
         Route::post('updateStoreDetails', [UnitController::class, 'updateStoreDetails'])->name('updateStoreDetails');
         Route::post('deleteStore', [UnitController::class, 'deleteStore'])->name('deleteStore');
+
+        // Transport Management
+
+        // Stopage Management
+        Route::get('stopage-list', [TransportController::class, 'stopagelist'])->name('stopage-list');
+        Route::post('addStopage', [TransportController::class, 'addStopage'])->name('addStopage');
+        Route::post('getStopageDetails', [TransportController::class, 'getStopageDetails'])->name('getStopageDetails');
+        Route::post('updateStopageDetails', [TransportController::class, 'updateStopageDetails'])->name('updateStopageDetails');
+        Route::post('deleteStopage', [TransportController::class, 'deleteStopage'])->name('deleteStopage');
+
+        Route::get('vehicletype-list', [TransportController::class, 'vehicletypelist'])->name('vehicletype-list');
+        Route::post('addVehicletype', [TransportController::class, 'addVehicletype'])->name('addVehicletype');
+        Route::post('getVehicletypeDetails', [TransportController::class, 'getVehicletypeDetails'])->name('getVehicletypeDetails');
+        Route::post('updateVehicletypeDetails', [TransportController::class, 'updateVehicletypeDetails'])->name('updateVehicletypeDetails');
+        Route::post('deleteVehicletype', [TransportController::class, 'deleteVehicletype'])->name('deleteVehicletype');
+
+        // Vehicle Management
+        Route::get('vehicle-list', [TransportController::class, 'vehiclelist'])->name('vehicle-list');
+        Route::post('addVehicle', [TransportController::class, 'addVehicle'])->name('addVehicle');
+        Route::post('getVehicleDetails', [TransportController::class, 'getVehicleDetails'])->name('getVehicleDetails');
+        Route::post('updateVehicleDetails', [TransportController::class, 'updateVehicleDetails'])->name('updateVehicleDetails');
+        Route::post('deleteVehicle', [TransportController::class, 'deleteVehicle'])->name('deleteVehicle');
+
+        // Route Management
+        Route::get('route-list', [TransportController::class, 'routelist'])->name('route-list');
+        Route::post('addRoute', [TransportController::class, 'addRoute'])->name('addRoute');
+        Route::post('getRouteDetails', [TransportController::class, 'getRouteDetails'])->name('getRouteDetails');
+        Route::post('updateRouteDetails', [TransportController::class, 'updateRouteDetails'])->name('updateRouteDetails');
+        Route::post('deleteRoute', [TransportController::class, 'deleteRoute'])->name('deleteRoute');
+
 
         // Reports
         Route::get('class-list-report', [ReportController::class, 'classlist_report'])->name('class-list-report');

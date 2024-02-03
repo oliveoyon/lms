@@ -638,6 +638,12 @@
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
+                                        <i class="fas fa-car-alt nav-icon"></i>
+                                        <p>{{ __('language.vehicle_types') }}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
                                         <i class="fas fa-bus nav-icon"></i>
                                         <p>{{ __('language.vehicles_lists') }}</p>
                                     </a>
@@ -654,8 +660,24 @@
                                         <p>{{ __('language.assign_students') }}</p>
                                     </a>
                                 </li>
+                                <!-- Add the new items below -->
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="fas fa-clipboard nav-icon"></i>
+                                        <p>{{ __('language.transport_fee_heads') }}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="fas fa-money-check-alt nav-icon"></i>
+                                        <p>{{ __('language.transport_fee_amounts') }}</p>
+                                    </a>
+                                </li>
+
+                                <!-- End of new items -->
                             </ul>
                         </li>
+
 
                         <li class="nav-item">
                             <a href="#" class="nav-link">
