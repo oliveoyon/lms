@@ -371,6 +371,7 @@ return [
     "store_edit" => "স্টোর সম্পাদনা করুন",
     "store_del_msg" => "স্টোর সফলভাবে মোছা হয়েছে!",
 
+<<<<<<< HEAD
     "stopage_mgmt" => "স্টোপেজ ম্যানেজমেন্ট",
     "stopage_add" => "স্টোপেজ যোগ করুন",
     "stopage_list" => "স্টোপেজ তালিকা",
@@ -393,5 +394,18 @@ return [
     "vehicle_reg_no" => "যানবাহনের রেজিস্ট্রেশন নম্বর",
     "vehicle_add" => "যানবাহন যোগ করুন",
     "vehicle_edit" => "যানবাহন সম্পাদনা করুন"
+=======
+    "supplier_list" => "সরবরাহকারী তালিকা",
+    "supplier" => "সরবরাহকারী",
+    "supplier_add" => "সরবরাহকারী যোগ করুন",
+    "supplier_edit" => "সরবরাহকারী সম্পাদনা করুন",
+    "supplier_name" => "সরবরাহকারীর নাম",
+    "supplier_address" => "সরবরাহকারীর ঠিকানা",
+    "supplier_phone" => "সরবরাহকারীর ফোন",
+    "supplier_email" => "সরবরাহকারীর ইমেইল",
+    "supplier_add_msg" => "সরবরাহকারী সফলভাবে যোগ করা হয়েছে!",
+    "supplier_edit_msg" => "সরবরাহকারী সফলভাবে আপডেট হয়েছে!",
+    "supplier_delete_msg" => "সরবরাহকারী সফলভাবে মোছা হয়েছে!",
+>>>>>>> c821e4cfdbd7ef362949c2ed4a411e6cb483a6fe
 
 ];
