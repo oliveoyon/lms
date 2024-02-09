@@ -371,7 +371,7 @@ return [
     "store_edit" => "Edit Store",
     "store_del_msg" => "Store deleted successfully!",
 
-<<<<<<< HEAD
+
     "stopage_mgmt" => "Stopage Management",
     "stopage_add" => "Add Stopage",
     "stopage_list" => "Stopage List",
@@ -393,8 +393,8 @@ return [
     "vehicle_no" => "Vehicle Number",
     "vehicle_reg_no" => "Vehicle Registration Number",
     "vehicle_add" => "Add Vehicle",
-    "vehicle_edit" => "Edit Vehicle"
-=======
+    "vehicle_edit" => "Edit Vehicle",
+
     "supplier_list" => "Supplier List",
     "supplier" => "Supplier",
     "supplier_add" => "Add Supplier",
@@ -406,6 +406,17 @@ return [
     "supplier_add_msg" => "Supplier added successfully!",
     "supplier_edit_msg" => "Supplier updated successfully!",
     "supplier_delete_msg" => "Supplier deleted successfully!",
->>>>>>> c821e4cfdbd7ef362949c2ed4a411e6cb483a6fe
+
+    "route_mgmt" => "Route Management",
+    "route_add" => "Add Route",
+    "route_list" => "Route List",
+    "route_name" => "Route Name",
+    "route_description" => "Route Description",
+    "pickup_time" => "Pickup Time",
+    "drop_time" => "Drop Time",
+    "route_add_msg" => "Route added successfully.",
+    "route_edit_msg" => "Route updated successfully.",
+    "route_del_msg" => "Route deleted successfully.",
+
 
 ];

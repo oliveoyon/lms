@@ -272,6 +272,8 @@ class TransportController extends Controller
     public function routelist()
     {
         $send['routes'] = TrRoute::get();
+        $send['vehicles'] = Vehicle::all();
+        $send['stopages'] = TransStopage::all();
         return view('dashboard.admin.transport.route', $send);
     }
 
@@ -279,7 +281,12 @@ class TransportController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'route_name' => 'required|string|max:255',
-            'route_status' => 'required',
+            'route_status' => 'required|in:0,1',
+            'vehicle_id' => 'required|exists:vehicles,id',
+            'stopage_id' => 'required|exists:trans_stopages,id',
+            'pickup_time' => 'nullable|date_format:H:i',
+            'drop_time' => 'nullable|date_format:H:i',
+            'route_description' => 'nullable|string|max:255',
         ]);
 
         if (!$validator->passes()) {
@@ -289,6 +296,12 @@ class TransportController extends Controller
             $route->route_hash_id = md5(uniqid(rand(), true));
             $route->route_name = $request->input('route_name');
             $route->route_status = $request->input('route_status');
+            $route->vehicle_id = $request->input('vehicle_id');
+            $route->stopage_id = $request->input('stopage_id');
+            $route->pickup_time = $request->input('pickup_time');
+            $route->drop_time = $request->input('drop_time');
+            $route->route_description = $request->input('route_description');
+            $route->school_id = auth()->user()->school_id;
             $query = $route->save();
 
             if (!$query) {

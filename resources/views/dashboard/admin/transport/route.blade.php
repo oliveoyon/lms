@@ -16,12 +16,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">{{ __('language.route') }}</h1>
+                        <h1 class="m-0">{{ __('language.route_list') }}</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('language.dashboard') }}</a></li>
-                            <li class="breadcrumb-item">{{ __('language.route') }}</li>
+                            <li class="breadcrumb-item">{{ __('language.route_list') }}</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -105,9 +105,8 @@
 
 
                 <!--Add Menu Modal -->
-                <div class="modal fade" id="addroutes" tabindex="-1" aria-labelledby="addRouteLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
+                <div class="modal fade" id="addroutes" tabindex="-1" aria-labelledby="addRouteLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-xl">
                         <div class="modal-content">
                             <div class="modal-header bg-success">
                                 <h5 class="modal-title" id="addRouteLabel">{{ __('language.route_add') }}</h5>
@@ -116,46 +115,107 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="{{ route('admin.addRoute') }}" enctype="multipart/form-data" files="true"
-                                    method="post" autocomplete="off" id="add-route-form">
+                                <form action="{{ route('admin.addRoute') }}" enctype="multipart/form-data" files="true" method="post"
+                                    autocomplete="off" id="add-route-form">
                                     @csrf
 
-                                    <div class="form-group">
-                                        <label for="route_name">{{ __('language.route_name') }}</label>
-                                        <input type="text" class="form-control form-control-sm" name="route_name"
-                                            id="route_name" placeholder="{{ __('language.route_name') }}">
-                                        <span class="text-danger error-text route_name_error"></span>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="route_name">{{ __('language.route_name') }}</label>
+                                                <input type="text" class="form-control" name="route_name" id="route_name"
+                                                    placeholder="{{ __('language.route_name') }}">
+                                                <span class="text-danger error-text route_name_error"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="vehicle_id">{{ __('language.vehicle') }}</label>
+                                                <select class="form-control" name="vehicle_id" id="vehicle_id">
+                                                    <!-- Populate this dropdown with data from the 'vehicles' table -->
+                                                    @foreach($vehicles as $vehicle)
+                                                        <option value="{{ $vehicle->id }}">{{ $vehicle->vehicle_name }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="text-danger error-text vehicle_id_error"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="stopage_id">{{ __('language.stopage_name') }}</label>
+                                                <select class="form-control" name="stopage_id" id="stopage_id">
+                                                    <!-- Populate this dropdown with data from the 'trans_stopages' table -->
+                                                    @foreach($stopages as $stopage)
+                                                        <option value="{{ $stopage->id }}">{{ $stopage->stopage_name }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="text-danger error-text stopage_id_error"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="pickup_time">{{ __('language.pickup_time') }}</label>
+                                                <input type="time" class="form-control" name="pickup_time" id="pickup_time"
+                                                    placeholder="{{ __('language.pickup_time') }}">
+                                                <span class="text-danger error-text pickup_time_error"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="drop_time">{{ __('language.drop_time') }}</label>
+                                                <input type="time" class="form-control" name="drop_time" id="drop_time"
+                                                    placeholder="{{ __('language.drop_time') }}">
+                                                <span class="text-danger error-text drop_time_error"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="route_status">{{ __('language.status') }}</label>
+                                                <select class="form-control" name="route_status" id="route_status">
+                                                    <option value="1">{{ __('language.active') }}</option>
+                                                    <option value="0">{{ __('language.inactive') }}</option>
+                                                </select>
+                                                <span class="text-danger error-text route_status_error"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="route_description">{{ __('language.route_description') }}</label>
+                                                <textarea class="form-control" name="route_description" id="route_description"
+                                                    placeholder="{{ __('language.route_description') }}"></textarea>
+                                                <span class="text-danger error-text route_description_error"></span>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="status">{{ __('language.status') }}</label>
-                                        <select class="form-control form-control-sm" name="route_status"
-                                            id="route_status">
-                                            <option value="1">{{ __('language.active') }}</option>
-                                            <option value="0">{{ __('language.inactive') }}</option>
-                                        </select>
-                                        <span class="text-danger error-text route_status_error"></span>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <button type="submit"
-                                            class="btn btn-block btn-success">{{ __('language.save') }}</button>
+                                        <button type="submit" class="btn btn-block btn-success">{{ __('language.save') }}</button>
                                     </div>
                                 </form>
-
-
                             </div>
-
                         </div>
                     </div>
                 </div>
+
+
                 {{-- Modal End --}}
 
 
                 {{-- Edit Modal --}}
                 <div class="modal fade editRoute" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                     aria-hidden="true" data-keyboard="false" data-backdrop="static">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
                         <div class="modal-content">
                             <div class="modal-header bg-purple">
                                 <h5 class="modal-title" id="exampleModalLabel">{{ __('language.route_edit') }}</h5>
@@ -169,26 +229,88 @@
                                     files="true" method="post" autocomplete="off" id="update-route-form">
                                     @csrf
                                     <input type="hidden" name="vid">
-                                    <div class="form-group">
-                                        <label for="route_name">{{ __('language.route_name') }}</label>
-                                        <input type="text" class="form-control form-control-sm" name="route_name"
-                                            id="route_name" placeholder="{{ __('language.route_name') }}">
-                                        <span class="text-danger error-text route_name_error"></span>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="route_name">{{ __('language.route_name') }}</label>
+                                                <input type="text" class="form-control" name="route_name" id="route_name"
+                                                    placeholder="{{ __('language.route_name') }}">
+                                                <span class="text-danger error-text route_name_error"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="vehicle_id">{{ __('language.vehicle') }}</label>
+                                                <select class="form-control" name="vehicle_id" id="vehicle_id">
+                                                    <!-- Populate this dropdown with data from the 'vehicles' table -->
+                                                    @foreach($vehicles as $vehicle)
+                                                        <option value="{{ $vehicle->id }}">{{ $vehicle->vehicle_name }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="text-danger error-text vehicle_id_error"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="stopage_id">{{ __('language.stopage_name') }}</label>
+                                                <select class="form-control" name="stopage_id" id="stopage_id">
+                                                    <!-- Populate this dropdown with data from the 'trans_stopages' table -->
+                                                    @foreach($stopages as $stopage)
+                                                        <option value="{{ $stopage->id }}">{{ $stopage->stopage_name }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="text-danger error-text stopage_id_error"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="pickup_time">{{ __('language.pickup_time') }}</label>
+                                                <input type="time" class="form-control" name="pickup_time" id="pickup_time"
+                                                    placeholder="{{ __('language.pickup_time') }}">
+                                                <span class="text-danger error-text pickup_time_error"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="drop_time">{{ __('language.drop_time') }}</label>
+                                                <input type="time" class="form-control" name="drop_time" id="drop_time"
+                                                    placeholder="{{ __('language.drop_time') }}">
+                                                <span class="text-danger error-text drop_time_error"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="route_status">{{ __('language.status') }}</label>
+                                                <select class="form-control" name="route_status" id="route_status">
+                                                    <option value="1">{{ __('language.active') }}</option>
+                                                    <option value="0">{{ __('language.inactive') }}</option>
+                                                </select>
+                                                <span class="text-danger error-text route_status_error"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="route_description">{{ __('language.route_description') }}</label>
+                                                <textarea class="form-control" name="route_description" id="route_description"
+                                                    placeholder="{{ __('language.route_description') }}"></textarea>
+                                                <span class="text-danger error-text route_description_error"></span>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="status">{{ __('language.status') }}</label>
-                                        <select class="form-control form-control-sm" name="route_status"
-                                            id="route_status">
-                                            <option value="1">{{ __('language.active') }}</option>
-                                            <option value="0">{{ __('language.inactive') }}</option>
-                                        </select>
-                                        <span class="text-danger error-text route_status_error"></span>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <button type="submit"
-                                            class="btn btn-block bg-purple">{{ __('language.update') }}</button>
+                                        <button type="submit" class="btn btn-block bg-purple">{{ __('language.save') }}</button>
                                     </div>
                                 </form>
 
@@ -300,10 +422,13 @@
                     //alert(data.details.route_name);
                     var linkModal = $('.editRoute');
                     $('.editRoute').find('input[name="vid"]').val(data.details.id);
-                    $('.editRoute').find('input[name="route_name"]').val(data.details
-                        .route_name);
-                    $('.editRoute').find('select[name="route_status"]').val(data.details
-                        .route_status);
+                    $('.editRoute').find('input[name="route_name"]').val(data.details.route_name);
+                    $('.editRoute').find('select[name="route_status"]').val(data.details.route_status);
+                    $('.editRoute').find('select[name="vehicle_id"]').val(data.details.vehicle_id);
+                    $('.editRoute').find('select[name="stopage_id"]').val(data.details.stopage_id);
+                    $('.editRoute').find('input[name="pickup_time"]').val(data.details.pickup_time);
+                    $('.editRoute').find('input[name="drop_time"]').val(data.details.drop_time);
+                    $('.editRoute').find('textarea[name="route_description"]').val(data.details.route_description);
                     $('.editRoute').modal('show');
                 }, 'json');
             });

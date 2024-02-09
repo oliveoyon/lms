@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\InvCategory;
 use App\Models\Admin\Product;
+use App\Models\Admin\Teacher;
 use App\Models\Admin\Unit;
 use Illuminate\Http\Request;
 
@@ -82,7 +83,7 @@ class ProductController extends Controller
         $product->class_id = $request->input('class_id');
         $product->max_students = $request->input('max_students');
         $product->product_status = $request->input('product_status');
-       
+
         $query = $product->save();
 
         if ($query) {

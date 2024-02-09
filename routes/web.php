@@ -92,6 +92,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware(['auth:admin', 'PreventBackHistory', 'is_admin_first_login'])->group(function () {
         Route::get('home', [AdminController::class, 'index'])->name('home');
 
+        /*=================================
+          Class Management
+        =================================*/
+
         // Version Management
         Route::get('version-list', [AcademicController::class, 'versionlist'])->name('version-list');
         Route::post('addVersion', [AcademicController::class, 'addVersion'])->name('addVersion');
@@ -120,6 +124,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('updateSubjectDetails', [AcademicController::class, 'updateSubjectDetails'])->name('updateSubjectDetails');
         Route::post('deleteSubject', [AcademicController::class, 'deleteSubject'])->name('deleteSubject');
 
+        /*=================================
+          Fee Management
+        =================================*/
+
         // Fee Frequency Management
         Route::get('fee-frequency-list', [FeeSetupController::class, 'feeFrequencyList'])->name('fee-frequency-list');
         Route::post('addFeeFrequency', [FeeSetupController::class, 'addFeeFrequency'])->name('addFeeFrequency');
@@ -142,7 +150,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('updateAcademicFeeGroupDetails', [FeeSetupController::class, 'updateAcademicFeeGroupDetails'])->name('updateAcademicFeeGroupDetails');
         Route::post('deleteAcademicFeeGroup', [FeeSetupController::class, 'deleteAcademicFeeGroup'])->name('deleteAcademicFeeGroup');
 
-
         // Routes for Academic Fee Amount Management
         Route::get('academic-fee-amount-list', [FeeSetupController::class, 'academicFeeAmountList'])->name('academic-fee-amount-list');
         Route::post('addAcademicFeeAmount', [FeeSetupController::class, 'addAcademicFeeAmount'])->name('addAcademicFeeAmount');
@@ -151,6 +158,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('deleteAcademicFeeAmount', [FeeSetupController::class, 'deleteAcademicFeeAmount'])->name('deleteAcademicFeeAmount');
         Route::get('/get-fee-heads', [FeeSetupController::class, 'getFeeHeads'])->name('get-fee-heads');
         Route::get('/get-group-data', [FeeSetupController::class, 'getGroupData'])->name('getGroupData');
+
+        /*=================================
+          Student Management
+        =================================*/
 
         // Student Management
         Route::get('student-admission', [StudentManagement::class, 'admission'])->name('admission');
@@ -177,6 +188,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('updateAssignedTeacher', [TeacherController::class, 'updateAssignedTeacher'])->name('updateAssignedTeacher');
         Route::post('deleteAssignedTeacher', [TeacherController::class, 'deleteAssignedTeacher'])->name('deleteAssignedTeacher');
 
+        /*=================================
+          Library Management
+        =================================*/
 
         // Book Category Management
         Route::get('book-category-list', [LibraryController::class, 'bookCategoryList'])->name('book-category-list');
@@ -196,12 +210,20 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('store-book-issues', [LibraryController::class, 'storeBookIssues'])->name('storeBookIssues');
         Route::get('get-student-list', [LibraryController::class, 'getStudentList'])->name('getStudentList');
 
+        /*=================================
+          Event Management
+        =================================*/
+
         // Event Controller
         Route::get('event-list', [EventController::class, 'eventList'])->name('event-list');
         Route::post('addEvent', [EventController::class, 'addEvent'])->name('addEvent');
         Route::post('getEventDetails', [EventController::class, 'getEventDetails'])->name('getEventDetails');
         Route::post('updateEventDetails', [EventController::class, 'updateEventDetails'])->name('updateEventDetails');
         Route::post('deleteEvent', [EventController::class, 'deleteEvent'])->name('deleteEvent');
+
+        /*=================================
+          Others Management
+        =================================*/
 
         // Dependent Controller
         Route::post('/get-classes-by-version', [DependentController::class, 'getClassesByVersion'])->name('getClassesByVersion');
@@ -210,6 +232,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/get-feegroup-by-ay', [DependentController::class, 'getFeegroupByAcademicYear'])->name('getFeegroupByAcademicYear');
         Route::post('/fetch-students-name', [DependentController::class, 'fetchStudentsName'])->name('fetchStudentsName');
 
+        /*=================================
+          Routine Management
+        =================================*/
 
         // View to display the form for creating a new class routine
         Route::get('/create-class-periods', [ClassRoutineController::class, 'createClassRoutine'])->name('createClassRoutine');
@@ -223,6 +248,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/testing', [ClassRoutineController::class, 'testing'])->name('testing');
         Route::get('/showRoutine1', [ClassRoutineController::class, 'showRoutine1'])->name('showRoutine1');
         Route::post('/fetchRoutine', [ClassRoutineController::class, 'fetchRoutine'])->name('fetchRoutine');
+
+        /*=================================
+          Attendance Management
+        =================================*/
 
         // Attendance Management
         Route::get('/attendance-input', [AttendanceController::class, 'attendanceInput'])->name('attendanceInput');
@@ -239,6 +268,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::get('/getfeedet', [StudentManagement::class, 'getfeedet'])->name('getfeedet');
 
+        /*=================================
+          Settings
+        =================================*/
+
         //Setting Management
         Route::get('/general-settings', [SettingController::class, 'genSetting'])->name('genSetting');
         Route::post('/edit-general-settings', [SettingController::class, 'editGenSetting'])->name('editGenSetting');
@@ -247,6 +280,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/generate-bill', [FeeCollectionController::class, 'generateBill'])->name('generateBill');
         Route::post('/fetchColletcData', [FeeCollectionController::class, 'fetchColletcData'])->name('fetchColletcData');
         Route::post('/collectBill', [FeeCollectionController::class, 'collectBill'])->name('collectBill');
+
+        /*=================================
+          Inventory Management
+        =================================*/
 
         //Inventory Management
         Route::get('category-list', [InvCategoryController::class, 'categorylist'])->name('category-list');
@@ -269,8 +306,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('updateStoreDetails', [UnitController::class, 'updateStoreDetails'])->name('updateStoreDetails');
         Route::post('deleteStore', [UnitController::class, 'deleteStore'])->name('deleteStore');
 
-<<<<<<< HEAD
-        // Transport Management
+        // Supplier Management
+        Route::get('supplier-list', [UnitController::class, 'supplierlist'])->name('supplier-list');
+        Route::post('addSupplier', [UnitController::class, 'addSupplier'])->name('addSupplier');
+        Route::post('getSupplierDetails', [UnitController::class, 'getSupplierDetails'])->name('getSupplierDetails');
+        Route::post('updateSupplierDetails', [UnitController::class, 'updateSupplierDetails'])->name('updateSupplierDetails');
+        Route::post('deleteSupplier', [UnitController::class, 'deleteSupplier'])->name('deleteSupplier');
+
+        /*=================================
+          Transport Management
+        =================================*/
 
         // Stopage Management
         Route::get('stopage-list', [TransportController::class, 'stopagelist'])->name('stopage-list');
@@ -299,14 +344,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('updateRouteDetails', [TransportController::class, 'updateRouteDetails'])->name('updateRouteDetails');
         Route::post('deleteRoute', [TransportController::class, 'deleteRoute'])->name('deleteRoute');
 
-=======
-        // Supplier Management
-        Route::get('supplier-list', [UnitController::class, 'supplierlist'])->name('supplier-list');
-        Route::post('addSupplier', [UnitController::class, 'addSupplier'])->name('addSupplier');
-        Route::post('getSupplierDetails', [UnitController::class, 'getSupplierDetails'])->name('getSupplierDetails');
-        Route::post('updateSupplierDetails', [UnitController::class, 'updateSupplierDetails'])->name('updateSupplierDetails');
-        Route::post('deleteSupplier', [UnitController::class, 'deleteSupplier'])->name('deleteSupplier');
->>>>>>> c821e4cfdbd7ef362949c2ed4a411e6cb483a6fe
+        /*=================================
+          Reports Management
+        =================================*/
 
         // Reports
         Route::get('class-list-report', [ReportController::class, 'classlist_report'])->name('class-list-report');

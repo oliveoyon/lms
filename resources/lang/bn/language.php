@@ -371,7 +371,6 @@ return [
     "store_edit" => "স্টোর সম্পাদনা করুন",
     "store_del_msg" => "স্টোর সফলভাবে মোছা হয়েছে!",
 
-<<<<<<< HEAD
     "stopage_mgmt" => "স্টোপেজ ম্যানেজমেন্ট",
     "stopage_add" => "স্টোপেজ যোগ করুন",
     "stopage_list" => "স্টোপেজ তালিকা",
@@ -393,8 +392,7 @@ return [
     "vehicle_no" => "যানবাহন নম্বর",
     "vehicle_reg_no" => "যানবাহনের রেজিস্ট্রেশন নম্বর",
     "vehicle_add" => "যানবাহন যোগ করুন",
-    "vehicle_edit" => "যানবাহন সম্পাদনা করুন"
-=======
+    "vehicle_edit" => "যানবাহন সম্পাদনা করুন",
     "supplier_list" => "সরবরাহকারী তালিকা",
     "supplier" => "সরবরাহকারী",
     "supplier_add" => "সরবরাহকারী যোগ করুন",
@@ -406,6 +404,15 @@ return [
     "supplier_add_msg" => "সরবরাহকারী সফলভাবে যোগ করা হয়েছে!",
     "supplier_edit_msg" => "সরবরাহকারী সফলভাবে আপডেট হয়েছে!",
     "supplier_delete_msg" => "সরবরাহকারী সফলভাবে মোছা হয়েছে!",
->>>>>>> c821e4cfdbd7ef362949c2ed4a411e6cb483a6fe
+    "route_mgmt" => "রুট পরিচালনা",
+    "route_add" => "রুট যোগ করুন",
+    "route_list" => "রুট তালিকা",
+    "route_name" => "রুট নাম",
+    "route_description" => "রুট বিবরণ",
+    "pickup_time" => "পিকআপ সময়",
+    "drop_time" => "ড্রপ সময়",
+    "route_add_msg" => "রুটটি সফলভাবে যোগ হয়েছে।",
+    "route_edit_msg" => "রুটটি সফলভাবে আপডেট হয়েছে।",
+    "route_del_msg" => "রুটটি সফলভাবে মোছা হয়েছে।",
 
 ];

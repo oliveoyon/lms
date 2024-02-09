@@ -631,25 +631,25 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="{{ route('admin.stopage-list') }}" class="nav-link">
                                         <i class="fas fa-map-pin nav-icon"></i>
                                         <p>{{ __('language.stoppages') }}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="{{ route('admin.vehicletype-list') }}" class="nav-link">
                                         <i class="fas fa-car-alt nav-icon"></i>
                                         <p>{{ __('language.vehicle_types') }}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="{{ route('admin.vehicle-list') }}" class="nav-link">
                                         <i class="fas fa-bus nav-icon"></i>
                                         <p>{{ __('language.vehicles_lists') }}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="{{ route('admin.route-list') }}" class="nav-link">
                                         <i class="fas fa-route nav-icon"></i>
                                         <p>{{ __('language.routes_lists') }}</p>
                                     </a>
