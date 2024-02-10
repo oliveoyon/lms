@@ -3,10 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\AcademicStudent;
+use App\Models\Admin\EduVersions;
+use App\Models\Admin\FeeCollection;
 use App\Models\Admin\TransStopage;
 use App\Models\Admin\TransVehicleType;
+use App\Models\Admin\TrAssignStd;
 use App\Models\Admin\TrRoute;
 use App\Models\Admin\Vehicle;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -358,5 +363,91 @@ class TransportController extends Controller
         } else {
             return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
         }
+    }
+
+    public function assignStdTrans(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            $validator = Validator::make($request->all(), [
+                'academic_year' => 'required|integer',
+                'amount' => 'required|numeric',
+                'std_id' => 'required|array|min:1',
+                'month' => 'required|array|min:1',
+                'route_id' => 'required|numeric',
+                'pickup_stopage' => 'required',
+            ]);
+
+
+            if ($validator->fails()) {
+                return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
+            }
+
+            $academicYear = $request->input('academic_year');
+            $versionId = $request->input('version_id');
+            $classId = $request->input('class_id');
+            $sectionId = $request->input('section_id');
+            $stdIds = $request->input('std_id'); // Assuming std_id is an array
+            $feeDesc = $request->input('fee_desc');
+            $month = $request->input('month');
+            $amount = $request->input('amount');
+
+            $query = AcademicStudent::query();
+
+            $query->when($academicYear, function ($query) use ($academicYear) {
+                return $query->where('academic_students.academic_year', $academicYear);
+            })
+                ->when($versionId, function ($query) use ($versionId) {
+                    return $query->where('academic_students.version_id', $versionId);
+                })
+                ->when($classId, function ($query) use ($classId) {
+                    return $query->where('academic_students.class_id', $classId);
+                })
+                ->when($stdIds !== null, function ($query) use ($stdIds) {
+                    return $query->whereIn('academic_students.std_id', $stdIds);
+                });
+
+            $result = $query->get(['std_id']);
+
+            foreach($result as $r){
+
+                TrAssignStd::create([
+                    'tr_assign_hash_id' => 'fdfdf',
+                    'std_id' => $r->std_id,
+                    'route_id' => $request->route_id,
+                    'pickup_stopage' => $request->pickup_stopage,
+                    'pickup_stopage' => $request->pickup_stopage,
+                    'drop_stopage' => 0,
+                    'pickup_time' => $request->pickup_time,
+                    'drop_time' => $request->input('drop_time'),
+                    'academic_year' => $academicYear,
+                    'tr_assign_status' => 1,
+                    'school_id' => auth()->user()->school_id,
+                ]);
+
+                foreach ($month as $selectedMonth) {
+                    $dueDate = Carbon::create($academicYear, $selectedMonth, 1, 0, 0, 0)->addDays(19);
+                    FeeCollection::create([
+                        'fee_collection_hash_id' => md5(uniqid(rand(), true)),
+                        'std_id' => $r->std_id,
+                        'fee_group_id' => 0,
+                        'aca_feehead_id' => 0,
+                        'aca_feeamount_id' => 0,
+                        'academic_year' => $academicYear,
+                        'payable_amount' => $amount,
+                        'is_paid' => false,
+                        'due_date' => $dueDate,
+                        'fee_description' => 'Transport Fee',
+                        'fee_collection_status' => 1,
+                        'school_id' => auth()->user()->school_id,
+                    ]);
+                }
+            }
+            return response()->json(['code' => 1, 'msg' => __('language.periods_add_msg'), 'redirect' => 'admin/assign-students-transport']);
+        }
+
+        $send['versions'] = EduVersions::get()->where('version_status', 1);
+        $send['routes'] = TrRoute::where('route_status', 1)->get();
+        $send['stopages'] = TransStopage::where('stopage_status', 1)->get();
+        return view('dashboard.admin.transport.assignStd', $send);
     }
 }

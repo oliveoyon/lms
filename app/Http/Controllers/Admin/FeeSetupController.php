@@ -11,6 +11,7 @@ use App\Models\Admin\EduClasses;
 use App\Models\Admin\EduVersions;
 use App\Models\Admin\FeeCollection;
 use App\Models\Admin\FeeFrequency;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -540,6 +541,7 @@ class FeeSetupController extends Controller
 
     public function customFeeGen(Request $request)
     {
+        // dd($request->all());
         if ($request->isMethod('post')) {
 
             $validator = Validator::make($request->all(), [
@@ -581,8 +583,10 @@ class FeeSetupController extends Controller
             $result = $query->get(['std_id']);
 
             foreach($result as $r){
-                for ($i=0; $i < count($month) ; $i++) {
-                    $dueDate = now()->addMonths($month[$i] - 1)->startOfMonth()->addDays(19);                    FeeCollection::create([
+                foreach ($month as $selectedMonth) {
+                    $dueDate = Carbon::create($academicYear, $selectedMonth, 1, 0, 0, 0)->addDays(19);
+
+                    FeeCollection::create([
                         'fee_collection_hash_id' => md5(uniqid(rand(), true)),
                         'std_id' => $r->std_id,
                         'fee_group_id' => 0,

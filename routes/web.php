@@ -236,7 +236,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
           Routine Management
         =================================*/
 
-        // View to display the form for creating a new class routine
+        // Class routine
         Route::get('/create-class-periods', [ClassRoutineController::class, 'createClassRoutine'])->name('createClassRoutine');
         Route::post('/addPeriods', [ClassRoutineController::class, 'addPeriods'])->name('addPeriods');
         Route::get('/show-class-periods', [ClassRoutineController::class, 'showClassRoutine'])->name('showClassRoutine');
@@ -343,7 +343,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('getRouteDetails', [TransportController::class, 'getRouteDetails'])->name('getRouteDetails');
         Route::post('updateRouteDetails', [TransportController::class, 'updateRouteDetails'])->name('updateRouteDetails');
         Route::post('deleteRoute', [TransportController::class, 'deleteRoute'])->name('deleteRoute');
-
+        Route::match(['get', 'post'], '/assign-students-transport', [TransportController::class, 'assignStdTrans'])->name('assignStdTrans');
         /*=================================
           Reports Management
         =================================*/
