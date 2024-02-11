@@ -1,7 +1,56 @@
 @extends('dashboard.admin.layouts.admin-layout-with-cdn')
 @section('title', 'Dashboard')
 @push('admincss')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
+    <style>
+        .notice_title {
+            font-weight: bold;
+        }
+
+        .notice-lists {
+            background-color: #334d37;
+            color: #FFFFFF;
+            padding: 5px;
+            display: flex;
+        }
+
+        .left-bar {
+            background-color: #3498db;
+            color: #fff;
+            padding: 5px;
+            border-radius: 5px;
+            flex-shrink: 0;
+            margin-right: 3px;
+        }
+
+        .marquee-container {
+            flex-grow: 1;
+            overflow: hidden;
+            min-width: 0;
+        }
+
+        .marquee-content {
+            display: flex;
+        }
+
+        .notice-items {
+            font-size: 16px;
+            padding: 5px;
+            margin-right: 50px;
+            text-decoration: none;
+            color: #FFFFFF;
+
+        }
+
+        .notice-items:hover {
+            color: #F4A623;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+    </style>
 @endpush
+
 
 @section('content')
     <!-- Content Wrapper. Contains page content -->
@@ -26,73 +75,167 @@
 
         <section class="content">
             <div class="container-fluid">
-                <h2 class="text-center">Bill Collection</h2>
-                <form action="{{ route('admin.generateBill') }}" method="post" id="bill-search">
-                    @csrf
-                    <div class="row">
-                        <div class="col-md-10 offset-md-1">
-                            <div class="row">
-                                <div class="col-3">
-                                    <div class="form-group">
-                                        <label>Academic Year</label>
-                                        <select class="select2" style="width: 100%;" name="ac">
-                                            <option value="">All Years</option>
-                                            @php
-                                                $currentYear = date('Y');
-                                            @endphp
-                                            @for ($i = $currentYear - 2; $i <= $currentYear + 2; $i++)
-                                                <option value="{{ $i }}"
-                                                    {{ $i == $currentYear ? 'selected' : '' }}>
-                                                    {{ $i }}
-                                                </option>
-                                            @endfor
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-3">
-                                    <div class="form-group">
-                                        <label>Month (Up To)</label>
-                                        <select class="select2" style="width: 100%;" name="mon">
-                                            <option value="">Every Month</option>
-                                            @php
-                                                $currentMonth = date('n');
-                                            @endphp
-                                            @for ($i = 1; $i <= 12; $i++)
-                                                <option value="{{ $i }}"
-                                                    {{ $i == $currentMonth ? 'selected' : '' }}>
-                                                    {{ date('F', mktime(0, 0, 0, $i, 1)) }}
-                                                </option>
-                                            @endfor
-                                        </select>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group input-group-lg">
-                                    <input type="search" name="std_id" class="form-control"
-                                        placeholder="Student ID" value="">
-                                    <div class="input-group-append">
-                                        <button type="submit" class="btn btn-lg btn-default">
-                                            <i class="fa fa-search"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="notice-lists">
+                    <div class="left-bar">
+                        <span class="notice-icon"><i class="fas fa-exclamation-circle"></i></span>
+                        <div>
+                            <span id="content"></span>
                         </div>
                     </div>
-                </form>
-                <div class="row mt-3">
-                    <div class="col-md-10 offset-md-1">
-                        <div class="list-group">
-                            <div id="generateBill"></div>
+
+                    <div class="marquee-container">
+                        <div class="marquee-content">
+                            <marquee behavior="scroll" direction="left" onmouseover="this.stop();"
+                                onmouseout="this.start();">
+                                <a href="https://example.com/notice/1" class="notice-items">Important Announcement for Class 6-10</a>
+                                <a href="https://example.com/notice/2" class="notice-items">Meet the New School Principal - John Doe</a>
+                                <a href="https://example.com/notice/3" class="notice-items">Upcoming Events and Activities</a>
+                                <a href="https://example.com/notice/4" class="notice-items">Reminder: Parent-Teacher Meeting on February 15</a>
+                                <a href="https://example.com/notice/5" class="notice-items">School Holiday Schedule for the Month</a>
+                            </marquee>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row mt-1">
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-info">
+                            <div class="inner">
+                                <h3>150</h3>
+                                <p>Total Students</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-6">
+
+                        <div class="small-box bg-success">
+                            <div class="inner">
+                                <h3>53<sup style="font-size: 20px">%</sup></h3>
+                                <p>Bounce Rate</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-stats-bars"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-6">
+
+                        <div class="small-box bg-warning">
+                            <div class="inner">
+                                <h3>44</h3>
+                                <p>Fee Collection Today</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-coins"></i>
+
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-6">
+
+                        <div class="small-box bg-danger">
+                            <div class="inner">
+                                <h3>65</h3>
+                                <p>Due Amount</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-hand-holding-usd"></i>
+
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-body">
+                                <div id="fullCalendar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-success"><i class="fas fa-user-graduate"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Total Students</span>
+                                <span class="info-box-number">{{ $data->total_students }}</span>
+                            </div>
+                        </div>
+
+                        <div class="info-box">
+                            <span class="info-box-icon bg-info"><i class="fas fa-chalkboard-teacher"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Total Teachers</span>
+                                <span class="info-box-number">{{ $data->total_teachers }}</span>
+                            </div>
+                        </div>
+
+                        <div class="info-box">
+                            <span class="info-box-icon bg-warning"><i class="fas fa-book"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Total Books</span>
+                                <span class="info-box-number">{{ $data->total_books }}</span>
+                            </div>
+                        </div>
+
+                        <div class="info-box">
+                            <span class="info-box-icon bg-danger"><i class="fas fa-bus"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Total Students<br>Using Transport</span>
+                                <span class="info-box-number">{{ $data->total_assigned_students }}</span>
+                            </div>
+                        </div>
+
+                        <div class="info-box">
+                            <span class="info-box-icon bg-purple"><i class="fas fa-bed"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Total Students <br> in Dormitory</span>
+                                <span class="info-box-number">{{ $data->total_students }}</span>
+                            </div>
+                        </div>
+
+                        <div class="info-box">
+                            <span class="info-box-icon bg-navy"><i class="fas fa-flag"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Your Text Here</span>
+                                <span class="info-box-number">{{ $data->total_students }}</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+
+
     </div>
     <!-- /.content-wrapper -->
+
 
 
     <!-- Control Sidebar -->
@@ -115,6 +258,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"
         integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- FullCalendar JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
 
     <script>
         toastr.options.preventDuplicates = true;
@@ -232,7 +378,7 @@
             function populateModalContent(month, stdId, academicYear) {
                 // Perform an AJAX request to fetch the data for the selected month, stdId, and academicYear
                 $.ajax({
-                    url: "{{route('admin.fetchColletcData')}}", // Replace with your actual route
+                    url: "{{ route('admin.fetchColletcData') }}", // Replace with your actual route
                     method: 'POST', // Change the method to POST
                     data: {
                         _token: '{{ csrf_token() }}', // Add CSRF token for POST requests
@@ -252,8 +398,43 @@
         });
     </script>
 
+    <?php
+    // Sample PHP dataset array
+    $events = [
+        [
+            'title' => 'Event 1',
+            'start' => '2024-02-15T10:00:00',
+            'end' => '2024-02-15T12:00:00',
+            'url' => 'https://example.com/event1',
+            'color' => '#FF5733', // Hex color code
+        ],
+        [
+            'title' => 'Event 2',
+            'start' => '2024-02-16T14:00:00',
+            'end' => '2024-02-16T16:00:00',
+            'url' => 'https://example.com/event2',
+            'color' => '#33FF57', // Hex color code
+        ],
+        // Add more events as needed
+    ];
+    ?>
+    <script>
+        $(document).ready(function() {
+            // Use PHP dataset array
+            var events = <?php echo json_encode($events); ?>;
 
-
-
-
+            // Initialize FullCalendar
+            $('#fullCalendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay',
+                },
+                events: events,
+                eventRender: function(event, element) {
+                    element.attr('title', event.title);
+                },
+            });
+        });
+    </script>
 @endpush

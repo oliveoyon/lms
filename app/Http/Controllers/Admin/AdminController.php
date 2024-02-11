@@ -6,16 +6,24 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
     public function index()
     {
-        return view('dashboard.admin.home');
+        $send['data'] = DB::select("
+            SELECT
+                (SELECT COUNT(*) FROM academic_students WHERE st_aca_status = 1) AS total_students,
+                (SELECT COUNT(*) FROM teachers WHERE teacher_status = 1) AS total_teachers,
+                (SELECT COUNT(*) FROM books WHERE book_status = 1) AS total_books,
+                (SELECT COUNT(*) FROM tr_assign_stds WHERE tr_assign_status = 1) AS total_assigned_students
+        ")[0];
+
+        return view('dashboard.admin.home', $send);
     }
 
-   
+
 
     public function check(Request $request)
     {

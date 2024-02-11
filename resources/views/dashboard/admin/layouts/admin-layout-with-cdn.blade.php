@@ -655,7 +655,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="{{ route('admin.assignStdTrans') }}" class="nav-link">
                                         <i class="fas fa-user-plus nav-icon"></i>
                                         <p>{{ __('language.assign_students') }}</p>
                                     </a>
