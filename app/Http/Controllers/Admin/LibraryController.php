@@ -200,7 +200,8 @@ class LibraryController extends Controller
 
     public function checkStudentBooks(Request $request)
     {
-        $studentId = $request->input('studentId');
+        $studentId = $request->input('std_id');
+
 
         $issuedBooks = DB::table('book_issues')
             ->join('books', 'book_issues.book_id', '=', 'books.id')
@@ -298,5 +299,11 @@ class LibraryController extends Controller
             ->get();
 
         return response()->json($students);
+    }
+
+
+    public function book_return()
+    {
+        return view('dashboard.admin.library.book_return');
     }
 }

@@ -209,6 +209,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/suggestions', [LibraryController::class, 'suggestions'])->name('suggestions');
         Route::post('store-book-issues', [LibraryController::class, 'storeBookIssues'])->name('storeBookIssues');
         Route::get('get-student-list', [LibraryController::class, 'getStudentList'])->name('getStudentList');
+        Route::get('/book-return', [LibraryController::class, 'book_return'])->name('book_return');
 
         /*=================================
           Event Management

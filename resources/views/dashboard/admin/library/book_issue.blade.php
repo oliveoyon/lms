@@ -73,7 +73,6 @@
                                             <th>Sl</th>
                                             <th>Book Title</th>
                                             <th>Quantity</th>
-                                            <th>Remarks</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -241,14 +240,13 @@
 
                 studentInfoHTML += '<h3>Occupied Books</h3>';
                 studentInfoHTML += '<table class="table">';
-                studentInfoHTML += '<thead><tr><th>Book Title</th><th>Quantity</th><th>Remarks</th><th>Issue Date</th><th>Due Date</th></tr></thead>';
+                studentInfoHTML += '<thead><tr><th>Book Title</th><th>Quantity</th><th>Issue Date</th><th>Due Date</th></tr></thead>';
                 studentInfoHTML += '<tbody>';
 
                 bookData.occupiedBooks.forEach(function(book) {
                     studentInfoHTML += '<tr>';
                     studentInfoHTML += '<td>' + book.book_title + '</td>';
                     studentInfoHTML += '<td>' + book.quantity + '</td>';
-                    studentInfoHTML += '<td>' + book.remarks + '</td>';
                     studentInfoHTML += '<td>' + book.issue_date + '</td>';
                     studentInfoHTML += '<td>' + book.due_date + '</td>';
                     studentInfoHTML += '</tr>';
@@ -321,7 +319,6 @@
                 '<td>' + sl + '</td>' +
                 '<td>' + book.book_title + '</td>' +
                 '<td><input type="number" class="form-control" name="quantity[]" placeholder="Quantity"></td>' +
-                '<td><input type="text" class="form-control" name="remarks[]" placeholder="Remarks"></td>' +
                 '<td><button type="button" class="btn btn-danger" onclick="removeBookRow(this)">Remove</button></td>' +
                 '</tr>'
             );
@@ -359,7 +356,6 @@
                 var bookEntry = {
                     bookTitle: $(row).find('td:eq(1)').text(),
                     quantity: $(row).find('input[name="quantity[]"]').val(),
-                    remarks: $(row).find('input[name="remarks[]"]').val(),
                 };
                 bookEntriesData.push(bookEntry);
             });
@@ -402,7 +398,6 @@
             var bookEntry = {
                 bookTitle: $(row).find('td:eq(1)').text(),
                 quantity: $(row).find('input[name="quantity[]"]').val(),
-                remarks: $(row).find('input[name="remarks[]"]').val(),
             };
             bookEntriesData.push(bookEntry);
         });
@@ -492,7 +487,6 @@
                     '<h3>Book Details</h3>' +
                     '<p><strong>Book Title:</strong> ' + firstBook.book.title + '</p>' +
                     '<p><strong>Quantity:</strong> ' + firstBook.quantity + '</p>' +
-                    '<p><strong>Remarks:</strong> ' + firstBook.remarks + '</p>'
                 );
             } else {
                 // If there are no occupied books, display a message
@@ -584,7 +578,6 @@
                 '<td>' + sl + '</td>' +
                 '<td>' + book.book_title + '</td>' +
                 '<td><input type="number" class="form-control" name="quantity[]" placeholder="Quantity"></td>' +
-                '<td><input type="text" class="form-control" name="remarks[]" placeholder="Remarks"></td>' +
                 '<td><button type="button" class="btn btn-danger" onclick="removeBookRow(this)">Remove</button></td>' +
                 '</tr>'
             );
