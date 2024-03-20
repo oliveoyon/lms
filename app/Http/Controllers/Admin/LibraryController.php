@@ -200,7 +200,8 @@ class LibraryController extends Controller
 
     public function checkStudentBooks(Request $request)
     {
-        $studentId = $request->input('studentId');
+        $studentId = $request->input('std_id');
+
 
         $issuedBooks = DB::table('book_issues')
             ->join('books', 'book_issues.book_id', '=', 'books.id')
@@ -234,26 +235,39 @@ class LibraryController extends Controller
 
     public function storeBookIssues(Request $request)
     {
+        // Step 1: Add a configuration parameter for the maximum number of books
+        // $maxBooksAllowed = config('library.max_books_allowed');
+        $maxBooksAllowed = 1;
+    
         $validator = Validator::make($request->all(), [
             'student.studentId' => 'required',
             'books.*.bookTitle' => 'required',
             'books.*.quantity' => 'required|numeric',
         ]);
-
+    
         if ($validator->fails()) {
-            return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
+            return response()->json(['code' => 0, 'errors' => $validator->errors()->toArray()]);
         }
-
+    
         $studentId = $request->input('student.studentId');
-
+    
+        // Step 2: Retrieve the current number of books issued to the student
+        $currentBooksIssued = BookIssue::where('student_id', $studentId)->sum('quantity');
+    
+        // Step 3: Check if the student is allowed to issue more books based on the maximum limit
+        if ($currentBooksIssued >= $maxBooksAllowed) {
+            return response()->json(['code' => 0, 'error' => 'Student has reached the maximum number of allowed books.']);
+        }
+    
         $bookEntries = $request->input('books');
         foreach ($bookEntries as $bookEntry) {
             $bookTitle = $bookEntry['bookTitle'];
             $quantity = $bookEntry['quantity'];
-
+    
             $book = Book::where('book_title', $bookTitle)->first();
-
+    
             if ($book) {
+                // Step 4: If the student is allowed, proceed with the book issuance
                 BookIssue::create([
                     'student_id' => $studentId,
                     'book_id' => $book->id,
@@ -266,9 +280,10 @@ class LibraryController extends Controller
                 // You can add custom logic or return an error response
             }
         }
-
-        return response()->json(['code' => 1, 'msg' => __('language.version_edit_msg') , 'redirect'=> 'admin/book-issue']);
+    
+        return response()->json(['code' => 1, 'msg' => __('language.version_edit_msg'), 'redirect' => 'admin/book-issue']);
     }
+
 
 
 
@@ -284,5 +299,11 @@ class LibraryController extends Controller
             ->get();
 
         return response()->json($students);
+    }
+
+
+    public function book_return()
+    {
+        return view('dashboard.admin.library.book_return');
     }
 }

@@ -631,31 +631,53 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="{{ route('admin.stopage-list') }}" class="nav-link">
                                         <i class="fas fa-map-pin nav-icon"></i>
                                         <p>{{ __('language.stoppages') }}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="{{ route('admin.vehicletype-list') }}" class="nav-link">
+                                        <i class="fas fa-car-alt nav-icon"></i>
+                                        <p>{{ __('language.vehicle_types') }}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.vehicle-list') }}" class="nav-link">
                                         <i class="fas fa-bus nav-icon"></i>
                                         <p>{{ __('language.vehicles_lists') }}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="{{ route('admin.route-list') }}" class="nav-link">
                                         <i class="fas fa-route nav-icon"></i>
                                         <p>{{ __('language.routes_lists') }}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="{{ route('admin.assignStdTrans') }}" class="nav-link">
                                         <i class="fas fa-user-plus nav-icon"></i>
                                         <p>{{ __('language.assign_students') }}</p>
                                     </a>
                                 </li>
+                                <!-- Add the new items below -->
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="fas fa-clipboard nav-icon"></i>
+                                        <p>{{ __('language.transport_fee_heads') }}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="fas fa-money-check-alt nav-icon"></i>
+                                        <p>{{ __('language.transport_fee_amounts') }}</p>
+                                    </a>
+                                </li>
+
+                                <!-- End of new items -->
                             </ul>
                         </li>
+
 
                         <li class="nav-item">
                             <a href="#" class="nav-link">

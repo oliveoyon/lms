@@ -38,6 +38,8 @@ class EventController extends Controller
             return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
         }
 
+        $color = EventType::where('id', $request->input('event_type_id'))->first();
+
         $event = new Event();
         $event->event_hash_id = md5(uniqid(rand(), true));
         $event->event_title = $request->input('event_title');
@@ -46,7 +48,7 @@ class EventController extends Controller
         $event->start_date = $request->input('start_date');
         $event->end_date = $request->input('end_date');
         $event->url = 'fdfdf';
-        $event->color = 'red';
+        $event->color = $color->color;
         $event->upload = '';
         $event->event_status = $request->input('event_status');
         $event->school_id = auth()->user()->school_id;

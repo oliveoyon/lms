@@ -36,59 +36,58 @@
             <div class="row">
                 <!-- Left Column: Student and Book Search Form -->
                 <div class="col-md-6">
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">Student and Book Search</h3>
-        </div>
-        <div class="card-body">
-            <!-- Student Search Form -->
-            <form id="yourFormId" action="{{ route('admin.storeBookIssues') }}" method="POST">
-                @csrf
-                <div class="form-group">
-                    <label for="studentId">Student ID</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="studentId" name="student.studentId" placeholder="Enter student ID">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Student and Book Search</h3>
+                        </div>
+                        <div class="card-body">
+                            <!-- Student Search Form -->
+                            <form id="yourFormId" action="{{ route('admin.storeBookIssues') }}" method="POST">
+                                @csrf
+                                <div class="form-group">
+                                    <label for="studentId">Student ID</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="studentId" name="student.studentId" placeholder="Enter student ID">
+                                    </div>
+                                </div>
+
+                                <!-- Display Student Suggestions -->
+                                <div id="studentSuggestions" class="dropdown-list"></div>
+
+                                <!-- Display Occupied Books Table -->
+                                <div id="occupiedBooksTable">
+                                    <!-- The table will be displayed here -->
+                                </div>
+
+                                <!-- Book Name Search and Form -->
+                                <div class="form-group">
+                                    <label for="bookName">Book Name</label>
+                                    <input type="text" class="form-control" id="bookName" autocomplete="off">
+                                    <div id="bookList" class="dropdown-list"></div>
+                                </div>
+
+                                <!-- Book Rows -->
+                                <table class="table mt-3">
+                                    <thead>
+                                        <tr>
+                                            <th>Sl</th>
+                                            <th>Book Title</th>
+                                            <th>Quantity</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bookRowsContainer">
+                                        <!-- Book rows will be dynamically added here -->
+                                    </tbody>
+                                </table>
+
+                                <!-- Submit Button -->
+                                <button type="button" class="btn btn-primary" onclick="submitBookIssueForm()">Submit</button>
+
+                            </form>
+                        </div>
                     </div>
                 </div>
-
-                <!-- Display Student Suggestions -->
-                <div id="studentSuggestions" class="dropdown-list"></div>
-
-                <!-- Display Occupied Books Table -->
-                <div id="occupiedBooksTable">
-                    <!-- The table will be displayed here -->
-                </div>
-
-                <!-- Book Name Search and Form -->
-                <div class="form-group">
-                    <label for="bookName">Book Name</label>
-                    <input type="text" class="form-control" id="bookName" autocomplete="off">
-                    <div id="bookList" class="dropdown-list"></div>
-                </div>
-
-                <!-- Book Rows -->
-                <table class="table mt-3">
-                    <thead>
-                        <tr>
-                            <th>Sl</th>
-                            <th>Book Title</th>
-                            <th>Quantity</th>
-                            <th>Remarks</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="bookRowsContainer">
-                        <!-- Book rows will be dynamically added here -->
-                    </tbody>
-                </table>
-
-                <!-- Submit Button -->
-                <button type="button" class="btn btn-primary" onclick="submitBookIssueForm()">Submit</button>
-
-            </form>
-        </div>
-    </div>
-</div>
 
                 <div class="col-md-6">
                     <div class="card">
@@ -132,11 +131,11 @@
 
 
 <script>
-$.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
 </script>
 
 <script>
@@ -192,15 +191,15 @@ $.ajaxSetup({
         }
 
         function selectStudent(student) {
-    // Set the selected student ID in the input field
-    studentIdInput.val(student.std_id);
+            // Set the selected student ID in the input field
+            studentIdInput.val(student.std_id);
 
-    // Clear the student suggestions and hide the dropdown list
-    clearStudentSuggestions();
+            // Clear the student suggestions and hide the dropdown list
+            clearStudentSuggestions();
 
-    // Fetch occupied books based on the selected student ID
-    fetchOccupiedBooks(student.std_id);
-}
+            // Fetch occupied books based on the selected student ID
+            fetchOccupiedBooks(student.std_id);
+        }
 
 
 
@@ -241,14 +240,13 @@ $.ajaxSetup({
 
                 studentInfoHTML += '<h3>Occupied Books</h3>';
                 studentInfoHTML += '<table class="table">';
-                studentInfoHTML += '<thead><tr><th>Book Title</th><th>Quantity</th><th>Remarks</th><th>Issue Date</th><th>Due Date</th></tr></thead>';
+                studentInfoHTML += '<thead><tr><th>Book Title</th><th>Quantity</th><th>Issue Date</th><th>Due Date</th></tr></thead>';
                 studentInfoHTML += '<tbody>';
 
                 bookData.occupiedBooks.forEach(function(book) {
                     studentInfoHTML += '<tr>';
                     studentInfoHTML += '<td>' + book.book_title + '</td>';
                     studentInfoHTML += '<td>' + book.quantity + '</td>';
-                    studentInfoHTML += '<td>' + book.remarks + '</td>';
                     studentInfoHTML += '<td>' + book.issue_date + '</td>';
                     studentInfoHTML += '<td>' + book.due_date + '</td>';
                     studentInfoHTML += '</tr>';
@@ -321,7 +319,6 @@ $.ajaxSetup({
                 '<td>' + sl + '</td>' +
                 '<td>' + book.book_title + '</td>' +
                 '<td><input type="number" class="form-control" name="quantity[]" placeholder="Quantity"></td>' +
-                '<td><input type="text" class="form-control" name="remarks[]" placeholder="Remarks"></td>' +
                 '<td><button type="button" class="btn btn-danger" onclick="removeBookRow(this)">Remove</button></td>' +
                 '</tr>'
             );
@@ -348,40 +345,7 @@ $.ajaxSetup({
             bookListDiv.empty().hide();
         }
 
-        // Submit Book Issue Form
-        function submitBookIssueForm() {
-            var csrfToken = $('meta[name="csrf-token"]').attr('content');
-            var studentData = {
-                studentId: $('#studentId').val(),
-            };
-            var bookEntriesData = [];
-            $('#bookRowsContainer tr').each(function(index, row) {
-                var bookEntry = {
-                    bookTitle: $(row).find('td:eq(1)').text(),
-                    quantity: $(row).find('input[name="quantity[]"]').val(),
-                    remarks: $(row).find('input[name="remarks[]"]').val(),
-                };
-                bookEntriesData.push(bookEntry);
-            });
-            var formData = {
-                student: studentData,
-                books: bookEntriesData,
-            };
-            $.ajax({
-                url: '{{ route("admin.storeBookIssues") }}',
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': csrfToken
-                },
-                data: formData,
-                success: function(response) {
-                    console.log('Form submitted successfully:', response);
-                },
-                error: function(error) {
-                    console.error('Error submitting form:', error);
-                }
-            });
-        }
+
     });
 </script>
 
@@ -389,120 +353,120 @@ $.ajaxSetup({
 
 <script>
     function submitBookIssueForm() {
-    var csrfToken = $('meta[name="csrf-token"]').attr('content');
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
-    // Show the loader overlay
-    $('#loader-overlay').show();
+        // Show the loader overlay
+        $('#loader-overlay').show();
 
-    var studentData = {
-        studentId: $('#studentId').val(),
-    };
-    var bookEntriesData = [];
-    $('#bookRowsContainer tr').each(function(index, row) {
-        var bookEntry = {
-            bookTitle: $(row).find('td:eq(1)').text(),
-            quantity: $(row).find('input[name="quantity[]"]').val(),
-            remarks: $(row).find('input[name="remarks[]"]').val(),
+        var studentData = {
+            studentId: $('#studentId').val(),
         };
-        bookEntriesData.push(bookEntry);
-    });
-    var formData = {
-        student: studentData,
-        books: bookEntriesData,
-    };
+        var bookEntriesData = [];
+        $('#bookRowsContainer tr').each(function(index, row) {
+            var bookEntry = {
+                bookTitle: $(row).find('td:eq(1)').text(),
+                quantity: $(row).find('input[name="quantity[]"]').val(),
+            };
+            bookEntriesData.push(bookEntry);
+        });
+        var formData = {
+            student: studentData,
+            books: bookEntriesData,
+        };
 
-    $.ajax({
-        url: '{{ route("admin.storeBookIssues") }}', // Replace with your actual route
-        method: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': csrfToken
-        },
-        data: formData,
-        success: function(data) {
-            console.log('Form submitted successfully:', data);
-            if (data.code === 0) {
-                $.each(data.error, function(prefix, val) {
-                    // Display validation errors
-                    // Replace this with your actual error handling logic
-                    console.error(prefix, val);
-                });
-            } else {
-                // Redirect to the specified URL
-                if (data.redirect) {
-                    window.location.href = data.redirect;
+        $.ajax({
+            url: '{{ route("admin.storeBookIssues") }}', // Replace with your actual route
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: formData,
+            success: function(data) {
+                if (data.code === 0 && data.errors) {
+                    $.each(data.errors, function(field, messages) {
+                        console.error(field, messages);
+                        toastr.error(messages[0]); // Display the first error message for each field
+                    });
+                } else if (data.code === 0 && data.error) {
+                    console.error('Error:', data.error);
+                    toastr.error(data.error); // Display a general error message
+                } else {
+                    // Handle success
+                    if (data.redirect) {
+                        window.location.href = data.redirect;
+                    }
+
+                    toastr.success(data.msg);
                 }
 
                 // Hide the loader overlay
                 $('#loader-overlay').hide();
+            },
+            error: function(error) {
+                console.error('Error submitting form:', error);
 
-                toastr.success(data.message);
+                // Hide the loader overlay on error
+                $('#loader-overlay').hide();
             }
-        },
-        error: function(error) {
-            console.error('Error submitting form:', error);
+        });
 
-            // Hide the loader overlay on error
-            $('#loader-overlay').hide();
-        }
-    });
-}
+    }
 
     $(document).ready(function() {
         // ... (previous code)
 
 
-         // Input field for student ID
-         var studentIdInput = $('#studentId');
+        // Input field for student ID
+        var studentIdInput = $('#studentId');
 
-// Right column for occupied books information
-var studentInfoElement = $('#studentInfo');
+        // Right column for occupied books information
+        var studentInfoElement = $('#studentInfo');
 
 
 
-function fetchOccupiedBooks(studentId) {
-    // Make an AJAX request to fetch occupied books
-    $.ajax({
-        url: '{{ route("admin.checkStudentBooks") }}',
-        method: 'POST',
-        data: {
-            studentId: studentId
-        },
-        success: function(data) {
-            // Display the fetched occupied books
-            displayOccupiedBooks(data);
-        },
-        error: function(error) {
-            console.error('Error fetching occupied books:', error);
+        function fetchOccupiedBooks(studentId) {
+            // Make an AJAX request to fetch occupied books
+            $.ajax({
+                url: '{{ route("admin.checkStudentBooks") }}',
+                method: 'POST',
+                data: {
+                    studentId: studentId
+                },
+                success: function(data) {
+                    // Display the fetched occupied books
+                    displayOccupiedBooks(data);
+                },
+                error: function(error) {
+                    console.error('Error fetching occupied books:', error);
+                }
+            });
         }
-    });
-}
 
-function displayOccupiedBooks(occupiedBooks) {
-    // Clear the previous occupied books
-    clearRightColumn();
+        function displayOccupiedBooks(occupiedBooks) {
+            // Clear the previous occupied books
+            clearRightColumn();
 
-    // Display the new occupied books
-    if (occupiedBooks.length > 0) {
-        var firstBook = occupiedBooks[0];
+            // Display the new occupied books
+            if (occupiedBooks.length > 0) {
+                var firstBook = occupiedBooks[0];
 
-        // Append the content to the right-side column
-        studentInfoElement.html(
-            '<h3>Book Details</h3>' +
-            '<p><strong>Book Title:</strong> ' + firstBook.book.title + '</p>' +
-            '<p><strong>Quantity:</strong> ' + firstBook.quantity + '</p>' +
-            '<p><strong>Remarks:</strong> ' + firstBook.remarks + '</p>'
-        );
-    } else {
-        // If there are no occupied books, display a message
-        studentInfoElement.html('<p>No books currently occupied by this student.</p>');
-    }
-}
+                // Append the content to the right-side column
+                studentInfoElement.html(
+                    '<h3>Book Details</h3>' +
+                    '<p><strong>Book Title:</strong> ' + firstBook.book.title + '</p>' +
+                    '<p><strong>Quantity:</strong> ' + firstBook.quantity + '</p>' +
+                );
+            } else {
+                // If there are no occupied books, display a message
+                studentInfoElement.html('<p>No books currently occupied by this student.</p>');
+            }
+        }
 
 
-function clearRightColumn() {
-    // Clear the content of the right-side column
-    studentInfoElement.html('');
-}
+        function clearRightColumn() {
+            // Clear the content of the right-side column
+            studentInfoElement.html('');
+        }
 
         // Input field for book name
         var bookNameInput = $('#bookName');
@@ -582,7 +546,6 @@ function clearRightColumn() {
                 '<td>' + sl + '</td>' +
                 '<td>' + book.book_title + '</td>' +
                 '<td><input type="number" class="form-control" name="quantity[]" placeholder="Quantity"></td>' +
-                '<td><input type="text" class="form-control" name="remarks[]" placeholder="Remarks"></td>' +
                 '<td><button type="button" class="btn btn-danger" onclick="removeBookRow(this)">Remove</button></td>' +
                 '</tr>'
             );

@@ -81,7 +81,7 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td class="font-weight-bold">{{ $section->section_name }}</td>
                                                 <td>{{ $section->version->version_name }}</td>
-                                                <td>{{ $section->eduClass->class_name }}</td>
+                                                <td>{{ $section->class->class_name }}</td>
                                                 <td
                                                     class="{{ $section->section_status == 1 ? 'text-success' : 'text-danger' }} font-weight-bold">
                                                     {{ $section->section_status == 1 ? __('language.active') : __('language.inactive') }}
