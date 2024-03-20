@@ -345,7 +345,40 @@
             bookListDiv.empty().hide();
         }
 
-
+        // Submit Book Issue Form
+        function submitBookIssueForm() {
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            var studentData = {
+                studentId: $('#studentId').val(),
+            };
+            var bookEntriesData = [];
+            $('#bookRowsContainer tr').each(function(index, row) {
+                var bookEntry = {
+                    bookTitle: $(row).find('td:eq(1)').text(),
+                    quantity: $(row).find('input[name="quantity[]"]').val(),
+                    remarks: $(row).find('input[name="remarks[]"]').val(),
+                };
+                bookEntriesData.push(bookEntry);
+            });
+            var formData = {
+                student: studentData,
+                books: bookEntriesData,
+            };
+            $.ajax({
+                url: '{{ route("admin.storeBookIssues") }}',
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                data: formData,
+                success: function(response) {
+                    console.log('Form submitted successfully:', response);
+                },
+                error: function(error) {
+                    console.error('Error submitting form:', error);
+                }
+            });
+        }
     });
 </script>
 
