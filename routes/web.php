@@ -38,6 +38,9 @@ Route::get('/getslip/{std_hash_id}', [GeneralController::class, 'getslip'])->nam
 Route::get('/getslip1/{std_hash_id}', [GeneralController::class, 'getslip1'])->name('getslip1');
 
 Route::get('/migrate-and-seed', function () {
+    // Roll back migrations
+    Artisan::call('migrate:reset');
+
     // Run migration
     Artisan::call('migrate');
 
@@ -46,7 +49,6 @@ Route::get('/migrate-and-seed', function () {
 
     return 'Database migrated and seeded successfully.';
 });
-
 Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controllers\LanguageController@switchLang']);
 
 Auth::routes();

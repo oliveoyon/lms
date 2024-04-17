@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('leaves', function (Blueprint $table) {
+        Schema::create('student_leaves', function (Blueprint $table) {
             $table->id();
             $table->string('leave_hash_id')->unique();
             $table->unsignedBigInteger('student_id')->constrained('students');
