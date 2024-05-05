@@ -62,7 +62,7 @@ class FeeCollectionController extends Controller
             $html .= '<div class="modal-dialog modal-lg" role="document">';
             $html .= '<div class="modal-content">';
             $html .= '<div class="modal-header">';
-            $html .= '<h5 class="modal-title" id="exampleModalLabel">Collect Bill</h5>';
+            $html .= '<h5 class="modal-title" id="exampleModalLabel">' . __('language.collect_fee') . '</h5>';
             $html .= '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
             $html .= '<span aria-hidden="true">&times;</span>';
             $html .= '</button>';
@@ -98,10 +98,10 @@ class FeeCollectionController extends Controller
                     $html .= '<table class="table">';
                     $html .= '<thead>';
                     $html .= '<tr>';
-                    $html .= '<th>Total Payable</th>';
-                    $html .= '<th>Amount Paid</th>';
-                    $html .= '<th>Remaining</th>';
-                    $html .= '<th>Description</th>';
+                    $html .= '<th>' . __('language.total_payable') . '</th>';
+                    $html .= '<th>' . __('language.amount_paid') . '</th>';
+                    $html .= '<th>' . __('language.remaining') . '</th>';
+                    $html .= '<th>' . __('language.description') . '</th>';
                     $html .= '</tr>';
                     $html .= '</thead>';
                     $html .= '<tbody>';
@@ -111,7 +111,7 @@ class FeeCollectionController extends Controller
 
 
                     } else {
-                        $html .= '<button type="button" class="btn btn-primary open-modal-btn" data-toggle="modal" data-target="#billModal" data-month="' . $month . '" data-std-id="' . $row->std_id . '" data-academic-year="' . $row->academic_year . '">Collect Bill</button>';
+                        $html .= '<button type="button" class="btn btn-primary open-modal-btn" data-toggle="modal" data-target="#billModal" data-month="' . $month . '" data-std-id="' . $row->std_id . '" data-academic-year="' . $row->academic_year . '">' . __('language.collect_fee') . '</button>';
                     }
                 }
 
@@ -137,7 +137,7 @@ class FeeCollectionController extends Controller
             if ($dueReport->count() > 0) {
                 return response()->json(['html' => $html]);
             } else {
-                $html = '<h2 style="text-center">Bill Already Cleared up to '.$uptomonth.'</h2>';
+                $html = '<h2 style="text-center">Bill Already Cleared up to ' . $uptomonth . '</h2>';
                 return response()->json(['html' => $html]);
             }
         } else {
@@ -187,10 +187,10 @@ class FeeCollectionController extends Controller
         $html .= '<table class="table">';
         $html .= '<thead>';
         $html .= '<tr>';
-        $html .= '<th>Payable Amount</th>';
-        $html .= '<th>Paid Amount</th>';
-        $html .= '<th>Remaining</th>';
-        $html .= '<th>Description</th>';
+        $html .= '<th>' . __('language.total_payable') . '</th>';
+        $html .= '<th>' . __('language.amount_paid') . '</th>';
+        $html .= '<th>' . __('language.remaining') . '</th>';
+        $html .= '<th>' . __('language.description') . '</th>';
         $html .= '</tr>';
         $html .= '</thead>';
         $html .= '<tbody>';
@@ -236,7 +236,7 @@ class FeeCollectionController extends Controller
 
             $html .= '</tbody>';
             $html .= '</table>';
-            $html .= '<button type="submit" class="btn btn-primary">Submit</button>';
+            $html .= '<button type="submit" class="btn btn-primary">' . __('language.submit') . '</button>';
         }
 
         $html .= '</form>';
@@ -284,26 +284,26 @@ class FeeCollectionController extends Controller
         $trnxId = $trnx_id;
 
         $send['payments'] = DB::table('fee_payments')
-        ->select(
-            'fee_payments.id',
-            'fee_payments.fee_collection_id',
-            'fee_payments.amount_paid',
-            'fee_payments.payment_date',
-            'fee_payments.payment_method',
-            'fee_payments.trnx_id',
-            'fee_payments.status',
-            'fee_payments.school_id',
-            'fee_collections.id as fee_collection_id',
-            'fee_collections.fee_description',
-            'students.std_name',
-            'students.std_id',
-            'edu_classes.class_name'
-        )
-        ->join('fee_collections', 'fee_payments.fee_collection_id', '=', 'fee_collections.id')
-        ->join('students', 'fee_collections.std_id', '=', 'students.std_id')
-        ->join('edu_classes', 'students.class_id', '=', 'edu_classes.id')
-        ->where('fee_payments.trnx_id', $trnxId)
-        ->get();
+            ->select(
+                'fee_payments.id',
+                'fee_payments.fee_collection_id',
+                'fee_payments.amount_paid',
+                'fee_payments.payment_date',
+                'fee_payments.payment_method',
+                'fee_payments.trnx_id',
+                'fee_payments.status',
+                'fee_payments.school_id',
+                'fee_collections.id as fee_collection_id',
+                'fee_collections.fee_description',
+                'students.std_name',
+                'students.std_id',
+                'edu_classes.class_name'
+            )
+            ->join('fee_collections', 'fee_payments.fee_collection_id', '=', 'fee_collections.id')
+            ->join('students', 'fee_collections.std_id', '=', 'students.std_id')
+            ->join('edu_classes', 'students.class_id', '=', 'edu_classes.id')
+            ->where('fee_payments.trnx_id', $trnxId)
+            ->get();
 
         $totalword = $send['payments']->sum('amount_paid');
         $numberService = new DependentController();
@@ -318,9 +318,9 @@ class FeeCollectionController extends Controller
             'width' => 80
         ];
 
-        if($is_pos){
+        if ($is_pos) {
             return view('dashboard.admin.feeCollection.fee_invoice_pos', $send);
-        }else{
+        } else {
 
             // $cr80Width = 80; //80 Width in millimeters
             $mpdf = new Mpdf([
@@ -343,7 +343,6 @@ class FeeCollectionController extends Controller
             $html = view($bladeViewPath, $send)->render();
             $mpdf->WriteHTML($html);
             return $mpdf->Output('invoice.pdf', 'I');
-
         }
     }
 }

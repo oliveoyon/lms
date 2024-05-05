@@ -18,7 +18,7 @@ class AcademicController extends Controller
         $send['versions'] = EduVersions::get();
         return view('dashboard.admin.academic.version', $send);
     }
-    
+
     public function addVersion(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -83,7 +83,7 @@ class AcademicController extends Controller
         $query = EduVersions::find($version_id);
         $query = $query->delete();
 
-        
+
         if ($query) {
             return response()->json(['code' => 1, 'msg' => __('language.version_del_msg') , 'redirect' => 'admin/version-list']);
         } else {
@@ -139,7 +139,7 @@ class AcademicController extends Controller
         $class_id = $request->cid;
         $class = EduClasses::find($class_id);
 
-        
+
 
         $validator = Validator::make($request->all(), [
             'class_name' => 'required|string|max:255|unique:edu_classes,class_name,' . $class_id,
@@ -178,7 +178,7 @@ class AcademicController extends Controller
         }
     }
 
-    
+
 
     public function sectionList()
     {
@@ -252,7 +252,7 @@ class AcademicController extends Controller
         $section->class_id = $request->input('class_id');
         $section->max_students = $request->input('max_students');
         $section->section_status = $request->input('section_status');
-       
+
         $query = $section->save();
 
         if ($query) {

@@ -121,13 +121,13 @@
                                     id="add-class-form">
                                     @csrf
                                     <div class="form-group">
-                                        <label for="class_name">{{ __('language.class_name') }}</label>
+                                        <label class="required" for="class_name">{{ __('language.class_name') }}</label>
                                         <input type="text" class="form-control" name="class_name" id="class_name"
                                             placeholder="{{ __('language.class_name') }}">
                                         <span class="text-danger error-text class_name_error"></span>
                                     </div>
                                     <div class="form-group">
-                                        <label for="version_id">{{ __('language.version') }}</label>
+                                        <label class="required" for="version_id">{{ __('language.version') }}</label>
                                         <select class="form-control" name="version_id" id="version_id">
                                             @foreach ($versions as $version)
                                                 <option value="{{ $version->id }}">{{ $version->version_name }}</option>
@@ -136,13 +136,13 @@
                                         <span class="text-danger error-text version_id_error"></span>
                                     </div>
                                     <div class="form-group">
-                                        <label for="class_numeric">{{ __('language.numeric') }}</label>
+                                        <label class="required" for="class_numeric">{{ __('language.numeric') }}</label>
                                         <input type="number" class="form-control" name="class_numeric" id="class_numeric"
                                             placeholder="Numeric Value">
                                         <span class="text-danger error-text class_numeric_error"></span>
                                     </div>
                                     <div class="form-group">
-                                        <label for="class_status">{{ __('language.status') }}</label>
+                                        <label class="required" for="class_status">{{ __('language.status') }}</label>
                                         <select class="form-control" name="class_status" id="class_status">
                                             <option value="1">{{ __('language.active') }}</option>
                                             <option value="0">{{ __('language.inactive') }}</option>
@@ -174,13 +174,13 @@
                                     @csrf
                                     <input type="hidden" name="cid">
                                     <div class="form-group">
-                                        <label for="class_name">{{ __('language.class_name') }}</label>
+                                        <label class="required" for="class_name">{{ __('language.class_name') }}</label>
                                         <input type="text" class="form-control" name="class_name" id="class_name"
                                             placeholder="{{ __('language.class_name') }}">
                                         <span class="text-danger error-text class_name_error"></span>
                                     </div>
                                     <div class="form-group">
-                                        <label for="version_id">{{ __('language.version') }}</label>
+                                        <label class="required" for="version_id">{{ __('language.version') }}</label>
                                         <select class="form-control" name="version_id" id="version_id">
                                             @foreach ($versions as $version)
                                                 <option value="{{ $version->id }}">{{ $version->version_name }}</option>
@@ -189,13 +189,13 @@
                                         <span class="text-danger error-text version_id_error"></span>
                                     </div>
                                     <div class="form-group">
-                                        <label for="class_numeric">{{ __('language.numeric') }}</label>
+                                        <label class="required" for="class_numeric">{{ __('language.numeric') }}</label>
                                         <input type="number" class="form-control" name="class_numeric"
                                             id="class_numeric" placeholder="Numeric Value">
                                         <span class="text-danger error-text class_numeric_error"></span>
                                     </div>
                                     <div class="form-group">
-                                        <label for="class_status">{{ __('language.status') }}</label>
+                                        <label class="required" for="class_status">{{ __('language.status') }}</label>
                                         <select class="form-control" name="class_status" id="class_status">
                                             <option value="1">{{ __('language.active') }}</option>
                                             <option value="0">{{ __('language.inactive') }}</option>

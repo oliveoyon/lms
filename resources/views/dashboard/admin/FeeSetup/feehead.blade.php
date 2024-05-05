@@ -124,20 +124,20 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="aca_feehead_name">{{ __('language.fee_head_name') }}</label>
+                                    <label class="required" for="aca_feehead_name">{{ __('language.fee_head_name') }}</label>
                                     <input type="text" class="form-control form-control-sm" name="aca_feehead_name"
                                         id="aca_feehead_name" placeholder="{{ __('language.fee_head_name') }}">
                                     <span class="text-danger error-text aca_feehead_name_error"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="aca_feehead_description">{{ __('language.fee_head_description') }}</label>
+                                    <label class="required" for="aca_feehead_description">{{ __('language.fee_head_description') }}</label>
                                     <input type="text" class="form-control form-control-sm"
                                         name="aca_feehead_description" id="aca_feehead_description"
                                         placeholder="{{ __('language.fee_head_description') }}">
                                     <span class="text-danger error-text aca_feehead_description_error"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="aca_feehead_freq">{{ __('language.fee_frequency') }}</label>
+                                    <label class="required" for="aca_feehead_freq">{{ __('language.fee_frequency') }}</label>
                                     <select class="form-control form-control-sm" name="aca_feehead_freq"
                                         id="aca_feehead_freq">
                                         @foreach ($feeFrequencies as $freq)
@@ -150,7 +150,7 @@
                             <div class="col-md-6">
 
                                 <div class="form-group">
-                                    <label for="status">{{ __('language.status') }}</label>
+                                    <label class="required" for="status">{{ __('language.status') }}</label>
                                     <select class="form-control form-control-sm" name="status" id="status">
                                         <option value="1">{{ __('language.active') }}</option>
                                         <option value="0">{{ __('language.inactive') }}</option>
@@ -187,20 +187,20 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="aca_feehead_name">{{ __('language.fee_head_name') }}</label>
+                                    <label class="required" for="aca_feehead_name">{{ __('language.fee_head_name') }}</label>
                                     <input type="text" class="form-control form-control-sm" name="aca_feehead_name"
                                         id="aca_feehead_name" placeholder="{{ __('language.fee_head_name') }}">
                                     <span class="text-danger error-text aca_feehead_name_error"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="aca_feehead_description">{{ __('language.fee_head_description') }}</label>
+                                    <label class="required" for="aca_feehead_description">{{ __('language.fee_head_description') }}</label>
                                     <input type="text" class="form-control form-control-sm"
                                         name="aca_feehead_description" id="aca_feehead_description"
                                         placeholder="{{ __('language.fee_head_description') }}">
                                     <span class="text-danger error-text aca_feehead_description_error"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="aca_feehead_freq">{{ __('language.fee_frequency') }}</label>
+                                    <label class="required" for="aca_feehead_freq">{{ __('language.fee_frequency') }}</label>
                                     <select class="form-control form-control-sm" name="aca_feehead_freq"
                                         id="aca_feehead_freq">
                                         @foreach ($feeFrequencies as $freq)
@@ -213,7 +213,7 @@
                             <div class="col-md-6">
 
                                 <div class="form-group">
-                                    <label for="status">{{ __('language.status') }}</label>
+                                    <label class="required" for="status">{{ __('language.status') }}</label>
                                     <select class="form-control form-control-sm" name="status" id="status">
                                         <option value="1">{{ __('language.active') }}</option>
                                         <option value="0">{{ __('language.inactive') }}</option>

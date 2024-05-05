@@ -217,7 +217,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="freq_name">{{ __('language.aca_fee_group') }}</label>
+                                                <label class="required" for="freq_name">{{ __('language.aca_fee_group') }}</label>
                                                 <select class="form-control form-control-sm" name="aca_group_id"
                                                     id="aca_feegroup_id">
                                                     <option value="">Select</option>
@@ -230,7 +230,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="academic_year">{{ __('language.academic_year') }}</label>
+                                                <label class="required" for="academic_year">{{ __('language.academic_year') }}</label>
                                                 <select class="form-control form-control-sm" name="academic_year"
                                                     id="academic_yeasr">
                                                     @php
@@ -248,7 +248,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="classes">{{ __('language.class') }}</label>
+                                                <label class="required" for="classes">{{ __('language.class') }}</label>
                                                 <select class="form-control form-control-sm select2" multiple="multiple" name="class_id[]" style="width: 100%;" >
                                                     <option>Select Class (Multiple)</option>
                                                     @foreach ($classes as $class)

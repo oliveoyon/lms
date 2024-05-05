@@ -5,20 +5,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.2.0/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <!-- Add your custom CSS here -->
-<style>
-    .required:after {
-        content: " *";
-        color: red;
-    }
-
-    .card-title {
-        font-size: 20px;
-        color: white;
-        font-family: 'Lucida Sans', 'SolaimanLipi'
-    }
-
-
-</style>
 
 @endpush
 

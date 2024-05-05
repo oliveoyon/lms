@@ -109,7 +109,7 @@ return [
     "student_admission" => "Student Admission",
     "bulk_student_admission" => "Bulk Student Admission",
     "add_student" => "Add Student",
-    "add_bulk_student" => "Buld Student Admission",
+    "add_bulk_student" => "Bulk Student Admission",
     "enroll_student" => "Enroll Students",
     "student_list" => "Student List",
     "promote_student" => "Promote Student",
@@ -417,6 +417,13 @@ return [
     "route_add_msg" => "Route added successfully.",
     "route_edit_msg" => "Route updated successfully.",
     "route_del_msg" => "Route deleted successfully.",
+
+    "bill_collection" => "Bill Collection",
+    "month_upto" => "Month (Up To)",
+    "total_payable" => "Total Payable",
+    "amount_paid" => "Amount Paid",
+    "remaining" => "Remaining",
+    "description" => "Description",
 
 
 ];

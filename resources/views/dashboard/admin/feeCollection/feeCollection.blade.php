@@ -11,12 +11,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Dashboard</h1>
+                        <h1 class="m-0">{{ __('language.dashboard') }}</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Home</a></li>
-                            <li class="breadcrumb-item active">Dashboard</li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('language.home') }}</a></li>
+                            <li class="breadcrumb-item active">{{ __('language.dashboard') }}</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -26,7 +26,7 @@
 
         <section class="content">
             <div class="container-fluid">
-                <h2 class="text-center">Bill Collection</h2>
+                <h2 class="text-center">{{ __('language.bill_collection') }}</h2>
                 <form action="{{ route('admin.generateBill') }}" method="post" id="bill-search">
                     @csrf
                     <div class="row">
@@ -34,7 +34,7 @@
                             <div class="row">
                                 <div class="col-3">
                                     <div class="form-group">
-                                        <label>Academic Year</label>
+                                        <label>{{ __('language.academic_year') }}</label>
                                         <select class="select2" style="width: 100%;" name="ac">
                                             <option value="">All Years</option>
                                             @php
@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="col-3">
                                     <div class="form-group">
-                                        <label>Month (Up To)</label>
+                                        <label>{{ __('language.month_upto') }}</label>
                                         <select class="select2" style="width: 100%;" name="mon">
                                             <option value="">Every Month</option>
                                             @php
@@ -94,15 +94,7 @@
     <!-- /.content-wrapper -->
 
 
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-        <div class="p-3">
-            <h5>Title</h5>
-            <p>Sidebar content</p>
-        </div>
-    </aside>
-    <!-- /.control-sidebar -->
+
 
 
 

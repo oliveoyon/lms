@@ -129,13 +129,13 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="subject_name">{{ __('language.subject_name') }}</label>
+                                    <label class="required" for="subject_name">{{ __('language.subject_name') }}</label>
                                     <input type="text" class="form-control form-control-sm" name="subject_name"
                                         id="subject_name" placeholder="{{ __('language.subject_name') }}">
                                     <span class="text-danger error-text subject_name_error"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="version_id">{{ __('language.version') }}</label>
+                                    <label class="required" for="version_id">{{ __('language.version') }}</label>
                                     <select class="form-control form-control-sm version_id" name="version_id"
                                         id="version_id">
                                         <option value="">{{ __('language.select_version') }}</option>
@@ -146,7 +146,7 @@
                                     <span class="text-danger error-text version_id_error"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="class_id">{{ __('language.class') }}</label>
+                                    <label class="required" for="class_id">{{ __('language.class') }}</label>
                                     <select class="form-control form-control-sm class_id" name="class_id" id="class_id">
                                         <option value="">{{ __('language.select_class') }}</option>
                                     </select>
@@ -155,13 +155,13 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="subject_code">{{ __('language.subject_code') }}</label>
+                                    <label class="required" for="subject_code">{{ __('language.subject_code') }}</label>
                                     <input type="text" class="form-control form-control-sm" name="subject_code"
                                         id="subject_code" placeholder="{{ __('language.subject_code') }}">
                                     <span class="text-danger error-text subject_code_error"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="academic_year">{{ __('language.academic_year') }}</label>
+                                    <label class="required" for="academic_year">{{ __('language.academic_year') }}</label>
                                     <select class="form-control form-control-sm academic_year" name="academic_year" id="academic_year">
                                         <option value="">{{ __('language.academic_year') }}</option>
                                         @php
@@ -176,7 +176,7 @@
                                     <span class="text-danger error-text academic_year_error"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="subject_status">{{ __('language.status') }}</label>
+                                    <label class="required" for="subject_status">{{ __('language.status') }}</label>
                                     <select class="form-control form-control-sm" name="subject_status"
                                         id="subject_status">
                                         <option value="1">{{ __('language.active') }}</option>
@@ -213,19 +213,19 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="subject_name">{{ __('language.subject_name') }}</label>
+                                    <label class="required" for="subject_name">{{ __('language.subject_name') }}</label>
                                     <input type="text" class="form-control form-control-sm" name="subject_name"
                                         placeholder="{{ __('language.subject_name') }}">
                                     <span class="text-danger error-text subject_name_error"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="subject_code">{{ __('language.subject_code') }}</label>
+                                    <label class="required" for="subject_code">{{ __('language.subject_code') }}</label>
                                     <input type="text" class="form-control form-control-sm" name="subject_code"
                                         placeholder="{{ __('language.subject_code') }}">
                                     <span class="text-danger error-text subject_code_error"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="academic_year">{{ __('language.academic_year') }}</label>
+                                    <label class="required" for="academic_year">{{ __('language.academic_year') }}</label>
                                     <select class="form-control form-control-sm academic_year" name="academic_year" id="academic_year">
                                         <option value="">{{ __('language.academic_year') }}</option>
                                         @php
@@ -242,7 +242,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="version_id">{{ __('language.version') }}</label>
+                                    <label class="required" for="version_id">{{ __('language.version') }}</label>
                                     <select class="form-control form-control-sm version_id" name="version_id"
                                         id="version_id">
                                         <option value="">{{ __('language.select_version') }}</option>
@@ -253,7 +253,7 @@
                                     <span class="text-danger error-text version_id_error"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="class_id">{{ __('language.class') }}</label>
+                                    <label class="required" for="class_id">{{ __('language.class') }}</label>
                                     <select class="form-control form-control-sm class_id" name="class_id" id="class_id">
                                         @foreach ($classes as $class)
                                             <option value="{{ $class->id }}">{{ $class->class_name }}</option>
@@ -262,7 +262,7 @@
                                     <span class="text-danger error-text class_id_error"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="subject_status">{{ __('language.status') }}</label>
+                                    <label class="required" for="subject_status">{{ __('language.status') }}</label>
                                     <select class="form-control form-control-sm" name="subject_status">
                                         <option value="1">{{ __('language.active') }}</option>
                                         <option value="0">{{ __('language.inactive') }}</option>

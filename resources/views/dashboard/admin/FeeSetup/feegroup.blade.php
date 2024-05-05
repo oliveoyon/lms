@@ -124,7 +124,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="aca_group_name">{{ __('language.fee_amount_group_name') }}</label>
+                                    <label class="required" for="aca_group_name">{{ __('language.fee_amount_group_name') }}</label>
                                     <input type="text" class="form-control form-control-sm" id="aca_group_name"
                                         name="aca_group_name" placeholder="{{ __('language.fee_amount_group_name') }}">
                                     <span class="text-danger error-text aca_group_name_error"></span>
@@ -133,7 +133,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="academic_year">{{ __('language.academic_year') }}</label>
+                                    <label class="required" for="academic_year">{{ __('language.academic_year') }}</label>
                                     <select class="form-control form-control-sm academic_year" name="academic_year" id="academic_year">
                                         <option value="">{{ __('language.academic_year') }}</option>
                                         @php
@@ -151,7 +151,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>{{ __('language.aca_fee_head') }}</label>
+                                    <label class="required">{{ __('language.aca_fee_head') }}</label>
                                     <select multiple="multiple" class="duallistbox form-control form-control-sm"
                                         id="aca_feehead_ids" name="aca_feehead_ids[]">
                                         @foreach ($feeHeads as $feeHead)
@@ -165,7 +165,7 @@
                             <div class="col-md-6">
 
                                 <div class="form-group">
-                                    <label for="aca_group_status">{{ __('language.status') }}</label>
+                                    <label class="required" for="aca_group_status">{{ __('language.status') }}</label>
                                     <select class="form-control form-control-sm" id="aca_group_status"
                                         name="aca_group_status">
                                         <option value="1">{{ __('language.active') }}</option>
@@ -203,7 +203,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="aca_group_name">{{ __('language.fee_amount_group_name') }}</label>
+                                    <label class="required" for="aca_group_name">{{ __('language.fee_amount_group_name') }}</label>
                                     <input type="text" class="form-control form-control-sm" id="aca_group_name"
                                         name="aca_group_name" placeholder="{{ __('language.fee_amount_group_name') }}">
                                     <span class="text-danger error-text aca_group_name_error"></span>
@@ -212,7 +212,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="academic_year">{{ __('language.academic_year') }}</label>
+                                    <label class="required" for="academic_year">{{ __('language.academic_year') }}</label>
                                     <select class="form-control form-control-sm academic_year" name="academic_year" id="academic_year">
                                         <option value="">{{ __('language.academic_year') }}</option>
                                         @php
@@ -230,7 +230,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>{{ __('language.aca_fee_head') }}</label>
+                                    <label class="required">{{ __('language.aca_fee_head') }}</label>
                                     <select multiple="multiple" class="duallistbox form-control form-control-sm"
                                         id="aca_feehead_ids" name="aca_feehead_ids[]">
                                         @foreach ($feeHeads as $feeHead)
@@ -244,7 +244,7 @@
                             <div class="col-md-6">
 
                                 <div class="form-group">
-                                    <label for="aca_group_status">{{ __('language.status') }}</label>
+                                    <label class="required" for="aca_group_status">{{ __('language.status') }}</label>
                                     <select class="form-control form-control-sm" id="aca_group_status"
                                         name="aca_group_status">
                                         <option value="1">{{ __('language.active') }}</option>

@@ -118,14 +118,13 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="freq_name">{{ __('language.fee_frequency_name') }}</label>
+                                                <label class="required" for="freq_name">{{ __('language.fee_frequency_name') }}</label>
                                                 <input type="text" class="form-control form-control-sm" name="freq_name"
                                                     placeholder="{{ __('language.fee_frequency_name') }}">
                                                 <span class="text-danger error-text freq_name_error"></span>
                                             </div>
                                             <div class="form-group">
-                                                <label
-                                                    for="no_of_installment">{{ __('language.no_of_installment') }}</label>
+                                                <label class="required" for="no_of_installment">{{ __('language.no_of_installment') }}</label>
                                                 <input type="number" class="form-control form-control-sm"
                                                     name="no_of_installment"
                                                     placeholder="{{ __('language.no_of_installment') }}">
@@ -135,14 +134,13 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label
-                                                    for="installment_period">{{ __('language.installment_period') }}</label>
+                                                <label for="installment_period">{{ __('language.installment_period') }}</label>
                                                 <input type="text" class="form-control form-control-sm"
                                                     name="installment_period" placeholder="{{ __('language.installment_period') }}">
                                                 <span class="text-danger error-text installment_period_error"></span>
                                             </div>
                                             <div class="form-group">
-                                                <label for="freq_status">Status</label>
+                                                <label for="freq_status">{{ __('language.status') }}</label>
                                                 <select class="form-control form-control-sm" name="freq_status"
                                                     id="freq_status">
                                                     <option value="1">{{ __('language.active') }}</option>
@@ -181,15 +179,14 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="freq_name">{{ __('language.fee_frequency_name') }}</label>
+                                                <label class="required" for="freq_name">{{ __('language.fee_frequency_name') }}</label>
                                                 <input type="text" class="form-control form-control-sm"
                                                     name="freq_name"
                                                     placeholder="{{ __('language.fee_frequency_name') }}">
                                                 <span class="text-danger error-text freq_name_error"></span>
                                             </div>
                                             <div class="form-group">
-                                                <label
-                                                    for="no_of_installment">{{ __('language.no_of_installment') }}</label>
+                                                <label class="required" for="no_of_installment">{{ __('language.no_of_installment') }}</label>
                                                 <input type="number" class="form-control form-control-sm"
                                                     name="no_of_installment"
                                                     placeholder="{{ __('language.no_of_installment') }}">
@@ -199,14 +196,13 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label
-                                                    for="installment_period">{{ __('language.installment_period') }}</label>
+                                                <label for="installment_period">{{ __('language.installment_period') }}</label>
                                                 <input type="text" class="form-control form-control-sm"
                                                     name="installment_period" placeholder="Installment Period">
                                                 <span class="text-danger error-text installment_period_error"></span>
                                             </div>
                                             <div class="form-group">
-                                                <label for="freq_status">Status</label>
+                                                <label for="freq_status">{{ __('language.status') }}</label>
                                                 <select class="form-control form-control-sm" name="freq_status"
                                                     id="freq_status">
                                                     <option value="1">{{ __('language.active') }}</option>

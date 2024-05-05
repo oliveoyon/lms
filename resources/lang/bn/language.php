@@ -415,4 +415,11 @@ return [
     "route_edit_msg" => "রুটটি সফলভাবে আপডেট হয়েছে।",
     "route_del_msg" => "রুটটি সফলভাবে মোছা হয়েছে।",
 
+    "bill_collection" => "বিল সংগ্রহ",
+    "month_upto" => "মাস (এর মধ্যে)",
+    "total_payable" => "মোট পরিশোধযোগ্য",
+    "amount_paid" => "পরিশোধিত পরিমাণ",
+    "remaining" => "অবশিষ্ট",
+    "description" => "বর্ণনা",
+
 ];

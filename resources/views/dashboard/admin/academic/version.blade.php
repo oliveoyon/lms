@@ -111,14 +111,14 @@
                                     @csrf
 
                                     <div class="form-group">
-                                        <label for="version_name">{{ __('language.version_name') }}</label>
+                                        <label class="required" for="version_name">{{ __('language.version_name') }}</label>
                                         <input type="text" class="form-control form-control-sm" name="version_name"
                                             id="version_name" placeholder="{{ __('language.version_name') }}">
                                         <span class="text-danger error-text version_name_error"></span>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="status">{{ __('language.status') }}</label>
+                                        <label class="required" for="status">{{ __('language.status') }}</label>
                                         <select class="form-control form-control-sm" name="version_status"
                                             id="version_status">
                                             <option value="1">{{ __('language.active') }}</option>
@@ -160,14 +160,14 @@
                                     @csrf
                                     <input type="hidden" name="vid">
                                     <div class="form-group">
-                                        <label for="version_name">{{ __('language.version_name') }}</label>
+                                        <label class="required" for="version_name">{{ __('language.version_name') }}</label>
                                         <input type="text" class="form-control form-control-sm" name="version_name"
                                             id="version_name" placeholder="{{ __('language.version_name') }}">
                                         <span class="text-danger error-text version_name_error"></span>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="status">{{ __('language.status') }}</label>
+                                        <label class="required" for="status">{{ __('language.status') }}</label>
                                         <select class="form-control form-control-sm" name="version_status"
                                             id="version_status">
                                             <option value="1">{{ __('language.active') }}</option>
