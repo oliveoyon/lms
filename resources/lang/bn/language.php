@@ -331,6 +331,7 @@ return [
     "fees_collection" => "ফি সংগ্রহ",
     "collect_fee" => "ফি সংগ্রহ করুন",
     "custom_fee_generate" => "কাস্টম ফি তৈরি করুন",
+    "custom_fee_mgmt" => "কাস্টম ফি ম্যানেজমেন্ট",
 
     //Reports
     "print_report" => "প্রিন্ট রিপোর্ট",
@@ -421,5 +422,6 @@ return [
     "amount_paid" => "পরিশোধিত পরিমাণ",
     "remaining" => "অবশিষ্ট",
     "description" => "বর্ণনা",
+    "month_multiple" => "মাস (একাধিক গ্রহনযোগ্য)",
 
 ];

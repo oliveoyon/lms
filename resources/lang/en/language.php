@@ -331,6 +331,7 @@ return [
     "fees_collection" => "Fees Collection",
     "collect_fee" => "Collect Fee",
     "custom_fee_generate" => "Custom Fee Generate",
+    "custom_fee_mgmt" => "Custom Fee Management",
 
     //Reports
     "print_report" => "Print Report",
@@ -424,6 +425,7 @@ return [
     "amount_paid" => "Amount Paid",
     "remaining" => "Remaining",
     "description" => "Description",
+    "month_multiple" => "For Month (Multiple)",
 
 
 ];

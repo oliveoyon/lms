@@ -25,12 +25,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">{{ __('language.fee_head') }}</h1>
+                        <h1 class="m-0">{{ __('language.custom_fee_mgmt') }}</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a
-                                    href="{{ route('admin.home') }}">{{ __('language.fee_head') }}</a></li>
+                                    href="{{ route('admin.home') }}">{{ __('language.custom_fee_mgmt') }}</a></li>
                         </ol>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
 
                             <div class="card">
                                 <div class="card-header bg-gray">
-                                    <h3 class="card-title">Academic Details</h3>
+                                    <h3 class="card-title">{{ __('language.academic_details') }}</h3>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
                                                 class="fas fa-minus"></i>
@@ -69,7 +69,7 @@
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="academicYear" class="required">Academic Year:</label>
+                                                <label for="academicYear" class="required">{{ __('language.academic_year') }}:</label>
                                                 <select class="form-control form-control-sm academic_year"
                                                     name="academic_year" id="academic_year">
                                                     @php
@@ -86,7 +86,7 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="versionName">Version Name:</label>
+                                                <label for="versionName">{{ __('language.version_name') }}:</label>
                                                 <select class="form-control form-control-sm version_id" name="version_id"
                                                     id="version_id">
                                                     <option value="">{{ __('language.select_version') }}</option>
@@ -99,7 +99,7 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="className">Class Name:</label>
+                                                <label for="className">{{ __('language.class_name') }}:</label>
                                                 <select class="form-control form-control-sm class_id" name="class_id"
                                                     id="class_id" disabled>
                                                     <option value="">{{ __('language.select_class') }}</option>
@@ -109,7 +109,7 @@
 
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="section_id">Section Name:</label>
+                                                <label for="section_id">{{ __('language.section_name') }}:</label>
                                                 <select id="section_id" name="section_id"
                                                     class="form-control form-control-sm section_id" disabled>
                                                     <option value="">{{ __('language.select_section') }}</option>
@@ -119,7 +119,7 @@
 
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="student_id">Student Name:</label>
+                                                <label for="student_id">{{ __('language.student_name') }}:</label>
                                                 <select id="student_id" name="std_id[]" multiple
                                                     class="form-control form-control-sm student_id select2" disabled>
                                                     <option value="">{{ __('language.student_name') }}</option>
@@ -129,14 +129,14 @@
 
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="student_id" class="required">Fee Description:</label>
+                                                <label for="student_id" class="required">{{ __('language.aca_fee_setup') }}:</label>
                                                 <input type="text" class="form-control form-control-sm" name="fee_desc">
                                             </div>
                                         </div>
 
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="academicYear" class="required">For Month (Multiple):</label>
+                                                <label for="academicYear" class="required">{{ __('language.month_multiple') }}:</label>
                                                 <select class="form-control form-control-sm month select2" name="month[]" id="month" multiple>
                                                     @php
                                                         $currentMonth = date('m');
@@ -154,7 +154,7 @@
 
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="student_id" class="required">Amount:</label>
+                                                <label for="student_id" class="required">{{ __('language.fee_amount') }}:</label>
                                                 <input type="number" class="form-control form-control-sm" name="amount" id="amount">
                                             </div>
                                         </div>
@@ -173,7 +173,7 @@
 
 
                             <div class="btn-container">
-                                <button type="submit" class="btn btn-primary">Finish</button>
+                                <button type="submit" class="btn btn-primary">{{ __('language.submit') }}</button>
                             </div>
 
                         </form>

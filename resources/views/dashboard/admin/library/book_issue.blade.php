@@ -47,7 +47,7 @@
                                 <div class="form-group">
                                     <label for="studentId">Student ID</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="studentId" name="student.studentId" placeholder="Enter student ID">
+                                        <input type="text" class="form-control" id="studentId" name="studentId" placeholder="Enter student ID">
                                     </div>
                                 </div>
 
@@ -347,6 +347,7 @@
 
         // Submit Book Issue Form
         function submitBookIssueForm() {
+            alert($('#studentId').val());
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
             var studentData = {
                 studentId: $('#studentId').val(),
@@ -385,65 +386,7 @@
 
 
 <script>
-    function submitBookIssueForm() {
-        var csrfToken = $('meta[name="csrf-token"]').attr('content');
-
-        // Show the loader overlay
-        $('#loader-overlay').show();
-
-        var studentData = {
-            studentId: $('#studentId').val(),
-        };
-        var bookEntriesData = [];
-        $('#bookRowsContainer tr').each(function(index, row) {
-            var bookEntry = {
-                bookTitle: $(row).find('td:eq(1)').text(),
-                quantity: $(row).find('input[name="quantity[]"]').val(),
-            };
-            bookEntriesData.push(bookEntry);
-        });
-        var formData = {
-            student: studentData,
-            books: bookEntriesData,
-        };
-
-        $.ajax({
-            url: '{{ route("admin.storeBookIssues") }}', // Replace with your actual route
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: formData,
-            success: function(data) {
-                if (data.code === 0 && data.errors) {
-                    $.each(data.errors, function(field, messages) {
-                        console.error(field, messages);
-                        toastr.error(messages[0]); // Display the first error message for each field
-                    });
-                } else if (data.code === 0 && data.error) {
-                    console.error('Error:', data.error);
-                    toastr.error(data.error); // Display a general error message
-                } else {
-                    // Handle success
-                    if (data.redirect) {
-                        window.location.href = data.redirect;
-                    }
-
-                    toastr.success(data.msg);
-                }
-
-                // Hide the loader overlay
-                $('#loader-overlay').hide();
-            },
-            error: function(error) {
-                console.error('Error submitting form:', error);
-
-                // Hide the loader overlay on error
-                $('#loader-overlay').hide();
-            }
-        });
-
-    }
+    
 
     $(document).ready(function() {
         // ... (previous code)
