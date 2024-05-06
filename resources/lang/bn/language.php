@@ -423,5 +423,20 @@ return [
     "remaining" => "অবশিষ্ট",
     "description" => "বর্ণনা",
     "month_multiple" => "মাস (একাধিক গ্রহনযোগ্য)",
+    "attendance_date" => "উপস্থিতির তারিখ",
+    "attendance_info" => "উপস্থিতি তথ্য",
+    "date" => "তারিখ",
+    "chk_absent" => "অনুপস্থিতির জন্য সব চেক করুন",
+    "chk_present" => "উপস্থিতির জন্য সব চেক করুন",
+
+    "teacher_name" => "শিক্ষকের_নাম",
+    "username" => "ইউজারনেম",
+    "mobile" => "মোবাইল",
+    "email" => "ইমেইল",
+    "designation" => "পদবী",
+    "gender" => "লিঙ্গ",
+    "image" => "চিত্র",
+    "teacher_add" => "শিক্ষক যোগ করুন",
+
 
 ];

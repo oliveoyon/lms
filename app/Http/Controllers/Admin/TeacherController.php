@@ -7,6 +7,7 @@ use App\Models\Admin\AssignTeacher;
 use App\Models\Admin\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -42,7 +43,7 @@ class TeacherController extends Controller
             $teacher->teacher_email = $request->input('teacher_email');
             $teacher->teacher_designation = $request->input('teacher_designation');
             $teacher->teacher_gender = $request->input('teacher_gender');
-            $teacher->teacher_password = $request->input('teacher_password');
+            $teacher->teacher_password = Hash::make($request->input('teacher_password'));
             $teacher->teacher_status = $request->input('teacher_status');
             $teacher->school_id = auth()->user()->school_id;;
             $query = $teacher->save();
@@ -87,7 +88,10 @@ class TeacherController extends Controller
             $teacher->teacher_email = $request->input('teacher_email');
             $teacher->teacher_designation = $request->input('teacher_designation');
             $teacher->teacher_gender = $request->input('teacher_gender');
-            $teacher->teacher_password = $request->input('teacher_password');
+            if ($request->has('teacher_password')) {
+                // Update the teacher's password
+                $teacher->teacher_password = Hash::make($request->input('teacher_password'));
+            }
             $teacher->teacher_status = $request->input('teacher_status');
             $query = $teacher->save();
 
@@ -136,9 +140,9 @@ class TeacherController extends Controller
             'subject_id' => 'required',
             'teacher_id' => 'required',
             'status' => 'required|in:0,1',
-            
+
         ]);
-        
+
 
         if ($validator->fails()) {
             return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
@@ -167,7 +171,7 @@ class TeacherController extends Controller
         $assignedTeacher->teacher_id = $request->input('teacher_id');
         $assignedTeacher->school_id = auth()->user()->school_id;
         $assignedTeacher->status = $request->input('status');
-        
+
         $query = $assignedTeacher->save();
 
         if (!$query) {
@@ -241,7 +245,7 @@ class TeacherController extends Controller
         $assigned_teacher_id = $request->assigned_teacher_id;
 
         $assignedTeacher = AssignTeacher::find($assigned_teacher_id);
-        
+
         if (!$assignedTeacher) {
             return response()->json(['code' => 0, 'msg' => 'Record not found']);
         }
@@ -257,6 +261,6 @@ class TeacherController extends Controller
 
 
 
-    
-    
+
+
 }

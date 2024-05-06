@@ -1,5 +1,5 @@
 @extends('dashboard.admin.layouts.admin-layout-with-cdn')
-@section('title', 'Fee Head')
+@section('title', 'Edit Attendance')
 @push('admincss')
     <!-- DataTables -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.2.0/dist/sweetalert2.min.css">
@@ -28,11 +28,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">{{ __('language.fee_head') }}</h1>
+                    <h1 class="m-0">{{ __('language.attendance_mgmt') }}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('language.fee_head') }}</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('language.attendance_mgmt') }}</a></li>
                     </ol>
                 </div>
             </div>
@@ -56,7 +56,7 @@
 
                             <div class="card">
                                 <div class="card-header bg-gray">
-                                    <h3 class="card-title">Academic Details</h3>
+                                    <h3 class="card-title">{{ __('language.academic_details') }}</h3>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                                         </button>
@@ -66,9 +66,9 @@
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="academicYear" class="required">Academic Year:</label>
+                                                <label for="academicYear" class="required">{{ __('language.academic_year') }}:</label>
                                                 <select class="form-control form-control-sm academic_year" name="academic_year" id="academic_year">
-                                                    <option value="">Academic Year</option>
+                                                    <option value="">{{ __('language.academic_year') }}</option>
                                                     @php
                                                         $currentYear = date('Y');
                                                     @endphp
@@ -82,7 +82,7 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="versionName" class="required">Version Name:</label>
+                                                <label for="versionName" class="required">{{ __('language.version_name') }}:</label>
                                                 <select class="form-control form-control-sm version_id" name="version_id" id="version_id">
                                                     <option value="">{{ __('language.select_version') }}</option>
                                                     @foreach ($versions as $version)
@@ -93,7 +93,7 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="className" class="required">Class Name:</label>
+                                                <label for="className" class="required">{{ __('language.class_name') }}:</label>
                                                 <select class="form-control form-control-sm class_id" name="class_id" id="class_id" disabled>
                                                     <option value="">{{ __('language.select_class') }}</option>
                                                 </select>
@@ -102,7 +102,7 @@
 
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="section_id" class="required">Section Name:</label>
+                                                <label for="section_id" class="required">{{ __('language.section_name') }}:</label>
                                                 <select id="section_id" name="section_id" class="form-control form-control-sm section_id" disabled>
                                                     <option value="">{{ __('language.select_section') }}</option>
                                                 </select>
@@ -111,7 +111,7 @@
 
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="attendance_date" class="required">Attendance Date:</label>
+                                                <label for="attendance_date" class="required">{{ __('language.attendance_date') }}:</label>
                                                 <input type="date" id="attendance_date" name="attendance_date" class="form-control form-control-sm" required value="{{ now()->toDateString() }}">
                                             </div>
                                         </div>
@@ -125,7 +125,7 @@
 
 
                             <div class="btn-container">
-                                <button type="submit" class="btn btn-primary">Finish</button>
+                                <button type="submit" class="btn btn-primary">{{ __('language.update') }}</button>
                             </div>
 
                         </form>
@@ -314,29 +314,26 @@ $(document).ready(function () {
 
             // Create a card for attendance information with dynamic heading
             var cardHtml = '<div class="card">';
-            cardHtml += '<div class="card-header">';
-            cardHtml += '<h5 class="mb-0">Attendance Information</h5>';
-            cardHtml += '</div>';
-            cardHtml += '<div class="card-body">';
+                cardHtml += '<div class="card-header">';
+                cardHtml += '<h5 class="mb-0">{{ __('language.attendance_info') }}</h5>';
+                cardHtml += '</div>';
+                cardHtml += '<div class="card-body">';
 
-            // Class Name
-            cardHtml += '<p class="card-text mb-2"><strong>Class Name:</strong> ' + response.classData.class_name + '</p>';
+                // Class Name
+                cardHtml += '<p class="card-text mb-2"><strong>{{ __('language.class_name') }}:</strong> ' + response.classData.class_name + '</p>';
 
-            // Section Name
-            cardHtml += '<p class="card-text mb-2"><strong>Section Name:</strong> ' + response.sectionData.section_name + '</p>';
+                // Section Name
+                cardHtml += '<p class="card-text mb-2"><strong>{{ __('language.section_name') }}:</strong> ' + response.sectionData.section_name + '</p>';
 
-            // Academic Year
-            cardHtml += '<p class="card-text mb-2"><strong>Academic Year:</strong> ' + academicYear + '</p>';
+                // Academic Year
+                cardHtml += '<p class="card-text mb-2"><strong>{{ __('language.academic_year') }}:</strong> ' + academicYear + '</p>';
 
-            // Attendance Date
-            cardHtml += '<p class="card-text mb-2"><strong>Attendance Date:</strong> ' + attendanceDate + '</p>';
+                // Current Date
+                cardHtml += '<p class="card-text mb-2"><strong>{{ __('language.date') }}:</strong> ' + response.currentDate + '</p>';
 
-            // Current Date
-            cardHtml += '<p class="card-text mb-2"><strong>Current Date:</strong> ' + response.currentDate + '</p>';
-
-            cardHtml += '<table class="table">';
-            cardHtml += '<thead><tr><th>Student Id</th><th>Student Name</th><th>Action</th></tr></thead>';
-            cardHtml += '<tbody>';
+                cardHtml += '<table class="table">';
+                cardHtml += '<thead><tr><th>{{ __('language.student_id') }}</th><th>{{ __('language.student_name') }}</th><th>{{ __('language.action') }}</th></tr></thead>';
+                cardHtml += '<tbody>';
 
             // Populate rows with student data
             $.each(response.students, function (index, std) {
@@ -354,8 +351,8 @@ $(document).ready(function () {
             cardHtml += '</tbody>';
             cardHtml += '</table>';
             cardHtml += '<div class="mt-3">';
-            cardHtml += '<button type="button" class="btn btn-danger" onclick="toggleAllRadio(\'Absent\')">All Checked for Absent</button>';
-            cardHtml += '<button type="button" class="btn btn-success ml-2" onclick="toggleAllRadio(\'Present\')">All Checked for Present</button>';
+            cardHtml += '<button type="button" class="btn btn-danger" onclick="toggleAllRadio(\'Absent\')">{{ __('language.chk_absent') }}</button>';
+            cardHtml += '<button type="button" class="btn btn-success ml-2" onclick="toggleAllRadio(\'Present\')">{{ __('language.chk_present') }}</button>';
             cardHtml += '</div>';
             cardHtml += '</div></div>';
 

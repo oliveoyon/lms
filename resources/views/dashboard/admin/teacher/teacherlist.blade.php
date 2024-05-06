@@ -1,5 +1,5 @@
 @extends('dashboard.admin.layouts.admin-layout-with-cdn')
-@section('title', 'Version')
+@section('title', 'Teacher List')
 @push('admincss')
     <!-- DataTables -->
     <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
@@ -16,11 +16,11 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">{{ __('language.version') }}</h1>
+                        <h1 class="m-0">{{ __('language.teacher_mgmt') }}</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('language.version') }}</a>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('language.home') }}</a>
                             </li>
                         </ol>
                     </div><!-- /.col -->
@@ -39,7 +39,7 @@
                             <div class="card-header bg-navy">
                                 <h3 class="card-title">
                                     <i class="fas fa-chalkboard-teacher mr-1"></i>
-                                    {{ __('language.version_list') }}
+                                    {{ __('language.teacher_lists') }}
                                 </h3>
                                 <div class="card-tools">
                                     <ul class="nav nav-pills ml-auto">
@@ -47,7 +47,7 @@
 
                                             <button class="btn btn-success btn-sm" data-toggle="modal"
                                                 data-target="#addTeacherModal"><i class="fas fa-plus-square mr-1"></i>
-                                                {{ __('language.version_add') }}</button>
+                                                {{ __('language.teacher_add') }}</button>
                                         </li>
                                     </ul>
                                 </div>
@@ -56,15 +56,15 @@
                                 <table class="table table-bordered table-striped table-hover table-sm" id="datas-table">
                                     <thead style="border-top: 1px solid #b4b4b4">
                                         <th style="width: 15px">#</th>
-                                        <th>Teacher Name</th>
-                                        <th>Username</th>
-                                        <th>Mobile</th>
-                                        <th>Email</th>
-                                        <th>Designation</th>
-                                        <th>Gender</th>
-                                        <th>Image</th>
-                                        <th>Status</th>
-                                        <th style="width: 40px">Action</th>
+                                        <th>{{ __('language.teacher_name') }}</th>
+                                        <th>{{ __('language.username') }}</th>
+                                        <th>{{ __('language.mobile') }}</th>
+                                        <th>{{ __('language.email') }}</th>
+                                        <th>{{ __('language.designation') }}</th>
+                                        <th>{{ __('language.gender') }}</th>
+                                        <th>{{ __('language.image') }}</th>
+                                        <th>{{ __('language.status') }}</th>
+                                        <th style="width: 40px">{{ __('language.action') }}</th>
                                     </thead>
                                     <tbody>
                                         @foreach ($teachers as $teacher)
@@ -92,7 +92,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -104,7 +104,7 @@
                     <div class="modal-dialog modal-xl modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header bg-success">
-                                <h5 class="modal-title" id="addTeacherLabel">Add Teacher</h5>
+                                <h5 class="modal-title" id="addTeacherLabel">{{ __('language.teacher_add') }}</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -112,58 +112,58 @@
                             <div class="modal-body">
                                 <form action="{{ route('admin.addTeacher') }}" method="post" enctype="multipart/form-data" id="add-teacher-form">
                                     @csrf
-                
+
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="teacher_name">Teacher Name</label>
+                                                <label for="teacher_name">{{ __('language.teacher_name') }}</label>
                                                 <input type="text" class="form-control form-control-sm" name="teacher_name" id="teacher_name"
                                                     placeholder="Teacher Name">
                                                 <span class="text-danger error-text teacher_name_error"></span>
                                             </div>
                                         </div>
-                
+
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="teacher_user_name">Username</label>
+                                                <label for="teacher_user_name">{{ __('language.username') }}</label>
                                                 <input type="text" class="form-control form-control-sm" name="teacher_user_name" id="teacher_user_name"
                                                     placeholder="Username">
                                                 <span class="text-danger error-text teacher_user_name_error"></span>
                                             </div>
                                         </div>
-                
+
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="teacher_mobile">Mobile</label>
+                                                <label for="teacher_mobile">{{ __('language.mobile') }}</label>
                                                 <input type="text" class="form-control form-control-sm" name="teacher_mobile" id="teacher_mobile"
                                                     placeholder="Mobile">
                                                 <span class="text-danger error-text teacher_mobile_error"></span>
                                             </div>
                                         </div>
                                     </div>
-                
+
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="teacher_email">Email</label>
+                                                <label for="teacher_email">{{ __('language.email') }}</label>
                                                 <input type="text" class="form-control form-control-sm" name="teacher_email" id="teacher_email"
                                                     placeholder="Email">
                                                 <span class="text-danger error-text teacher_email_error"></span>
                                             </div>
                                         </div>
-                
+
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="teacher_designation">Designation</label>
+                                                <label for="teacher_designation">{{ __('language.designation') }}</label>
                                                 <input type="text" class="form-control form-control-sm" name="teacher_designation" id="teacher_designation"
                                                     placeholder="Designation">
                                                 <span class="text-danger error-text teacher_designation_error"></span>
                                             </div>
                                         </div>
-                
+
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="teacher_gender">Gender</label>
+                                                <label for="teacher_gender">{{ __('language.gender') }}</label>
                                                 <select class="form-control form-control-sm" name="teacher_gender" id="teacher_gender">
                                                     <option value="Male">Male</option>
                                                     <option value="Female">Female</option>
@@ -173,53 +173,53 @@
                                             </div>
                                         </div>
                                     </div>
-                
+
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="teacher_password">Password</label>
+                                                <label for="teacher_password">{{ __('language.password') }}</label>
                                                 <input type="password" class="form-control form-control-sm" name="teacher_password" id="teacher_password"
                                                     placeholder="Password">
                                                 <span class="text-danger error-text teacher_password_error"></span>
                                             </div>
                                         </div>
-                
+
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="teacher_image">Image</label>
+                                                <label for="teacher_image">{{ __('language.image') }}</label>
                                                 <input type="file" class="form-control form-control-sm" name="teacher_image" id="teacher_image">
                                                 <span class="text-danger error-text teacher_image_error"></span>
                                             </div>
                                         </div>
-                
+
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="teacher_status">Status</label>
+                                                <label for="teacher_status">{{ __('language.status') }}</label>
                                                 <select class="form-control form-control-sm" name="teacher_status" id="teacher_status">
-                                                    <option value="1">Active</option>
-                                                    <option value="0">Inactive</option>
+                                                    <option value="1">{{ __('language.active') }}</option>
+                                                    <option value="0">{{ __('language.inactive') }}</option>
                                                 </select>
                                                 <span class="text-danger error-text teacher_status_error"></span>
                                             </div>
                                         </div>
                                     </div>
-                
+
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-block btn-success">Save</button>
+                                        <button type="submit" class="btn btn-block btn-success">{{ __('language.save') }}</button>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
 
 
                 {{-- Edit Modal --}}
                 <!-- Edit Teacher Modal -->
 <div class="modal fade editTeacher" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
 data-keyboard="false" data-backdrop="static">
-<div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal-dialog modal-xl modal-dialog-centered" role="document">
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">{{ __('language.teacher_edit') }}</h5>
@@ -238,26 +238,26 @@ data-keyboard="false" data-backdrop="static">
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="teacher_name">{{ __('language.teacher_name') }}</label>
-                            <input type="text" class="form-control form-control-sm" name="teacher_name"
-                                id="teacher_name" placeholder="{{ __('language.teacher_name') }}">
+                            <input type="text" class="form-control form-control-sm" name="teacher_name" id="teacher_name"
+                                placeholder="Teacher Name">
                             <span class="text-danger error-text teacher_name_error"></span>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="teacher_user_name">{{ __('language.teacher_user_name') }}</label>
-                            <input type="text" class="form-control form-control-sm" name="teacher_user_name"
-                                id="teacher_user_name" placeholder="{{ __('language.teacher_user_name') }}">
+                            <label for="teacher_user_name">{{ __('language.username') }}</label>
+                            <input type="text" class="form-control form-control-sm" name="teacher_user_name" id="teacher_user_name"
+                                placeholder="Username">
                             <span class="text-danger error-text teacher_user_name_error"></span>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="teacher_mobile">{{ __('language.teacher_mobile') }}</label>
-                            <input type="text" class="form-control form-control-sm" name="teacher_mobile"
-                                id="teacher_mobile" placeholder="{{ __('language.teacher_mobile') }}">
+                            <label for="teacher_mobile">{{ __('language.mobile') }}</label>
+                            <input type="text" class="form-control form-control-sm" name="teacher_mobile" id="teacher_mobile"
+                                placeholder="Mobile">
                             <span class="text-danger error-text teacher_mobile_error"></span>
                         </div>
                     </div>
@@ -266,30 +266,29 @@ data-keyboard="false" data-backdrop="static">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="teacher_email">{{ __('language.teacher_email') }}</label>
-                            <input type="text" class="form-control form-control-sm" name="teacher_email"
-                                id="teacher_email" placeholder="{{ __('language.teacher_email') }}">
+                            <label for="teacher_email">{{ __('language.email') }}</label>
+                            <input type="text" class="form-control form-control-sm" name="teacher_email" id="teacher_email"
+                                placeholder="Email">
                             <span class="text-danger error-text teacher_email_error"></span>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="teacher_designation">{{ __('language.teacher_designation') }}</label>
-                            <input type="text" class="form-control form-control-sm" name="teacher_designation"
-                                id="teacher_designation" placeholder="{{ __('language.teacher_designation') }}">
+                            <label for="teacher_designation">{{ __('language.designation') }}</label>
+                            <input type="text" class="form-control form-control-sm" name="teacher_designation" id="teacher_designation"
+                                placeholder="Designation">
                             <span class="text-danger error-text teacher_designation_error"></span>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="teacher_gender">{{ __('language.teacher_gender') }}</label>
-                            <select class="form-control form-control-sm" name="teacher_gender"
-                                id="teacher_gender">
-                                <option value="Male">{{ __('language.male') }}</option>
-                                <option value="Female">{{ __('language.female') }}</option>
-                                <option value="Other">{{ __('language.other') }}</option>
+                            <label for="teacher_gender">{{ __('language.gender') }}</label>
+                            <select class="form-control form-control-sm" name="teacher_gender" id="teacher_gender">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
                             </select>
                             <span class="text-danger error-text teacher_gender_error"></span>
                         </div>
@@ -299,27 +298,25 @@ data-keyboard="false" data-backdrop="static">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="teacher_password">{{ __('language.teacher_password') }}</label>
-                            <input type="password" class="form-control form-control-sm" name="teacher_password"
-                                id="teacher_password" placeholder="{{ __('language.teacher_password') }}">
+                            <label for="teacher_password">{{ __('language.password') }}</label>
+                            <input type="password" class="form-control form-control-sm" name="teacher_password" id="teacher_password"
+                                placeholder="Password">
                             <span class="text-danger error-text teacher_password_error"></span>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="teacher_image">{{ __('language.teacher_image') }}</label>
-                            <input type="file" class="form-control form-control-sm" name="teacher_image"
-                                id="teacher_image">
+                            <label for="teacher_image">{{ __('language.image') }}</label>
+                            <input type="file" class="form-control form-control-sm" name="teacher_image" id="teacher_image">
                             <span class="text-danger error-text teacher_image_error"></span>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="teacher_status">{{ __('language.teacher_status') }}</label>
-                            <select class="form-control form-control-sm" name="teacher_status"
-                                id="teacher_status">
+                            <label for="teacher_status">{{ __('language.status') }}</label>
+                            <select class="form-control form-control-sm" name="teacher_status" id="teacher_status">
                                 <option value="1">{{ __('language.active') }}</option>
                                 <option value="0">{{ __('language.inactive') }}</option>
                             </select>

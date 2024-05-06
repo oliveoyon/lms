@@ -426,6 +426,19 @@ return [
     "remaining" => "Remaining",
     "description" => "Description",
     "month_multiple" => "For Month (Multiple)",
+    "attendance_date" => "Attendance Date",
+    "attendance_info" => "Attendace Information",
+    "date" => "Date",
+    "chk_absent" => "All Checked for Absent",
+    "chk_present" => "All Checked for Present",
+
+    "teacher_name" => "Teacher Name",
+    "username" => "Username",
+    "mobile" => "Mobile",
+    "email" => "Email",
+    "designation" => "Designation",
+    "gender" => "Gender",
+    "image" => "Image",
 
 
 ];
