@@ -1,5 +1,5 @@
 @extends('dashboard.admin.layouts.admin-layout-with-cdn')
-@section('title', 'Version')
+@section('title', 'Assigned Teacher List')
 @push('admincss')
     <!-- DataTables -->
     <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
@@ -16,11 +16,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">{{ __('language.assigned_teachers') }}</h1>
+                        <h1 class="m-0">{{ __('language.assigned_teachers_list') }}</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('language.assigned_teachers') }}</a></li>
+                            <li class="breadcrumb-item"><a
+                                    href="{{ route('admin.home') }}">{{ __('language.assigned_teachers_list') }}</a></li>
                         </ol>
                     </div>
                 </div>
@@ -42,7 +43,8 @@
                                 <div class="card-tools">
                                     <ul class="nav nav-pills ml-auto">
                                         <li class="nav-item">
-                                            <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#addAssignedTeacherModal">
+                                            <button class="btn btn-success btn-sm" data-toggle="modal"
+                                                data-target="#addAssignedTeacherModal">
                                                 <i class="fas fa-plus-square mr-1"></i>
                                                 {{ __('language.assign_teacher_add') }}
                                             </button>
@@ -51,17 +53,18 @@
                                 </div>
                             </div>
                             <div class="card-body table-responsive">
-                                <table class="table table-bordered table-striped table-hover table-sm" id="assignedTeachersTable">
+                                <table class="table table-bordered table-striped table-hover table-sm"
+                                    id="assignedTeachersTable">
                                     <thead style="border-top: 1px solid #b4b4b4">
                                         <th style="width: 15px">#</th>
-                                        <th>Teacher Name</th>
-                                        <th>Version</th>
-                                        <th>Class</th>
-                                        <th>Section</th>
-                                        <th>Subject</th>
-                                        <th>Academic Year</th>
-                                        <th>Status</th>
-                                        <th style="width: 40px">Action</th>
+                                        <th>{{ __('language.teacher_name') }}</th>
+                                        <th>{{ __('language.version_name') }}</th>
+                                        <th>{{ __('language.class_name') }}</th>
+                                        <th>{{ __('language.section_name') }}</th>
+                                        <th>{{ __('language.subject_name') }}</th>
+                                        <th>{{ __('language.academic_year') }}</th>
+                                        <th>{{ __('language.status') }}</th>
+                                        <th style="width: 40px">{{ __('language.action') }}</th>
                                     </thead>
                                     <tbody>
                                         @foreach ($assignedTeachers as $assignedTeacher)
@@ -76,10 +79,14 @@
                                                 <td>{{ $assignedTeacher->status == 1 ? 'Active' : 'Inactive' }}</td>
                                                 <td>
                                                     <div class="btn-group">
-                                                        <button type="button" class="btn btn-warning btn-xs" data-id="{{ $assignedTeacher->id }}" id="editAssignedTeacherBtn">
+                                                        <button type="button" class="btn btn-warning btn-xs"
+                                                            data-id="{{ $assignedTeacher->id }}"
+                                                            id="editAssignedTeacherBtn">
                                                             <i class="fas fa-edit"></i>
                                                         </button>
-                                                        <button type="button" class="btn btn-danger btn-xs" data-id="{{ $assignedTeacher->id }}" id="deleteAssignedTeacherBtn">
+                                                        <button type="button" class="btn btn-danger btn-xs"
+                                                            data-id="{{ $assignedTeacher->id }}"
+                                                            id="deleteAssignedTeacherBtn">
                                                             <i class="fas fa-trash-alt"></i>
                                                         </button>
                                                     </div>
@@ -94,25 +101,29 @@
                 </div>
 
 
-                <div class="modal fade" id="addAssignedTeacherModal" tabindex="-1" aria-labelledby="addAssignedTeacherLabel" aria-hidden="true">
+                <div class="modal fade" id="addAssignedTeacherModal" tabindex="-1"
+                    aria-labelledby="addAssignedTeacherLabel" aria-hidden="true">
                     <div class="modal-dialog modal-xl modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header bg-success">
-                                <h5 class="modal-title" id="addAssignedTeacherLabel">Assign Teacher to Subject</h5>
+                                <h5 class="modal-title" id="addAssignedTeacherLabel">{{ __('language.assign_teacher_add') }}</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="{{ route('admin.addAssignedTeacher') }}" method="post" enctype="multipart/form-data" id="add-assigned-teacher-form">
+                                <form action="{{ route('admin.addAssignedTeacher') }}" method="post"
+                                    enctype="multipart/form-data" id="add-assigned-teacher-form">
                                     @csrf
-                
+
                                     <div class="row">
                                         <!-- First Column -->
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="academicYear" class="required">Academic Year:</label>
-                                                <select class="form-control form-control-sm academic_year" name="academic_year" id="academic_yeasr">
+                                                <label for="academicYear"
+                                                    class="required">{{ __('language.academic_year') }}:</label>
+                                                <select class="form-control form-control-sm academic_year"
+                                                    name="academic_year" id="academic_yeasr">
                                                     <option value="">Academic Year</option>
                                                     @php
                                                         $currentYear = date('Y');
@@ -128,11 +139,14 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="versionName" class="required">Version Name:</label>
-                                                <select class="form-control form-control-sm version_id" name="version_id" id="version_id">
+                                                <label for="versionName"
+                                                    class="required">{{ __('language.version_name') }}:</label>
+                                                <select class="form-control form-control-sm version_id" name="version_id"
+                                                    id="version_id">
                                                     <option value="">{{ __('language.select_version') }}</option>
                                                     @foreach ($versions as $version)
-                                                        <option value="{{ $version->id }}">{{ $version->version_name }}</option>
+                                                        <option value="{{ $version->id }}">{{ $version->version_name }}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                                 <span class="text-danger error-text version_id_error"></span>
@@ -140,8 +154,10 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="className" class="required">Class Name:</label>
-                                                <select class="form-control form-control-sm class_id" name="class_id" id="class_id" disabled>
+                                                <label for="className"
+                                                    class="required">{{ __('language.class_name') }}:</label>
+                                                <select class="form-control form-control-sm class_id" name="class_id"
+                                                    id="class_id" disabled>
                                                     <option value="">{{ __('language.select_class') }}</option>
                                                 </select>
                                                 <span class="text-danger error-text class_id_error"></span>
@@ -149,8 +165,10 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="section_id" class="required">Section Name:</label>
-                                                <select id="section_id" name="section_id" class="form-control form-control-sm section_id" disabled>
+                                                <label for="section_id"
+                                                    class="required">{{ __('language.section_name') }}:</label>
+                                                <select id="section_id" name="section_id"
+                                                    class="form-control form-control-sm section_id" disabled>
                                                     <option value="">{{ __('language.select_section') }}</option>
                                                 </select>
                                                 <span class="text-danger error-text section_id_error"></span>
@@ -158,8 +176,10 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="subject_id" class="required">Subject Name:</label>
-                                                <select id="subject_id" name="subject_id" class="form-control form-control-sm subject_id" disabled>
+                                                <label for="subject_id"
+                                                    class="required">{{ __('language.subject_name') }}:</label>
+                                                <select id="subject_id" name="subject_id"
+                                                    class="form-control form-control-sm subject_id" disabled>
                                                     <option value="">{{ __('language.subject_name') }}</option>
                                                 </select>
                                                 <span class="text-danger error-text subject_id_error"></span>
@@ -167,10 +187,12 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="teacher_id">Select Teacher:</label>
-                                                <select name="teacher_id" id="teacher_id" class="form-control form-control-sm">
+                                                <label for="teacher_id">{{ __('language.teacher_name') }}:</label>
+                                                <select name="teacher_id" id="teacher_id"
+                                                    class="form-control form-control-sm">
                                                     @foreach ($teachers as $teacher)
-                                                        <option value="{{ $teacher->id }}">{{ $teacher->teacher_name }}</option>
+                                                        <option value="{{ $teacher->id }}">{{ $teacher->teacher_name }}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                                 <span class="text-danger error-text teacher_id_error"></span>
@@ -178,24 +200,25 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="status">Status:</label>
+                                                <label for="status">{{ __('language.status') }}:</label>
                                                 <select class="form-control form-control-sm" name="status"
                                                     id="status">
                                                     <option value="1">{{ __('language.active') }}</option>
                                                     <option value="0">{{ __('language.inactive') }}</option>
                                                 </select>
                                                 <span class="text-danger error-text status_error"></span>
-                                                
+
                                             </div>
                                         </div>
                                         <span class="text-danger abc "></span>
                                     </div>
-                
-                                    
+
+
                                     <!-- Other form fields as needed -->
-                
+
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-block btn-success">Save</button>
+                                        <button type="submit"
+                                            class="btn btn-block btn-success">{{ __('language.save') }}</button>
                                     </div>
                                 </form>
                             </div>
@@ -203,25 +226,30 @@
                     </div>
                 </div>
 
-                <div class="modal fade editAssignedTeacher" id="editAssignedTeacherModal" tabindex="-1" aria-labelledby="editAssignedTeacherLabel" aria-hidden="true">
+                <div class="modal fade editAssignedTeacher" id="editAssignedTeacherModal" tabindex="-1"
+                    aria-labelledby="editAssignedTeacherLabel" aria-hidden="true">
                     <div class="modal-dialog modal-xl modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header bg-primary">
-                                <h5 class="modal-title" id="editAssignedTeacherLabel">Edit Assigned Teacher to Subject</h5>
+                                <h5 class="modal-title" id="editAssignedTeacherLabel">{{ __('language.teacher_edit') }}
+                                </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="{{ route('admin.updateAssignedTeacher') }}" method="post" enctype="multipart/form-data" id="update-assigned-teacher-form">
+                                <form action="{{ route('admin.updateAssignedTeacher') }}" method="post"
+                                    enctype="multipart/form-data" id="update-assigned-teacher-form">
                                     @csrf
-                
+
                                     <div class="row">
                                         <!-- First Column -->
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="academic_year" class="required">Academic Year:</label>
-                                                <select class="form-control form-control-sm academic_year" name="academic_year" id="academic_year" readonly>
+                                                <label for="academicYear"
+                                                    class="required">{{ __('language.academic_year') }}:</label>
+                                                <select class="form-control form-control-sm academic_year"
+                                                    name="academic_year" id="academic_yeasr">
                                                     <option value="">Academic Year</option>
                                                     @php
                                                         $currentYear = date('Y');
@@ -237,11 +265,14 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="version_id">Select Version:</label>
-                                                <select name="version_id" id="version_id" class="form-control form-control-sm" readonly>
-                                                    <!-- Options for version dropdown -->
+                                                <label for="versionName"
+                                                    class="required">{{ __('language.version_name') }}:</label>
+                                                <select class="form-control form-control-sm version_id" name="version_id"
+                                                    id="version_id">
+                                                    <option value="">{{ __('language.select_version') }}</option>
                                                     @foreach ($versions as $version)
-                                                        <option value="{{ $version->id }}">{{ $version->version_name }}</option>
+                                                        <option value="{{ $version->id }}">{{ $version->version_name }}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                                 <span class="text-danger error-text version_id_error"></span>
@@ -249,48 +280,45 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="class_id">Select Class:</label>
-                                                <select name="class_id" id="class_id" class="form-control form-control-sm" readonly>
-                                                    <!-- Options for class dropdown -->
-                                                    @foreach ($classes as $class)
-                                                        <option value="{{ $class->id }}">{{ $class->class_name }}</option>
-                                                    @endforeach
+                                                <label for="className"
+                                                    class="required">{{ __('language.class_name') }}:</label>
+                                                <select class="form-control form-control-sm class_id" name="class_id"
+                                                    id="class_id" disabled>
+                                                    <option value="">{{ __('language.select_class') }}</option>
                                                 </select>
                                                 <span class="text-danger error-text class_id_error"></span>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="section_id">Select Section:</label>
-                                                <select name="section_id" id="section_id" class="form-control form-control-sm" readonly>
-                                                    <!-- Options for section dropdown -->
-                                                    <!-- Assuming you have a variable $sections with the sections data -->
-                                                    @foreach ($sections as $section)
-                                                        <option value="{{ $section->id }}">{{ $section->section_name }}</option>
-                                                    @endforeach
+                                                <label for="section_id"
+                                                    class="required">{{ __('language.section_name') }}:</label>
+                                                <select id="section_id" name="section_id"
+                                                    class="form-control form-control-sm section_id" disabled>
+                                                    <option value="">{{ __('language.select_section') }}</option>
                                                 </select>
                                                 <span class="text-danger error-text section_id_error"></span>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="subject_id">Select Subject:</label>
-                                                <select name="subject_id" id="subject_id" class="form-control form-control-sm" readonly>
-                                                    <!-- Options for subject dropdown -->
-                                                    @foreach ($subjects as $subject)
-                                                        <option value="{{ $subject->id }}">{{ $subject->subject_name }}</option>
-                                                    @endforeach
+                                                <label for="subject_id"
+                                                    class="required">{{ __('language.subject_name') }}:</label>
+                                                <select id="subject_id" name="subject_id"
+                                                    class="form-control form-control-sm subject_id" disabled>
+                                                    <option value="">{{ __('language.subject_name') }}</option>
                                                 </select>
                                                 <span class="text-danger error-text subject_id_error"></span>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="teacher_id">Select Teacher:</label>
-                                                <select name="teacher_id" id="teacher_id" class="form-control form-control-sm">
-                                                    <!-- Options for teacher dropdown -->
+                                                <label for="teacher_id">{{ __('language.teacher_name') }}:</label>
+                                                <select name="teacher_id" id="teacher_id"
+                                                    class="form-control form-control-sm">
                                                     @foreach ($teachers as $teacher)
-                                                        <option value="{{ $teacher->id }}">{{ $teacher->teacher_name }}</option>
+                                                        <option value="{{ $teacher->id }}">{{ $teacher->teacher_name }}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                                 <span class="text-danger error-text teacher_id_error"></span>
@@ -298,21 +326,18 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="status">Status:</label>
+                                                <label for="status">{{ __('language.status') }}:</label>
                                                 <select class="form-control form-control-sm" name="status"
                                                     id="status">
                                                     <option value="1">{{ __('language.active') }}</option>
                                                     <option value="0">{{ __('language.inactive') }}</option>
                                                 </select>
                                                 <span class="text-danger error-text status_error"></span>
-                                                
+
                                             </div>
                                         </div>
-                                        <!-- Add other columns as needed -->
-                
-                                        <!-- Other form fields as needed -->
-                
-                                        
+
+
                                     </div>
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-block btn-primary">Update</button>
@@ -322,12 +347,6 @@
                         </div>
                     </div>
                 </div>
-                
-                
-                
-                
-
-
 
             </div><!-- /.container-fluid -->
         </div>
@@ -364,17 +383,17 @@
 
         $(document).ready(function() {
             // When the "Academic Year" dropdown changes
-            
+
             // When the "Version" dropdown changes
             $('.version_id').on('change', function() {
                 var versionId = $(this).val();
-                
+
                 // Enable the "Class" dropdown
                 $('.class_id').prop('disabled', false).data('version-id', versionId);
-                
+
                 // Add the extra option to the "Class" dropdown
                 $('.class_id').html('<option value="">-- Please select a class --</option>');
-                
+
                 // Make an AJAX request to fetch classes based on the selected version
                 $.ajax({
                     url: '{{ route('admin.getClassesByVersion') }}',
@@ -385,7 +404,7 @@
                     },
                     success: function(data) {
                         var classDropdown = $('.class_id');
-                        
+
                         // Populate the "Class" dropdown with the fetched data
                         $.each(data.classes, function(key, value) {
                             classDropdown.append($('<option>', {
@@ -403,10 +422,12 @@
                 var versionId = $(this).data('version-id'); // Retrieve the version_id
 
                 // Enable the "Section" dropdown
-                $('.section_id').prop('disabled', false).data('version-id', versionId); // Pass version_id to the Section dropdown
+                $('.section_id').prop('disabled', false).data('version-id',
+                versionId); // Pass version_id to the Section dropdown
 
                 // Enable the "Subject" dropdown
-                $('.subject_id').prop('disabled', false).data('version-id', versionId); // Pass version_id to the Subject dropdown
+                $('.subject_id').prop('disabled', false).data('version-id',
+                versionId); // Pass version_id to the Subject dropdown
 
                 // Add the extra option to the "Section" dropdown
                 $('.section_id').html('<option value="">-- Please select a section --</option>');
@@ -486,9 +507,9 @@
                             $(form).find('span.abc').text(data.error.unique_combination);
                             $.each(data.error, function(prefix, val) {
                                 $(form).find('span.' + prefix + '_error').text(val[0]);
-                                
+
                             });
-                            
+
                         } else {
                             var redirectUrl = data.redirect;
                             $('#addAssignedTeacherModal').modal('hide');
@@ -519,13 +540,20 @@
                     assigned_teacher_id: assignedTeacherId
                 }, function(data) {
                     // Assuming you have similar structure in your HTML for the edit modal
-                    $('.editAssignedTeacher').find('select[name="academic_year"]').val(data.details.academic_year);
-                    $('.editAssignedTeacher').find('select[name="version_id"]').val(data.details.version_id);
-                    $('.editAssignedTeacher').find('select[name="class_id"]').val(data.details.class_id);
-                    $('.editAssignedTeacher').find('select[name="section_id"]').val(data.details.section_id);
-                    $('.editAssignedTeacher').find('select[name="subject_id"]').val(data.details.subject_id);
-                    $('.editAssignedTeacher').find('select[name="teacher_id"]').val(data.details.teacher_id);
-                    $('.editAssignedTeacher').find('select[name="status"]').val(data.details.status);
+                    $('.editAssignedTeacher').find('select[name="academic_year"]').val(data.details
+                        .academic_year);
+                    $('.editAssignedTeacher').find('select[name="version_id"]').val(data.details
+                        .version_id);
+                    $('.editAssignedTeacher').find('select[name="class_id"]').val(data.details
+                        .class_id);
+                    $('.editAssignedTeacher').find('select[name="section_id"]').val(data.details
+                        .section_id);
+                    $('.editAssignedTeacher').find('select[name="subject_id"]').val(data.details
+                        .subject_id);
+                    $('.editAssignedTeacher').find('select[name="teacher_id"]').val(data.details
+                        .teacher_id);
+                    $('.editAssignedTeacher').find('select[name="status"]').val(data.details
+                    .status);
                     $('.editAssignedTeacher').modal('show');
                 }, 'json');
             });

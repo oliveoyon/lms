@@ -437,6 +437,10 @@ return [
     "gender" => "লিঙ্গ",
     "image" => "চিত্র",
     "teacher_add" => "শিক্ষক যোগ করুন",
+    "teacher_edit" => "শিক্ষকের বিবরণ সম্পাদন করুন",
+    "assigned_teachers_list" => "ক্লাসে নিবন্ধিত শিক্ষকের তালিকা",
+    "assign_teacher_add" => "ক্লাসে শিক্ষক নিবন্ধন করুন",
+
 
 
 ];

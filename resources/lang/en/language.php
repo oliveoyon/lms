@@ -439,6 +439,10 @@ return [
     "designation" => "Designation",
     "gender" => "Gender",
     "image" => "Image",
+    "teacher_add" => "Add a Teacher",
+    "teacher_edit" => "Edit Teacher Details",
+    "assigned_teachers_list" => "Assigend Teacher List",
+
 
 
 ];
