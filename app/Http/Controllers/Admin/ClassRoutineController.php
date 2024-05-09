@@ -145,94 +145,6 @@ class ClassRoutineController extends Controller
         return view('dashboard.admin.RoutineManagement.create_routine_action', compact('versions'));
     }
 
-    // public function getRoutineData(Request $request)
-    // {
-    //     // Fetch data from the database based on the request parameters
-    //     $sectionId = $request->input('section_id');
-    //     $classId = $request->input('class_id');
-    //     $versionId = $request->input('version_id');
-    //     $academicYear = $request->input('academic_year');
-
-    //     $classRoutineId = DB::table('class_routines')
-    //     ->where('version_id', $request->input('version_id'))
-    //     ->where('class_id', $request->input('class_id'))
-    //     ->where('section_id', $request->input('section_id'))
-    //     ->where('academic_year', $request->input('academic_year'))
-    //     ->value('id');
-
-    //     // Example: Fetch class routine details for the given section ID
-    //     $classRoutineDetails = ClassRoutineDetail::where('class_routine_id', $classRoutineId)->get();
-
-    //     // Fetch periods for the given section ID and class ID
-    //     $periods = Period::whereHas('classRoutine', function ($query) use ($sectionId, $classId) {
-    //         $query->where('section_id', $sectionId)->where('class_id', $classId);
-    //     })->orderBy('id', 'asc')->get();
-
-
-    //     // Fetch subjects for the given class ID
-    //     $subjects = Subject::where(['version_id' => $versionId, 'class_id' => $classId, 'academic_year' => $academicYear ])->get();
-
-    //     // Fetch days of week (considering a fixed set of days)
-    //     $daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-    //     // Prepare the HTML table
-    //     $tableHtml = '<table class="table table-bordered">' .
-    //         '<thead>' .
-    //         '<tr>' .
-    //         '<th>Sl</th>' .
-    //         '<th>Day</th>';
-
-    //     // Add table headers based on periods
-    //     foreach ($periods as $period) {
-    //         $tableHtml .= '<th>' . $period->name . '</th>';
-    //     }
-
-    //     $tableHtml .= '</tr>' .
-    //         '</thead>' .
-    //         '<tbody>';
-
-    //     // Add 7 static rows based on days
-    //     for ($i = 0; $i < 7; $i++) {
-    //         $day = $daysOfWeek[$i % count($daysOfWeek)];
-
-    //         $tableHtml .= '<tr>' .
-    //             '<td>' . ($i + 1) . '</td>' .
-    //             '<td>' . $day . '</td>';
-
-    //         // Add dropdowns for each period and subject
-    //         foreach ($periods as $period) {
-    //             $tableHtml .= '<td>' .
-    //                 '<select class="form-control" name="subjects[]" data-section="' .
-    //                 $sectionId . '" data-day="' . $day .
-    //                 '" data-period="' . $period->id . '">' .
-    //                 '<option value="">Select Subject</option>';
-
-    //             foreach ($subjects as $subject) {
-    //                 $tableHtml .= '<option value="' .
-    //                     $subject->id . '">' . $subject->subject_name . '</option>';
-    //             }
-
-    //             $tableHtml .= '</select> <input type="hidden" name="pr_id[]" value="' .
-    //             $period->id . '">'  .
-    //                 '</td>';
-    //         }
-
-    //         $tableHtml .= '</tr>';
-    //     }
-
-    //     $tableHtml .= '</tbody>' .
-    //         '</table>';
-
-    //     // You can format other data as needed
-    //     $formattedData = [
-    //         'cardTitle' => 'Routine Card',
-    //         'tableHtml' => $tableHtml,
-    //         // Add other data as needed
-    //     ];
-
-    //     // Return a JSON response
-    //     return response()->json($formattedData);
-    // }
 
     public function getRoutineData(Request $request)
     {
@@ -268,8 +180,8 @@ class ClassRoutineController extends Controller
         $tableHtml = '<table class="table table-bordered">' .
             '<thead>' .
             '<tr>' .
-            '<th>Sl</th>' .
-            '<th>Day</th>';
+            '<th>'.__('language.serial').'</th>' .
+            '<th>'.__('language.day').'</th>';
 
         // Add table headers based on periods
         foreach ($periods as $period) {
@@ -338,53 +250,6 @@ class ClassRoutineController extends Controller
     }
 
 
-    // public function addRoutine(Request $request){
-
-    //     $classRoutineId = DB::table('class_routines')
-    //     ->where('version_id', $request->input('version_id'))
-    //     ->where('class_id', $request->input('class_id'))
-    //     ->where('section_id', $request->input('section_id'))
-    //     ->where('academic_year', $request->input('academic_year'))
-    //     ->value('id');
-
-    //     $periodIds = $request->input('pr_id');
-    //     $subIds = $request->input('subjects');
-
-    //     $periodsPerDay = count($periodIds) / 7;
-    //     $subPerDay = count($subIds) / 7;
-
-    //     $daysOfWeeks = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-    //     // Organize period IDs into subarrays for each day using array_chunk
-    //     $prchunk = array_chunk($periodIds, $periodsPerDay);
-    //     $subchunk = array_chunk($subIds, $subPerDay);
-
-    //     foreach($prchunk as $k=>$v){
-    //         foreach($v as $l=>$z){
-    //             if($subchunk[$k][$l] == NULL){$subchunk[$k][$l] = 0;}
-    //             // echo $daysOfWeeks[$k].' '.$z.' '.$subchunk[$k][$l].'<br>';
-    //             ClassRoutineDetail::create([
-    //                 'class_routine_id' => $classRoutineId,
-    //                 'day_of_week' => $daysOfWeeks[$k],
-    //                 'period_id' => $z,
-    //                 'subject_id' => $subchunk[$k][$l],
-    //                 'created_at' => date('Y-m-d H:i:s'),
-    //                 'updated_at' => date('Y-m-d H:i:s')
-    //             ]);
-    //         }
-    //     }
-
-    //     // Output the result
-    //     // echo "<pre>";
-    //     // print_r($daysOfWeek);
-    //     exit;
-
-
-
-    //     return response()->json(['message' => 'Class routine details saved successfully']);
-    // }
-
-
 
     public function addRoutine(Request $request)
     {
@@ -448,7 +313,8 @@ class ClassRoutineController extends Controller
         echo '<table border="1">';
         echo '<thead>';
         echo '<tr>';
-        echo '<th>Day</th>';
+        echo '<th>'.__('language.day').'</th>';
+
         foreach ($dataByDay[0] as $ld) {
             echo '<td>' . ($ld['period'] ? $ld['period']['name'] : 'N/A') . '</td>';
         }
@@ -525,8 +391,8 @@ class ClassRoutineController extends Controller
             '<table class="table table-bordered table-striped">' .
             '<thead>' .
             '<tr>' .
-            '<th>Sl</th>' .
-            '<th>Day</th>';
+            '<th>'.__('language.serial').'</th>' .
+            '<th>'.__('language.day').'</th>';
 
         // Add table headers based on periods with start and end times
         foreach ($periods as $period) {

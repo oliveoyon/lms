@@ -12,6 +12,7 @@ return [
     "inactive" => "InActive",
     "home" => "Home",
     "contact" => "Contact",
+    "serial" => "Sl",
 
     // Class Management
     "class_mgmt" => "Class Management",
@@ -113,6 +114,17 @@ return [
     "enroll_student" => "Enroll Students",
     "student_list" => "Student List",
     "promote_student" => "Promote Student",
+
+    "student_profile" => "Student Profile",
+    "about_student" => "About Student",
+    "fee" => "Student Fee",
+    "month" => "Month",
+    "present" => "Present",
+    "absent" => "Absent",
+    "late" => "Late",
+    "total_day" => "Total Days",
+    "due_amount" => "Due Amount",
+
     // from here
     "academic_details" => "Academic Details",
     "personal_details" => "Personal Details",
@@ -442,6 +454,18 @@ return [
     "teacher_add" => "Add a Teacher",
     "teacher_edit" => "Edit Teacher Details",
     "assigned_teachers_list" => "Assigend Teacher List",
+
+    // Routine Management
+    "add_class_period" => "Add Class Period",
+    "period_view_details" => "Class Period Details",
+    "period_name" => "Period Name",
+    "start_time" => "Start Time",
+    "end_time" => "End Time",
+    "add_row" => "Add New",
+    "total_period" => "Total Period (with Tiffin)", 
+    "view_class_routine" => "View Class Routine", 
+    "routine_card" => "Routine Card", 
+    "day" => "Day", 
 
 
 

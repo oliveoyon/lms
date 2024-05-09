@@ -12,6 +12,7 @@ return [
     "inactive" => "একটিভ নয়",
     "home" => "হোম",
     "contact" => "যোগাযোগ",
+    "serial" => "নং",
 
     // Class Management
     "class_mgmt" => "ক্লাস ম্যানেজমেন্ট",
@@ -157,6 +158,15 @@ return [
     "type_phone" => "আপনার ফোন নম্বর লিখুন",
     "close" => "বন্ধ করুন",
     "birth_certificate" => "জন্ম নিবন্ধন নং",
+    "student_profile" => "ছাত্র/ছাত্রীর প্রোফাইল",
+    "about_student" => "ছাত্র/ছাত্রীর সম্বন্ধে",
+    "fee" => "ছাত্র/ছাত্রীর ফি",
+    "month" => "মাস",
+    "present" => "উপস্থিতি",
+    "absent" => "অনুপস্থিতি",
+    "late" => "বিলম্ব",
+    "total_day" => "সর্বমোট দিন",
+    "due_amount" => "সর্বমোট বাকি",
 
 
     // পরীক্ষা ব্যবস্থাপনা
@@ -440,6 +450,19 @@ return [
     "teacher_edit" => "শিক্ষকের বিবরণ সম্পাদন করুন",
     "assigned_teachers_list" => "ক্লাসে নিবন্ধিত শিক্ষকের তালিকা",
     "assign_teacher_add" => "ক্লাসে শিক্ষক নিবন্ধন করুন",
+
+    // Routine Management
+    "add_class_period" => "ক্লাস পিরিয়ড যোগ করুন",
+    "period_view_details" => "ক্লাস পিরিয়ড বিস্তারিত",
+    "period_name" => "ক্লাস পিরিয়ড এর নাম",
+    "start_time" => "ক্লাস শুরুর সময়",
+    "end_time" => "ক্লাস শেষের সময়",
+    "add_row" => "নতুন যোগ করুন",
+    "total_period" => "সর্বমোট পিরিয়ড (টিফিন সহ)", 
+    "view_class_routine" => "ক্লাস রুটিন দেখুন", 
+    "routine_card" => "রুটিন", 
+    "day" => "দিন", 
+    
 
 
 

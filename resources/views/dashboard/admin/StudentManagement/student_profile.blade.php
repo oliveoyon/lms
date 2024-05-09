@@ -1,22 +1,11 @@
 @extends('dashboard.admin.layouts.admin-layout-with-cdn')
-@section('title', 'Fee Head')
+@section('title', 'Student Profile')
 @push('admincss')
     <!-- DataTables -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.2.0/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <!-- Add your custom CSS here -->
-    <style>
-        .required:after {
-            content: " *";
-            color: red;
-        }
-
-        .card-title {
-            font-size: 20px;
-            color: white;
-            font-family: 'Lucida Sans', 'SolaimanLipi'
-        }
-    </style>
+   
 @endpush
 
 @section('content')
@@ -25,12 +14,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">{{ __('language.fee_head') }}</h1>
+                        <h1 class="m-0">{{ __('language.manage_student') }}</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a
-                                    href="{{ route('admin.home') }}">{{ __('language.fee_head') }}</a></li>
+                                    href="{{ route('admin.home') }}">{{ __('language.student_profile') }}</a></li>
                         </ol>
                     </div>
                 </div>
@@ -82,17 +71,17 @@
 
                                 <h3 class="profile-username text-center">{{ $student->std_name }}</h3>
 
-                                <p class="text-muted text-center">Student ID: <strong>{{ $student->std_id }}</strong></p>
+                                <p class="text-muted text-center">{{ __('language.student_id') }}: <strong>{{ $student->std_id }}</strong></p>
 
                                 <ul class="list-group list-group-unbordered mb-3">
                                     <li class="list-group-item">
-                                        <b>Version Name</b> <a class="float-right">{{ $student->version_name }}</a>
+                                        <b>{{ __('language.version_name') }}</b> <a class="float-right">{{ $student->version_name }}</a>
                                     </li>
                                     <li class="list-group-item">
-                                        <b>Class Name</b> <a class="float-right">{{ $student->class_name }}</a>
+                                        <b>{{ __('language.class_name') }}</b> <a class="float-right">{{ $student->class_name }}</a>
                                     </li>
                                     <li class="list-group-item">
-                                        <b>Section Name</b> <a class="float-right">{{ $student->section_name }}</a>
+                                        <b>{{ __('language.section_name') }}</b> <a class="float-right">{{ $student->section_name }}</a>
                                     </li>
                                 </ul>
 
@@ -104,21 +93,21 @@
                         <!-- About Me Box -->
                         <div class="card card-purple">
                             <div class="card-header">
-                                <h3 class="card-title">About Student</h3>
+                                <h3 class="card-title">{{ __('language.about_student') }}</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <strong><i class="fas fa-user mr-1"></i> Father's Name</strong>
+                                <strong><i class="fas fa-user mr-1"></i> {{ __('language.fathers_name') }}</strong>
                                 <p class="text-muted">
                                     {{ $student->std_fname }} </p>
-                                <strong><i class="fas fa-user mr-1"></i> Mother's Name</strong>
+                                <strong><i class="fas fa-user mr-1"></i> {{ __('language.mothers_name') }}</strong>
                                 <p class="text-muted">
                                     {{ $student->std_mname }} </p>
-                                <strong><i class="fas fa-phone mr-1"></i> Phone No.</strong>
+                                <strong><i class="fas fa-phone mr-1"></i> {{ __('language.students_phone') }}</strong>
                                 <p class="text-muted">
                                     {{ $student->std_phone }} &nbsp;&nbsp;&nbsp; </p>
 
-                                <strong><i class="fas fa-map-marker-alt mr-1"></i> Present Address</strong>
+                                <strong><i class="fas fa-map-marker-alt mr-1"></i> {{ __('language.present_address') }}</strong>
 
                                 <p class="text-muted">
                                 <p>{{ $student->std_present_address }}</p>
@@ -134,9 +123,9 @@
                             <div class="card-header p-2">
                                 <ul class="nav nav-pills">
                                     <li class="nav-item"><a class="nav-link active" href="#Attendence"
-                                            data-toggle="tab">Attendence</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#Fees" data-toggle="tab">Fees</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="#Result" data-toggle="tab">Result</a>
+                                            data-toggle="tab">{{ __('language.attendance_info') }}</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#Fees" data-toggle="tab">{{ __('language.fee') }}</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#Result" data-toggle="tab">{{ __('language.result_grade') }}</a>
                                     </li>
                                 </ul>
                             </div><!-- /.card-header -->
@@ -154,11 +143,11 @@
                                                     <thead>
                                                         <tr>
                                                             <th>#</th>
-                                                            <th>Month</th>
-                                                            <th>Present</th>
-                                                            <th>Absent</th>
-                                                            <th>Late</th>
-                                                            <th>Total Days</th>
+                                                            <th>{{ __('language.month') }}</th>
+                                                            <th>{{ __('language.present') }}</th>
+                                                            <th>{{ __('language.absent') }}</th>
+                                                            <th>{{ __('language.late') }}</th>
+                                                            <th>{{ __('language.total_day') }}</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -183,10 +172,10 @@
                                     <div class="tab-pane table-responsive" id="Fees">
                                         <table class="table">
                                             <tr>
-                                                <th>Student ID</th>
-                                                <th>Student Name</th>
-                                                <th>Due Amount</th>
-                                                <th>Action</th>
+                                                <th>{{ __('language.student_id') }}</th>
+                                                <th>{{ __('language.student_name') }}</th>
+                                                <th>{{ __('language.due_amount') }}</th>
+                                                <th>{{ __('language.action') }}</th>
                                             </tr>
                                             <tr>
                                                 <td>{{ $totalDues->std_id }}</td>
