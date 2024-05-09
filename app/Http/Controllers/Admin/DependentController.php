@@ -84,7 +84,7 @@ class DependentController extends Controller
             ->leftJoin(DB::raw('(SELECT fee_collection_id, SUM(amount_paid) as total_amount_paid FROM fee_payments GROUP BY fee_collection_id) as fp'), 'fee_collections.id', '=', 'fp.fee_collection_id')
             ->where('students.std_id', $std_id) // Filter by student ID
             ->where('fee_collections.is_paid', 0) // Unpaid fees
-            ->where('fee_collections.due_date', '>', $currentDate) // Future due date
+            ->where('fee_collections.due_date', '<', $currentDate) // Future due date
             ->groupBy('students.std_id', 'students.std_name')
             ->having('total_due_amount', '>', 0); // Filter out students with no due amount
 
