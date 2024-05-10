@@ -22,7 +22,7 @@ class AcademicStudent extends Model
         // Add other fields that you want to be mass assignable...
     ];
 
-    
+
 
     public function student()
     {

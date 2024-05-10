@@ -21,6 +21,10 @@ return [
         'driver' => 'eloquent',
         'model' => App\Models\Admin::class,
     ],
+    'std' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\Std::class,
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -48,6 +52,11 @@ return [
             'driver' => 'session',
             'provider' => 'admins',
         ],
+        'std' => [
+            'driver' => 'session',
+            'provider' => 'stds',
+        ],
+
     ],
 
     /*
@@ -75,6 +84,10 @@ return [
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
+        ],
+        'stds' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Std::class,
         ],
 
         // 'users' => [
@@ -109,6 +122,11 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
         ],
+        'stds' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Std::class,
+        ],
+
     ],
 
     /*

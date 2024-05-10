@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\Admin\TransportController;
 use App\Http\Controllers\Admin\UnitController;
 use App\Http\Controllers\GeneralController;
+use App\Http\Controllers\Student\StudentController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Artisan;
@@ -76,6 +77,29 @@ Route::prefix('user')->name('user.')->group(function () {
     });
 });
 
+
+Route::prefix('student')->name('student.')->group(function () {
+
+    Route::middleware(['guest:std', 'PreventBackHistory'])->group(function () {
+
+        Route::get('/', function () {
+            return 'Hello, worlds!';
+        });
+        Route::view('/login', 'student.login')->name('login');
+        Route::post('check', [StudentController::class, 'check'])->name('check');
+
+    });
+
+    Route::middleware(['auth:std', 'PreventBackHistory'])->group(function () {
+        // Route::view('/home', 'dashboard.user.home')->name('home');
+        Route::get('/home', function () {
+            return 'Hello, world!';
+        })->name('home');
+        Route::get('logout', [StudentController::class, 'logout'])->name('logout');
+    });
+
+
+});
 
 
 Route::prefix('admin')->name('admin.')->group(function () {
