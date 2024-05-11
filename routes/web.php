@@ -98,6 +98,26 @@ Route::prefix('student')->name('student.')->group(function () {
 
 });
 
+Route::prefix('teacher')->name('teacher.')->group(function () {
+
+    Route::middleware(['guest:teacher', 'PreventBackHistory'])->group(function () {
+
+        Route::get('/', function () {
+            return 'Hello, worlds!';
+        });
+        Route::view('/login', 'teacher.login')->name('login');
+        Route::post('check', [TeacherController::class, 'check'])->name('check');
+
+    });
+
+    Route::middleware(['auth:teacher', 'PreventBackHistory'])->group(function () {
+        Route::get('logout', [TeacherController::class, 'logout'])->name('logout');
+        // Route::get('home', [TeacherController::class, 'index'])->name('home');
+    });
+
+
+});
+
 
 Route::prefix('admin')->name('admin.')->group(function () {
 

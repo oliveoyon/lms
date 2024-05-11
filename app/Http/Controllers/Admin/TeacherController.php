@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin\AssignTeacher;
 use App\Models\Admin\Teacher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -25,10 +26,10 @@ class TeacherController extends Controller
             'teacher_name' => 'required|string|max:255',
             'teacher_user_name' => 'required|string|max:50|unique:teachers,teacher_user_name',
             'teacher_mobile' => 'required|string|max:20',
-            'teacher_email' => 'nullable|email|max:100',
+            'email' => 'nullable|email|max:100',
             'teacher_designation' => 'required|string|max:100',
             'teacher_gender' => 'required|string|max:10',
-            'teacher_password' => 'required|string|max:300',
+            'password' => 'required|string|max:300',
             'teacher_status' => 'required',
         ]);
 
@@ -40,10 +41,10 @@ class TeacherController extends Controller
             $teacher->teacher_name = $request->input('teacher_name');
             $teacher->teacher_user_name = $request->input('teacher_user_name');
             $teacher->teacher_mobile = $request->input('teacher_mobile');
-            $teacher->teacher_email = $request->input('teacher_email');
+            $teacher->email = $request->input('email');
             $teacher->teacher_designation = $request->input('teacher_designation');
             $teacher->teacher_gender = $request->input('teacher_gender');
-            $teacher->teacher_password = Hash::make($request->input('teacher_password'));
+            $teacher->password = Hash::make($request->input('password'));
             $teacher->teacher_status = $request->input('teacher_status');
             $teacher->school_id = auth()->user()->school_id;;
             $query = $teacher->save();
@@ -72,10 +73,10 @@ class TeacherController extends Controller
             'teacher_name' => 'required|string|max:255',
             'teacher_user_name' => 'required|string|max:50|unique:teachers,teacher_user_name,' . $teacher_id,
             'teacher_mobile' => 'required|string|max:20',
-            'teacher_email' => 'nullable|email|max:100',
+            'email' => 'nullable|email|max:100',
             'teacher_designation' => 'required|string|max:100',
             'teacher_gender' => 'required|string|max:10',
-            'teacher_password' => 'required|string|max:300',
+            'password' => 'required|string|max:300',
             'teacher_status' => 'required',
         ]);
 
@@ -85,12 +86,12 @@ class TeacherController extends Controller
             $teacher->teacher_name = $request->input('teacher_name');
             $teacher->teacher_user_name = $request->input('teacher_user_name');
             $teacher->teacher_mobile = $request->input('teacher_mobile');
-            $teacher->teacher_email = $request->input('teacher_email');
+            $teacher->email = $request->input('email');
             $teacher->teacher_designation = $request->input('teacher_designation');
             $teacher->teacher_gender = $request->input('teacher_gender');
-            if ($request->has('teacher_password')) {
+            if ($request->has('password')) {
                 // Update the teacher's password
-                $teacher->teacher_password = Hash::make($request->input('teacher_password'));
+                $teacher->password = Hash::make($request->input('password'));
             }
             $teacher->teacher_status = $request->input('teacher_status');
             $query = $teacher->save();
@@ -256,6 +257,24 @@ class TeacherController extends Controller
             return response()->json(['code' => 1, 'msg' => __('language.assigned_teacher_del_msg'), 'redirect' => 'admin/assigned-teacher-list']);
         } else {
             return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
+        }
+    }
+
+    public function check(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:teachers,email',
+            'password' => 'required|min:4|max:8'
+        ], [
+            'email.exists' => 'This email is not in db'
+        ]);
+
+        $creds = $request->only('email', 'password');
+        if (Auth::guard('teacher')->attempt($creds)) {
+            // return redirect()->route('teacher.home');
+            echo "test";
+        } else {
+            return redirect()->route('teacher.login')->with('fail', 'Credential fails');
         }
     }
 

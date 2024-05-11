@@ -73,7 +73,7 @@
                                             <td>{{ $teacher->teacher_name }}</td>
                                             <td>{{ $teacher->teacher_user_name }}</td>
                                             <td>{{ $teacher->teacher_mobile }}</td>
-                                            <td>{{ $teacher->teacher_email }}</td>
+                                            <td>{{ $teacher->email }}</td>
                                             <td>{{ $teacher->teacher_designation }}</td>
                                             <td>{{ $teacher->teacher_gender }}</td>
                                             <td>{{ $teacher->teacher_image }}</td>
@@ -145,10 +145,10 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="teacher_email">{{ __('language.email') }}</label>
-                                                <input type="text" class="form-control form-control-sm" name="teacher_email" id="teacher_email"
+                                                <label for="email">{{ __('language.email') }}</label>
+                                                <input type="text" class="form-control form-control-sm" name="email" id="email"
                                                     placeholder="Email">
-                                                <span class="text-danger error-text teacher_email_error"></span>
+                                                <span class="text-danger error-text email_error"></span>
                                             </div>
                                         </div>
 
@@ -177,10 +177,10 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="teacher_password">{{ __('language.password') }}</label>
-                                                <input type="password" class="form-control form-control-sm" name="teacher_password" id="teacher_password"
+                                                <label for="password">{{ __('language.password') }}</label>
+                                                <input type="password" class="form-control form-control-sm" name="password" id="password"
                                                     placeholder="Password">
-                                                <span class="text-danger error-text teacher_password_error"></span>
+                                                <span class="text-danger error-text password_error"></span>
                                             </div>
                                         </div>
 
@@ -266,10 +266,10 @@ data-keyboard="false" data-backdrop="static">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="teacher_email">{{ __('language.email') }}</label>
-                            <input type="text" class="form-control form-control-sm" name="teacher_email" id="teacher_email"
+                            <label for="email">{{ __('language.email') }}</label>
+                            <input type="text" class="form-control form-control-sm" name="email" id="email"
                                 placeholder="Email">
-                            <span class="text-danger error-text teacher_email_error"></span>
+                            <span class="text-danger error-text email_error"></span>
                         </div>
                     </div>
 
@@ -298,10 +298,10 @@ data-keyboard="false" data-backdrop="static">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="teacher_password">{{ __('language.password') }}</label>
-                            <input type="password" class="form-control form-control-sm" name="teacher_password" id="teacher_password"
+                            <label for="password">{{ __('language.password') }}</label>
+                            <input type="password" class="form-control form-control-sm" name="password" id="password"
                                 placeholder="Password">
-                            <span class="text-danger error-text teacher_password_error"></span>
+                            <span class="text-danger error-text password_error"></span>
                         </div>
                     </div>
 
@@ -441,10 +441,10 @@ $(document).on('click', '#editTeacherBtn', function() {
         $('.editTeacher').find('input[name="teacher_name"]').val(data.details.teacher_name);
         $('.editTeacher').find('input[name="teacher_user_name"]').val(data.details.teacher_user_name);
         $('.editTeacher').find('input[name="teacher_mobile"]').val(data.details.teacher_mobile);
-        $('.editTeacher').find('input[name="teacher_email"]').val(data.details.teacher_email);
+        $('.editTeacher').find('input[name="email"]').val(data.details.email);
         $('.editTeacher').find('input[name="teacher_designation"]').val(data.details.teacher_designation);
         $('.editTeacher').find('select[name="teacher_gender"]').val(data.details.teacher_gender);
-        $('.editTeacher').find('input[name="teacher_password"]').val(""); // Reset password field
+        $('.editTeacher').find('input[name="password"]').val(""); // Reset password field
         $('.editTeacher').find('select[name="teacher_status"]').val(data.details.teacher_status);
         $('.editTeacher').modal('show');
     }, 'json');

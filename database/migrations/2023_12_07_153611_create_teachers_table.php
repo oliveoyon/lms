@@ -17,10 +17,10 @@ return new class extends Migration
             $table->string('teacher_name', 100);
             $table->string('teacher_user_name', 50);
             $table->string('teacher_mobile', 20);
-            $table->string('teacher_email', 100)->nullable();
+            $table->string('email', 100)->nullable();
             $table->string('teacher_designation', 100);
             $table->string('teacher_gender', 10);
-            $table->string('teacher_password', 300);
+            $table->string('password', 300);
             $table->string('teacher_image', 50)->nullable();
             $table->integer('teacher_status');
             $table->integer('school_id');
