@@ -91,11 +91,8 @@ Route::prefix('student')->name('student.')->group(function () {
     });
 
     Route::middleware(['auth:std', 'PreventBackHistory'])->group(function () {
-        // Route::view('/home', 'dashboard.user.home')->name('home');
-        Route::get('/home', function () {
-            return 'Hello, world!';
-        })->name('home');
         Route::get('logout', [StudentController::class, 'logout'])->name('logout');
+        Route::get('home', [StudentController::class, 'index'])->name('home');
     });
 
 
