@@ -458,11 +458,25 @@ return [
     "start_time" => "ক্লাস শুরুর সময়",
     "end_time" => "ক্লাস শেষের সময়",
     "add_row" => "নতুন যোগ করুন",
-    "total_period" => "সর্বমোট পিরিয়ড (টিফিন সহ)", 
-    "view_class_routine" => "ক্লাস রুটিন দেখুন", 
-    "routine_card" => "রুটিন", 
-    "day" => "দিন", 
-    
+    "total_period" => "সর্বমোট পিরিয়ড (টিফিন সহ)",
+    "view_class_routine" => "ক্লাস রুটিন দেখুন",
+    "routine_card" => "রুটিন",
+    "day" => "দিন",
+
+
+
+
+    // Students Login
+    "my_profile" => "আমার প্রোফাইল",
+    "current_subjects" => "বর্তমান বিষয়",
+    "class_routine" => "ক্লাস রুটিন",
+    "exam_routine" => "পরীক্ষা রুটিন",
+    "payment_history" => "পেমেন্ট ইতিহাস",
+    "fine_calculations" => "জরিমানা গণনা",
+    "my_library" => "আমার লাইব্রেরি",
+    "search_book" => "বই অনুসন্ধান",
+    "issued_book" => "বই প্রদত্ত",
+
 
 
 

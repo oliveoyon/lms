@@ -155,674 +155,85 @@
                     <ul class="nav nav-pills nav-sidebar text-sm flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
 
-                        <!-- Multilevel Menu -->
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-chart-bar"></i>
-                                <p>
-                                    {{ __('language.reports') }}
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <!-- Class Reports Heading -->
-                                <li class="nav-item has-treeview">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-building nav-icon"></i>
-                                        <p>
-                                            {{ __('language.class_reports') }}
-                                            <i class="right fas fa-angle-left"></i>
-                                        </p>
-                                    </a>
-                                    <ul class="nav nav-treeview">
-                                        <!-- Class List Report -->
-                                        <li class="nav-item">
-                                            <a href="{{ route('admin.class-list-report') }}" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>{{ __('language.class_list_report') }}</p>
-                                            </a>
-                                        </li>
-
-
-                                        <!-- Class Enrollment Report -->
-                                        <li class="nav-item">
-                                            <a href="{{ route('admin.version-wise-enrollment') }}" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>{{ __('language.class_enrollment_report') }}</p>
-                                            </a>
-                                        </li>
-                                        <!-- Version-wise Class Report -->
-                                        <li class="nav-item">
-                                            <a href="{{ route('admin.version-wise-class-list-report') }}"
-                                                class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>{{ __('language.version_wise_class_report') }}</p>
-                                            </a>
-                                        </li>
-
-                                        <!-- Class Statistics Report -->
-                                        <li class="nav-item">
-                                            <a href="{{ route('admin.class_statistics') }}" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>{{ __('language.class_statistics_report') }}</p>
-                                            </a>
-                                        </li>
-
-                                        <li class="nav-item">
-                                            <a href="{{ route('admin.class_summery') }}" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>{{ __('language.class_summary_report') }}</p>
-                                            </a>
-                                        </li>
-
-
-                                        <li class="nav-item">
-                                            <a href="{{ route('admin.class_student_count') }}" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Student Enrollment</p>
-                                            </a>
-                                        </li>
-
-                                        <li class="nav-item">
-                                            <a href="{{ route('admin.subject_list') }}" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Class Wise Subject</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{ route('admin.subject_count') }}" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Class Wise Total Subject</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{ route('admin.section_wise_teacher') }}" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Class Teacher</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{ route('admin.guardian_list') }}" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Guardian Information</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{ route('admin.class_attendance') }}" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Class Attendance Report</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item has-treeview">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-building nav-icon"></i>
-                                        <p>
-                                            Fee Reports
-                                            <i class="right fas fa-angle-left"></i>
-                                        </p>
-                                    </a>
-                                    <ul class="nav nav-treeview">
-                                        <!-- Class List Report -->
-                                        <li class="nav-item">
-                                            <a href="{{ route('admin.FrequencyList') }}" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Fee Frequency List</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{ route('admin.FeeHeadList') }}" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Fee Head List</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{ route('admin.FeeGroupList') }}" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Fee Group List</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{ route('admin.FeeAmountList') }}" class="nav-link">
-                                                <i class="far fa-circle nav-icon"></i>
-                                                <p>Fee Amount List</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-school"></i>
+                                <i class="nav-icon far fa-user"></i>
                                 <p>
-                                    {{ __('language.class_mgmt') }}
-                                    <i class="right fas fa-angle-left"></i>
+                                    {{ __('language.my_profile') }}
                                 </p>
                             </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.version-list') }}" class="nav-link">
-                                        <i class="fas fa-chalkboard nav-icon"></i>
-                                        <p>{{ __('language.version') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.class-list') }}" class="nav-link">
-                                        <i class="fas fa-chalkboard-teacher nav-icon"></i>
-                                        <p>{{ __('language.class') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.section-list') }}" class="nav-link">
-                                        <i class="fas fa-stream nav-icon"></i>
-                                        <p>{{ __('language.section') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.subject-list') }}" class="nav-link">
-                                        <i class="fas fa-book nav-icon"></i>
-                                        <p>{{ __('language.subject') }}</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-money-check-alt"></i>
-                                <p>
-                                    {{ __('language.aca_fee_setup') }}
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.fee-frequency-list') }}" class="nav-link">
-                                        <i class="fas fa-money-bill nav-icon"></i>
-                                        <p>{{ __('language.fee_frequency') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.academic-fee-head-list') }}" class="nav-link">
-                                        <i class="far fa-credit-card nav-icon"></i>
-                                        <p>{{ __('language.aca_fee_head') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.academic-fee-group-list') }}" class="nav-link">
-                                        <i class="far fa-list-alt nav-icon"></i>
-                                        <p>{{ __('language.aca_fee_group') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.academic-fee-amount-list') }}" class="nav-link">
-                                        <i class="far fa-money-bill-alt nav-icon"></i>
-                                        <p>{{ __('language.fee_amount') }}</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-graduation-cap"></i>
-                                <p>
-                                    {{ __('language.manage_student') }}
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.admission') }}" class="nav-link">
-                                        <i class="fas fa-user-plus nav-icon"></i>
-                                        <p>{{ __('language.add_student') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.bulkadmission') }}" class="nav-link">
-                                        <i class="fas fa-upload nav-icon"></i>
-                                        <p>{{ __('language.add_bulk_student') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.enroll') }}" class="nav-link">
-                                        <i class="far fa-check-circle nav-icon"></i>
-                                        <p>{{ __('language.enroll_student') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.stdlist') }}" class="nav-link">
-                                        <i class="far fa-list-alt nav-icon"></i>
-                                        <p>{{ __('language.student_list') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-arrow-alt-circle-up nav-icon"></i>
-                                        <p>{{ __('language.promote_student') }}</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-file-invoice-dollar"></i>
-                                <p>
-                                    {{ __('language.fees_collection') }}
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.collectFee') }}" class="nav-link">
-                                        <i class="fas fa-hand-holding-usd nav-icon"></i>
-                                        <p>{{ __('language.collect_fee') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.customFeeGen') }}" class="nav-link">
-                                        <i class="fas fa-file-upload nav-icon"></i>
-                                        <p>{{ __('language.custom_fee_generate') }}</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-clipboard"></i>
-                                <p>
-                                    {{ __('language.exam_mgmt') }}
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-list-alt nav-icon"></i>
-                                        <p>{{ __('language.exam_lists') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-clock nav-icon"></i>
-                                        <p>{{ __('language.exam_routine') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-id-card nav-icon"></i>
-                                        <p>{{ __('language.admit_card') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fas fa-list nav-icon"></i>
-                                        <p>{{ __('language.result_grade') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-edit nav-icon"></i>
-                                        <p>{{ __('language.result_entry') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-file-alt nav-icon"></i>
-                                        <p>{{ __('language.mark_sheet') }}</p>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-book"></i>
                                 <p>
-                                    {{ __('language.library_mgmt') }}
-                                    <i class="right fas fa-angle-left"></i>
+                                    {{ __('language.current_subjects') }}
                                 </p>
                             </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.book-category-list') }}" class="nav-link">
-                                        <i class="far fa-folder-open nav-icon"></i>
-                                        <p>{{ __('language.book_category') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.book-list') }}" class="nav-link">
-                                        <i class="fas fa-book-open nav-icon"></i>
-                                        <p>{{ __('language.book_lists') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.book_issue') }}" class="nav-link">
-                                        <i class="fas fa-file-import nav-icon"></i>
-                                        <p>{{ __('language.issue_book') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fas fa-file-export nav-icon"></i>
-                                        <p>{{ __('language.return_book') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-chart-bar nav-icon"></i>
-                                        <p>{{ __('language.library_reports') }}</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-calendar-check"></i>
-                                <p>
-                                    {{ __('language.attendance_mgmt') }}
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.attendanceInput') }}" class="nav-link">
-                                        <i class="fas fa-pencil-alt nav-icon"></i>
-                                        <p>{{ __('language.attendance_input') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.attendanceEdit') }}" class="nav-link">
-                                        <i class="fas fa-edit nav-icon"></i>
-                                        <p>{{ __('language.attendance_edit') }}</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-chalkboard-teacher"></i>
-                                <p>
-                                    {{ __('language.teacher_mgmt') }}
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.teacher-list') }}" class="nav-link">
-                                        <i class="far fa-list-alt nav-icon"></i>
-                                        <p>{{ __('language.teacher_lists') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.assigned-teacher-list') }}" class="nav-link">
-                                        <i class="fas fa-user-plus nav-icon"></i>
-                                        <p>{{ __('language.assign_teacher_to_course') }}</p>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon far fa-calendar-alt"></i>
                                 <p>
-                                    {{ __('language.routine_mgmt') }}
-                                    <i class="right fas fa-angle-left"></i>
+                                    {{ __('language.class_routine') }}
                                 </p>
                             </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.showClassRoutine') }}" class="nav-link">
-                                        <i class="far fa-clock nav-icon"></i>
-                                        <p>{{ __('language.view_class_period') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.createClassRoutine') }}" class="nav-link">
-                                        <i class="far fa-clock nav-icon"></i>
-                                        <p>{{ __('language.create_class_period') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.createRoutine') }}" class="nav-link">
-                                        <i class="far fa-calendar nav-icon"></i>
-                                        <p>{{ __('language.class_routine') }}</p>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon far fa-calendar-check"></i>
+                                <i class="nav-icon far fa-file-alt"></i>
                                 <p>
-                                    {{ __('language.notice_events_mgmt') }}
-                                    <i class="right fas fa-angle-left"></i>
+                                    {{ __('language.exam_routine') }}
                                 </p>
                             </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.event-list') }}" class="nav-link">
-                                        <i class="fas fa-bullhorn nav-icon"></i>
-                                        <p>{{ __('language.notice_events') }}</p>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-bus"></i>
-                                <p>
-                                    {{ __('language.transport_mgmt') }}
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.stopage-list') }}" class="nav-link">
-                                        <i class="fas fa-map-pin nav-icon"></i>
-                                        <p>{{ __('language.stoppages') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.vehicletype-list') }}" class="nav-link">
-                                        <i class="fas fa-car-alt nav-icon"></i>
-                                        <p>{{ __('language.vehicle_types') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.vehicle-list') }}" class="nav-link">
-                                        <i class="fas fa-bus nav-icon"></i>
-                                        <p>{{ __('language.vehicles_lists') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.route-list') }}" class="nav-link">
-                                        <i class="fas fa-route nav-icon"></i>
-                                        <p>{{ __('language.routes_lists') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.assignStdTrans') }}" class="nav-link">
-                                        <i class="fas fa-user-plus nav-icon"></i>
-                                        <p>{{ __('language.assign_students') }}</p>
-                                    </a>
-                                </li>
-                                <!-- Add the new items below -->
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fas fa-clipboard nav-icon"></i>
-                                        <p>{{ __('language.transport_fee_heads') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fas fa-money-check-alt nav-icon"></i>
-                                        <p>{{ __('language.transport_fee_amounts') }}</p>
-                                    </a>
-                                </li>
-
-                                <!-- End of new items -->
-                            </ul>
-                        </li>
-
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-warehouse"></i>
-                                <p>
-                                    {{ __('language.inventory_mgmt') }}
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fas fa-boxes nav-icon"></i>
-                                        <p>{{ __('language.product_categories') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fas fa-balance-scale nav-icon"></i>
-                                        <p>{{ __('language.units') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fas fa-store nav-icon"></i>
-                                        <p>{{ __('language.stores') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fas fa-truck nav-icon"></i>
-                                        <p>{{ __('language.vendors') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fas fa-box nav-icon"></i>
-                                        <p>{{ __('language.products') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fas fa-shopping-cart nav-icon"></i>
-                                        <p>{{ __('language.product_purchases') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fas fa-users nav-icon"></i>
-                                        <p>{{ __('language.recipients') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-handshake nav-icon"></i>
-                                        <p>{{ __('language.issue_products') }}</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon far fa-money-bill-alt"></i>
                                 <p>
-                                    {{ __('language.expenditure_mgmt') }}
+                                    {{ __('language.payment_history') }}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-calculator"></i>
+                                <p>
+                                    {{ __('language.fine_calculations') }}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-book"></i>
+                                <p>
+                                    {{ __('language.my_library') }}
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fas fa-list-ul nav-icon"></i>
-                                        <p>{{ __('language.expenditure_types') }}</p>
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>{{ __('language.search_book') }}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fas fa-file-invoice-dollar nav-icon"></i>
-                                        <p>{{ __('language.expenditure_bills') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fas fa-chart-pie nav-icon"></i>
-                                        <p>{{ __('language.expenditure_reports') }}</p>
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>{{ __('language.issued_book') }}</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
 
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-certificate"></i>
+                            <a href="pages/gallery.html" class="nav-link">
+                                <i class="nav-icon far fa-image"></i>
                                 <p>
-                                    {{ __('language.certificate_mgmt') }}
-                                    <i class="right fas fa-angle-left"></i>
+                                    Gallery
                                 </p>
                             </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-file-alt nav-icon"></i>
-                                        <p>{{ __('language.testimonial') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-file-excel nav-icon"></i>
-                                        <p>{{ __('language.tabulation_sheet') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-file-alt nav-icon"></i>
-                                        <p>{{ __('language.mark_sheet') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-chart-bar nav-icon"></i>
-                                        <p>{{ __('language.grade_report') }}</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-hotel"></i>
-                                <p>
-                                    {{ __('language.hostel_mgmt') }}
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-list-alt nav-icon"></i>
-                                        <p>{{ __('language.hostel_lists') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-building nav-icon"></i>
-                                        <p>{{ __('language.room_lists') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fas fa-user-plus nav-icon"></i>
-                                        <p>{{ __('language.assign_students') }}</p>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
 
                         <li class="nav-item">
@@ -838,42 +249,6 @@
                                     <a href="#" class="nav-link">
                                         <i class="far fa-file-alt nav-icon"></i>
                                         <p>{{ __('language.assignments_homeworks') }}</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-cog"></i>
-                                <p>
-                                    {{ __('language.settings') }}
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.genSetting') }}" class="nav-link">
-                                        <i class="fas fa-sliders-h nav-icon"></i>
-                                        <p>{{ __('language.general_settings') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-file-alt nav-icon"></i>
-                                        <p>{{ __('language.fine_settings') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-envelope nav-icon"></i>
-                                        <p>{{ __('language.email_settings') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-comment-dots nav-icon"></i>
-                                        <p>{{ __('language.sms_settings') }}</p>
                                     </a>
                                 </li>
                             </ul>

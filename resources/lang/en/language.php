@@ -462,10 +462,25 @@ return [
     "start_time" => "Start Time",
     "end_time" => "End Time",
     "add_row" => "Add New",
-    "total_period" => "Total Period (with Tiffin)", 
-    "view_class_routine" => "View Class Routine", 
-    "routine_card" => "Routine Card", 
-    "day" => "Day", 
+    "total_period" => "Total Period (with Tiffin)",
+    "view_class_routine" => "View Class Routine",
+    "routine_card" => "Routine Card",
+    "day" => "Day",
+
+
+
+
+
+    // Students Login
+    "my_profile" => "My Profile",
+    "current_subjects" => "Current Subjects",
+    "class_routine" => "Class Routine",
+    "exam_routine" => "Exam Routine",
+    "payment_history" => "Payment History",
+    "fine_calculations" => "Fine Calculations",
+    "my_library" => "My Library",
+    "search_book" => "Search Book",
+    "issued_book" => "Issued Book",
 
 
 
