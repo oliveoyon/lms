@@ -43,13 +43,13 @@ class StudentController extends Controller
     public function check(Request $request)
     {
         $request->validate([
-            'name' => 'required|exists:stds,name',
+            'std_id' => 'required|exists:academic_students,std_id',
             'password' => 'required|min:4|max:8'
         ], [
-            'name.exists' => 'This email is not in db'
+            'std_id.exists' => 'This Student Id is not in db'
         ]);
 
-        $creds = $request->only('name', 'password');
+        $creds = $request->only('std_id', 'password');
         if (Auth::guard('std')->attempt($creds)) {
             return redirect()->route('student.home');
         } else {

@@ -27,7 +27,7 @@ return [
     ],
     'std' => [
         'driver' => 'eloquent',
-        'model' => App\Models\Std::class,
+        'model' => App\Models\Admin\AcademicStudent::class,
     ],
 
     /*
@@ -99,7 +99,7 @@ return [
         ],
         'stds' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Std::class,
+            'model' => App\Models\Admin\AcademicStudent::class,
         ],
 
         // 'users' => [
@@ -140,7 +140,7 @@ return [
         ],
         'stds' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Std::class,
+            'model' => App\Models\Admin\AcademicStudent::class,
         ],
 
     ],

@@ -50,7 +50,7 @@
                     <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account</h5>
 
                     <div class="form-outline mb-4">
-                      <input type="text" id="form2Example17" name="name" class="form-control form-control-lg @error('name') is-invalid @enderror" value="{{ old('name') }}" />
+                      <input type="text" id="form2Example17" name="std_id" class="form-control form-control-lg @error('std_id') is-invalid @enderror" value="{{ old('std_id') }}" />
                       <label class="form-label" for="form2Example17">Student ID</label>
                     </div>
 
