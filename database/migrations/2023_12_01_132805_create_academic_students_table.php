@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('section_id');
             $table->integer('roll_no');
             $table->string('academic_year', 4);
-            $table->string('std_password', 300);
+            $table->string('password', 300);
             $table->integer('st_aca_status');
             $table->integer('school_id');
             $table->timestamps();

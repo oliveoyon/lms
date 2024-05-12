@@ -93,6 +93,9 @@ Route::prefix('student')->name('student.')->group(function () {
     Route::middleware(['auth:std', 'PreventBackHistory'])->group(function () {
         Route::get('logout', [StudentController::class, 'logout'])->name('logout');
         Route::get('home', [StudentController::class, 'index'])->name('home');
+        Route::get('my-profile', [StudentController::class, 'my_profile'])->name('my-profile');
+        Route::get('my-subject', [StudentController::class, 'mySubject'])->name('my-subject');
+        Route::post('/generate-pdf', [StudentController::class, 'generatePdf'])->name('generate-pdf');
     });
 
 

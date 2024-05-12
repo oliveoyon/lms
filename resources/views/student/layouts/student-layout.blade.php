@@ -144,7 +144,7 @@
                         <img src="dashboard/img/avatar.png" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">{{ Auth::guard('std')->user()->name }}</a>
+                        <a href="#" class="d-block">{{ Auth::guard('std')->user()->std_id }}</a>
                     </div>
                 </div>
 
@@ -156,7 +156,7 @@
                         data-accordion="false">
 
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('student.my-profile') }}" class="nav-link">
                                 <i class="nav-icon far fa-user"></i>
                                 <p>
                                     {{ __('language.my_profile') }}
