@@ -1,5 +1,5 @@
 @extends('student.layouts.student-layout')
-@section('title', 'My Subject')
+@section('title', 'Class Routine')
 @push('admincss')
 <!-- DataTables -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.2.0/dist/sweetalert2.min.css">
@@ -14,12 +14,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">{{ __('language.current_subjects') }}</h1>
+                    <h1 class="m-0">{{ __('language.class_routine') }}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">{{ __('language.home') }}</a></li>
-                        <li class="breadcrumb-item">{{ __('language.current_subjects') }}</li>
+                        <li class="breadcrumb-item">{{ __('language.class_routine') }}</li>
                     </ol>
                 </div>
             </div>
@@ -34,7 +34,7 @@
                         <div class="card-header bg-navy">
                             <h3 class="card-title">
                                 <i class="fas fa-chalkboard-teacher mr-1"></i>
-                                {{ __('language.current_subjects') }}
+                                {{ __('language.class_routine') }}
                             </h3>
                             <div class="card-tools">
                                 <ul class="nav nav-pills ml-auto">
@@ -52,20 +52,22 @@
                                 <ul id="errorList"></ul>
                             </div>
                             <div id="reportDiv">
-                                <table class="table table-bordered table-striped table-hover table-sm" id="class-table">
-                                    <thead style="border-top: 1px solid #b4b4b4">
-                                        <th style="width: 10px">#</th>
-                                        <th>{{ __('language.subject_code') }}</th>
-                                        <th>{{ __('language.subject_name') }}</th>
-                                        <th>{{ __('language.teacher_name') }}</th>
+                                <table class="table table-bordered table-striped table-hover table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Day</th>
+                                            @foreach($periods as $period)
+                                                <th>{{ $period->name }}</th>
+                                            @endforeach
+                                        </tr>
                                     </thead>
-                                    <tbody id="result-table-body">
-                                        @foreach ($subjects as $subject)
+                                    <tbody>
+                                        @foreach($tableData as $rowData)
                                             <tr>
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td class="font-weight-bold">{{ $subject->subject_code }}</td>
-                                                <td class="font-weight-bold">{{ $subject->subject_name }}</td>
-                                                <td>{{ $subject->teacher_name }}</td>
+                                                <td>{{ $rowData['day'] }}</td>
+                                                @foreach($rowData['periods'] as $subject)
+                                                    <td>{{ $subject }}</td>
+                                                @endforeach
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -96,108 +98,6 @@
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
-    });
-
-
-
-    $(document).ready(function() {
-
-        $('.version_id').on('change', function() {
-                var versionId = $(this).val();
-
-                // Enable the "Class" dropdown
-                $('.class_id').prop('disabled', false).data('version-id', versionId);
-
-                // Add the extra option to the "Class" dropdown
-                $('.class_id').html('<option value="">-- Please select a class --</option>');
-
-                // Make an AJAX request to fetch classes based on the selected version
-                $.ajax({
-                    url: '{{ route("admin.getClassesByVersion") }}',
-                    method: 'POST',
-                    data: {
-                        version_id: versionId,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(data) {
-                        var classDropdown = $('.class_id');
-
-                        // Populate the "Class" dropdown with the fetched data
-                        $.each(data.classes, function(key, value) {
-                            classDropdown.append($('<option>', {
-                                value: value.id,
-                                text: value.class_name
-                            }));
-                        });
-                    }
-                });
-            });
-
-        $('#get-version-wise-class-list').submit(function(e) {
-            e.preventDefault();
-
-            // Disable the submit button to prevent double-clicking
-            $(this).find(':submit').prop('disabled', true);
-
-            // Show the loader overlay
-            $('#loader-overlay').show();
-
-            var form = this;
-
-            $.ajax({
-                url: $(form).attr('action'),
-                method: $(form).attr('method'),
-                data: $(form).serialize(),
-                success: function(response) {
-                    var tableBody = $('#result-table-body');
-                    tableBody.empty(); // Clear existing rows
-
-                    // Assuming response.classes contains the Laravel collection of classes
-                    var classes = response.classes;
-
-                    if (classes instanceof Array || classes instanceof Object) {
-                        // Keep track of the serial number
-                        var serialNumber = 1;
-
-                        // Loop through the classes and append rows to the table
-                        for (var i in classes) {
-                            if (classes.hasOwnProperty(i)) {
-                                var classData = classes[i];
-                                var row = '<tr>' +
-                                    '<td>' + serialNumber + '</td>' +
-                                    '<td>' + classData.academic_year + '</td>' +
-                                    '<td>' + classData.version + '</td>' +
-                                    '<td>' + classData.class + '</td>' +
-                                    '<td>' + classData.subject_code + '</td>' +
-                                    '<td>' + classData.subject_name + '</td>' +
-                                    '<td>' + (classData.subject_status == 1 ? 'Active' : 'Inactive') + '</td>'
-                                    '</tr>';
-                                tableBody.append(row);
-
-                                // Increment the serial number for the next iteration
-                                serialNumber++;
-                            }
-                        }
-
-                        // Show the entire content (assuming its class is 'content')
-                        $('.content').removeClass('d-none');
-                    } else {
-                        console.error("Classes is not a valid collection:", classes);
-                    }
-                },
-                error: function(error) {
-                    // Handle errors if needed
-                    console.log(error);
-                },
-                complete: function() {
-                    // Enable the submit button and hide the loader overlay
-                    $(form).find(':submit').prop('disabled', false);
-                    $('#loader-overlay').hide();
-                }
-            });
-        });
-
-
     });
 </script>
 

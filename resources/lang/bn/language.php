@@ -468,7 +468,7 @@ return [
 
     // Students Login
     "my_profile" => "আমার প্রোফাইল",
-    "current_subjects" => "বর্তমান বিষয়",
+    "current_subjects" => "বর্তমান সাবজেক্ট",
     "class_routine" => "ক্লাস রুটিন",
     "exam_routine" => "পরীক্ষা রুটিন",
     "payment_history" => "পেমেন্ট ইতিহাস",

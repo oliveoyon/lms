@@ -473,7 +473,7 @@ return [
 
     // Students Login
     "my_profile" => "My Profile",
-    "current_subjects" => "Current Subjects",
+    "current_subjects" => "My Subjects",
     "class_routine" => "Class Routine",
     "exam_routine" => "Exam Routine",
     "payment_history" => "Payment History",

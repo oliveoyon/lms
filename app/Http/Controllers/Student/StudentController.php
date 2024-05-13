@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Admin\DependentController;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Attendances;
+use App\Models\Admin\ClassRoutineDetail;
 use App\Models\Admin\Event;
+use App\Models\Admin\Period;
 use App\Models\Admin\Subject;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -42,18 +44,18 @@ class StudentController extends Controller
                 (SELECT COUNT(*) FROM tr_assign_stds WHERE tr_assign_status = 1) AS total_assigned_students")[0];
 
         $events = Event::where('event_status', 1)
-        ->whereDate('start_date', '>=', now())
-        ->select('event_title', 'start_date', 'end_date', 'url', 'color')
-        ->get()
-        ->map(function ($event) {
-            return [
-                'title' => $event->event_title,
-                'start' => Carbon::parse($event->start_date)->toDateTimeString(),
-                'end' => Carbon::parse($event->end_date)->toDateTimeString(),
-                'url' => $event->url,
-                'color' => $event->color,
-            ];
-        });
+            ->whereDate('start_date', '>=', now())
+            ->select('event_title', 'start_date', 'end_date', 'url', 'color')
+            ->get()
+            ->map(function ($event) {
+                return [
+                    'title' => $event->event_title,
+                    'start' => Carbon::parse($event->start_date)->toDateTimeString(),
+                    'end' => Carbon::parse($event->end_date)->toDateTimeString(),
+                    'url' => $event->url,
+                    'color' => $event->color,
+                ];
+            });
 
         $send['eventsJson'] = $events->toJson();
 
@@ -111,12 +113,24 @@ class StudentController extends Controller
     }
 
     public function mySubject()
-    {
-        $subjects = Subject::with(['version', 'class'])->get();
-        // dd($subjects);
+{
+    $academicYear = Auth::guard('std')->user()->academic_year;
+    $versionId = Auth::guard('std')->user()->version_id;
+    $classId = Auth::guard('std')->user()->class_id;
 
-        return view('student.subject-list', compact('subjects'));
-    }
+    // Fetch subjects and associated teacher names based on the provided criteria
+    $subjects = Subject::select('subjects.*', 'teachers.teacher_name')
+                ->leftJoin('assign_teachers', 'subjects.id', '=', 'assign_teachers.subject_id')
+                ->leftJoin('teachers', 'assign_teachers.teacher_id', '=', 'teachers.id')
+                ->where('subjects.version_id', $versionId)
+                ->where('subjects.academic_year', $academicYear)
+                ->where('subjects.class_id', $classId)
+                ->get();
+
+    return view('student.subject-list', compact('subjects'));
+}
+
+
 
     public function generatePdf(Request $request)
     {
@@ -149,6 +163,54 @@ class StudentController extends Controller
 
         // Return a JSON response with the PDF URL and a success message
         return response()->json(['pdf_url' => $pdfUrl, 'message' => 'PDF generated successfully']);
+    }
+
+    public function printRoutine()
+    {
+        // Static values for demonstration
+        $academicYear = Auth::guard('std')->user()->academic_year;
+        $versionId = Auth::guard('std')->user()->version_id;
+        $classId = Auth::guard('std')->user()->class_id;
+        $sectionId = Auth::guard('std')->user()->section_id;
+
+        $classRoutineId = DB::table('class_routines')
+            ->where('version_id', $versionId)
+            ->where('class_id', $classId)
+            ->where('section_id', $sectionId)
+            ->where('academic_year', $academicYear)
+            ->value('id');
+
+        $classRoutineDetails = ClassRoutineDetail::where('class_routine_id', $classRoutineId)->get();
+
+        $periods = Period::whereHas('classRoutine', function ($query) use ($sectionId, $classId) {
+            $query->where('section_id', $sectionId)->where('class_id', $classId);
+        })->orderBy('id', 'asc')->get();
+
+        $subjects = Subject::where(['version_id' => $versionId, 'class_id' => $classId, 'academic_year' => $academicYear])->get();
+
+        $daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+        $tableData = [];
+
+        for ($i = 0; $i < 7; $i++) {
+            $day = $daysOfWeek[$i % count($daysOfWeek)];
+            $rowData = ['day' => $day, 'periods' => []];
+
+            foreach ($periods as $period) {
+                $matchingDetail = $classRoutineDetails
+                    ->where('day_of_week', $day)
+                    ->where('period_id', $period->id)
+                    ->first();
+
+                $subjectName = $matchingDetail && $matchingDetail->subject ? $matchingDetail->subject->subject_name : '';
+                $rowData['periods'][] = $subjectName;
+            }
+
+            $tableData[] = $rowData;
+        }
+
+        // Pass both $tableData and $periods to the view
+        return view('student.myroutine', compact('tableData', 'periods'));
     }
 
 
