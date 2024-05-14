@@ -96,6 +96,7 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::get('my-profile', [StudentController::class, 'my_profile'])->name('my-profile');
         Route::get('my-subject', [StudentController::class, 'mySubject'])->name('my-subject');
         Route::get('my-routine', [StudentController::class, 'printRoutine'])->name('my-routine');
+        Route::get('my-payment-history', [StudentController::class, 'paymentHistory'])->name('my-payment-history');
         Route::post('/generate-pdf', [StudentController::class, 'generatePdf'])->name('generate-pdf');
     });
 

@@ -23,4 +23,8 @@ class FeeCollection extends Model
         'school_id',
     ];
 
+    public function feePayments()
+    {
+        return $this->hasMany(FeePayment::class);
+    }
 }

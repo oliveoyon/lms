@@ -481,6 +481,8 @@ return [
     "my_library" => "My Library",
     "search_book" => "Search Book",
     "issued_book" => "Issued Book",
+    "payment_history" => "Payment History",
+    "my_payment" => "My Payment",
 
 
 

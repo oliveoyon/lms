@@ -84,6 +84,11 @@ class StudentManagement extends Controller
                 return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
             }
 
+            $chk = AcademicFeeAmount::where('aca_group_id', $request->input('feeSetup'))->first();
+            if(empty($chk)){
+                return response()->json(['code' => 1, 'msg' => 'error', 'redirect' => 'admin/student-admission']);
+            }
+
             $lastTwoDigits = substr($request->input('academic_year'), -2);
             $std_id = $lastTwoDigits . str_pad(Student::max('id') + 1, 3, '0', STR_PAD_LEFT);
 
@@ -245,6 +250,11 @@ class StudentManagement extends Controller
             // If validation fails, throw an exception
             if ($validator->fails()) {
                 return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
+            }
+
+            $chk = AcademicFeeAmount::where('aca_group_id', $request->input('feeSetup'))->get();
+            if(empty($chk)){
+                return response()->json(['code' => 1, 'msg' => 'Setup Amount First', 'redirect' => 'admin/bulk-student-admission']);
             }
 
             if ($request->hasFile('upload')) {

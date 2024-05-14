@@ -188,7 +188,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('student.my-payment-history') }}" class="nav-link">
                                 <i class="nav-icon far fa-money-bill-alt"></i>
                                 <p>
                                     {{ __('language.payment_history') }}

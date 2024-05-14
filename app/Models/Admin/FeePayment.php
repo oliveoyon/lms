@@ -21,4 +21,5 @@ class FeePayment extends Model
     {
         return $this->belongsTo(FeeCollection::class, 'fee_collection_id', 'id');
     }
+    
 }

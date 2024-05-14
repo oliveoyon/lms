@@ -107,7 +107,7 @@
                 <div class="school_info">
                     <h1>{{$gs->school_title}}</h1>
                     <p>{{$gs->school_address}}, Phone: {{$gs->school_phone}}, {{$gs->school_phone1}}</p>
-                    <p>Email: {{$gs->school_email}}, Web: https://shalikhaschool.edu.bd/</p>
+                    <p>Email: {{$gs->school_email}}, Web: {{url('/')}}</p>
                 </div>
                 <div class="right">
                     <?php

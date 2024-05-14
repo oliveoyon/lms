@@ -39,7 +39,7 @@ return new class extends Migration
             $table->string('std_gurdian_relation', 30)->nullable();
             $table->string('std_gurdian_mobile', 15)->nullable();
             $table->string('std_gurdian_address', 200)->nullable();
-            $table->string('std_picture', 15)->nullable();
+            $table->string('std_picture')->nullable();
             $table->string('std_category', 15);
             $table->integer('std_status');
             $table->integer('school_id');

@@ -476,6 +476,9 @@ return [
     "my_library" => "আমার লাইব্রেরি",
     "search_book" => "বই অনুসন্ধান",
     "issued_book" => "বই প্রদত্ত",
+    "payment_history" => "পেমেন্ট ইতিহাস",
+    "my_payment" => "আমার পেমেন্ট",
+
 
 
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin\Attendances;
 use App\Models\Admin\ClassRoutineDetail;
 use App\Models\Admin\Event;
+use App\Models\Admin\FeePayment;
 use App\Models\Admin\Period;
 use App\Models\Admin\Subject;
 use Carbon\Carbon;
@@ -113,22 +114,33 @@ class StudentController extends Controller
     }
 
     public function mySubject()
-{
-    $academicYear = Auth::guard('std')->user()->academic_year;
-    $versionId = Auth::guard('std')->user()->version_id;
-    $classId = Auth::guard('std')->user()->class_id;
+    {
+        $academicYear = Auth::guard('std')->user()->academic_year;
+        $versionId = Auth::guard('std')->user()->version_id;
+        $classId = Auth::guard('std')->user()->class_id;
 
-    // Fetch subjects and associated teacher names based on the provided criteria
-    $subjects = Subject::select('subjects.*', 'teachers.teacher_name')
-                ->leftJoin('assign_teachers', 'subjects.id', '=', 'assign_teachers.subject_id')
-                ->leftJoin('teachers', 'assign_teachers.teacher_id', '=', 'teachers.id')
-                ->where('subjects.version_id', $versionId)
-                ->where('subjects.academic_year', $academicYear)
-                ->where('subjects.class_id', $classId)
-                ->get();
+        // Fetch subjects and associated teacher names based on the provided criteria
+        $subjects = Subject::select('subjects.*', 'teachers.teacher_name')
+            ->leftJoin('assign_teachers', 'subjects.id', '=', 'assign_teachers.subject_id')
+            ->leftJoin('teachers', 'assign_teachers.teacher_id', '=', 'teachers.id')
+            ->where('subjects.version_id', $versionId)
+            ->where('subjects.academic_year', $academicYear)
+            ->where('subjects.class_id', $classId)
+            ->get();
 
-    return view('student.subject-list', compact('subjects'));
-}
+        return view('student.subject-list', compact('subjects'));
+    }
+
+    public function paymentHistory()
+    {
+        $paymentHistory = FeePayment::with(['feeCollection'])
+            ->select('fee_payments.trnx_id', 'fee_payments.payment_date', 'fee_payments.amount_paid', 'fee_payments.payment_method', 'fee_collections.fee_description')
+            ->join('fee_collections', 'fee_payments.fee_collection_id', '=', 'fee_collections.id')
+            ->where('fee_collections.std_id', Auth::guard('std')->user()->std_id)
+            ->groupBy('fee_payments.trnx_id', 'fee_payments.payment_date', 'fee_payments.amount_paid', 'fee_payments.payment_method', 'fee_collections.fee_description')
+            ->get();
+        return view('student.payment-history', compact('paymentHistory'));
+    }
 
 
 
@@ -218,6 +230,6 @@ class StudentController extends Controller
     {
         //Auth::logout(); it will also work, or we can specify like bellow line as guard name
         Auth::guard('std')->logout();
-        return redirect('/');
+        return redirect()->route('student.login');
     }
 }
