@@ -10,7 +10,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5;
+            background-color: red;
             /* Whitish background */
             display: flex;
             align-items: center;
@@ -176,6 +176,8 @@
 
 
     </div>
+
+    
 
 
 
