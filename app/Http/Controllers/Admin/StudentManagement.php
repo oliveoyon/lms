@@ -293,11 +293,12 @@ class StudentManagement extends Controller
                         'Permanent Address' => 'std_permanent_address', // Make sure this is correctly mapped
                         'Father\'s Occupation' => 'std_f_occupation',
                         'Mother\'s Occupation' => 'std_m_occupation',
-                        'Yearly Income' => 'f_yearly_income',
+                        // 'Yearly Income' => 'f_yearly_income',
                         'Guardian Name' => 'std_gurdian_name',
                         'Guardian Relation' => 'std_gurdian_relation',
                         'Guardian Phone' => 'std_gurdian_mobile',
                         'Guardian Address' => 'std_gurdian_address',
+                        'Picture' => 'std_picture'
                     ];
 
                     $studentData = [

@@ -1,3 +1,8 @@
+@php
+    $gs = \App\Models\Admin\GeneralSetting::find(1);
+@endphp
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,7 +45,7 @@
         }
 
         .photo {
-            width: 75px;
+            width: 85px;
             margin: 10px auto;
             overflow: hidden;
         }
@@ -121,32 +126,30 @@
 
 <body>
 
-
+    @foreach($stds as $std)
+    @php
+        $date = new DateTime($std->std_dob);
+        $formattedDate = $date->format('d M Y');
+    @endphp
     <div class="card">
-        <div class="header">{{ $card->school_name }}</div>
+        <div class="header">{{$gs->school_title}}</div>
         <div class="photo">
-            <img src="{{ public_path('23001.jpg') }}" alt="Student Photo">
+            <img src="{{ public_path('dashboard/img/std_img/'.$std->std_picture) }}" alt="Student Photo">
         </div>
         <div class="watermark">
             <div class="info-container">
                 <!-- Your centered text content goes here -->
-                <h1>{{ $card->name }}</h1>
-                <p style="font-size: 12px">Student ID: {{ $card->std_id }}</p>
-                <p style="font-size: 12px">Class: {{ $card->class }}</p>
-                <p style="font-size: 12px">DOB: {{ $card->dob }}</p>
+                <h1>{{ $std->std_name }}</h1>
+                <p style="font-size: 12px">Student ID: {{ $std->std_id }}</p>
+                <p style="font-size: 12px">Class: {{ $std->class_name }}</p>
+                <p style="font-size: 12px">DOB: {{ $formattedDate }}</p>
             </div>
         </div>
 
-        {{-- <div class="barcode-signature-container">
-            <img src="{{ public_path('barcode.gif') }}" alt="Principal Signature"
-                style="width: 80%; max-width: 80px; height: auto; flex-shrink: 0; margin-left: 10px;">
-            <img src="{{ public_path('barcode.gif') }}" alt="Principal Signature"
-                style="width: 80%; max-width: 80px; height: auto; flex-shrink: 0; margin-left: 10px;">
-        </div> --}}
 
         <div style="text-align: center">
             <?php
-                $barcodeImage = 'data:image/png;base64,' . DNS1D::getBarcodePNG('23001', 'C39', 1, 20);
+                $barcodeImage = 'data:image/png;base64,' . DNS1D::getBarcodePNG($std->std_id, 'C39', 1, 20);
                 echo '<img  src="' . $barcodeImage . '" alt="barcode"  />';
             ?>
         </div>
@@ -157,11 +160,11 @@
     <div class="card">
         <div class="back">
             {{-- <h1>Back Part Information</h1> --}}
-            <p><span style="font-weight:bold">{{ $card->full_name }}</span></p>
-            <p>Blood Group: {{ $card->blood_group }}</p>
-            <p>Emergency Contact: {{ $card->emergency }}</p>
+            <p><span style="font-weight:bold">{{ $std->std_name }}</span></p>
+            <p>Blood Group: {{ $std->blood_group }}</p>
+            <p>Emergency Contact: {{ $std->std_phone }}</p>
             <p>If you found this card, Contact:</p>
-            <p><span style="font-weight:bold">{{ $card->school_name }}</span> <br> {{ $card->school_address }} <br> {{ $card->school_contact }}</p>
+            <p><span style="font-weight:bold">{{$gs->school_title}}</span> <br> {{$gs->school_address}} <br> {{$gs->school_phone}}</p>
         </div>
 
 
@@ -173,11 +176,11 @@
             ?>
         </div>
 
-
-
     </div>
 
-    
+    @endforeach
+
+
 
 
 

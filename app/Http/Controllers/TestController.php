@@ -41,6 +41,26 @@ class TestController extends Controller
     public function test()
     {
 
+        $academicStudents = DB::table('academic_students')
+        ->join('students', 'academic_students.std_id', '=', 'students.std_id')
+        ->join('edu_versions', 'academic_students.version_id', '=', 'edu_versions.id')
+        ->join('edu_classes', 'academic_students.class_id', '=', 'edu_classes.id')
+        ->join('sections', 'academic_students.section_id', '=', 'sections.id')
+        ->select(
+            'academic_students.id',
+            'academic_students.academic_year',
+            'academic_students.std_id',
+            'students.*',
+
+            'edu_versions.version_name',
+            'edu_classes.class_name',
+            'sections.section_name'
+        )
+        ->get();
+
+
+        $send['stds'] = $academicStudents;
+
         $send['card'] = (object) [
             'name' => 'A.K.M BODRUDDUZA CHOWDHURY',
             'std_id' => '24001',
@@ -69,9 +89,10 @@ class TestController extends Controller
         // $mpdf->SetWatermarkText('SHALIKHA');
         // $mpdf->showWatermarkText = true;
         // $mpdf->watermarkTextAlpha = 0.1;
-        $mpdf->SetWatermarkImage('logo.png');
-        $mpdf->showWatermarkImage = true;
-        $mpdf->watermarkImageAlpha = 0.1;
+
+        // $mpdf->SetWatermarkImage('logo.png');
+        // $mpdf->showWatermarkImage = true;
+        // $mpdf->watermarkImageAlpha = 0.1;
         $mpdf->SetAutoPageBreak(true);
 
         $mpdf->SetAuthor('IconBangla');
