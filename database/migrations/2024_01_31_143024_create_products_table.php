@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('product_hash_id');
             $table->string('product_name', 200);
-            $table->foreignId('category_id')->constrained('inv_categories');
-            $table->foreignId('unit_id')->constrained('units');
-            $table->foreignId('supplier_id')->nullable()->constrained('suppliers');
+            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('unit_id');
+            $table->unsignedBigInteger('supplier_id')->nullable();
+            $table->unsignedBigInteger('aca_feehead_freq');
             $table->double('total_qty')->default(0);
             $table->string('size', 100)->nullable();
             $table->string('location', 11)->nullable();
